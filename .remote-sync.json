@@ -1,0 +1,21 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": true,
+  "deleteLocal": true,
+  "hostname": "192.168.33.10",
+  "port": "22",
+  "target": "/home/vagrant/go/src/dotstamp_server/",
+  "ignore": [
+    ".remote-sync.json",
+    ".git/**",
+    "dotstamp_server",
+    "vendor/**",
+    "log/**",
+    "doc/**",
+    "tmp/**"
+  ],
+  "username": "vagrant",
+  "password": "vagrant",
+  "watch": [],
+  "transport": "scp"
+}
