@@ -1,12 +1,10 @@
 package models
 
 import (
-	"database/sql"
+	"dotstamp_server/models/database"
 	"strings"
 
 	"github.com/astaxie/beedb"
-	"github.com/astaxie/beego"
-	_ "github.com/ziutek/mymysql/godrv"
 )
 
 // DeleteFlagOn 削除ON
@@ -15,23 +13,9 @@ const DeleteFlagOn = 1
 // DeleteFlagOff 削除OFF
 const DeleteFlagOff = 0
 
-// GetDB DB取得する
-func GetDB() *sql.DB {
-	username := beego.AppConfig.String("mysqluser")
-	password := beego.AppConfig.String("mysqlpass")
-	database := beego.AppConfig.String("mysqldb")
-
-	db, err := sql.Open("mymysql", database+"/"+username+"/"+password)
-	if err != nil {
-		panic(err)
-	}
-
-	return db
-}
-
 // GetLink コネクションを取得する
 func GetLink() beedb.Model {
-	db := GetDB()
+	db := database.GetDB()
 	orm := beedb.New(db)
 
 	return orm

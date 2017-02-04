@@ -1,6 +1,8 @@
 package controllers
 
 import (
+	"log"
+
 	"github.com/astaxie/beego"
 )
 
@@ -15,5 +17,7 @@ func (c *MainController) Get() {
 	c.Data["Email"] = "astaxie@gmail.com"
 
 	c.TplName = "index.tpl"
-
+	path := beego.AppConfig.String("viewspath")
+	log.Println(path)
+	log.Println(c)
 }

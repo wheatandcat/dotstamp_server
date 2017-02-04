@@ -1,0 +1,32 @@
+package: dotstamp_server
+import:
+- package: github.com/astaxie/beedb
+- package: github.com/astaxie/beego
+  version: ^1.7.2
+  subpackages:
+  - session/redis
+- package: github.com/garyburd/redigo
+  version: ^1.0.0
+  subpackages:
+  - redis
+- package: github.com/mitchellh/mapstructure
+- package: github.com/nfnt/resize
+- package: github.com/ziutek/mymysql
+  version: ^1.5.4
+  subpackages:
+  - godrv
+- package: golang.org/x/oauth2
+- package: google.golang.org/api
+  subpackages:
+  - oauth2/v2
+- package: google.golang.org/appengine
+  version: ^1.0.0
+- package: gopkg.in/check.v1
+- package: gopkg.in/go-playground/validator.v9
+  version: ^9.3.3
+- package: gopkg.in/yaml.v2
+testImport:
+- package: github.com/smartystreets/goconvey
+  version: ^1.6.2
+  subpackages:
+  - convey

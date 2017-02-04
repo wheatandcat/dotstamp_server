@@ -1,10 +1,10 @@
 package test
 
 import (
+	"dotstamp_server/tests/database"
 	"io/ioutil"
 	"path/filepath"
 	"runtime"
-	"dotstamp_server/models"
 
 	"github.com/astaxie/beego"
 	"gopkg.in/yaml.v2"
@@ -43,7 +43,7 @@ func SetupFixture(tableNameList []string) {
 
 // deleteFixture データを削除する
 func deleteFixture(tableName string) {
-	models.Truncate(tableName)
+	testsDatabase.Truncate(tableName)
 }
 
 // addFixture データを追加する
@@ -64,7 +64,7 @@ func addFixture(tableName string) {
 		data = append(data, fixture)
 	}
 
-	err = models.InsertBatch(tableName, data)
+	err = testsDatabase.InsertBatch(tableName, data)
 	if err != nil {
 		panic(err)
 	}

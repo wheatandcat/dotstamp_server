@@ -1,11 +1,11 @@
 
 test:
     driver: mymysql
-    open: ttol_test/worker/Meron/pan2
+    open: stamp_test/stamp/stamp
 
 development:
     driver: mymysql
-    open: ttol_develop/worker/Meron/pan2
+    open: stamp/stamp/stamp
 
 production:
     driver: postgres

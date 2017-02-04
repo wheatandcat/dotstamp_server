@@ -1,10 +1,10 @@
 package controllersContribution
 
 import (
+	_ "dotstamp_server/routers"
 	"net/http"
 	"net/http/httptest"
 	"testing"
-	_ "dotstamp_server/routers"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
