@@ -15,3 +15,6 @@
 !/log/.keep
 /tmp/*
 /vendor/*
+/static/css
+/static/js
+/static/fonts
