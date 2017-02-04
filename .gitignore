@@ -18,3 +18,8 @@
 /static/css
 /static/js
 /static/fonts
+/static/files/character/*
+!/static/files/character/.gitkeep
+/static/files/tmp/character/*
+!/static/files/tmp/character/.gitkeep
+dotstamp_server
