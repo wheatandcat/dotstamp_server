@@ -8,6 +8,7 @@
 /.bundle
 .DS_Store
 ._.DS_Store
+metas/
 
 # Ignore all logfiles and tempfiles.
 /doc/*
