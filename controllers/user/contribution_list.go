@@ -17,7 +17,6 @@ func (t *ContributionListController) Post() {
 		t.ServerLoginNotFound()
 		return
 	}
-	
 
 	userContributionlist := contributions.GetListByUserID(userID)
 

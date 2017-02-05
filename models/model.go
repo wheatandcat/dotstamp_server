@@ -13,17 +13,9 @@ const DeleteFlagOn = 1
 // DeleteFlagOff 削除OFF
 const DeleteFlagOff = 0
 
-// GetLink コネクションを取得する
-func GetLink() beedb.Model {
-	db := database.GetDB()
-	orm := beedb.New(db)
-
-	return orm
-}
-
 // Execute クエリを実行する
 func Execute(query string) error {
-	db := GetLink()
+	db := database.GetLink()
 
 	_, err := db.Exec(query)
 
@@ -52,7 +44,7 @@ func Truncate(tableName string) {
 
 // InsertBatch 挿入する(複数)
 func InsertBatch(tableName string, add []map[string]interface{}) error {
-	db := GetLink()
+	db := database.GetLink()
 
 	_, err := db.SetTable(tableName).InsertBatch(add)
 
@@ -61,14 +53,14 @@ func InsertBatch(tableName string, add []map[string]interface{}) error {
 
 // Save 保存する
 func Save(dbModel interface{}) error {
-	db := GetLink()
+	db := database.GetLink()
 
 	return db.Save(dbModel)
 }
 
 // GetFindAll 全て取得する
 func GetFindAll(dbModel interface{}) error {
-	db := GetLink()
+	db := database.GetLink()
 
 	return db.FindAll(dbModel)
 }
@@ -111,7 +103,7 @@ func GetBindAndPlaceHolder(where string, bindList []map[string]interface{}) (str
 
 // GetDbOption DBオプションを取得する
 func GetDbOption(where string, bindList []map[string]interface{}, option map[string]interface{}) beedb.Model {
-	db := GetLink()
+	db := database.GetLink()
 
 	if where != "" {
 		w, bind := GetBindAndPlaceHolder(where, bindList)
