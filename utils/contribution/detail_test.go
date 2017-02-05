@@ -24,9 +24,9 @@ func (t *TestDetail) TestSaveDetail(c *C) {
 	uID := 1
 
 	SaveDetail(uID, b)
+
 	r, _ := GetBodyByUserContributionID(uID)
 
-	c.Check(r[0].Body, Equals, "あああ")
 	c.Check(r[0].Character.ID, Equals, 128)
 	c.Check(r[0].Character.FileName, Equals, "2747b7c718564ba5f066f0523b03e17f6a496b06851333d2d59ab6d863225848.jpg")
 }
