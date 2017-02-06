@@ -2,18 +2,35 @@ package controllersContribution
 
 import (
 	_ "dotstamp_server/routers"
+	"dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-// TestMain is a sample to run an endpoint test
-func TestList(t *testing.T) {
-	r, _ := http.NewRequest("POST", "/contribution/list/?order=0", nil)
-	r.Header.Set("Content-Type", "application/json")
+func init() {
+	test.Setup()
+}
+
+func TestListPost(t *testing.T) {
+	values := url.Values{}
+	values.Set("order", "2")
+
+	r, err := http.NewRequest(
+		"POST",
+		"/contribution/list/",
+		strings.NewReader(values.Encode()),
+	)
+	if err != nil {
+		panic(err)
+	}
+
+	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

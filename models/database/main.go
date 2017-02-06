@@ -3,6 +3,7 @@ package database
 import (
 	"database/sql"
 
+	"github.com/astaxie/beedb"
 	"github.com/astaxie/beego"
 	_ "github.com/ziutek/mymysql/godrv"
 )
@@ -19,4 +20,12 @@ func GetDB() *sql.DB {
 	}
 
 	return db
+}
+
+// GetLink コネクションを取得する
+func GetLink() beedb.Model {
+	db := GetDB()
+	orm := beedb.New(db)
+
+	return orm
 }

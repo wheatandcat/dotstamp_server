@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"path/filepath"
 	"runtime"
+	"time"
 
 	"github.com/astaxie/beego"
 	"gopkg.in/yaml.v2"
@@ -23,37 +24,52 @@ func Setup() {
 	apppath := getAppPath()
 
 	//beego.TestBeegoInit(apppath)
-
 	err := beego.LoadAppConfig("ini", apppath+"/conf/app_test.conf")
 	if err != nil {
 		panic(err)
 	}
 }
 
+// UserContributionTag ユーザー投稿タグ
+type UserContributionTag struct {
+	ID                 int `beedb:"PK"`
+	UserContributionID int `sql:"user_contribution_id"`
+	Name               string
+	DeleteFlag         int `sql:"delete_flag"`
+	Created            time.Time
+	Updated            time.Time
+}
+
 // SetupFixture フィクスチャー設定する
 func SetupFixture(tableNameList []string) {
+	var err error
+
 	for _, tableName := range tableNameList {
+		if err = deleteFixture(tableName); err == nil {
+			err = addFixture(tableName)
+		}
 
-		deleteFixture(tableName)
-
-		addFixture(tableName)
+		if err != nil {
+			panic(err)
+		}
 	}
 
 }
 
 // deleteFixture データを削除する
-func deleteFixture(tableName string) {
-	testsDatabase.Truncate(tableName)
+func deleteFixture(tableName string) error {
+	return testsDatabase.Truncate(tableName)
 }
 
 // addFixture データを追加する
-func addFixture(tableName string) {
+func addFixture(tableName string) error {
+
 	apppath := getAppPath()
 	dir := beego.AppConfig.String("resourcesDir")
 
 	buf, err := ioutil.ReadFile(apppath + "/" + dir + "fixture/" + tableName + ".yml")
 	if err != nil {
-		panic(err)
+		return err
 	}
 
 	var fixtures map[string]map[string]interface{}
@@ -66,6 +82,8 @@ func addFixture(tableName string) {
 
 	err = testsDatabase.InsertBatch(tableName, data)
 	if err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil
 }
