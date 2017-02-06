@@ -122,19 +122,15 @@ func GetDbOption(where string, bindList []map[string]interface{}, option map[str
 }
 
 // GetListWhere 条件からリストを取得する
-func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) interface{} {
+func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
 	db := GetDbOption(where, bindList, option)
 
-	db.FindAll(dbModel)
-
-	return dbModel
+	return db.FindAll(dbModel)
 }
 
 // GetWhere 条件から取得する
-func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) interface{} {
+func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
 	db := GetDbOption(where, bindList, option)
 
-	db.Find(dbModel)
-
-	return dbModel
+	return db.Find(dbModel)
 }

@@ -1,4 +1,4 @@
-package controllersContribution
+package controllersLogin
 
 import (
 	_ "dotstamp_server/routers"
@@ -15,17 +15,23 @@ import (
 
 func init() {
 	test.Setup()
+
+	test.SetupFixture([]string{
+		"user_master",
+	})
 }
 
 func TestListPost(t *testing.T) {
 	values := url.Values{}
-	values.Set("order", "2")
+	values.Set("email", "test_xyz@test.com")
+	values.Set("password", "test")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/list/",
+		"/login/new/",
 		strings.NewReader(values.Encode()),
 	)
+
 	if err != nil {
 		panic(err)
 	}

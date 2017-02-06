@@ -24,7 +24,6 @@ func Setup() {
 	apppath := getAppPath()
 
 	//beego.TestBeegoInit(apppath)
-
 	err := beego.LoadAppConfig("ini", apppath+"/conf/app_test.conf")
 	if err != nil {
 		panic(err)
