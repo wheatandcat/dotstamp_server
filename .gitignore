@@ -9,6 +9,7 @@
 .DS_Store
 ._.DS_Store
 metas/
+dotstamp_server
 
 # Ignore all logfiles and tempfiles.
 /doc/*
@@ -23,4 +24,3 @@ metas/
 !/static/files/character/.gitkeep
 /static/files/tmp/character/*
 !/static/files/tmp/character/.gitkeep
-dotstamp_server

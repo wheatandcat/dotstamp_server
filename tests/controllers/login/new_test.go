@@ -21,7 +21,7 @@ func init() {
 	})
 }
 
-func TestListPost(t *testing.T) {
+func TestNewPost(t *testing.T) {
 	values := url.Values{}
 	values.Set("email", "test_xyz@test.com")
 	values.Set("password", "test")

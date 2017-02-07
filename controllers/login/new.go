@@ -3,8 +3,6 @@ package controllersLogin
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/user"
-
-	"github.com/astaxie/beego"
 )
 
 // NewController 新規登録コントローラ
@@ -21,6 +19,7 @@ type NewRequest struct {
 // Post 新規ログイン
 func (t *NewController) Post() {
 	request := NewRequest{}
+
 	if err := t.ParseForm(&request); err != nil {
 		t.ServerError(err, controllers.ErrCodeCommon)
 		return
@@ -32,9 +31,7 @@ func (t *NewController) Post() {
 		return
 	}
 
-	if beego.AppConfig.String("SessionOn") == "true" {
-		t.SetSession("user_id", userID)
-	}
+	t.SetSession("user_id", userID)
 
 	t.Data["json"] = userID
 

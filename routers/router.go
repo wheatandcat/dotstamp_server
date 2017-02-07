@@ -27,6 +27,8 @@ func init() {
 
 	beego.Router("/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/login/new/", &controllersLogin.NewController{})
+	beego.Router("/login/check/", &controllersLogin.CheckController{})
+	beego.Router("/login/logout/", &controllersLogin.LogoutController{})
 	beego.Router("/login/callback/", &controllersLogin.CallbackController{})
 
 	beego.Router("/user/contributionList/", &controllersUser.ContributionListController{})

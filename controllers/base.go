@@ -27,8 +27,8 @@ type Accessor interface {
 }
 
 // GetUserID ユーザIDを取得する
-func (t *BaseController) GetUserID() int {
-	uID := t.GetSession("user_id")
+func (c *BaseController) GetUserID() int {
+	uID := c.GetSession("user_id")
 	if uID, ok := uID.(int); ok {
 		return uID
 	}
@@ -103,7 +103,7 @@ func getErroResponse(errCode int) ErrorResponse {
 }
 
 // IsNoLogin ログインしているか判定する
-func (t *BaseController) IsNoLogin(userID int) bool {
+func (c *BaseController) IsNoLogin(userID int) bool {
 	if userID == noUserID {
 		return false
 	}
@@ -112,16 +112,16 @@ func (t *BaseController) IsNoLogin(userID int) bool {
 }
 
 // ServerLoginNotFound ログイン無しで観覧できない
-func (t *BaseController) ServerLoginNotFound() {
-	t.ServerError(errors.New("login not found"), ErrCodeLoginNotFound)
+func (c *BaseController) ServerLoginNotFound() {
+	c.ServerError(errors.New("login not found"), ErrCodeLoginNotFound)
 }
 
 // ServerError サーバーエラーにする
-func (t *BaseController) ServerError(err error, errCode int) {
+func (c *BaseController) ServerError(err error, errCode int) {
 	beego.Error("Error :", err.Error())
 
-	t.Ctx.ResponseWriter.WriteHeader(500)
-	t.Data["json"] = getErroResponse(errCode)
+	c.Ctx.ResponseWriter.WriteHeader(500)
+	c.Data["json"] = getErroResponse(errCode)
 
-	t.ServeJSON()
+	c.ServeJSON()
 }
