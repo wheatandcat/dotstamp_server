@@ -32,6 +32,7 @@ func init() {
 	beego.Router("/login/callback/", &controllersLogin.CallbackController{})
 
 	beego.Router("/user/contributionList/", &controllersUser.ContributionListController{})
+	beego.Router("/user/show/", &controllersUser.ShowController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 

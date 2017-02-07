@@ -26,16 +26,6 @@ type Accessor interface {
 	ServerError()
 }
 
-// GetUserID ユーザIDを取得する
-func (c *BaseController) GetUserID() int {
-	uID := c.GetSession("user_id")
-	if uID, ok := uID.(int); ok {
-		return uID
-	}
-
-	return noUserID
-}
-
 const (
 	// ErrCodeCommon 汎用エラー
 	ErrCodeCommon = 1

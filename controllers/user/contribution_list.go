@@ -11,15 +11,15 @@ type ContributionListController struct {
 }
 
 // Post ユーザー投稿一覧を取得する
-func (t *ContributionListController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *ContributionListController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
 	userContributionlist := contributions.GetListByUserID(userID)
 
-	t.Data["json"] = userContributionlist
-	t.ServeJSON()
+	c.Data["json"] = userContributionlist
+	c.ServeJSON()
 }

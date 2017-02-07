@@ -11,18 +11,18 @@ type ShowController struct {
 }
 
 // Post ユーザー情報
-func (t *ShowController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *ShowController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
 	u, err := user.GetByUserID(userID)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound)
 	}
 
-	t.Data["json"] = u
-	t.ServeJSON()
+	c.Data["json"] = u
+	c.ServeJSON()
 }
