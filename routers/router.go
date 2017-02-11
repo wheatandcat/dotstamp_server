@@ -33,6 +33,7 @@ func init() {
 
 	beego.Router("/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/user/show/", &controllersUser.ShowController{})
+	beego.Router("/user/upload/", &controllersUser.UploadController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 

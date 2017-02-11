@@ -6,13 +6,14 @@ import (
 
 // UserMaster ユーザー情報
 type UserMaster struct {
-	ID         int `beedb:"PK"`
-	Name       string
-	Email      string `validate:"required,email"`
-	Password   string
-	DeleteFlag int `sql:"delete_flag"`
-	Created    time.Time
-	Updated    time.Time
+	ID             int `beedb:"PK"`
+	Name           string
+	Email          string `validate:"required,email"`
+	Password       string
+	ProfileImageID int `sql:"profile_image_id"`
+	DeleteFlag     int `sql:"delete_flag"`
+	Created        time.Time
+	Updated        time.Time
 }
 
 // GetIDAndAdd 投稿してIDを取得する

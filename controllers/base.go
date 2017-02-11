@@ -115,3 +115,12 @@ func (c *BaseController) ServerError(err error, errCode int) {
 
 	c.ServeJSON()
 }
+
+// isTest テスト環境か判定する
+func isTest() bool {
+	if beego.AppConfig.String("runmode") == "test" {
+		return true
+	}
+
+	return false
+}

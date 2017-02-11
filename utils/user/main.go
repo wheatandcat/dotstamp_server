@@ -1,9 +1,9 @@
 package user
 
 import (
-	"errors"
 	"dotstamp_server/models"
 	"dotstamp_server/utils"
+	"errors"
 
 	"github.com/astaxie/beego"
 	"github.com/mitchellh/mapstructure"
@@ -57,7 +57,7 @@ func GetByEmailAndPassword(email string, password string) (u models.UserMaster, 
 	return u, nil
 }
 
-// GetByUserID ユーザーIDから取得する
+// GetByUserID ユーザIDから取得する
 func GetByUserID(userID int) (User, error) {
 	u := &models.UserMaster{}
 	userMaster := u.GetByID(userID)
@@ -70,7 +70,7 @@ func GetByUserID(userID int) (User, error) {
 	return user, nil
 }
 
-// GetMaptByUserIDList ユーザーIDリストからマップを取得する
+// GetMaptByUserIDList ユーザIDリストからマップを取得する
 func GetMaptByUserIDList(userIDList []int) (userMap map[int]User, err error) {
 	u := &models.UserMaster{}
 	userMaster := u.GetListByIDList(userIDList)
