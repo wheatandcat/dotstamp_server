@@ -13,6 +13,10 @@ import (
 
 func init() {
 	test.Setup()
+
+	test.SetupFixture([]string{
+		"user_master",
+	})
 }
 
 func TestShowPost(t *testing.T) {

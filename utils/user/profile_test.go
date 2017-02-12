@@ -20,7 +20,7 @@ func init() {
 }
 
 func (t *TestProfile) TestGetProfileImageListByUserID(c *C) {
-	r := GetProfileImageListByUserID(1)
+	r, _ := GetProfileImageListByUserID(1)
 
 	c.Check(r[0].ID, Equals, 1)
 }

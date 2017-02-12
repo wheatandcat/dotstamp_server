@@ -10,6 +10,12 @@ type ShowController struct {
 	controllers.BaseController
 }
 
+// ShowResponse 詳細レスポンス
+type ShowResponse struct {
+	User    user.User
+	Profile []user.Profile
+}
+
 // Post ユーザー情報
 func (c *ShowController) Post() {
 	userID := c.GetUserID()
@@ -23,6 +29,14 @@ func (c *ShowController) Post() {
 		c.ServerError(err, controllers.ErrCodeUserNotFound)
 	}
 
-	c.Data["json"] = u
+	p, err := user.GetProfileImageListByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeUserNotFound)
+	}
+
+	c.Data["json"] = ShowResponse{
+		User:    u,
+		Profile: p,
+	}
 	c.ServeJSON()
 }

@@ -7,6 +7,7 @@ import (
 	"dotstamp_server/controllers/contribution"
 	"dotstamp_server/controllers/login"
 	"dotstamp_server/controllers/user"
+	"dotstamp_server/controllers/user/profile"
 	"dotstamp_server/controllers/work"
 
 	"github.com/astaxie/beego"
@@ -33,7 +34,7 @@ func init() {
 
 	beego.Router("/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/user/show/", &controllersUser.ShowController{})
-	beego.Router("/user/upload/", &controllersUser.UploadController{})
+	beego.Router("/user/profile/upload/", &controllersUserProfile.UploadController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 
