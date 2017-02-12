@@ -12,8 +12,9 @@ import (
 
 // User ユーザー情報
 type User struct {
-	ID   int
-	Name string
+	ID             int
+	Name           string
+	ProfileImageID int
 }
 
 // GetPassword パスワードを取得する
