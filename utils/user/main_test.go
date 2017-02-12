@@ -44,6 +44,13 @@ func (t *TestMain) TestGetByUserID(c *C) {
 	c.Check(r.ID, Equals, 1)
 }
 
+func (t *TestMain) TestUpadateToProfileImageID(c *C) {
+	UpadateToProfileImageID(1, 3)
+	r, _ := GetByUserID(1)
+
+	c.Check(r.ProfileImageID, Equals, 3)
+}
+
 func (t *TestMain) TestGetMaptByUserIDList(c *C) {
 	r, _ := GetMaptByUserIDList([]int{1})
 

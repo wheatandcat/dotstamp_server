@@ -32,6 +32,10 @@ func (c *UploadController) Post() {
 		return
 	}
 
+	if err = user.UpadateToProfileImageID(userID, id); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+	}
+
 	c.Data["json"] = fileName
 	c.ServeJSON()
 }

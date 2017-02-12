@@ -71,6 +71,16 @@ func GetByUserID(userID int) (User, error) {
 	return user, nil
 }
 
+// UpadateToProfileImageID プロフィール画像IDを更新する
+func UpadateToProfileImageID(uID int, pID int) error {
+	u := &models.UserMaster{}
+	userMaster := u.GetByID(uID)
+
+	userMaster.ProfileImageID = pID
+
+	return userMaster.Save()
+}
+
 // GetMaptByUserIDList ユーザIDリストからマップを取得する
 func GetMaptByUserIDList(userIDList []int) (userMap map[int]User, err error) {
 	u := &models.UserMaster{}

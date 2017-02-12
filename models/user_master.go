@@ -29,6 +29,14 @@ func (u *UserMaster) GetIDAndAdd() (int, error) {
 	return u.ID, nil
 }
 
+// Save 保存する
+func (u *UserMaster) Save() error {
+	u.DeleteFlag = DeleteFlagOff
+	u.Updated = time.Now()
+
+	return Save(u)
+}
+
 // GetByEmail メールアドレスから取得する
 func (u *UserMaster) GetByEmail(email string) (userMaster UserMaster) {
 	whereList := []map[string]interface{}{

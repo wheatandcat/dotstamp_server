@@ -31,9 +31,29 @@ func (t *TestUserMaster) TestGetIDAndAdd(c *C) {
 	c.Check(r, Equals, 3)
 }
 
+func (t *TestUserMaster) TestSave(c *C) {
+	u := &UserMaster{}
+	user := u.GetByID(1)
+
+	user.Name = "test"
+
+	user.Save()
+
+	r := u.GetByID(1)
+
+	c.Check(r.Name, Equals, "test")
+}
+
 func (t *TestUserMaster) TestGetByID(c *C) {
 	u := &UserMaster{}
 	r := u.GetByID(1)
+
+	c.Check(r.ID, Equals, 1)
+}
+
+func (t *TestUserMaster) TestGetByEmail(c *C) {
+	u := &UserMaster{}
+	r := u.GetByEmail("test@tedt.com")
 
 	c.Check(r.ID, Equals, 1)
 }
