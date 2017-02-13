@@ -13,7 +13,7 @@ func gormConnect() *gorm.DB {
 	dbms := "mysql"
 	user := beego.AppConfig.String("mysqluser")
 	pass := beego.AppConfig.String("mysqlpass")
-	protocol := "tcp(127.0.0.1:3306)"
+	protocol := beego.AppConfig.String("mysqlhost")
 	database := beego.AppConfig.String("mysqldb")
 
 	connect := user + ":" + pass + "@" + protocol + "/" + database + "?parseTime=true&loc=Asia%2FTokyo"
