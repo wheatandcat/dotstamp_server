@@ -7,8 +7,8 @@ CREATE TABLE IF NOT EXISTS `user_characters` (
     `name` VARCHAR(20) COMMENT '名前',
     `info` TEXT COMMENT '情報(JSON)',
     `priority` INT COMMENT '優先度',
-    `created_at` DATETIME NULL DEFAULT COMMENT '作成日時',
-    `updated_at` DATETIME NULL DEFAULT COMMENT '更新日時',
+    `created_at` DATETIME NULL COMMENT '作成日時',
+    `updated_at` DATETIME NULL COMMENT '更新日時',
     `deleted_at` DATETIME NULL COMMENT '削除日時',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;

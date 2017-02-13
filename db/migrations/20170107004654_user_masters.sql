@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `user_masters` (
     `name` VARCHAR(100) NOT NULL COMMENT 'ユーザ名',
     `email` VARCHAR(100) NOT NULL COMMENT 'メールアドレス',
     `password` text NOT NULL COMMENT 'メールアドレス',
-    `created_at` DATETIME NULL DEFAULT COMMENT '作成日時',
-    `updated_at` DATETIME NULL DEFAULT COMMENT '更新日時',
+    `created_at` DATETIME NULL COMMENT '作成日時',
+    `updated_at` DATETIME NULL COMMENT '更新日時',
     `deleted_at` DATETIME NULL COMMENT '削除日時',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;

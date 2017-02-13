@@ -5,8 +5,8 @@ CREATE TABLE IF NOT EXISTS `user_work_histories` (
     `id` BIGINT NOT NULL AUTO_INCREMENT,
     `user_id` BIGINT NOT NULL COMMENT 'ユーザID',
     `work_id` BIGINT NOT NULL COMMENT '作品ID',
-    `created_at` DATETIME NULL DEFAULT COMMENT '作成日時',
-    `updated_at` DATETIME NULL DEFAULT COMMENT '更新日時',
+    `created_at` DATETIME NULL COMMENT '作成日時',
+    `updated_at` DATETIME NULL COMMENT '更新日時',
     `deleted_at` DATETIME NULL COMMENT '削除日時',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
