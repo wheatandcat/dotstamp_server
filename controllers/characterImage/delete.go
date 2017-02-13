@@ -17,33 +17,33 @@ type DeleteResponse struct {
 }
 
 // Post 画像を削除する
-func (t *DeleteController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *DeleteController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
-	id, err := strconv.Atoi(t.Ctx.Input.Param(":id"))
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
 
 	if err = characters.DeleteByID(id, userID); err != nil {
-		t.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
-	t.Data["json"] = UploadResponse{
+	c.Data["json"] = UploadResponse{
 		Image: image,
 	}
 
-	t.ServeJSON()
+	c.ServeJSON()
 }
