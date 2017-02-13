@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `user_character_images` (
     `user_id` BIGINT NOT NULL COMMENT 'ユーザID',
     `character_id` BIGINT NOT NULL COMMENT 'ユーザキャラクタID',
     `priority` INT COMMENT '優先度',
-    `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
-    `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新日時',
+    `created_at` DATETIME NULL DEFAULT COMMENT '作成日時',
+    `updated_at` DATETIME NULL DEFAULT COMMENT '更新日時',
     `deleted_at` DATETIME NULL COMMENT '削除日時',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;

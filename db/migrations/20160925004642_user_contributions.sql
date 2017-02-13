@@ -6,8 +6,8 @@ CREATE TABLE IF NOT EXISTS `user_contributions` (
     `user_id` BIGINT NOT NULL COMMENT 'ユーザID',
     `title` VARCHAR(100) COMMENT 'タイトル',
     `view_status` INT(10) DEFAULT 1 COMMENT '表示状態',
-    `created_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '作成日時',
-    `updated_at` DATETIME NULL DEFAULT CURRENT_TIMESTAMP COMMENT '更新日時',
+    `created_at` DATETIME NULL COMMENT '作成日時',
+    `updated_at` DATETIME NULL COMMENT '更新日時',
     `deleted_at` DATETIME NULL COMMENT '削除日時',
     PRIMARY KEY (`id`)
 ) ENGINE = InnoDB;
