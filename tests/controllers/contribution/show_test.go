@@ -15,17 +15,18 @@ func init() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_masters",
-		"user_characters",
+		"user_contributions",
+		"user_contribution_details",
+		"user_contribution_tags",
 	})
 }
 
-func TestListPost(t *testing.T) {
+func TestShowtPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/character/list/",
+		"/contribution/show/1",
 		nil,
 	)
-
 	if err != nil {
 		panic(err)
 	}
@@ -35,7 +36,7 @@ func TestListPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/character/list/\n", t, func() {
+	Convey("/contribution/show/1\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

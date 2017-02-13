@@ -1,10 +1,12 @@
-package controllersContribution
+package controllersUser
 
 import (
 	_ "dotstamp_server/routers"
 	"dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
+	"strings"
 	"testing"
 
 	"github.com/astaxie/beego"
@@ -13,17 +15,20 @@ import (
 
 func init() {
 	test.Setup()
+
 	test.SetupFixture([]string{
 		"user_masters",
-		"user_characters",
 	})
 }
 
-func TestListPost(t *testing.T) {
+func TestSavePost(t *testing.T) {
+	values := url.Values{}
+	values.Set("name", "test_xyz@test.com")
+
 	r, err := http.NewRequest(
 		"POST",
-		"/character/list/",
-		nil,
+		"/user/save/",
+		strings.NewReader(values.Encode()),
 	)
 
 	if err != nil {
@@ -35,7 +40,7 @@ func TestListPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/character/list/\n", t, func() {
+	Convey("/user/save/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
