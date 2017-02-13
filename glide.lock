@@ -1,5 +1,5 @@
-hash: d3288fe651fe698c380a3c7ae90397a2c1bff014ddd89f31d75810f77c6d20d6
-updated: 2017-02-13T07:06:56.579182505+09:00
+hash: 17469fde7c5d73543cac07c63ec709d95e9e22d5ab74f4d4b0a6dc83928f842f
+updated: 2017-02-14T07:56:41.403011424+09:00
 imports:
 - name: github.com/astaxie/beedb
   version: 1732292dfde40fab7b4ad38ba413492ec5633ad3
@@ -33,6 +33,10 @@ imports:
   - proto
 - name: github.com/jinzhu/gorm
   version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
+  subpackages:
+  - dialects/mysql
+- name: github.com/jinzhu/inflection
+  version: 1c35d901db3da928c72a72d8458480cc9ade058f
 - name: github.com/mitchellh/mapstructure
   version: db1efb556f84b25a0a13a04aad883943538ad2e0
 - name: github.com/nfnt/resize
