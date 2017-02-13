@@ -8,6 +8,7 @@ import (
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/session/redis"
 	_ "github.com/garyburd/redigo/redis"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 	_ "github.com/ziutek/mymysql/godrv"
 )
 
