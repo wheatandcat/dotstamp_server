@@ -1,9 +1,9 @@
 package controllersContribution
 
 import (
-	"strconv"
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/contribution"
+	"strconv"
 )
 
 // DeleteController Deleteコントローラ
@@ -25,12 +25,16 @@ func (t *DeleteController) Post() {
 		return
 	}
 
-	if err := contributions.DeleteByID(id, userID); err != nil {
+	if err = contributions.DeleteByID(id, userID); err != nil {
 		t.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}
 
-	userContributionlist := contributions.GetListByUserID(userID)
+	userContributionlist, err := contributions.GetListByUserID(userID)
+	if err != nil {
+		t.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	t.Data["json"] = userContributionlist
 

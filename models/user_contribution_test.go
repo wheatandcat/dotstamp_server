@@ -32,22 +32,30 @@ func (t *TestUserContribution) TestGetIDAndAdd(c *C) {
 
 func (t *TestUserContribution) TestDelete(c *C) {
 	u := &UserContribution{}
-	uc := u.GetByID(1)
+	uc, _, _ := u.GetByID(1)
 	uc.Delete()
 }
 
 func (t *TestUserContribution) TestGetByID(c *C) {
 	u := &UserContribution{}
 
-	r := u.GetByID(1)
+	r, _, _ := u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(1))
+}
+
+func (t *TestUserContribution) TestGetListByUserID(c *C) {
+	u := &UserContribution{}
+
+	r, _, _ := u.GetListByUserID(1)
+
+	c.Check(r[0].ID, Equals, uint(1))
 }
 
 func (t *TestUserContribution) TestGetByTop(c *C) {
 	u := &UserContribution{}
 
-	r := u.GetByTop(0, 1)
+	r, _, _ := u.GetByTop(0, 1)
 
 	c.Check(r[0].ID, Equals, uint(2))
 }

@@ -16,25 +16,25 @@ func (u *UserCharacterImage) Add() error {
 }
 
 // GetListByUserID ユーザーIDからリストを取得する
-func (u *UserCharacterImage) GetListByUserID(uID int) (userCharacterImage []UserCharacterImage) {
+func (u *UserCharacterImage) GetListByUserID(uID int) (userCharacterImage []UserCharacterImage, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserID": uID},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userCharacterImage, "User_ID = :UserID", whereList, option)
+	db, err = GetListWhere(&userCharacterImage, "User_ID = :UserID", whereList, option)
 
 	return
 }
 
 // GetByID IDから取得する
-func (u *UserCharacterImage) GetByID(id int) (userCharacterImage UserCharacterImage) {
+func (u *UserCharacterImage) GetByID(id int) (userCharacterImage UserCharacterImage, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"ID": id},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userCharacterImage, "ID = :ID", whereList, option)
+	db, err = GetWhere(&userCharacterImage, "ID = :ID", whereList, option)
 
 	return
 }

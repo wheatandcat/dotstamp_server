@@ -37,7 +37,11 @@ func (c *UploadController) Post() {
 		return
 	}
 
-	image := characters.GetImageListByUserID(userID)
+	image, err := characters.GetImageListByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	c.Data["json"] = UploadResponse{
 		Image: image,

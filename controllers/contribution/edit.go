@@ -31,7 +31,7 @@ func (t *EditController) Post() {
 		return
 	}
 
-	if c.User.ID != userID {
+	if int(c.User.ID) != userID {
 		t.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}

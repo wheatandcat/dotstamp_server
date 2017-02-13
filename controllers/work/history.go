@@ -11,13 +11,16 @@ type WorkHistoryController struct {
 }
 
 // Post ユーザー歴史一覧取得
-func (w *WorkHistoryController) Post() {
+func (c *WorkHistoryController) Post() {
 	uID := 1
 
 	userContribution := &models.UserContribution{}
 
-	userContributionlist := userContribution.GetListByUserID(uID)
-
-	w.Data["json"] = userContributionlist
-	w.ServeJSON()
+	userContributionlist, _, err := userContribution.GetListByUserID(uID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+	c.Data["json"] = userContributionlist
+	c.ServeJSON()
 }

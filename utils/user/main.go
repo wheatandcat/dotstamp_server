@@ -6,9 +6,15 @@ import (
 	"errors"
 
 	"github.com/astaxie/beego"
-	"github.com/mitchellh/mapstructure"
 	"gopkg.in/go-playground/validator.v9"
 )
+
+// User ユーザー情報
+type User struct {
+	ID             uint
+	Name           string
+	ProfileImageID int
+}
 
 // GetPassword パスワードを取得する
 func GetPassword(pass string) string {
@@ -34,15 +40,20 @@ func Add(email string, name string, pass string) (uint, error) {
 }
 
 // GetByEmail メールアドレスから取得する
-func GetByEmail(email string) models.UserMaster {
+func GetByEmail(email string) (models.UserMaster, error) {
 	u := &models.UserMaster{}
 
-	return u.GetByEmail(email)
+	r, _, err := u.GetByEmail(email)
+
+	return r, err
 }
 
 // GetByEmailAndPassword メールアドレスとパスワードから取得する
 func GetByEmailAndPassword(email string, password string) (u models.UserMaster, err error) {
-	u = GetByEmail(email)
+	u, err = GetByEmail(email)
+	if err != nil {
+		return models.UserMaster{}, err
+	}
 
 	if u.Password != GetPassword(password) {
 		return models.UserMaster{}, errors.New("password diffrent")
@@ -54,15 +65,28 @@ func GetByEmailAndPassword(email string, password string) (u models.UserMaster, 
 // GetByUserID ユーザIDから取得する
 func GetByUserID(userID int) (User, error) {
 	u := &models.UserMaster{}
-	userMaster := u.GetByID(userID)
+	user := User{}
 
-	return userMaster
+	_, db, err := u.GetByID(userID)
+	if err != nil {
+		return user, err
+	}
+
+	err = db.Table("user_masters").Scan(&user).Error
+	if err != nil {
+		return user, err
+	}
+
+	return user, err
 }
 
 // UpadateToProfileImageID プロフィール画像IDを更新する
 func UpadateToProfileImageID(uID int, pID int) error {
 	u := &models.UserMaster{}
-	userMaster := u.GetByID(uID)
+	userMaster, _, err := u.GetByID(uID)
+	if err != nil {
+		return err
+	}
 
 	userMaster.ProfileImageID = pID
 
@@ -72,7 +96,10 @@ func UpadateToProfileImageID(uID int, pID int) error {
 // Upadate 更新する
 func Upadate(uID int, n string) error {
 	u := &models.UserMaster{}
-	userMaster := u.GetByID(uID)
+	userMaster, _, err := u.GetByID(uID)
+	if err != nil {
+		return err
+	}
 
 	userMaster.Name = n
 
@@ -80,16 +107,20 @@ func Upadate(uID int, n string) error {
 }
 
 // GetMaptByUserIDList ユーザIDリストからマップを取得する
-func GetMaptByUserIDList(userIDList []int) (userMap map[int]User, err error) {
+func GetMaptByUserIDList(userIDList []int) (map[int]User, error) {
+	userMap := map[int]User{}
 	u := &models.UserMaster{}
-	userMaster := u.GetListByIDList(userIDList)
-
-	userList := []User{}
-	if err = mapstructure.Decode(utils.StructListToMapList(userMaster), &userList); err != nil {
-		return map[int]User{}, err
+	_, db, err := u.GetListByIDList(userIDList)
+	if err != nil {
+		return userMap, err
 	}
 
-	userMap = map[int]User{}
+	userList := []User{}
+	err = db.Table("user_masters").Scan(&userList).Error
+	if err != nil {
+		return userMap, err
+	}
+
 	for _, user := range userList {
 		userMap[int(user.ID)] = user
 	}

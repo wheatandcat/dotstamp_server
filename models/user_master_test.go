@@ -33,34 +33,34 @@ func (t *TestUserMaster) TestGetIDAndAdd(c *C) {
 
 func (t *TestUserMaster) TestSave(c *C) {
 	u := &UserMaster{}
-	user := u.GetByID(1)
+	user, _, _ := u.GetByID(1)
 
 	user.Name = "test"
 
 	user.Save()
 
-	r := u.GetByID(1)
+	r, _, _ := u.GetByID(1)
 
 	c.Check(r.Name, Equals, "test")
 }
 
 func (t *TestUserMaster) TestGetByID(c *C) {
 	u := &UserMaster{}
-	r := u.GetByID(1)
+	r, _, _ := u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserMaster) TestGetByEmail(c *C) {
 	u := &UserMaster{}
-	r := u.GetByEmail("test@tedt.com")
+	r, _, _ := u.GetByEmail("test@tedt.com")
 
 	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserMaster) TestGetListByIDList(c *C) {
 	u := &UserMaster{}
-	r := u.GetListByIDList([]int{1, 2})
+	r, _, _ := u.GetListByIDList([]int{1, 2})
 
 	c.Check(r[0].ID, Equals, uint(1))
 	c.Check(r[1].ID, Equals, uint(2))

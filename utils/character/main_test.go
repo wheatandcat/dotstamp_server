@@ -24,13 +24,13 @@ func (t *TestMain) TestAdd(c *C) {
 
 	Add(uID, "test_abc", "{}", 1)
 
-	r := GetListByUserID(uID)
+	r, _ := GetListByUserID(uID)
 
 	c.Check(r[0].Name, Equals, "test_abc")
 }
 
 func (t *TestMain) TestGetListByUserID(c *C) {
-	r := GetListByUserID(1)
+	r, _ := GetListByUserID(1)
 
 	c.Check(r[0].Name, Equals, "abc")
 }

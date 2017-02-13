@@ -23,25 +23,25 @@ func (u *UserContributionFollow) Delete() error {
 }
 
 // GetListByUserContributionID 投稿IDからフォローを取得する
-func (u *UserContributionFollow) GetListByUserContributionID(ucID int) (userContributionFollow []UserContributionFollow) {
+func (u *UserContributionFollow) GetListByUserContributionID(ucID int) (userContributionFollow []UserContributionFollow, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": ucID},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userContributionFollow, "User_contribution_ID = :UserContributionID", whereList, option)
+	db, err = GetWhere(&userContributionFollow, "User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
 }
 
 // GetListByUserContributionIDList 投稿IDリストからフォローを取得する
-func (u *UserContributionFollow) GetListByUserContributionIDList(ucID []int) (userContributionFollow []UserContributionFollow) {
+func (u *UserContributionFollow) GetListByUserContributionIDList(ucID []int) (userContributionFollow []UserContributionFollow, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": ucID},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userContributionFollow, "User_contribution_ID IN :UserContributionID", whereList, option)
+	db, err = GetWhere(&userContributionFollow, "User_contribution_ID IN :UserContributionID", whereList, option)
 
 	return
 }

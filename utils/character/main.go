@@ -27,21 +27,13 @@ func Add(uID int, name string, info string, p int) (uint, error) {
 }
 
 // GetListByUserID ユーザーIDからリストを取得する
-func GetListByUserID(uID int) (character []Character) {
+func GetListByUserID(uID int) ([]Character, error) {
 	u := models.UserCharacter{}
 
-	r := u.GetListByUserID(uID)
+	character := []Character{}
+	_, db, err := u.GetListByUserID(uID)
 
-	for _, v := range r {
-		c := Character{
-			ID:       v.ID,
-			Name:     v.Name,
-			Info:     v.Info,
-			Priority: v.Priority,
-		}
+	db.Table("user_characters").Scan(&character)
 
-		character = append(character, c)
-	}
-
-	return
+	return character, err
 }

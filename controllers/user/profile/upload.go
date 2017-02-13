@@ -24,7 +24,7 @@ func (c *UploadController) Post() {
 		c.ServerError(err, controllers.ErrCodeCommon)
 	}
 
-	fileName := strconv.Itoa(id) + ".jpg"
+	fileName := strconv.Itoa(int(id)) + ".jpg"
 
 	var code int
 	if code, err = c.SetImageFileResize(fileName, "icon", 60, 60); err != nil {
@@ -32,7 +32,7 @@ func (c *UploadController) Post() {
 		return
 	}
 
-	if err = user.UpadateToProfileImageID(userID, id); err != nil {
+	if err = user.UpadateToProfileImageID(userID, int(id)); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 	}
 

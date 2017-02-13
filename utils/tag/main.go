@@ -2,10 +2,7 @@ package tags
 
 import (
 	"dotstamp_server/models"
-	"dotstamp_server/utils"
 	"strings"
-
-	"github.com/mitchellh/mapstructure"
 )
 
 // Tag タグ
@@ -16,18 +13,25 @@ type Tag struct {
 }
 
 // Save 保存する
-func Save(id int, n string) error {
+func Save(id int, n string) (err error) {
 	u := models.UserContributionTag{}
-	u = u.GetByID(id)
+	u, _, err = u.GetByID(id)
+	if err != nil {
+		return err
+	}
+
 	u.Name = n
 
 	return u.Save()
 }
 
 // DeleteByID IDから削除する
-func DeleteByID(id int) error {
+func DeleteByID(id int) (err error) {
 	u := models.UserContributionTag{}
-	u = u.GetByID(id)
+	u, _, err = u.GetByID(id)
+	if err != nil {
+		return err
+	}
 
 	return u.Delete()
 }
@@ -56,10 +60,15 @@ func AddList(uID int, n string) error {
 // GetListByUserContributionID 投稿IDからリストを取得する
 func GetListByUserContributionID(uID int) ([]Tag, error) {
 	u := &models.UserContributionTag{}
-	userContributionTag := u.GetListByUserContributionID(uID)
-
 	tag := []Tag{}
-	if err := mapstructure.Decode(utils.StructListToMapList(userContributionTag), &tag); err != nil {
+
+	_, db, err := u.GetListByUserContributionID(uID)
+	if err != nil {
+		return tag, err
+	}
+
+	err = db.Table("user_contribution_tags").Scan(&tag).Error
+	if err != nil {
 		return tag, err
 	}
 
@@ -67,16 +76,21 @@ func GetListByUserContributionID(uID int) ([]Tag, error) {
 }
 
 // GetMapByUserContributionIDList 投稿IDからマップを取得する
-func GetMapByUserContributionIDList(uIDList []int) (tagMap map[int][]Tag, err error) {
-	u := &models.UserContributionTag{}
-	userContributionTag := u.GetListByUserContributionIDList(uIDList)
+func GetMapByUserContributionIDList(uIDList []int) (map[int][]Tag, error) {
+	tagMap := map[int][]Tag{}
 
-	tagList := []Tag{}
-	if err = mapstructure.Decode(utils.StructListToMapList(userContributionTag), &tagList); err != nil {
-		return map[int][]Tag{}, err
+	u := &models.UserContributionTag{}
+	_, db, err := u.GetListByUserContributionIDList(uIDList)
+	if err != nil {
+		return tagMap, err
 	}
 
-	tagMap = map[int][]Tag{}
+	tagList := []Tag{}
+	err = db.Table("user_contribution_tags").Scan(&tagList).Error
+	if err != nil {
+		return tagMap, err
+	}
+
 	for _, tag := range tagList {
 		tagMap[tag.UserContributionID] = append(tagMap[tag.UserContributionID], tag)
 	}

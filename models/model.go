@@ -86,17 +86,21 @@ func getDbOption(where string, bindList []map[string]interface{}, option map[str
 }
 
 // GetWhere 条件から取得する
-func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
+func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (*gorm.DB, error) {
 	db := getDbOption(where, bindList, option)
 
-	return db.First(dbModel).Error
+	err := db.First(dbModel).Error
+
+	return db, err
 }
 
 // GetListWhere 条件からリストを取得する
-func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
+func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (*gorm.DB, error) {
 	db := getDbOption(where, bindList, option)
 
-	return db.Find(dbModel).Error
+	err := db.Find(dbModel).Error
+
+	return db, err
 }
 
 // Create 作成する

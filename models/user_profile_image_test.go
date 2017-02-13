@@ -26,7 +26,7 @@ func (t *TestUserProfileImage) TestAdd(c *C) {
 
 	u.GetIDAndAdd()
 
-	r := u.GetListByUserID(u.UserID)
+	r, _, _ := u.GetListByUserID(u.UserID)
 
 	c.Check(r[0].ID, Equals, uint(1))
 	c.Check(r[1].ID, Equals, uint(3))
@@ -37,7 +37,7 @@ func (t *TestUserProfileImage) TestAdd(c *C) {
 func (t *TestUserProfileImage) TestGetListByUserID(c *C) {
 	u := &UserProfileImage{}
 
-	r := u.GetListByUserID(1)
+	r, _, _ := u.GetListByUserID(1)
 
 	c.Check(r[0].ID, Equals, uint(1))
 }

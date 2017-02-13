@@ -18,13 +18,13 @@ func (u *UserProfileImage) GetIDAndAdd() (uint, error) {
 }
 
 // GetListByUserID ユーザーIDからリストを取得する
-func (u *UserProfileImage) GetListByUserID(uID int) (userProfileImage []UserProfileImage) {
+func (u *UserProfileImage) GetListByUserID(uID int) (userProfileImage []UserProfileImage, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserID": uID},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userProfileImage, "User_ID = :UserID", whereList, option)
+	db, err = GetListWhere(&userProfileImage, "User_ID = :UserID", whereList, option)
 
 	return
 }

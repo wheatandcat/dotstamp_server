@@ -1,10 +1,10 @@
 package controllersLoginGoogle
 
 import (
+	"dotstamp_server/controllers"
 	"fmt"
 	"log"
 	"reflect"
-	"dotstamp_server/controllers"
 
 	"golang.org/x/oauth2"
 	v2 "google.golang.org/api/oauth2/v2"

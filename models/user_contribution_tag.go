@@ -21,37 +21,37 @@ func (uc *UserContributionTag) AddList(u []UserContributionTag) (err error) {
 }
 
 // GetListByUserContributionID 投稿IDから取得する
-func (uc *UserContributionTag) GetListByUserContributionID(id int) (userContributionTag []UserContributionTag) {
+func (uc *UserContributionTag) GetListByUserContributionID(id int) (userContributionTag []UserContributionTag, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": id},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userContributionTag, "User_contribution_ID = :UserContributionID", whereList, option)
+	db, err = GetListWhere(&userContributionTag, "User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
 }
 
 // GetListByUserContributionIDList 投稿IDリストから取得する
-func (uc *UserContributionTag) GetListByUserContributionIDList(idList []int) (userContributionTag []UserContributionTag) {
+func (uc *UserContributionTag) GetListByUserContributionIDList(idList []int) (userContributionTag []UserContributionTag, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"User_contribution_ID": idList},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userContributionTag, "User_contribution_ID IN :User_contribution_ID", whereList, option)
+	db, err = GetListWhere(&userContributionTag, "User_contribution_ID IN :User_contribution_ID", whereList, option)
 
 	return
 }
 
 // GetByID IDから取得する
-func (uc *UserContributionTag) GetByID(id int) (userContributionTag UserContributionTag) {
+func (uc *UserContributionTag) GetByID(id int) (userContributionTag UserContributionTag, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"ID": id},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userContributionTag, "ID = :ID", whereList, option)
+	db, err = GetWhere(&userContributionTag, "ID = :ID", whereList, option)
 
 	return
 }

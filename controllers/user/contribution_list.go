@@ -18,7 +18,11 @@ func (c *ContributionListController) Post() {
 		return
 	}
 
-	userContributionlist := contributions.GetListByUserID(userID)
+	userContributionlist, err := contributions.GetListByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	c.Data["json"] = userContributionlist
 	c.ServeJSON()

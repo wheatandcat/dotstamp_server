@@ -1,9 +1,9 @@
 package controllersCharacterImage
 
 import (
-	"strconv"
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/character"
+	"strconv"
 )
 
 // DeleteController Deleteコントローラ
@@ -30,12 +30,16 @@ func (t *DeleteController) Post() {
 		return
 	}
 
-	if err := characters.DeleteByID(id, userID); err != nil {
+	if err = characters.DeleteByID(id, userID); err != nil {
 		t.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}
 
-	image := characters.GetImageListByUserID(userID)
+	image, err := characters.GetImageListByUserID(userID)
+	if err != nil {
+		t.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	t.Data["json"] = UploadResponse{
 		Image: image,

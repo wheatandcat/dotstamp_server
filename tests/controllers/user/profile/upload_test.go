@@ -15,7 +15,7 @@ func init() {
 	test.Setup()
 
 	test.SetupFixture([]string{
-		"user_profile_image",
+		"user_profile_images",
 	})
 }
 

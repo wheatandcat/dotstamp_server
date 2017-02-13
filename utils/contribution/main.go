@@ -43,7 +43,10 @@ func Add(userID int, title string, body string) (uint, error) {
 
 // Save 保存する
 func Save(userContributionID int, userID int, title string) error {
-	uc := GetByUserContributionID(userContributionID)
+	uc, err := GetByUserContributionID(userContributionID)
+	if err != nil {
+		return err
+	}
 	if uc.UserID != userID {
 		return errors.New("difference UserID")
 	}
@@ -55,7 +58,10 @@ func Save(userContributionID int, userID int, title string) error {
 
 // DeleteByID 削除する
 func DeleteByID(userContributionID int, userID int) error {
-	uc := GetByUserContributionID(userContributionID)
+	uc, err := GetByUserContributionID(userContributionID)
+	if err != nil {
+		return err
+	}
 
 	if uc.UserID != userID {
 		return errors.New("difference UserID")
@@ -65,28 +71,38 @@ func DeleteByID(userContributionID int, userID int) error {
 		return e
 	}
 
-	ucd := GetDetailByUserContributionID(userContributionID)
+	ucd, err := GetDetailByUserContributionID(userContributionID)
+	if err != nil {
+		return err
+	}
 
 	return ucd.Delete()
 }
 
 // GetByUserContributionID 投稿IDから取得する
-func GetByUserContributionID(userContributionID int) models.UserContribution {
+func GetByUserContributionID(userContributionID int) (models.UserContribution, error) {
 	userContribution := &models.UserContribution{}
 
-	return userContribution.GetByID(userContributionID)
+	r, _, err := userContribution.GetByID(userContributionID)
+
+	return r, err
 }
 
 // GetListByUserID ユーザIDから取得する
-func GetListByUserID(userID int) []models.UserContribution {
+func GetListByUserID(userID int) ([]models.UserContribution, error) {
 	userContribution := &models.UserContribution{}
 
-	return userContribution.GetListByUserID(userID)
+	r, _, err := userContribution.GetListByUserID(userID)
+
+	return r, err
 }
 
 // GetContributionByUserContributionID 投稿IDから取得する
 func GetContributionByUserContributionID(userContributionID int) (c Contribution, err error) {
-	uc := GetByUserContributionID(userContributionID)
+	uc, err := GetByUserContributionID(userContributionID)
+	if err != nil {
+		return c, err
+	}
 	var u user.User
 
 	if u, err = user.GetByUserID(uc.UserID); err != nil {
@@ -122,9 +138,13 @@ func GetContributionByUserContributionID(userContributionID int) (c Contribution
 }
 
 // GetByTop 新着を取得する
-func GetByTop(offset int, size int) (contributionList []Contribution, err error) {
+func GetByTop(offset int, size int) ([]Contribution, error) {
 	uc := &models.UserContribution{}
-	userContribution := uc.GetByTop(offset, size)
+	contributionList := []Contribution{}
+	userContribution, _, err := uc.GetByTop(offset, size)
+	if err != nil {
+		return contributionList, err
+	}
 
 	var idList []int
 	var userIDList []int

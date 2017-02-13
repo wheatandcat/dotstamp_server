@@ -16,10 +16,10 @@ type DeleteResponse struct {
 }
 
 // Post 削除する
-func (delte *DeleteController) Post() {
+func (c *DeleteController) Post() {
 	//id, _ := this.GetInt("tagId")
 
-	delte.Data["json"] = DeleteResponse{}
+	c.Data["json"] = DeleteResponse{}
 
-	delte.ServeJSON()
+	c.ServeJSON()
 }

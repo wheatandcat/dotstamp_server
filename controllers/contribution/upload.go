@@ -1,9 +1,9 @@
 package controllersContribution
 
 import (
-	"fmt"
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils"
+	"fmt"
 )
 
 // UploadController Uploadコントローラ
@@ -12,16 +12,16 @@ type UploadController struct {
 }
 
 // Post 画像アップロード
-func (upload *UploadController) Post() {
-	_, header, _ := upload.GetFile("file")
+func (c *UploadController) Post() {
+	_, header, _ := c.GetFile("file")
 	displayUserID := 1
 	userContributionID := 1
 
 	fileName := utils.SrringToEncryption(header.Filename)
 	filePath := fmt.Sprintf("%08d", displayUserID) + "_" + fmt.Sprintf("%08d", userContributionID) + "_" + fileName + ".jpg"
 
-	upload.SaveToFile("file", "./static/files/talk/"+filePath)
+	c.SaveToFile("file", "./static/files/talk/"+filePath)
 
-	upload.Data["json"] = filePath
-	upload.ServeJSON()
+	c.Data["json"] = filePath
+	c.ServeJSON()
 }

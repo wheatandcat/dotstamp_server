@@ -16,21 +16,21 @@ type SaveResponse struct {
 }
 
 // Post 保存する
-func (t *SaveController) Post() {
-	id, err := t.GetInt("tagId")
+func (c *SaveController) Post() {
+	id, err := c.GetInt("tagId")
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
 
-	if err := tags.Save(id, t.GetString("tagName")); err != nil {
-		t.ServerError(err, controllers.ErrContributionTagSave)
+	if err := tags.Save(id, c.GetString("tagName")); err != nil {
+		c.ServerError(err, controllers.ErrContributionTagSave)
 		return
 	}
 
-	t.Data["json"] = SaveResponse{
+	c.Data["json"] = SaveResponse{
 		Message: "",
 	}
 
-	t.ServeJSON()
+	c.ServeJSON()
 }

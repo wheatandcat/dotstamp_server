@@ -37,14 +37,17 @@ type GetCharacter struct {
 
 // SaveDetail 詳細を保存する
 func SaveDetail(userContributionID int, body string) error {
-	ucd := GetDetailByUserContributionID(userContributionID)
-
-	data, err := StirngToSaveBody(body)
+	ucd, err := GetDetailByUserContributionID(userContributionID)
 	if err != nil {
 		return err
 	}
 
-	st, err := json.Marshal(data)
+	b, err := StirngToSaveBody(body)
+	if err != nil {
+		return err
+	}
+
+	st, err := json.Marshal(b)
 	if err != nil {
 		return err
 	}
@@ -83,17 +86,26 @@ func StirngToGetBody(body string) (b []GetBody, err error) {
 }
 
 // GetDetailByUserContributionID 投稿IDから投稿詳細を取得する
-func GetDetailByUserContributionID(uID int) models.UserContributionDetail {
+func GetDetailByUserContributionID(uID int) (models.UserContributionDetail, error) {
 	u := &models.UserContributionDetail{}
 
-	return u.GetByUserContributionID(uID)
+	r, _, err := u.GetByUserContributionID(uID)
+	if err != nil {
+		return r, err
+	}
+
+	return r, err
 }
 
 // GetBodyByUserContributionID 投稿IDから本文を取得する
 func GetBodyByUserContributionID(uID int) ([]GetBody, error) {
-	u := GetDetailByUserContributionID(uID)
+	b := []GetBody{}
+	u, err := GetDetailByUserContributionID(uID)
+	if err != nil {
+		return b, err
+	}
 
-	b, err := StirngToGetBody(u.Body)
+	b, err = StirngToGetBody(u.Body)
 	if err != nil {
 		return b, err
 	}

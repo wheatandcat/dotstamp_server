@@ -17,7 +17,7 @@ func init() {
 	test.Setup()
 
 	test.SetupFixture([]string{
-		"user_master",
+		"user_masters",
 	})
 }
 

@@ -29,7 +29,7 @@ func (t *TestUserCharacter) TestAdd(c *C) {
 
 	u.Add()
 
-	r := u.GetListByUserID(u.UserID)
+	r, _, _ := u.GetListByUserID(u.UserID)
 
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "test")
@@ -37,7 +37,7 @@ func (t *TestUserCharacter) TestAdd(c *C) {
 
 func (t *TestUserCharacter) TestGetListByUserID(c *C) {
 	u := &UserCharacter{}
-	r := u.GetListByUserID(2)
+	r, _, _ := u.GetListByUserID(2)
 
 	c.Check(r[0].Name, Equals, "def")
 }
@@ -49,7 +49,7 @@ func (t *TestUserCharacter) TestGetListByIDList(c *C) {
 	}
 
 	u := &UserCharacter{}
-	r := u.GetListByIDList(e)
+	r, _, _ := u.GetListByIDList(e)
 
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "def")

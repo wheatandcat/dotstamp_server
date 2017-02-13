@@ -8,11 +8,11 @@ type LogoutController struct {
 }
 
 // Post ログアウト
-func (t *LogoutController) Post() {
+func (c *LogoutController) Post() {
 
-	t.DelSession("user_id")
+	c.DelSession("user_id")
 
-	t.Data["json"] = true
+	c.Data["json"] = true
 
-	t.ServeJSON()
+	c.ServeJSON()
 }

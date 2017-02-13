@@ -10,13 +10,13 @@ type UserWorkHistory struct {
 }
 
 // GetListByUserID ユーザーIDからリストを取得する
-func (u *UserWorkHistory) GetListByUserID(uID int) (userWorkHistory []UserWorkHistory) {
+func (u *UserWorkHistory) GetListByUserID(uID int) (userWorkHistory []UserWorkHistory, db *gorm.DB, err error) {
 	w := []map[string]interface{}{
 		{"UserID": uID},
 	}
 
 	o := map[string]interface{}{}
 
-	GetListWhere(&userWorkHistory, "User_ID = :UserID", w, o)
+	db, err = GetListWhere(&userWorkHistory, "User_ID = :UserID", w, o)
 	return
 }

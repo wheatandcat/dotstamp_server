@@ -17,25 +17,25 @@ func (u *UserCharacter) Add() error {
 }
 
 // GetListByUserID ユーザーIDからリストを取得する
-func (u *UserCharacter) GetListByUserID(uID int) (userCharacter []UserCharacter) {
+func (u *UserCharacter) GetListByUserID(uID int) (userCharacter []UserCharacter, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserID": uID},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userCharacter, "User_ID = :UserID", whereList, option)
+	db, err = GetListWhere(&userCharacter, "User_ID = :UserID", whereList, option)
 
 	return
 }
 
 // GetListByIDList IDリストからリスト取得する
-func (u *UserCharacter) GetListByIDList(id []int) (userCharacter []UserCharacter) {
+func (u *UserCharacter) GetListByIDList(id []int) (userCharacter []UserCharacter, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"IDList": id},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userCharacter, "ID IN :IDList", whereList, option)
+	db, err = GetListWhere(&userCharacter, "ID IN :IDList", whereList, option)
 
 	return
 }

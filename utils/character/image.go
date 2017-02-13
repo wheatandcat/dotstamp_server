@@ -28,9 +28,10 @@ func AddImage(uID int, cID int, p int) (uint, error) {
 }
 
 // GetImageListByUserID ユーザーIDからリストを取得する
-func GetImageListByUserID(uID int) (image []Image) {
+func GetImageListByUserID(uID int) ([]Image, error) {
 	u := models.UserCharacterImage{}
-	r := u.GetListByUserID(uID)
+	image := []Image{}
+	r, _, err := u.GetListByUserID(uID)
 
 	for _, v := range r {
 		st := Image{
@@ -43,13 +44,16 @@ func GetImageListByUserID(uID int) (image []Image) {
 		image = append(image, st)
 	}
 
-	return
+	return image, err
 }
 
 // DeleteByID IDから削除する
 func DeleteByID(id int, userID int) error {
 	u := models.UserCharacterImage{}
-	userCharacterImage := u.GetByID(id)
+	userCharacterImage, _, err := u.GetByID(id)
+	if err != nil {
+		return err
+	}
 
 	if userCharacterImage.UserID != userID {
 		return errors.New("User_ID is wrong")

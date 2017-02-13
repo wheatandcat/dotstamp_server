@@ -25,13 +25,13 @@ func (u *UserContributionDetail) Delete() error {
 }
 
 // GetByUserContributionID 投稿IDから取得する
-func (u *UserContributionDetail) GetByUserContributionID(uID int) (userContributionDetail UserContributionDetail) {
+func (u *UserContributionDetail) GetByUserContributionID(uID int) (userContributionDetail UserContributionDetail, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": uID},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userContributionDetail, "User_contribution_ID = :UserContributionID", whereList, option)
+	db, err = GetWhere(&userContributionDetail, "User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
 }

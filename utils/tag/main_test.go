@@ -27,7 +27,7 @@ func (t *TestMain) TestSave(c *C) {
 	Save(id, n)
 
 	u := models.UserContributionTag{}
-	r := u.GetByID(id)
+	r, _, _ := u.GetByID(id)
 
 	c.Check(r.Name, Equals, "bbb")
 }
@@ -35,7 +35,7 @@ func (t *TestMain) TestSave(c *C) {
 func (t *TestMain) TestDeleteByID(c *C) {
 	DeleteByID(1)
 	u := models.UserContributionTag{}
-	r := u.GetByID(1)
+	r, _, _ := u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(0))
 }
@@ -47,7 +47,7 @@ func (t *TestMain) TestAddList(c *C) {
 
 	u := models.UserContributionTag{}
 
-	r := u.GetListByUserContributionID(uID)
+	r, _, _ := u.GetListByUserContributionID(uID)
 
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "defg")

@@ -2,31 +2,33 @@ package user
 
 import (
 	"dotstamp_server/models"
-	"dotstamp_server/utils"
 	"time"
-
-	"github.com/mitchellh/mapstructure"
 )
 
 // Profile プロフィール
 type Profile struct {
-	ID      int
+	ID      uint
 	UserID  int
 	Created time.Time
 }
 
 // GetProfileImageListByUserID ユーザIDからプロフィール画像リストを取得する
-func GetProfileImageListByUserID(uID int) (profile []Profile, err error) {
+func GetProfileImageListByUserID(uID int) ([]Profile, error) {
+
+	profile := []Profile{}
 	u := models.UserProfileImage{}
 
-	p := u.GetListByUserID(uID)
-
-	Profile := []Profile{}
-	if err = mapstructure.Decode(utils.StructListToMapList(p), &Profile); err != nil {
-		return Profile, err
+	_, db, err := u.GetListByUserID(uID)
+	if err != nil {
+		return profile, err
 	}
 
-	return Profile, nil
+	err = db.Table("user_profile_images").Scan(&profile).Error
+	if err != nil {
+		return profile, err
+	}
+
+	return profile, nil
 }
 
 // GetIDAndAddProfileImage プロフィール画像を追加してIDを取得する

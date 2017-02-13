@@ -36,18 +36,18 @@ func (u *UserContribution) Delete() error {
 }
 
 // GetByID 投稿IDから取得する
-func (u *UserContribution) GetByID(id int) (userContribution UserContribution) {
+func (u *UserContribution) GetByID(id int) (userContribution UserContribution, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"ID": id},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userContribution, "ID = :ID", whereList, option)
+	db, err = GetWhere(&userContribution, "ID = :ID", whereList, option)
 	return
 }
 
 // GetListByUserID 投稿IDから取得する
-func (u *UserContribution) GetListByUserID(userID int) (userContribution []UserContribution) {
+func (u *UserContribution) GetListByUserID(userID int) (userContribution []UserContribution, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserID": userID},
 	}
@@ -58,12 +58,12 @@ func (u *UserContribution) GetListByUserID(userID int) (userContribution []UserC
 		"offset": 0,
 	}
 
-	GetListWhere(&userContribution, "User_ID = :UserID", whereList, option)
+	db, err = GetListWhere(&userContribution, "User_ID = :UserID", whereList, option)
 	return
 }
 
 // GetByTop 新着から投稿リスト取得する
-func (u *UserContribution) GetByTop(o int, s int) (userContributionList []UserContribution) {
+func (u *UserContribution) GetByTop(o int, s int) (userContributionList []UserContribution, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{}
 
 	optionMap := map[string]interface{}{
@@ -72,6 +72,6 @@ func (u *UserContribution) GetByTop(o int, s int) (userContributionList []UserCo
 		"offset": o,
 	}
 
-	GetListWhere(&userContributionList, "", whereList, optionMap)
+	db, err = GetListWhere(&userContributionList, "", whereList, optionMap)
 	return
 }

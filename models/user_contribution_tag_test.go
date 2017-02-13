@@ -34,7 +34,7 @@ func (t *TestUserContributionTag) TestAddList(c *C) {
 	u := UserContributionTag{}
 	u.AddList(userTag)
 
-	r := u.GetListByUserContributionIDList([]int{3, 4})
+	r, _, _ := u.GetListByUserContributionIDList([]int{3, 4})
 
 	c.Check(r[0].UserContributionID, Equals, 3)
 	c.Check(r[1].UserContributionID, Equals, 4)
@@ -43,7 +43,7 @@ func (t *TestUserContributionTag) TestAddList(c *C) {
 func (t *TestUserContributionTag) TestGetListByUserContributionID(c *C) {
 	u := UserContributionTag{}
 
-	r := u.GetListByUserContributionID(1)
+	r, _, _ := u.GetListByUserContributionID(1)
 
 	c.Check(r[0].UserContributionID, Equals, 1)
 	c.Check(r[0].Name, Equals, "abc")
@@ -52,7 +52,7 @@ func (t *TestUserContributionTag) TestGetListByUserContributionID(c *C) {
 func (t *TestUserContributionTag) TestGetListByUserContributionIDList(c *C) {
 	u := UserContributionTag{}
 
-	r := u.GetListByUserContributionIDList([]int{1, 2})
+	r, _, _ := u.GetListByUserContributionIDList([]int{1, 2})
 
 	c.Check(r[0].UserContributionID, Equals, 1)
 	c.Check(r[0].Name, Equals, "abc")
@@ -64,7 +64,7 @@ func (t *TestUserContributionTag) TestGetListByUserContributionIDList(c *C) {
 func (t *TestUserContributionTag) TestGetByID(c *C) {
 	u := UserContributionTag{}
 
-	r := u.GetByID(1)
+	r, _, _ := u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(1))
 	c.Check(r.Name, Equals, "abc")
@@ -72,11 +72,12 @@ func (t *TestUserContributionTag) TestGetByID(c *C) {
 
 func (t *TestUserContributionTag) TestSave(c *C) {
 	u := UserContributionTag{}
-	u = u.GetByID(1)
+	u, _, _ = u.GetByID(1)
 	u.Name = "ddd"
 
 	u.Save()
-	r := u.GetByID(1)
+
+	r, _, _ := u.GetByID(1)
 	c.Check(r.ID, Equals, uint(1))
 	c.Check(r.Name, Equals, "ddd")
 }

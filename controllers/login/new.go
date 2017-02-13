@@ -17,23 +17,23 @@ type NewRequest struct {
 }
 
 // Post 新規ログイン
-func (t *NewController) Post() {
+func (c *NewController) Post() {
 	request := NewRequest{}
 
-	if err := t.ParseForm(&request); err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	userID, err := user.Add(request.Email, request.Email, request.Password)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCreateUser)
+		c.ServerError(err, controllers.ErrCreateUser)
 		return
 	}
 
-	t.SetSession("user_id", userID)
+	c.SetSession("user_id", userID)
 
-	t.Data["json"] = userID
+	c.Data["json"] = userID
 
-	t.ServeJSON()
+	c.ServeJSON()
 }

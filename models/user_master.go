@@ -26,37 +26,37 @@ func (u *UserMaster) Save() error {
 }
 
 // GetByEmail メールアドレスから取得する
-func (u *UserMaster) GetByEmail(email string) (userMaster UserMaster) {
+func (u *UserMaster) GetByEmail(email string) (userMaster UserMaster, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"Email": email},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userMaster, "Email LIKE :Email", whereList, option)
+	db, err = GetWhere(&userMaster, "Email LIKE :Email", whereList, option)
 
 	return
 }
 
 // GetByID ユーザ IDから取得する
-func (u *UserMaster) GetByID(id int) (userMaster UserMaster) {
+func (u *UserMaster) GetByID(id int) (userMaster UserMaster, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"ID": id},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userMaster, "ID = :ID", whereList, option)
+	db, err = GetWhere(&userMaster, "ID = :ID", whereList, option)
 
 	return
 }
 
 // GetListByIDList ユーザ IDリストからリストを取得する
-func (u *UserMaster) GetListByIDList(idList []int) (userMaster []UserMaster) {
+func (u *UserMaster) GetListByIDList(idList []int) (userMaster []UserMaster, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"ID": idList},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userMaster, "ID IN :ID", whereList, option)
+	db, err = GetListWhere(&userMaster, "ID IN :ID", whereList, option)
 
 	return
 }

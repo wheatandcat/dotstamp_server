@@ -8,6 +8,6 @@ type CallbackController struct {
 }
 
 // Get コールバック
-func (callback *CallbackController) Get() {
+func (c *CallbackController) Get() {
 
 }

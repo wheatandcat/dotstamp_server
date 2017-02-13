@@ -24,7 +24,7 @@ func (t *TestMain) TestAdd(c *C) {
 
 	c.Check(uID, Equals, uint(3))
 
-	r := GetByEmail("test@gmail.com")
+	r, _ := GetByEmail("test@gmail.com")
 
 	c.Check(r.ID, Equals, uint(3))
 	c.Check(r.Email, Equals, "test@gmail.com")
@@ -41,7 +41,7 @@ func (t *TestMain) TestGetByEmailAndPassword(c *C) {
 func (t *TestMain) TestGetByUserID(c *C) {
 	r, _ := GetByUserID(1)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestMain) TestUpadateToProfileImageID(c *C) {

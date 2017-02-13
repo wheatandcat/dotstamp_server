@@ -16,18 +16,22 @@ type ListResponse struct {
 }
 
 // Post 一覧を取得する
-func (t *ListController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *ListController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
-	character := characters.GetListByUserID(userID)
+	character, err := characters.GetListByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
-	t.Data["json"] = ListResponse{
+	c.Data["json"] = ListResponse{
 		Character: character,
 	}
 
-	t.ServeJSON()
+	c.ServeJSON()
 }

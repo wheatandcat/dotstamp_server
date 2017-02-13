@@ -11,12 +11,12 @@ type TopController struct {
 }
 
 // Post 新着情報を取得する
-func (t *TopController) Post() {
+func (c *TopController) Post() {
 	contributionList, err := contributions.GetByTop(0, 10)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon)
 	}
 
-	t.Data["json"] = contributionList
-	t.ServeJSON()
+	c.Data["json"] = contributionList
+	c.ServeJSON()
 }

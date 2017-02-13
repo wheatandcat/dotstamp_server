@@ -17,23 +17,23 @@ type CheckRequest struct {
 }
 
 // Post ログイン
-func (t *CheckController) Post() {
+func (c *CheckController) Post() {
 	request := CheckRequest{}
 
-	if err := t.ParseForm(&request); err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	u, err := user.GetByEmailAndPassword(request.Email, request.Password)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCreateUser)
+		c.ServerError(err, controllers.ErrCreateUser)
 		return
 	}
 
-	t.SetSession("user_id", u.ID)
+	c.SetSession("user_id", u.ID)
 
-	t.Data["json"] = true
+	c.Data["json"] = true
 
-	t.ServeJSON()
+	c.ServeJSON()
 }

@@ -27,7 +27,7 @@ func (t *NewController) Post() {
 
 	tag := t.GetString("tag")
 	if tag != "" {
-		if err := tags.AddList(userContributionID, tag); err != nil {
+		if err := tags.AddList(int(userContributionID), tag); err != nil {
 			t.ServerError(err, controllers.ErrContributionNew)
 			return
 		}

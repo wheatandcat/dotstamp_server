@@ -18,27 +18,27 @@ type SaveRequest struct {
 }
 
 // Post 保存する
-func (t *SaveController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *SaveController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
 	request := SaveRequest{}
-	if err := t.ParseForm(&request); err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if err := contributions.Save(request.UserContributionID, userID, request.Title); err != nil {
-		t.ServerError(err, controllers.ErrContributionSave)
+		c.ServerError(err, controllers.ErrContributionSave)
 	}
 
 	if err := contributions.SaveDetail(request.UserContributionID, request.Body); err != nil {
-		t.ServerError(err, controllers.ErrContributionSave)
+		c.ServerError(err, controllers.ErrContributionSave)
 	}
 
-	t.Data["json"] = request.UserContributionID
-	t.ServeJSON()
+	c.Data["json"] = request.UserContributionID
+	c.ServeJSON()
 }

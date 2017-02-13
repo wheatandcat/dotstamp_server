@@ -31,35 +31,35 @@ func (t *TestMain) TestAdd(c *C) {
 func (t *TestMain) TestSave(c *C) {
 	Save(1, 1, "abcdef")
 
-	r := GetByUserContributionID(1)
+	r, _ := GetByUserContributionID(1)
 
 	c.Check(r.Title, Equals, "abcdef")
 }
 
 func (t *TestMain) TestDeleteByID(c *C) {
 	DeleteByID(1, 100)
-	uc := GetByUserContributionID(1)
-	ucd := GetDetailByUserContributionID(1)
+	uc, _ := GetByUserContributionID(1)
+	ucd, _ := GetDetailByUserContributionID(1)
 
 	c.Check(uc.ID, Equals, uint(1))
 	c.Check(ucd.ID, Equals, uint(1))
 
 	DeleteByID(1, 1)
-	uc = GetByUserContributionID(1)
-	ucd = GetDetailByUserContributionID(1)
+	uc, _ = GetByUserContributionID(1)
+	ucd, _ = GetDetailByUserContributionID(1)
 
 	c.Check(uc.ID, Equals, uint(0))
 	c.Check(ucd.ID, Equals, uint(0))
 }
 
 func (t *TestMain) TestGetListByUserID(c *C) {
-	r := GetListByUserID(1)
+	r, _ := GetListByUserID(1)
 
 	c.Check(r[0].UserID, Equals, 1)
 }
 
 func (t *TestMain) TestGetByUserContributionID(c *C) {
-	r := GetByUserContributionID(1)
+	r, _ := GetByUserContributionID(1)
 
 	c.Check(r.Title, Equals, "test001")
 }

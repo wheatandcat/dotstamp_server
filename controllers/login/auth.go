@@ -17,11 +17,11 @@ type AuthResponse struct {
 }
 
 // Post ログイン中か判定する
-func (t *AuthController) Post() {
-	userID := t.GetUserID()
+func (c *AuthController) Post() {
+	userID := c.GetUserID()
 
 	var response AuthResponse
-	if !t.IsNoLogin(userID) {
+	if !c.IsNoLogin(userID) {
 		response = AuthResponse{
 			Login: false,
 			Name:  "",
@@ -30,7 +30,7 @@ func (t *AuthController) Post() {
 
 		u, err := user.GetByUserID(userID)
 		if err != nil {
-			t.ServerError(err, controllers.ErrCodeUserNotFound)
+			c.ServerError(err, controllers.ErrCodeUserNotFound)
 		}
 
 		response = AuthResponse{
@@ -39,7 +39,7 @@ func (t *AuthController) Post() {
 		}
 	}
 
-	t.Data["json"] = response
+	c.Data["json"] = response
 
-	t.ServeJSON()
+	c.ServeJSON()
 }
