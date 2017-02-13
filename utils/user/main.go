@@ -10,13 +10,6 @@ import (
 	"gopkg.in/go-playground/validator.v9"
 )
 
-// User ユーザー情報
-type User struct {
-	ID             int
-	Name           string
-	ProfileImageID int
-}
-
 // GetPassword パスワードを取得する
 func GetPassword(pass string) string {
 	key := beego.AppConfig.String("loginKey")
@@ -25,7 +18,7 @@ func GetPassword(pass string) string {
 }
 
 // Add ユーザー登録する
-func Add(email string, name string, pass string) (int, error) {
+func Add(email string, name string, pass string) (uint, error) {
 	u := models.UserMaster{
 		Email:    email,
 		Name:     name,
@@ -62,13 +55,8 @@ func GetByEmailAndPassword(email string, password string) (u models.UserMaster, 
 func GetByUserID(userID int) (User, error) {
 	u := &models.UserMaster{}
 	userMaster := u.GetByID(userID)
-	user := User{}
 
-	if err := mapstructure.Decode(utils.StructToMap(&userMaster), &user); err != nil {
-		return user, err
-	}
-
-	return user, nil
+	return userMaster
 }
 
 // UpadateToProfileImageID プロフィール画像IDを更新する
@@ -77,6 +65,16 @@ func UpadateToProfileImageID(uID int, pID int) error {
 	userMaster := u.GetByID(uID)
 
 	userMaster.ProfileImageID = pID
+
+	return userMaster.Save()
+}
+
+// Upadate 更新する
+func Upadate(uID int, n string) error {
+	u := &models.UserMaster{}
+	userMaster := u.GetByID(uID)
+
+	userMaster.Name = n
 
 	return userMaster.Save()
 }
@@ -93,7 +91,7 @@ func GetMaptByUserIDList(userIDList []int) (userMap map[int]User, err error) {
 
 	userMap = map[int]User{}
 	for _, user := range userList {
-		userMap[user.ID] = user
+		userMap[int(user.ID)] = user
 	}
 
 	return userMap, nil

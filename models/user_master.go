@@ -1,28 +1,19 @@
 package models
 
-import (
-	"time"
-)
+import "github.com/jinzhu/gorm"
 
 // UserMaster ユーザー情報
 type UserMaster struct {
-	ID             int `beedb:"PK"`
+	gorm.Model     `model:"true"`
 	Name           string
 	Email          string `validate:"required,email"`
 	Password       string
-	ProfileImageID int `sql:"profile_image_id"`
-	DeleteFlag     int `sql:"delete_flag"`
-	Created        time.Time
-	Updated        time.Time
+	ProfileImageID int `json:"profile_image_id"`
 }
 
 // GetIDAndAdd 投稿してIDを取得する
-func (u *UserMaster) GetIDAndAdd() (int, error) {
-	u.DeleteFlag = DeleteFlagOff
-	u.Created = time.Now()
-	u.Updated = time.Now()
-
-	if err := Save(u); err != nil {
+func (u *UserMaster) GetIDAndAdd() (uint, error) {
+	if err := Create(u); err != nil {
 		return 0, err
 	}
 
@@ -31,9 +22,6 @@ func (u *UserMaster) GetIDAndAdd() (int, error) {
 
 // Save 保存する
 func (u *UserMaster) Save() error {
-	u.DeleteFlag = DeleteFlagOff
-	u.Updated = time.Now()
-
 	return Save(u)
 }
 
@@ -41,11 +29,10 @@ func (u *UserMaster) Save() error {
 func (u *UserMaster) GetByEmail(email string) (userMaster UserMaster) {
 	whereList := []map[string]interface{}{
 		{"Email": email},
-		{"DeleteFlag": DeleteFlagOff},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userMaster, "Email LIKE :Email AND Delete_flag = :DeleteFlag", whereList, option)
+	GetWhere(&userMaster, "Email LIKE :Email", whereList, option)
 
 	return
 }
@@ -54,11 +41,10 @@ func (u *UserMaster) GetByEmail(email string) (userMaster UserMaster) {
 func (u *UserMaster) GetByID(id int) (userMaster UserMaster) {
 	whereList := []map[string]interface{}{
 		{"ID": id},
-		{"DeleteFlag": DeleteFlagOff},
 	}
 	option := make(map[string]interface{})
 
-	GetWhere(&userMaster, "ID = :ID AND Delete_flag = :DeleteFlag", whereList, option)
+	GetWhere(&userMaster, "ID = :ID", whereList, option)
 
 	return
 }
@@ -67,11 +53,10 @@ func (u *UserMaster) GetByID(id int) (userMaster UserMaster) {
 func (u *UserMaster) GetListByIDList(idList []int) (userMaster []UserMaster) {
 	whereList := []map[string]interface{}{
 		{"ID": idList},
-		{"DeleteFlag": DeleteFlagOff},
 	}
 	option := make(map[string]interface{})
 
-	GetListWhere(&userMaster, "ID IN :ID AND Delete_flag = :DeleteFlag", whereList, option)
+	GetListWhere(&userMaster, "ID IN :ID", whereList, option)
 
 	return
 }

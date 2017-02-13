@@ -13,7 +13,7 @@ type TestUserContribution struct {
 func init() {
 	var t test.Accessor = &TestUserContribution{}
 	t.SetTableNameList([]string{
-		"user_contribution",
+		"user_contributions",
 	})
 
 	var _ = Suite(t)
@@ -27,17 +27,13 @@ func (t *TestUserContribution) TestGetIDAndAdd(c *C) {
 
 	r, _ := u.GetIDAndAdd()
 
-	c.Check(r, Equals, 3)
+	c.Check(r, Equals, uint(3))
 }
 
 func (t *TestUserContribution) TestDelete(c *C) {
 	u := &UserContribution{}
 	uc := u.GetByID(1)
 	uc.Delete()
-
-	r := u.GetByID(1)
-
-	c.Check(r.DeleteFlag, Equals, 0)
 }
 
 func (t *TestUserContribution) TestGetByID(c *C) {
@@ -45,7 +41,7 @@ func (t *TestUserContribution) TestGetByID(c *C) {
 
 	r := u.GetByID(1)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserContribution) TestGetByTop(c *C) {
@@ -53,5 +49,5 @@ func (t *TestUserContribution) TestGetByTop(c *C) {
 
 	r := u.GetByTop(0, 1)
 
-	c.Check(r[0].ID, Equals, 2)
+	c.Check(r[0].ID, Equals, uint(2))
 }

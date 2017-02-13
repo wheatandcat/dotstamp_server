@@ -30,7 +30,7 @@ func GetProfileImageListByUserID(uID int) (profile []Profile, err error) {
 }
 
 // GetIDAndAddProfileImage プロフィール画像を追加してIDを取得する
-func GetIDAndAddProfileImage(uID int) (int, error) {
+func GetIDAndAddProfileImage(uID int) (uint, error) {
 	u := models.UserProfileImage{
 		UserID: uID,
 	}

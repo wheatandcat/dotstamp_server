@@ -1,27 +1,27 @@
 package contributions
 
 import (
-	"errors"
-	"time"
 	"dotstamp_server/models"
 	"dotstamp_server/utils/tag"
 	"dotstamp_server/utils/user"
+	"errors"
+	"time"
 )
 
 // Contribution 投稿情報
 type Contribution struct {
-	ID                int
+	ID                uint
 	User              user.User
 	Title             string
 	FewDaysAgoMessage string
 	Tag               []tags.Tag
 	Body              []GetBody
-	Updated           time.Time
-	Created           time.Time
+	UpdatedAt         time.Time
+	CreatedAt         time.Time
 }
 
 // Add 投稿する
-func Add(userID int, title string, body string) (int, error) {
+func Add(userID int, title string, body string) (uint, error) {
 	userContribution := &models.UserContribution{
 		UserID: userID,
 		Title:  title,
@@ -33,7 +33,7 @@ func Add(userID int, title string, body string) (int, error) {
 	}
 
 	userContributionDetail := &models.UserContributionDetail{
-		UserContributionID: userContributionID,
+		UserContributionID: int(userContributionID),
 		Body:               body,
 	}
 	userContributionDetail.Add()
@@ -109,13 +109,13 @@ func GetContributionByUserContributionID(userContributionID int) (c Contribution
 	}
 
 	contribution := Contribution{
-		ID:      uc.ID,
-		User:    user,
-		Title:   uc.Title,
-		Tag:     tag,
-		Body:    body,
-		Updated: uc.Updated,
-		Created: uc.Created,
+		ID:        uc.ID,
+		User:      user,
+		Title:     uc.Title,
+		Tag:       tag,
+		Body:      body,
+		UpdatedAt: uc.UpdatedAt,
+		CreatedAt: uc.CreatedAt,
 	}
 
 	return contribution, nil
@@ -129,8 +129,8 @@ func GetByTop(offset int, size int) (contributionList []Contribution, err error)
 	var idList []int
 	var userIDList []int
 	for _, val := range userContribution {
-		idList = append(idList, val.ID)
-		userIDList = append(idList, val.UserID)
+		idList = append(idList, int(val.ID))
+		userIDList = append(idList, int(val.UserID))
 	}
 
 	var tagMap map[int][]tags.Tag
@@ -149,10 +149,10 @@ func GetByTop(offset int, size int) (contributionList []Contribution, err error)
 			ID:                val.ID,
 			User:              userMap[val.UserID],
 			Title:             val.Title,
-			Created:           val.Created,
-			Updated:           val.Updated,
+			CreatedAt:         val.CreatedAt,
+			UpdatedAt:         val.UpdatedAt,
 			FewDaysAgoMessage: "",
-			Tag:               tagMap[val.ID],
+			Tag:               tagMap[int(val.ID)],
 		}
 		contributionList = append(contributionList, c)
 	}

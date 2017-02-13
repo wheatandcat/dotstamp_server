@@ -76,7 +76,7 @@ func StirngToGetBody(body string) (b []GetBody, err error) {
 	}
 
 	for k, v := range b {
-		b[k].Character.FileName = characters.GetImageName(v.Character.ID)
+		b[k].Character.FileName = characters.GetImageName(uint(v.Character.ID))
 	}
 
 	return b, err

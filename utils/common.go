@@ -43,8 +43,8 @@ func DbValueToMap(e reflect.Value) map[string]interface{} {
 
 	for i := 0; i < size; i++ {
 		name := e.Type().Field(i).Name
-		if e.Type().Field(i).Tag.Get("sql") != "" {
-			name = e.Type().Field(i).Tag.Get("sql")
+		if e.Type().Field(i).Tag.Get("json") != "" {
+			name = e.Type().Field(i).Tag.Get("json")
 		}
 		r[name] = e.Field(i).Interface()
 	}

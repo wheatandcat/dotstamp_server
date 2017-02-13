@@ -1,7 +1,6 @@
 package models
 
 import (
-	"time"
 	"dotstamp_server/tests"
 
 	. "gopkg.in/check.v1"
@@ -14,29 +13,31 @@ type TestUserContributionTag struct {
 func init() {
 	var t test.Accessor = &TestUserContributionTag{}
 	t.SetTableNameList([]string{
-		"user_contribution_tag",
+		"user_contribution_tags",
 	})
 
 	var _ = Suite(t)
 }
 
 func (t *TestUserContributionTag) TestAddList(c *C) {
-	u := []UserContributionTag{
+	userTag := []UserContributionTag{
 		{
-			UserContributionID: 2,
-			Name:               "test_edf",
-			Updated:            time.Now(),
-			Created:            time.Now(),
+			UserContributionID: 3,
+			Name:               "aaa",
+		},
+		{
+			UserContributionID: 4,
+			Name:               "bbb",
 		},
 	}
 
-	userContributionTag := UserContributionTag{}
-	userContributionTag.AddList(u)
+	u := UserContributionTag{}
+	u.AddList(userTag)
 
-	r := userContributionTag.GetFindAll()
+	r := u.GetListByUserContributionIDList([]int{3, 4})
 
-	c.Check(r[0].UserContributionID, Equals, 1)
-	c.Check(r[1].UserContributionID, Equals, 2)
+	c.Check(r[0].UserContributionID, Equals, 3)
+	c.Check(r[1].UserContributionID, Equals, 4)
 }
 
 func (t *TestUserContributionTag) TestGetListByUserContributionID(c *C) {
@@ -65,7 +66,7 @@ func (t *TestUserContributionTag) TestGetByID(c *C) {
 
 	r := u.GetByID(1)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 	c.Check(r.Name, Equals, "abc")
 }
 
@@ -76,6 +77,6 @@ func (t *TestUserContributionTag) TestSave(c *C) {
 
 	u.Save()
 	r := u.GetByID(1)
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 	c.Check(r.Name, Equals, "ddd")
 }

@@ -13,7 +13,7 @@ type TestMain struct {
 func init() {
 	var t test.Accessor = &TestMain{}
 	t.SetTableNameList([]string{
-		"user_character",
+		"user_characters",
 	})
 
 	var _ = Suite(t)

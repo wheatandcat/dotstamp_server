@@ -14,7 +14,7 @@ type TestMain struct {
 func init() {
 	var t test.Accessor = &TestMain{}
 	t.SetTableNameList([]string{
-		"user_contribution_tag",
+		"user_contribution_tags",
 	})
 
 	var _ = Suite(t)
@@ -37,7 +37,7 @@ func (t *TestMain) TestDeleteByID(c *C) {
 	u := models.UserContributionTag{}
 	r := u.GetByID(1)
 
-	c.Check(r.ID, Equals, 0)
+	c.Check(r.ID, Equals, uint(0))
 }
 
 func (t *TestMain) TestAddList(c *C) {
@@ -63,5 +63,5 @@ func (t *TestMain) TestGetListByUserContributionID(c *C) {
 func (t *TestMain) TestGetMapByUserContributionIDList(c *C) {
 	r, _ := GetMapByUserContributionIDList([]int{1})
 
-	c.Check(r[1][0].ID, Equals, 1)
+	c.Check(r[1][0].Name, Equals, "abc")
 }

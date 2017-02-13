@@ -1,72 +1,32 @@
 package models
 
 import (
-	"dotstamp_server/models/database"
 	"strings"
 
-	"github.com/astaxie/beedb"
+	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
+	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
-// DeleteFlagOn 削除ON
-const DeleteFlagOn = 1
+// gormConnect gorm接続を取得する
+func gormConnect() *gorm.DB {
+	dbms := "mysql"
+	user := beego.AppConfig.String("mysqluser")
+	pass := beego.AppConfig.String("mysqlpass")
+	protocol := "tcp(127.0.0.1:3306)"
+	database := beego.AppConfig.String("mysqldb")
 
-// DeleteFlagOff 削除OFF
-const DeleteFlagOff = 0
+	connect := user + ":" + pass + "@" + protocol + "/" + database + "?parseTime=true&loc=Asia%2FTokyo"
+	db, err := gorm.Open(dbms, connect)
 
-// Execute クエリを実行する
-func Execute(query string) error {
-	db := database.GetLink()
-
-	_, err := db.Exec(query)
-
-	return err
+	if err != nil {
+		panic(err.Error())
+	}
+	return db
 }
 
-// Begin トランザクション
-func Begin() error {
-	return Execute("BEGIN")
-}
-
-// Commit コミット
-func Commit() error {
-	return Execute("COMMIT")
-}
-
-// Rollback ロールバック
-func Rollback() error {
-	return Execute("ROLLBACK")
-}
-
-// Truncate テーブルデータを空にする
-func Truncate(tableName string) {
-	Execute("TRUNCATE TABLE " + tableName)
-}
-
-// InsertBatch 挿入する(複数)
-func InsertBatch(tableName string, add []map[string]interface{}) error {
-	db := database.GetLink()
-
-	_, err := db.SetTable(tableName).InsertBatch(add)
-
-	return err
-}
-
-// Save 保存する
-func Save(dbModel interface{}) error {
-	db := database.GetLink()
-
-	return db.Save(dbModel)
-}
-
-// GetFindAll 全て取得する
-func GetFindAll(dbModel interface{}) error {
-	db := database.GetLink()
-
-	return db.FindAll(dbModel)
-}
-
-// GetBindAndPlaceHolder バインドとプレースホルダの結果を取得する
-func GetBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {
+// getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
+func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {
 	bind := []interface{}{}
 	var holder string
 
@@ -101,36 +61,61 @@ func GetBindAndPlaceHolder(where string, bindList []map[string]interface{}) (str
 	return where, bind
 }
 
-// GetDbOption DBオプションを取得する
-func GetDbOption(where string, bindList []map[string]interface{}, option map[string]interface{}) beedb.Model {
-	db := database.GetLink()
+// getDbOption DBオプションを取得する
+func getDbOption(where string, bindList []map[string]interface{}, option map[string]interface{}) *gorm.DB {
+	db := gormConnect()
 
 	if where != "" {
-		w, bind := GetBindAndPlaceHolder(where, bindList)
-		db.Where(w, bind...)
+		w, bind := getBindAndPlaceHolder(where, bindList)
+		db = db.Where(w, bind...)
 	}
 
 	if order, ok := option["order"].(string); ok {
-		db.OrderBy(order)
+		db = db.Order(order)
 	}
 
-	if limit, ok := option["limit"].(map[string]int); ok {
-		db.Limit(limit["size"], limit["offset"])
+	if limit, ok := option["limit"].(int); ok {
+		db = db.Limit(limit)
+	}
+
+	if offset, ok := option["offset"].(int); ok {
+		db = db.Offset(offset)
 	}
 
 	return db
 }
 
-// GetListWhere 条件からリストを取得する
-func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
-	db := GetDbOption(where, bindList, option)
-
-	return db.FindAll(dbModel)
-}
-
 // GetWhere 条件から取得する
 func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
-	db := GetDbOption(where, bindList, option)
+	db := getDbOption(where, bindList, option)
 
-	return db.Find(dbModel)
+	return db.First(dbModel).Error
+}
+
+// GetListWhere 条件からリストを取得する
+func GetListWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
+	db := getDbOption(where, bindList, option)
+
+	return db.Find(dbModel).Error
+}
+
+// Create 作成する
+func Create(dbModel interface{}) error {
+	db := gormConnect()
+
+	return db.Create(dbModel).Error
+}
+
+// Save 更新する
+func Save(dbModel interface{}) error {
+	db := gormConnect()
+
+	return db.Save(dbModel).Error
+}
+
+// Delete 削除する
+func Delete(dbModel interface{}) error {
+	db := gormConnect()
+
+	return db.Delete(dbModel).Error
 }

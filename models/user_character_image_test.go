@@ -13,7 +13,7 @@ type TestUserCharacterImage struct {
 func init() {
 	var t test.Accessor = &TestUserCharacterImage{}
 	t.SetTableNameList([]string{
-		"user_character_image",
+		"user_character_images",
 	})
 
 	var _ = Suite(t)
@@ -33,7 +33,7 @@ func (t *TestUserCharacterImage) TestAdd(c *C) {
 	c.Check(r[0].CharacterID, Equals, 1)
 	c.Check(r[1].CharacterID, Equals, 0)
 
-	c.Check(u.ID, Equals, 3)
+	c.Check(u.ID, Equals, uint(3))
 }
 
 func (t *TestUserCharacterImage) TestGetListByUserID(c *C) {
@@ -48,7 +48,7 @@ func (t *TestUserCharacterImage) TestGetByID(c *C) {
 	u := &UserCharacterImage{}
 	r := u.GetByID(id)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserCharacterImage) TestDelete(c *C) {

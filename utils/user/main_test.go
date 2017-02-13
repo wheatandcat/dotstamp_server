@@ -13,7 +13,7 @@ type TestMain struct {
 func init() {
 	var t test.Accessor = &TestMain{}
 	t.SetTableNameList([]string{
-		"user_master",
+		"user_masters",
 	})
 
 	var _ = Suite(t)
@@ -22,20 +22,20 @@ func init() {
 func (t *TestMain) TestAdd(c *C) {
 	uID, _ := Add("test@gmail.com", "abc", "abcdef")
 
-	c.Check(uID, Equals, 3)
+	c.Check(uID, Equals, uint(3))
 
 	r := GetByEmail("test@gmail.com")
 
-	c.Check(r.ID, Equals, 3)
+	c.Check(r.ID, Equals, uint(3))
 	c.Check(r.Email, Equals, "test@gmail.com")
 }
 
 func (t *TestMain) TestGetByEmailAndPassword(c *C) {
 	r, _ := GetByEmailAndPassword("test@tedt.com", "abc")
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 
 	r, _ = GetByEmailAndPassword("test@tedt.com", "kbk")
-	c.Check(r.ID, Equals, 0)
+	c.Check(r.ID, Equals, uint(0))
 }
 
 func (t *TestMain) TestGetByUserID(c *C) {
@@ -51,8 +51,15 @@ func (t *TestMain) TestUpadateToProfileImageID(c *C) {
 	c.Check(r.ProfileImageID, Equals, 3)
 }
 
+func (t *TestMain) TestUpadate(c *C) {
+	Upadate(1, "abcdef")
+	r, _ := GetByUserID(1)
+
+	c.Check(r.Name, Equals, "abcdef")
+}
+
 func (t *TestMain) TestGetMaptByUserIDList(c *C) {
 	r, _ := GetMaptByUserIDList([]int{1})
 
-	c.Check(r[1].ID, Equals, 1)
+	c.Check(r[1].ID, Equals, uint(1))
 }

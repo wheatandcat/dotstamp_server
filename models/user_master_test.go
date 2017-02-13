@@ -13,7 +13,7 @@ type TestUserMaster struct {
 func init() {
 	var t test.Accessor = &TestUserMaster{}
 	t.SetTableNameList([]string{
-		"user_master",
+		"user_masters",
 	})
 
 	var _ = Suite(t)
@@ -28,7 +28,7 @@ func (t *TestUserMaster) TestGetIDAndAdd(c *C) {
 
 	r, _ := u.GetIDAndAdd()
 
-	c.Check(r, Equals, 3)
+	c.Check(r, Equals, uint(3))
 }
 
 func (t *TestUserMaster) TestSave(c *C) {
@@ -48,20 +48,20 @@ func (t *TestUserMaster) TestGetByID(c *C) {
 	u := &UserMaster{}
 	r := u.GetByID(1)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserMaster) TestGetByEmail(c *C) {
 	u := &UserMaster{}
 	r := u.GetByEmail("test@tedt.com")
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestUserMaster) TestGetListByIDList(c *C) {
 	u := &UserMaster{}
 	r := u.GetListByIDList([]int{1, 2})
 
-	c.Check(r[0].ID, Equals, 1)
-	c.Check(r[1].ID, Equals, 2)
+	c.Check(r[0].ID, Equals, uint(1))
+	c.Check(r[1].ID, Equals, uint(2))
 }

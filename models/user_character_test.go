@@ -13,7 +13,7 @@ type TestUserCharacter struct {
 func init() {
 	var t test.Accessor = &TestUserCharacter{}
 	t.SetTableNameList([]string{
-		"user_character",
+		"user_characters",
 	})
 
 	var _ = Suite(t)
@@ -33,8 +33,6 @@ func (t *TestUserCharacter) TestAdd(c *C) {
 
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "test")
-
-	c.Check(u.ID, Equals, 3)
 }
 
 func (t *TestUserCharacter) TestGetListByUserID(c *C) {

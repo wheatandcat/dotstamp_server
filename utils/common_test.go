@@ -1,8 +1,10 @@
 package utils
 
 import (
-	"time"
 	"dotstamp_server/tests"
+	"time"
+
+	"github.com/jinzhu/gorm"
 
 	. "gopkg.in/check.v1"
 )
@@ -41,14 +43,13 @@ func (t *TestCommon) TestGetArrayCombile(c *C) {
 }
 
 type TDB struct {
-	ID     int
-	Title  string
-	UserID int `sql:"user_id"`
+	Title      string
+	UserID     int `json:"user_id"`
+	gorm.Model `model:"true"`
 }
 
 func (t *TestCommon) TestDbStructToMap(c *C) {
 	s := &TDB{
-		ID:     1,
 		Title:  "テスト",
 		UserID: 1,
 	}
@@ -61,7 +62,6 @@ func (t *TestCommon) TestDbStructToMap(c *C) {
 func (t *TestCommon) TestDbStructListToMapList(c *C) {
 	s := []TDB{
 		{
-			ID:     1,
 			Title:  "テスト",
 			UserID: 1,
 		},

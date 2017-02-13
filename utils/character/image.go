@@ -8,14 +8,14 @@ import (
 
 // Image 画像
 type Image struct {
-	ID          int
+	ID          uint
 	CharacterID int
 	Priority    int
 	FileName    string
 }
 
 // AddImage 画像を追加する
-func AddImage(uID int, cID int, p int) (int, error) {
+func AddImage(uID int, cID int, p int) (uint, error) {
 	u := &models.UserCharacterImage{
 		UserID:      uID,
 		CharacterID: cID,
@@ -59,6 +59,6 @@ func DeleteByID(id int, userID int) error {
 }
 
 // GetImageName 画像名を取得する
-func GetImageName(id int) string {
-	return utils.IntToEncryption(id) + ".jpg"
+func GetImageName(id uint) string {
+	return utils.IntToEncryption(int(id)) + ".jpg"
 }

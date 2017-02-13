@@ -14,7 +14,7 @@ type TestImage struct {
 func init() {
 	var t test.Accessor = &TestImage{}
 	t.SetTableNameList([]string{
-		"user_character_image",
+		"user_character_images",
 	})
 
 	var _ = Suite(t)
@@ -44,12 +44,12 @@ func (t *TestImage) TestDeleteByID(c *C) {
 	c.Check(e, Equals, e)
 
 	r := u.GetByID(1)
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 
 	DeleteByID(1, 1)
 	r = u.GetByID(1)
 
-	c.Check(r.ID, Not(Equals), 1)
+	c.Check(r.ID, Not(Equals), uint(1))
 }
 
 func (t *TestImage) TestGetImageName(c *C) {

@@ -13,10 +13,10 @@ type TestMain struct {
 func init() {
 	var t test.Accessor = &TestMain{}
 	t.SetTableNameList([]string{
-		"user_master",
-		"user_contribution",
-		"user_contribution_detail",
-		"user_contribution_tag",
+		"user_masters",
+		"user_contributions",
+		"user_contribution_details",
+		"user_contribution_tags",
 	})
 
 	var _ = Suite(t)
@@ -25,7 +25,7 @@ func init() {
 func (t *TestMain) TestAdd(c *C) {
 	r, _ := Add(100, "abc", "{}")
 
-	c.Check(r, Equals, 3)
+	c.Check(r, Equals, uint(3))
 }
 
 func (t *TestMain) TestSave(c *C) {
@@ -41,15 +41,15 @@ func (t *TestMain) TestDeleteByID(c *C) {
 	uc := GetByUserContributionID(1)
 	ucd := GetDetailByUserContributionID(1)
 
-	c.Check(uc.ID, Equals, 1)
-	c.Check(ucd.ID, Equals, 1)
+	c.Check(uc.ID, Equals, uint(1))
+	c.Check(ucd.ID, Equals, uint(1))
 
 	DeleteByID(1, 1)
 	uc = GetByUserContributionID(1)
 	ucd = GetDetailByUserContributionID(1)
 
-	c.Check(uc.ID, Equals, 0)
-	c.Check(ucd.ID, Equals, 0)
+	c.Check(uc.ID, Equals, uint(0))
+	c.Check(ucd.ID, Equals, uint(0))
 }
 
 func (t *TestMain) TestGetListByUserID(c *C) {
@@ -67,12 +67,12 @@ func (t *TestMain) TestGetByUserContributionID(c *C) {
 func (t *TestMain) TestGetContributionByUserContributionID(c *C) {
 	r, _ := GetContributionByUserContributionID(1)
 
-	c.Check(r.ID, Equals, 1)
+	c.Check(r.ID, Equals, uint(1))
 }
 
 func (t *TestMain) TestGetByTop(c *C) {
 	r, _ := GetByTop(0, 10)
 
-	c.Check(r[0].ID, Equals, 2)
+	c.Check(r[0].ID, Equals, uint(2))
 	c.Check(r[0].Tag[0].Name, Equals, "def")
 }

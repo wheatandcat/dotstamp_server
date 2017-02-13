@@ -13,7 +13,7 @@ type TestUserContributionFollow struct {
 func init() {
 	var t test.Accessor = &TestUserContributionFollow{}
 	t.SetTableNameList([]string{
-		"user_contribution_follow",
+		"user_contribution_follows",
 	})
 
 	var _ = Suite(t)

@@ -6,14 +6,14 @@ import (
 
 // Character キャラクター
 type Character struct {
-	ID       int
+	ID       uint
 	Name     string
 	Info     string
 	Priority int
 }
 
 // Add 追加する
-func Add(uID int, name string, info string, p int) (int, error) {
+func Add(uID int, name string, info string, p int) (uint, error) {
 	u := &models.UserCharacter{
 		UserID:   uID,
 		Name:     name,

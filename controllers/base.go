@@ -47,6 +47,8 @@ const (
 	ErrContributionSave = 9
 	// ErrContributionTagSave 投稿タグ保存失敗
 	ErrContributionTagSave = 10
+	// ErrUserSave ユーザ保存失敗
+	ErrUserSave = 11
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -80,6 +82,9 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrContributionTagSave: {
 		Message: "タグ保存に失敗しました。",
+	},
+	ErrUserSave: {
+		Message: "ユーザ保存に失敗しました。",
 	},
 }
 

@@ -1,17 +1,16 @@
 package tags
 
 import (
-	"strings"
-	"time"
 	"dotstamp_server/models"
 	"dotstamp_server/utils"
+	"strings"
 
 	"github.com/mitchellh/mapstructure"
 )
 
 // Tag タグ
 type Tag struct {
-	ID                 int
+	ID                 uint
 	UserContributionID int
 	Name               string
 }
@@ -44,9 +43,6 @@ func AddList(uID int, n string) error {
 		u := models.UserContributionTag{
 			UserContributionID: uID,
 			Name:               name,
-			DeleteFlag:         models.DeleteFlagOff,
-			Created:            time.Now(),
-			Updated:            time.Now(),
 		}
 
 		userContributionTag = append(userContributionTag, u)

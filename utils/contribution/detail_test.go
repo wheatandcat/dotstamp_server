@@ -13,7 +13,7 @@ type TestDetail struct {
 func init() {
 	var t test.Accessor = &TestDetail{}
 	t.SetTableNameList([]string{
-		"user_contribution_detail",
+		"user_contribution_details",
 	})
 
 	var _ = Suite(t)
