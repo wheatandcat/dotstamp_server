@@ -35,7 +35,7 @@ func TestListPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("Subject: Test Station Endpoint\n", t, func() {
+	Convey("/contribution/list/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

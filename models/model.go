@@ -90,6 +90,9 @@ func GetWhere(dbModel interface{}, where string, bindList []map[string]interface
 	db := getDbOption(where, bindList, option)
 
 	err := db.First(dbModel).Error
+	if err != nil && err.Error() == "record not found" {
+		return db, nil
+	}
 
 	return db, err
 }
@@ -99,6 +102,9 @@ func GetListWhere(dbModel interface{}, where string, bindList []map[string]inter
 	db := getDbOption(where, bindList, option)
 
 	err := db.Find(dbModel).Error
+	if err != nil && err.Error() == "record not found" {
+		return db, nil
+	}
 
 	return db, err
 }

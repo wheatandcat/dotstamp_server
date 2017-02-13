@@ -51,6 +51,24 @@ func (t *TestModel) TestGetWhere(c *C) {
 	c.Check(ut.ID, Equals, uint(1))
 }
 
+func (t *TestModel) TestGetWhereRecordNotFound(c *C) {
+	u := UserMaster{}
+	whereList := []map[string]interface{}{
+		{"ID": 999},
+	}
+	option := map[string]interface{}{
+		"order":  "ID desc",
+		"offset": 0,
+		"limit":  1,
+	}
+
+	_, err := GetWhere(&u, "ID = :ID", whereList, option)
+	c.Check(err, IsNil)
+	r := u
+	c.Check(r.ID, Equals, uint(0))
+
+}
+
 func (t *TestModel) TestGetLisWhere(c *C) {
 	u := []UserMaster{}
 	whereList := []map[string]interface{}{
@@ -73,6 +91,21 @@ func (t *TestModel) TestGetLisWhere(c *C) {
 	db.Table("user_masters").Scan(&ut)
 
 	c.Check(ut[0].ID, Equals, uint(1))
+}
+
+func (t *TestModel) TestGetLisWhereRecordNotFound(c *C) {
+	u := []UserMaster{}
+	whereList := []map[string]interface{}{
+		{"ID": 999},
+	}
+	option := map[string]interface{}{
+		"order":  "ID desc",
+		"offset": 0,
+		"limit":  1,
+	}
+
+	_, err := GetListWhere(&u, "ID = :ID", whereList, option)
+	c.Check(err, IsNil)
 }
 
 func (t *TestModel) TestCreate(c *C) {
