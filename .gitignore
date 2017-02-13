@@ -20,6 +20,7 @@ dotstamp_server
 /static/css
 /static/js
 /static/fonts
+/static/images
 /static/files/character/*
 !/static/files/character/.gitkeep
 /static/files/tmp/character/*
