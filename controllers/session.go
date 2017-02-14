@@ -1,6 +1,10 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"log"
+
+	"github.com/astaxie/beego"
+)
 
 var session = make(map[string]interface{})
 
@@ -21,8 +25,12 @@ func (c *BaseController) GetUserID() int {
 	}
 
 	uID := c.GetSession("user_id")
+	log.Println(uID)
 	if uID, ok := uID.(int); ok {
 		return uID
+	}
+	if uintID, ok := uID.(uint); ok {
+		return int(uintID)
 	}
 
 	return noUserID
@@ -42,6 +50,7 @@ func (c *BaseController) GetSession(name string) interface{} {
 
 // SetSession セッションを設定する
 func (c *BaseController) SetSession(name string, value interface{}) {
+	log.Println("SetSession")
 	if !isSession() {
 		session[name] = value
 		return
@@ -50,6 +59,9 @@ func (c *BaseController) SetSession(name string, value interface{}) {
 	if c.CruSession == nil {
 		c.StartSession()
 	}
+
+	log.Println(name)
+	log.Println(value)
 	c.CruSession.Set(name, value)
 }
 
