@@ -145,6 +145,9 @@ func GetByTop(offset int, size int) ([]Contribution, error) {
 	if err != nil {
 		return contributionList, err
 	}
+	if len(userContribution) == 0 {
+		return contributionList, nil
+	}
 
 	var idList []int
 	var userIDList []int

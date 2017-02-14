@@ -5,7 +5,6 @@ import (
 
 	"github.com/astaxie/beego"
 	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 // gormConnect gorm接続を取得する
@@ -22,6 +21,11 @@ func gormConnect() *gorm.DB {
 	if err != nil {
 		panic(err.Error())
 	}
+
+	if beego.AppConfig.String("runmode") == "dev" {
+		db.LogMode(true)
+	}
+
 	return db
 }
 
