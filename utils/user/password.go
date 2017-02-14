@@ -2,13 +2,13 @@ package user
 
 import (
 	"dotstamp_server/models"
-	"errors"
+	"dotstamp_server/utils"
 )
 
 // AddForgetPassword 忘れたパスワードを追加する
 func AddForgetPassword(email string) error {
-	// TODO 乱数にする
-	rand := "aaaa"
+	rand := utils.GetRandString(50)
+
 	u := models.UserForgetPassword{
 		Email:   email,
 		Keyword: rand,
@@ -33,8 +33,23 @@ func IsUpdatePassword(email string, keyword string) (bool, error) {
 	}
 
 	if up.Keyword != keyword {
-		return false, errors.New("difference keyword")
+		return false, nil
 	}
 
 	return true, nil
+}
+
+// DeleteByEmail メールアドレスから削除する
+func DeleteByEmail(email string) error {
+	u := models.UserForgetPassword{}
+	r, _, err := u.GetListByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	if len(r) == 0 {
+		return nil
+	}
+
+	return u.DeleteList(r)
 }

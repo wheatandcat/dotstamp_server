@@ -36,3 +36,14 @@ func (t *TestPassword) TestIsUpdatePassword(c *C) {
 
 	c.Check(r, Equals, false)
 }
+
+func (t *TestPassword) TestDeleteByEmail(c *C) {
+	err := DeleteByEmail("test@tedt.com")
+	c.Check(err, Equals, nil)
+
+	r, _ := GetForgetPasswordByEmail("test@abcdef.com")
+	c.Check(r.ID, Equals, uint(0))
+
+	err = DeleteByEmail("test@tedt.com")
+	c.Check(err, Equals, nil)
+}

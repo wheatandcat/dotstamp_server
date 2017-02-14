@@ -42,9 +42,27 @@ func (t *TestUserForgetPassword) TestDelete(c *C) {
 	c.Check(r.ID, Equals, uint(0))
 }
 
+func (t *TestUserForgetPassword) TestDeleteList(c *C) {
+	u := &UserForgetPassword{}
+	user, _, _ := u.GetListByEmail("test@tedt.com")
+
+	u.DeleteList(user)
+
+	r, _, _ := u.GetByEmail("test@tedt.com")
+
+	c.Check(r.ID, Equals, uint(0))
+}
+
 func (t *TestUserForgetPassword) TestGetByEmail(c *C) {
 	u := &UserForgetPassword{}
 	r, _, _ := u.GetByEmail("test@tedt.com")
 
 	c.Check(r.ID, Equals, uint(1))
+}
+
+func (t *TestUserForgetPassword) TestGetListByEmail(c *C) {
+	u := &UserForgetPassword{}
+	r, _, _ := u.GetListByEmail("test@tedt.com")
+
+	c.Check(r[0].ID, Equals, uint(1))
 }

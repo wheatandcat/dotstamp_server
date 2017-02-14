@@ -7,6 +7,7 @@ import (
 	"dotstamp_server/controllers/contribution"
 	"dotstamp_server/controllers/login"
 	"dotstamp_server/controllers/user"
+	"dotstamp_server/controllers/user/forget_password"
 	"dotstamp_server/controllers/user/profile"
 	"dotstamp_server/controllers/work"
 
@@ -36,6 +37,8 @@ func init() {
 	beego.Router("/user/save/", &controllersUser.ShowController{})
 	beego.Router("/user/show/", &controllersUser.ShowController{})
 	beego.Router("/user/profile/upload/", &controllersUserProfile.UploadController{})
+	beego.Router("/user/forget_password/add/", &controllersForgetPassword.AddController{})
+	beego.Router("/user/forget_password/check/", &controllersForgetPassword.CheckController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 

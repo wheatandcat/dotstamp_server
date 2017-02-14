@@ -98,25 +98,9 @@ func StructListToMapList(s interface{}) (r []map[string]interface{}) {
 	return r
 }
 
-var testRandNum int
-
-// SetTestRandNum テストランダム数を設定する
-func SetTestRandNum(n int) {
-	testRandNum = n
-}
-
-// GetRandNum ランダム数を取得する
-func GetRandNum(maxNum int) int {
-	if isTest() {
-		return testRandNum
-	}
-
-	return maxNum
-}
-
-// isTest テスト環境か判定する
-func isTest() bool {
-	if beego.AppConfig.String("runmode") == "test" {
+// IsTest テスト環境か判定する
+func IsTest() bool {
+	if beego.BConfig.RunMode == "test" {
 		return true
 	}
 
