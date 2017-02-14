@@ -63,3 +63,10 @@ func (t *TestMain) TestGetMaptByUserIDList(c *C) {
 
 	c.Check(r[1].ID, Equals, uint(1))
 }
+
+func (t *TestMain) TestUpadateToPassword(c *C) {
+	UpadateToPassword("test@tedt.com", "bbb")
+	r, _ := GetByEmail("test@tedt.com")
+
+	c.Check(r.Password, Equals, GetPassword("bbb"))
+}

@@ -10,6 +10,7 @@
 ._.DS_Store
 metas/
 dotstamp_server
+dump.rdb
 
 # Ignore all logfiles and tempfiles.
 /doc/*

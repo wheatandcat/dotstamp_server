@@ -127,3 +127,15 @@ func GetMaptByUserIDList(userIDList []int) (map[int]User, error) {
 
 	return userMap, nil
 }
+
+// UpadateToPassword パスワードを更新する
+func UpadateToPassword(email string, password string) error {
+	u, err := GetByEmail(email)
+	if err != nil {
+		return err
+	}
+
+	u.Password = GetPassword(password)
+
+	return u.Save()
+}
