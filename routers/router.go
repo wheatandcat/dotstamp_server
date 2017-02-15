@@ -39,6 +39,7 @@ func init() {
 	beego.Router("/user/profile/upload/", &controllersUserProfile.UploadController{})
 	beego.Router("/user/forget_password/add/", &controllersForgetPassword.AddController{})
 	beego.Router("/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
+	beego.Router("/user/forget_password/save/", &controllersForgetPassword.SaveController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 

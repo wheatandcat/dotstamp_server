@@ -65,8 +65,7 @@ func (t *TestMain) TestGetForgetpasswordBody(c *C) {
 }
 
 func (t *TestMain) TestGetForgetpasswordURL(c *C) {
+	r, _ := GetForgetpasswordURL("test@tedt.com", "abcdef")
 
-	r, _ := GetForgetpasswordURL("test@add.com", "abcdef")
-
-	c.Check(r, Not(Equals), "test@add.com/abcdef")
+	c.Check(r, Not(Equals), "test@tedt.com/abcdef")
 }
