@@ -24,14 +24,24 @@ func (c *CheckController) Post() {
 		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
+	e, err := utils.Decrypter([]byte(email))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
+		return
+	}
 
 	keyword, err := utils.Urldecode(c.Ctx.Input.Param(":keyword"))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
+	k, err := utils.Decrypter([]byte(keyword))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
+		return
+	}
 
-	r, err := user.IsUpdatePassword(email, keyword)
+	r, err := user.IsUpdatePassword(e, k)
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter)
 		return
