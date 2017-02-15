@@ -70,7 +70,7 @@ func (c *AddController) Post() {
 	top := beego.AppConfig.String("topurl")
 
 	f := mail.ForgetpasswordTemplate{
-		URL:   top + "#/login/forgetPassword/" + url,
+		URL:   top + "#/login/password/reset/" + url,
 		Host:  top,
 		Email: beego.AppConfig.String("email"),
 	}
