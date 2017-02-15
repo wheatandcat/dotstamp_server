@@ -27,7 +27,7 @@ func (c *CheckController) Post() {
 
 	u, err := user.GetByEmailAndPassword(request.Email, request.Password)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCreateUser)
+		c.ServerError(err, controllers.ErrUserOrPasswordDifferent)
 		return
 	}
 

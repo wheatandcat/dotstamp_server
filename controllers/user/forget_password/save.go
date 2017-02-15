@@ -32,13 +32,23 @@ func (c *SaveController) Post() {
 		return
 	}
 
-	e, err := utils.Decrypter([]byte(request.Email))
+	email, err := utils.Urldecode(request.Email)
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
+		return
+	}
+	e, err := utils.Decrypter([]byte(email))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
 
-	k, err := utils.Decrypter([]byte(request.Keyword))
+	keyword, err := utils.Urldecode(request.Keyword)
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
+		return
+	}
+	k, err := utils.Decrypter([]byte(keyword))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter)
 		return

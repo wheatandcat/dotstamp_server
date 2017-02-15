@@ -49,6 +49,8 @@ const (
 	ErrContributionTagSave = 10
 	// ErrUserSave ユーザ保存失敗
 	ErrUserSave = 11
+	// ErrUserOrPasswordDifferent ユーザかパスワードが異なる
+	ErrUserOrPasswordDifferent = 12
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -85,6 +87,9 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrUserSave: {
 		Message: "ユーザ保存に失敗しました。",
+	},
+	ErrUserOrPasswordDifferent: {
+		Message: "メールアドレスとパスワードが一致しません。もう一度入力お願い致します。",
 	},
 }
 
