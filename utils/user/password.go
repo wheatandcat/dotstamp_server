@@ -1,17 +1,12 @@
 package user
 
-import (
-	"dotstamp_server/models"
-	"dotstamp_server/utils"
-)
+import "dotstamp_server/models"
 
 // AddForgetPassword 忘れたパスワードを追加する
-func AddForgetPassword(email string) error {
-	rand := utils.GetRandString(50)
-
+func AddForgetPassword(email string, keyword string) error {
 	u := models.UserForgetPassword{
 		Email:   email,
-		Keyword: rand,
+		Keyword: keyword,
 	}
 
 	return u.Add()

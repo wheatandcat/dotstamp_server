@@ -38,7 +38,7 @@ func init() {
 	beego.Router("/user/show/", &controllersUser.ShowController{})
 	beego.Router("/user/profile/upload/", &controllersUserProfile.UploadController{})
 	beego.Router("/user/forget_password/add/", &controllersForgetPassword.AddController{})
-	beego.Router("/user/forget_password/check/", &controllersForgetPassword.CheckController{})
+	beego.Router("/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
 
 	beego.Router("/character/list/", &controllersCharacter.ListController{})
 

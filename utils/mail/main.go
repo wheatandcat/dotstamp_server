@@ -1,4 +1,4 @@
-package maill
+package mail
 
 import (
 	"bytes"
@@ -56,4 +56,46 @@ func getBodyTemplate() string {
 		"Subject: {{.Subject}}\r\n" +
 		"\r\n" +
 		"{{.Message}}"
+}
+
+// ForgetpasswordTemplate パスワード忘れた本文
+type ForgetpasswordTemplate struct {
+	URL   string
+	Host  string
+	Email string
+}
+
+// GetForgetpasswordBody パスワード忘れた本文を取得する
+func GetForgetpasswordBody(f ForgetpasswordTemplate) []byte {
+	t := "パスワードの変更申請を受け付けました。\r\n" +
+		"\r\n" +
+		"下記のURLから、、パスワード変更手続きをしてください\r\n" +
+		"{{.URL}}\r\n" +
+		"\r\n" +
+		"※このURLは発行から1時間有効です。\r\n" +
+		"※1時間以内に複数回パスワードの変更申請を行った場合は、直近で発行されたURLのみ有効になるのでご注意ください。\r\n" +
+		"\r\n" +
+		"--------------------------------\r\n" +
+		"dotstamp :{{.Host}}\r\n" +
+		"お問い合わせ：{{.Email}}"
+
+	buffer := new(bytes.Buffer)
+	template := template.Must(template.New("forgetPassword").Parse(t))
+	template.Execute(buffer, &f)
+
+	return buffer.Bytes()
+}
+
+// GetForgetpasswordURL パスワード忘れたURLを取得する
+func GetForgetpasswordURL(email string, keyword string) (string, error) {
+	e, err := utils.Encrypter([]byte(email))
+	if err != nil {
+		return "", err
+	}
+	k, err := utils.Encrypter([]byte(keyword))
+	if err != nil {
+		return "", err
+	}
+
+	return utils.Urlencode(e) + "/" + utils.Urlencode(k), nil
 }

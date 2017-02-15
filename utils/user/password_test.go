@@ -20,7 +20,7 @@ func init() {
 }
 
 func (t *TestPassword) TestAddForgetPassword(c *C) {
-	AddForgetPassword("test@abcdef.com")
+	AddForgetPassword("test@abcdef.com", "aaaa")
 
 	r, _ := GetForgetPasswordByEmail("test@abcdef.com")
 

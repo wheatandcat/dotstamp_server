@@ -1,14 +1,25 @@
 package utils
 
 import (
+	"encoding/base64"
 	"errors"
 	"path/filepath"
 	"reflect"
 	"runtime"
+	"strings"
 	"time"
 
 	"github.com/astaxie/beego"
 )
+
+// IsTest テスト環境か判定する
+func IsTest() bool {
+	if beego.BConfig.RunMode == "test" {
+		return true
+	}
+
+	return false
+}
 
 // StringToDate 日付に変換する
 func StringToDate(s string) (time.Time, error) {
@@ -98,11 +109,23 @@ func StructListToMapList(s interface{}) (r []map[string]interface{}) {
 	return r
 }
 
-// IsTest テスト環境か判定する
-func IsTest() bool {
-	if beego.BConfig.RunMode == "test" {
-		return true
+// Urlencode URLエンコードを取得する
+func Urlencode(s string) string {
+	e := base64.StdEncoding.EncodeToString([]byte(s))
+	r := strings.NewReplacer("=", "-", "/", "_", "+", ".")
+	encode := r.Replace(e)
+
+	return encode
+}
+
+// Urldecode URLデコードを取得する
+func Urldecode(s string) (string, error) {
+	r := strings.NewReplacer("-", "=", "_", "/", ".", "+")
+	d := r.Replace(s)
+	data, err := base64.StdEncoding.DecodeString(d)
+	if err != nil {
+		return "", err
 	}
 
-	return false
+	return string(data), nil
 }

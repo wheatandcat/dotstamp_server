@@ -1,4 +1,4 @@
-package maill
+package mail
 
 import (
 	"testing"

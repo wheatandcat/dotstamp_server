@@ -2,18 +2,13 @@ package controllersForgetPassword
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/utils"
 	"dotstamp_server/utils/user"
 )
 
 // CheckController パスワード忘れ確認コントローラー
 type CheckController struct {
 	controllers.BaseController
-}
-
-// CheckRequest パスワードを忘れ確認リクエスト
-type CheckRequest struct {
-	Email   string `form:"email"`
-	Keyword string `form:"key"`
 }
 
 // CheckResponse パスワードを忘れ確認レスポンス
@@ -24,13 +19,19 @@ type CheckResponse struct {
 
 // Post パスワード忘れ確認
 func (c *CheckController) Post() {
-	request := CheckRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+	email, err := utils.Urldecode(c.Ctx.Input.Param(":email"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
 
-	r, err := user.IsUpdatePassword(request.Email, request.Keyword)
+	keyword, err := utils.Urldecode(c.Ctx.Input.Param(":keyword"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter)
+		return
+	}
+
+	r, err := user.IsUpdatePassword(email, keyword)
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter)
 		return

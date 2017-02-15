@@ -1,4 +1,4 @@
-package maill
+package mail
 
 import (
 	"dotstamp_server/tests"
@@ -41,5 +41,32 @@ func (t *TestMain) TestGetBody(c *C) {
 		Message: "本文です",
 	}
 
-	GetBody(b)
+	r := GetBody(b)
+	c.Log(string(r))
+}
+
+func (t *TestMain) TestGetForgetpasswordBody(c *C) {
+	f := ForgetpasswordTemplate{
+		URL:   "http://abc.com/?p=aaaaaa&e=bbbbb",
+		Host:  "http:/abc.com",
+		Email: "test@abc.com",
+	}
+
+	m := GetForgetpasswordBody(f)
+	b := Body{
+		From:    "dotstamplocaltest@gmail.com",
+		To:      "dotstamplocaltest2@gmail.com",
+		Subject: "[dotstamp]パスワード再設定",
+		Message: string(m),
+	}
+
+	r := GetBody(b)
+	c.Log(string(r))
+}
+
+func (t *TestMain) TestGetForgetpasswordURL(c *C) {
+
+	r, _ := GetForgetpasswordURL("test@add.com", "abcdef")
+
+	c.Check(r, Not(Equals), "test@add.com/abcdef")
 }

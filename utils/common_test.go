@@ -109,3 +109,10 @@ func (t *TestCommon) TestStructListToMapList(c *C) {
 	c.Check(r[0]["ID"], Equals, e[0]["ID"])
 	c.Check(r[0]["Title"], Equals, e[0]["Title"])
 }
+
+func (t *TestCommon) TestUrldecode(c *C) {
+	e := Urlencode("test@add.com")
+	r, _ := Urldecode(e)
+
+	c.Check(r, Equals, "test@add.com")
+}

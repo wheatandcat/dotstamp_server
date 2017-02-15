@@ -5,8 +5,6 @@ import (
 	"dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	"github.com/astaxie/beego"
@@ -23,14 +21,11 @@ func init() {
 }
 
 func TestCheckPost(t *testing.T) {
-	values := url.Values{}
-	values.Set("email", "test_xyz@test.com")
-	values.Set("key", "abcdef")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/user/forget_password/check/",
-		strings.NewReader(values.Encode()),
+		"/user/forget_password/check/rH.Zw7xSMXghDIT_/uXiJ05lV/",
+		nil,
 	)
 
 	if err != nil {
