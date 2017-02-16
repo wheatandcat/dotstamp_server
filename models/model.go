@@ -8,8 +8,15 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+var db *gorm.DB
+
 // gormConnect gorm接続を取得する
 func gormConnect() *gorm.DB {
+	if db != nil {
+		return db
+	}
+
+	var err error
 	dbms := "mysql"
 	user := beego.AppConfig.String("mysqluser")
 	pass := beego.AppConfig.String("mysqlpass")
@@ -17,7 +24,7 @@ func gormConnect() *gorm.DB {
 	database := beego.AppConfig.String("mysqldb")
 
 	connect := user + ":" + pass + "@" + protocol + "/" + database + "?parseTime=true&loc=Asia%2FTokyo"
-	db, err := gorm.Open(dbms, connect)
+	db, err = gorm.Open(dbms, connect)
 
 	if err != nil {
 		panic(err.Error())
