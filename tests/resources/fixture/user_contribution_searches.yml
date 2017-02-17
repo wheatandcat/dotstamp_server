@@ -1,0 +1,18 @@
+1:
+    id: 1
+    user_contribution_id: 1
+    search: "abc"
+    created_at: "2015-01-01 10:00:00"
+    updated_at: "2015-01-01 10:00:00"
+2:
+    id: 2
+    user_contribution_id: 2
+    search: "def"
+    created_at: "2015-01-01 10:00:00"
+    updated_at: "2015-01-01 10:00:00"
+3:
+    id: 3
+    user_contribution_id: 3
+    search: "abcdef"
+    created_at: "2015-01-01 10:00:00"
+    updated_at: "2015-01-01 10:00:00"
