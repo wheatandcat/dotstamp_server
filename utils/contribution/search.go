@@ -2,8 +2,26 @@ package contributions
 
 import "dotstamp_server/models"
 
-// GetSearchWordByBody 本文から検索文を取得する
-func GetSearchWordByBody(body string) (s string, err error) {
+// SearchValue 検索値
+type SearchValue struct {
+	UserContributionID int
+	Order              int
+}
+
+// SearchWord 検索文
+type SearchWord struct {
+	Title string
+	Body  string
+	Tag   string
+}
+
+// JoinSearchWord 検索文を連結する
+func JoinSearchWord(s SearchWord) string {
+	return s.Title + "/" + s.Body + "/" + s.Tag
+}
+
+// GetSearchWordBody 検索本文を取得する
+func GetSearchWordBody(body string) (s string, err error) {
 	b, err := StirngToGetBody(body)
 	if err != nil {
 		return "", err
@@ -35,12 +53,7 @@ func GetSearchByUserContributionID(uID int) (models.UserContributionSearch, erro
 }
 
 // AddOrSaveSearch 検索を追加か保存する
-func AddOrSaveSearch(uID int, b string) error {
-	s, err := GetSearchWordByBody(b)
-	if err != nil {
-		return err
-	}
-
+func AddOrSaveSearch(uID int, s string) error {
 	u, err := GetSearchByUserContributionID(uID)
 	if err != nil {
 		return err
@@ -66,4 +79,30 @@ func DeleteSearchByUserContributionID(uID int) error {
 	}
 
 	return u.Delete()
+}
+
+// GetSearchValueListBySearch 検索から検索値リストを取得する
+func GetSearchValueListBySearch(search string, order string, limit int, offset int) ([]SearchValue, error) {
+	s := []SearchValue{}
+
+	u := models.UserContributionSearch{}
+	user, _, err := u.GetListBySearch(search, order, limit, offset)
+	if err != nil {
+		return s, err
+	}
+
+	if len(user) == 0 {
+		return s, nil
+	}
+
+	for key, v := range user {
+		tmp := SearchValue{
+			UserContributionID: v.UserContributionID,
+			Order:              key,
+		}
+
+		s = append(s, tmp)
+	}
+
+	return s, nil
 }

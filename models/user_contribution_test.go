@@ -59,3 +59,12 @@ func (t *TestUserContribution) TestGetByTop(c *C) {
 
 	c.Check(r[0].ID, Equals, uint(2))
 }
+
+func (t *TestUserContribution) TestGetListByIDList(c *C) {
+	u := &UserContribution{}
+
+	r, _, _ := u.GetListByIDList([]int{1, 2})
+
+	c.Check(r[0].ID, Equals, uint(1))
+	c.Check(r[1].ID, Equals, uint(2))
+}

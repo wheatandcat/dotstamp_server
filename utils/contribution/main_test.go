@@ -70,8 +70,29 @@ func (t *TestMain) TestGetContributionByUserContributionID(c *C) {
 	c.Check(r.ID, Equals, uint(1))
 }
 
-func (t *TestMain) TestGetByTop(c *C) {
-	r, _ := GetByTop(0, 10)
+func (t *TestMain) TestGetListByTop(c *C) {
+	r, _ := GetListByTop(0, 10)
+
+	c.Check(r[0].ID, Equals, uint(2))
+	c.Check(r[0].Tag[0].Name, Equals, "def")
+}
+
+func (t *TestMain) TestGetListBySearchValue(c *C) {
+	s := []SearchValue{
+		{
+			UserContributionID: 1,
+			Order:              1,
+		},
+		{
+			UserContributionID: 2,
+			Order:              0,
+		},
+	}
+
+	r, _ := GetListBySearchValue(s)
+
+	c.Check(r[1].ID, Equals, uint(1))
+	c.Check(r[1].Tag[0].Name, Equals, "abc")
 
 	c.Check(r[0].ID, Equals, uint(2))
 	c.Check(r[0].Tag[0].Name, Equals, "def")

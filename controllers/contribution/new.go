@@ -49,7 +49,20 @@ func (c *NewController) Post() {
 	}
 
 	if request.ViewStatus == models.ViewStatusPublic {
-		if err := contributions.AddSearch(int(userContributionID), request.Body); err != nil {
+		b, err := contributions.GetSearchWordBody(request.Body)
+		if err != nil {
+			c.ServerError(err, controllers.ErrContributionNew)
+			return
+		}
+
+		searchWord := contributions.SearchWord{
+			Title: request.Title,
+			Body:  b,
+			Tag:   request.Tag,
+		}
+
+		s := contributions.JoinSearchWord(searchWord)
+		if err := contributions.AddSearch(int(userContributionID), s); err != nil {
 			c.ServerError(err, controllers.ErrContributionNew)
 			return
 		}

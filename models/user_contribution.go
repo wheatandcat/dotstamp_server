@@ -75,3 +75,14 @@ func (u *UserContribution) GetByTop(o int, s int) (userContributionList []UserCo
 	db, err = GetListWhere(&userContributionList, "", whereList, optionMap)
 	return
 }
+
+// GetListByIDList IDリストから投稿リストを取得する
+func (u *UserContribution) GetListByIDList(idList []int) (userContributionList []UserContribution, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"IDList": idList},
+	}
+	optionMap := make(map[string]interface{})
+
+	db, err = GetListWhere(&userContributionList, "ID IN :IDList", whereList, optionMap)
+	return
+}

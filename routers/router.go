@@ -24,6 +24,7 @@ func init() {
 	beego.Router("/contribution/show/:id([0-9]+)", &controllersContribution.ShowController{})
 	beego.Router("/contribution/edit/:id([0-9]+)", &controllersContribution.EditController{})
 	beego.Router("/contribution/delete/:id([0-9]+)", &controllersContribution.DeleteController{})
+	beego.Router("/contribution/search/", &controllersContribution.SearchController{})
 
 	beego.Router("/work/history", &controllersWork.WorkHistoryController{})
 

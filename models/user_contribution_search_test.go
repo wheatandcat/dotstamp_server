@@ -66,7 +66,8 @@ func (t *TestUserContributionSearch) TestGetByUserContributionID(c *C) {
 func (t *TestUserContributionSearch) TestGetListBySearch(c *C) {
 	u := &UserContributionSearch{}
 
-	r, _, _ := u.GetListBySearch("abc")
+	r, _, _ := u.GetListBySearch("a", "ID desc", 10, 0)
 
-	c.Check(r[0].Search, Equals, "abc")
+	c.Check(r[0].Search, Equals, "abcdef")
+	c.Check(r[1].Search, Equals, "abc")
 }

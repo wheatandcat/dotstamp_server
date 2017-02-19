@@ -51,6 +51,8 @@ const (
 	ErrUserSave = 11
 	// ErrUserOrPasswordDifferent ユーザかパスワードが異なる
 	ErrUserOrPasswordDifferent = 12
+	// ErrContributionSearch 検索取得に失敗
+	ErrContributionSearch = 13
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -90,6 +92,9 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrUserOrPasswordDifferent: {
 		Message: "メールアドレスとパスワードが一致しません。もう一度入力お願い致します。",
+	},
+	ErrContributionSearch: {
+		Message: "検索結果の取得に失敗した。",
 	},
 }
 

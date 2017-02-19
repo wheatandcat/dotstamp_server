@@ -65,3 +65,9 @@ func (t *TestMain) TestGetMapByUserContributionIDList(c *C) {
 
 	c.Check(r[1][0].Name, Equals, "abc")
 }
+
+func (t *TestMain) TestGetTagNameJoin(c *C) {
+	r, _ := GetTagNameJoin(1)
+
+	c.Check(r, Equals, "abc")
+}

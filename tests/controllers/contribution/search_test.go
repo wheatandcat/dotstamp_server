@@ -20,18 +20,23 @@ func init() {
 		"user_contributions",
 		"user_contribution_details",
 		"user_contribution_tags",
+		"user_contribution_searches",
 	})
 }
 
-func TestListPost(t *testing.T) {
+func TestSearchPost(t *testing.T) {
 	values := url.Values{}
-	values.Set("order", "2")
+	values.Set("search", "a")
+	values.Set("order", "1")
+	values.Set("page", "1")
+	values.Set("limit", "10")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/list/",
+		"/contribution/search/",
 		strings.NewReader(values.Encode()),
 	)
+
 	if err != nil {
 		panic(err)
 	}
@@ -41,7 +46,7 @@ func TestListPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/contribution/list/\n", t, func() {
+	Convey("/contribution/search/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

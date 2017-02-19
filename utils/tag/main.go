@@ -97,3 +97,18 @@ func GetMapByUserContributionIDList(uIDList []int) (map[int][]Tag, error) {
 
 	return tagMap, nil
 }
+
+// GetTagNameJoin 連結したタグ名を取得する
+func GetTagNameJoin(uID int) (string, error) {
+	t, err := GetListByUserContributionID(uID)
+	if err != nil {
+		return "", err
+	}
+
+	list := []string{}
+	for _, v := range t {
+		list = append(list, v.Name)
+	}
+
+	return strings.Join(list, ","), nil
+}

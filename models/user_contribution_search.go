@@ -43,11 +43,15 @@ func (u *UserContributionSearch) GetByUserContributionID(id int) (userContributi
 }
 
 // GetListBySearch 検索からリストを取得する
-func (u *UserContributionSearch) GetListBySearch(search string) (userContributionSearch []UserContributionSearch, db *gorm.DB, err error) {
+func (u *UserContributionSearch) GetListBySearch(search string, order string, limit int, offset int) (userContributionSearch []UserContributionSearch, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"Search": "+" + search},
 	}
-	option := make(map[string]interface{})
+	option := map[string]interface{}{
+		"order":  order,
+		"limit":  limit,
+		"offset": offset,
+	}
 
 	db, err = GetListWhere(&userContributionSearch, "MATCH(`search`) AGAINST( :Search IN BOOLEAN MODE)", whereList, option)
 

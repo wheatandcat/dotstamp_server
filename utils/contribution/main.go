@@ -8,7 +8,7 @@ import (
 	"time"
 )
 
-// Contribution 投稿情報
+// Contribution 投稿
 type Contribution struct {
 	ID                uint
 	User              user.User
@@ -137,21 +137,15 @@ func GetContributionByUserContributionID(userContributionID int) (c Contribution
 	return contribution, nil
 }
 
-// GetByTop 新着を取得する
-func GetByTop(offset int, size int) ([]Contribution, error) {
-	uc := &models.UserContribution{}
-	contributionList := []Contribution{}
-	userContribution, _, err := uc.GetByTop(offset, size)
-	if err != nil {
-		return contributionList, err
-	}
-	if len(userContribution) == 0 {
+// getContributionList 投稿リストを取得する
+func getContributionList(u []models.UserContribution) (contributionList []Contribution, err error) {
+	if len(u) == 0 {
 		return contributionList, nil
 	}
 
 	var idList []int
 	var userIDList []int
-	for _, val := range userContribution {
+	for _, val := range u {
 		idList = append(idList, int(val.ID))
 		userIDList = append(idList, int(val.UserID))
 	}
@@ -166,7 +160,7 @@ func GetByTop(offset int, size int) ([]Contribution, error) {
 		return contributionList, err
 	}
 
-	for _, val := range userContribution {
+	for _, val := range u {
 
 		c := Contribution{
 			ID:                val.ID,
@@ -181,4 +175,50 @@ func GetByTop(offset int, size int) ([]Contribution, error) {
 	}
 
 	return contributionList, nil
+}
+
+// GetListByTop 新着を取得する
+func GetListByTop(offset int, size int) ([]Contribution, error) {
+	u := &models.UserContribution{}
+	userContribution, _, err := u.GetByTop(offset, size)
+	if err != nil {
+		return []Contribution{}, err
+	}
+
+	return getContributionList(userContribution)
+}
+
+// GetListBySearchValue 検索値からリストを取得する
+func GetListBySearchValue(s []SearchValue) ([]Contribution, error) {
+	idList := []int{}
+	for _, v := range s {
+		idList = append(idList, v.UserContributionID)
+	}
+
+	u := &models.UserContribution{}
+	contributionList := []Contribution{}
+	userContribution, _, err := u.GetListByIDList(idList)
+	if err != nil {
+		return contributionList, err
+	}
+
+	m := map[int]models.UserContribution{}
+	orderMap := map[int]int{}
+	for _, v := range s {
+		orderMap[v.UserContributionID] = v.Order
+	}
+
+	keyList := []int{}
+	for _, v := range userContribution {
+		m[orderMap[int(v.ID)]] = v
+		keyList = append(keyList, int(v.ID))
+
+	}
+
+	userContributionList := []models.UserContribution{}
+	for v := range keyList {
+		userContributionList = append(userContributionList, m[v])
+	}
+
+	return getContributionList(userContributionList)
 }
