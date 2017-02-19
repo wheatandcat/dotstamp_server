@@ -2,6 +2,7 @@ package controllersContribution
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 )
 
@@ -15,6 +16,7 @@ type SaveRequest struct {
 	UserContributionID int    `form:"userContributionId"`
 	Title              string `form:"title"`
 	Body               string `form:"body"`
+	ViewStatus         int    `form:"viewStatus"`
 }
 
 // Post 保存する
@@ -37,6 +39,16 @@ func (c *SaveController) Post() {
 
 	if err := contributions.SaveDetail(request.UserContributionID, request.Body); err != nil {
 		c.ServerError(err, controllers.ErrContributionSave)
+	}
+
+	if request.ViewStatus == models.ViewStatusPublic {
+		if err := contributions.AddOrSaveSearch(request.UserContributionID, request.Body); err != nil {
+			c.ServerError(err, controllers.ErrContributionSave)
+		}
+	} else {
+		if err := contributions.DeleteSearchByUserContributionID(request.UserContributionID); err != nil {
+			c.ServerError(err, controllers.ErrContributionSave)
+		}
 	}
 
 	c.Data["json"] = request.UserContributionID

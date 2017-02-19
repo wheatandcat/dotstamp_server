@@ -16,7 +16,7 @@ type NewController struct {
 type NewRequest struct {
 	Title      string `form:"title"`
 	Body       string `form:"body"`
-	ViewStatus int    `form:"view_status"`
+	ViewStatus int    `form:"viewStatus"`
 	Tag        string `form:"tag"`
 }
 
