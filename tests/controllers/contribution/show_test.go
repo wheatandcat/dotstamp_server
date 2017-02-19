@@ -21,7 +21,7 @@ func init() {
 	})
 }
 
-func TestShowtPost(t *testing.T) {
+func TestShowPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
 		"/contribution/show/1",
