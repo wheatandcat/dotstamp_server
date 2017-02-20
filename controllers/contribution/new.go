@@ -34,7 +34,7 @@ func (c *NewController) Post() {
 		return
 	}
 
-	userContributionID, err := contributions.Add(userID, request.Title, request.Body)
+	userContributionID, err := contributions.Add(userID, request.Title, request.Body, request.ViewStatus)
 	if err != nil {
 		c.ServerError(err, controllers.ErrContributionNew)
 		return

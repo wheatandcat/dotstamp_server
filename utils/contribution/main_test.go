@@ -23,7 +23,7 @@ func init() {
 }
 
 func (t *TestMain) TestAdd(c *C) {
-	r, _ := Add(100, "abc", "{}")
+	r, _ := Add(100, "abc", "{}", 1)
 
 	c.Check(r, Equals, uint(3))
 }

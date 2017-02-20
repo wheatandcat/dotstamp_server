@@ -21,10 +21,11 @@ type Contribution struct {
 }
 
 // Add 投稿する
-func Add(userID int, title string, body string) (uint, error) {
+func Add(userID int, title string, body string, v int) (uint, error) {
 	userContribution := &models.UserContribution{
-		UserID: userID,
-		Title:  title,
+		UserID:     userID,
+		Title:      title,
+		ViewStatus: v,
 	}
 
 	userContributionID, err := userContribution.GetIDAndAdd()
