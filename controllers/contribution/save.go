@@ -34,7 +34,7 @@ func (c *SaveController) Post() {
 		return
 	}
 
-	if err := contributions.Save(request.UserContributionID, userID, request.Title); err != nil {
+	if err := contributions.Save(request.UserContributionID, userID, request.Title, request.ViewStatus); err != nil {
 		c.ServerError(err, controllers.ErrContributionSave)
 		return
 	}

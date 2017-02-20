@@ -29,7 +29,7 @@ func (t *TestMain) TestAdd(c *C) {
 }
 
 func (t *TestMain) TestSave(c *C) {
-	Save(1, 1, "abcdef")
+	Save(1, 1, "abcdef", 1)
 
 	r, _ := GetByUserContributionID(1)
 

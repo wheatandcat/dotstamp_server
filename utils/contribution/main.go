@@ -43,18 +43,19 @@ func Add(userID int, title string, body string, v int) (uint, error) {
 }
 
 // Save 保存する
-func Save(userContributionID int, userID int, title string) error {
-	uc, err := GetByUserContributionID(userContributionID)
+func Save(userContributionID int, userID int, title string, v int) error {
+	u, err := GetByUserContributionID(userContributionID)
 	if err != nil {
 		return err
 	}
-	if uc.UserID != userID {
+	if u.UserID != userID {
 		return errors.New("difference UserID")
 	}
 
-	uc.Title = title
+	u.Title = title
+	u.ViewStatus = v
 
-	return uc.Save()
+	return u.Save()
 }
 
 // DeleteByID 削除する
