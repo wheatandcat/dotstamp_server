@@ -53,6 +53,14 @@ const (
 	ErrUserOrPasswordDifferent = 12
 	// ErrContributionSearch 検索取得に失敗
 	ErrContributionSearch = 13
+	// ErrFollowed フォロー済み
+	ErrFollowed = 14
+	// ErrAddFollow フォロー追加失敗
+	ErrAddFollow = 15
+	// ErrContributionNotFound 投稿が存在しない
+	ErrContributionNotFound = 16
+	// ErrDeleteFollow フォロー削除失敗
+	ErrDeleteFollow = 17
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -95,6 +103,18 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrContributionSearch: {
 		Message: "検索結果の取得に失敗した。",
+	},
+	ErrFollowed: {
+		Message: "既にフォロー済みです。",
+	},
+	ErrAddFollow: {
+		Message: "フォローの登録に失敗しました。お手数ですが、もう一度追加お願い致します。",
+	},
+	ErrContributionNotFound: {
+		Message: "存在しない投稿データです。",
+	},
+	ErrDeleteFollow: {
+		Message: "フォローの削除に失敗しました。お手数ですが、もう一度操作お願い致します。",
 	},
 }
 

@@ -54,3 +54,16 @@ func (u *UserContributionFollow) GetListByUserContributionIDList(ucID []int) (us
 
 	return
 }
+
+// GetByUserIDAndUserContributionID ユーザIDと投稿IDから取得する
+func (u *UserContributionFollow) GetByUserIDAndUserContributionID(uID int, ucID int) (userContributionFollow UserContributionFollow, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+		{"UserContributionID": ucID},
+	}
+	option := make(map[string]interface{})
+
+	db, err = GetWhere(&userContributionFollow, "User_ID = :UserID AND User_contribution_ID = :UserContributionID", whereList, option)
+
+	return
+}

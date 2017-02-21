@@ -5,7 +5,9 @@ import (
 	"dotstamp_server/controllers/character"
 	"dotstamp_server/controllers/characterImage"
 	"dotstamp_server/controllers/contribution"
+	"dotstamp_server/controllers/follow"
 	"dotstamp_server/controllers/login"
+	"dotstamp_server/controllers/tag"
 	"dotstamp_server/controllers/user"
 	"dotstamp_server/controllers/user/forget_password"
 	"dotstamp_server/controllers/user/profile"
@@ -47,4 +49,10 @@ func init() {
 	beego.Router("/characterImage/list/", &controllersCharacterImage.ListController{})
 	beego.Router("/characterImage/upload/", &controllersCharacterImage.UploadController{})
 	beego.Router("/characterImage/delete/:id([0-9]+)", &controllersCharacterImage.DeleteController{})
+
+	beego.Router("/follow/add/", &controllersFollow.AddController{})
+	beego.Router("/follow/delete/", &controllersFollow.DeleteController{})
+
+	beego.Router("/tag/save/", &controllersTag.SaveController{})
+	beego.Router("/tag/delete/", &controllersTag.DeleteController{})
 }
