@@ -164,6 +164,9 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 	}
 
 	for _, val := range u {
+		if len(tagMap[int(val.ID)]) == 0 {
+			tagMap[int(val.ID)] = []tags.Tag{}
+		}
 
 		c := Contribution{
 			ID:                val.ID,

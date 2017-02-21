@@ -56,9 +56,6 @@ func (t *TestUserContributionTag) TestGetListByUserContributionIDList(c *C) {
 
 	c.Check(r[0].UserContributionID, Equals, 1)
 	c.Check(r[0].Name, Equals, "abc")
-
-	c.Check(r[1].UserContributionID, Equals, 2)
-	c.Check(r[1].Name, Equals, "def")
 }
 
 func (t *TestUserContributionTag) TestGetByID(c *C) {

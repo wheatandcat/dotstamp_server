@@ -74,7 +74,7 @@ func (t *TestMain) TestGetListByTop(c *C) {
 	r, _ := GetListByTop(0, 10)
 
 	c.Check(r[0].ID, Equals, uint(2))
-	c.Check(r[0].Tag[0].Name, Equals, "def")
+	c.Check(len(r[0].Tag), Equals, 0)
 }
 
 func (t *TestMain) TestGetListBySearchValue(c *C) {
@@ -98,6 +98,6 @@ func (t *TestMain) TestGetListBySearchValue(c *C) {
 	c.Check(r[1].Search, Equals, "aaaaabbbbcccc")
 
 	c.Check(r[0].ID, Equals, uint(2))
-	c.Check(r[0].Tag[0].Name, Equals, "def")
+	c.Check(len(r[0].Tag), Equals, 0)
 	c.Check(r[0].Search, Equals, "xxxyyyzzz")
 }

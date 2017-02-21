@@ -52,15 +52,15 @@ func (t *TestMain) TestAddList(c *C) {
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "defg")
 	c.Check(r[2].Name, Equals, "hijkl")
-
-	r, _, _ = u.GetListByUserContributionID(100)
-	c.Check(len(r), Equals, 0)
 }
 
 func (t *TestMain) TestGetListByUserContributionID(c *C) {
 	r, _ := GetListByUserContributionID(1)
 
 	c.Check(r[0].Name, Equals, "abc")
+
+	r, _ = GetListByUserContributionID(100)
+	c.Check(len(r), Equals, 0)
 }
 
 func (t *TestMain) TestGetMapByUserContributionIDList(c *C) {
