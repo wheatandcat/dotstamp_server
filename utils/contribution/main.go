@@ -16,6 +16,7 @@ type Contribution struct {
 	FewDaysAgoMessage string
 	Tag               []tags.Tag
 	Body              []GetBody
+	Search            string
 	UpdatedAt         time.Time
 	CreatedAt         time.Time
 }
@@ -222,5 +223,18 @@ func GetListBySearchValue(s []SearchValue) ([]Contribution, error) {
 		userContributionList = append(userContributionList, m[v])
 	}
 
-	return getContributionList(userContributionList)
+	r, err := getContributionList(userContributionList)
+	if err != nil {
+		return contributionList, err
+	}
+
+	for k := range r {
+		for _, v := range s {
+			if r[k].ID == uint(v.UserContributionID) {
+				r[k].Search = v.Search
+			}
+		}
+	}
+
+	return r, nil
 }

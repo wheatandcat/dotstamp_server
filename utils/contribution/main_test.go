@@ -81,10 +81,12 @@ func (t *TestMain) TestGetListBySearchValue(c *C) {
 	s := []SearchValue{
 		{
 			UserContributionID: 1,
+			Search:             "aaaaabbbbcccc",
 			Order:              1,
 		},
 		{
 			UserContributionID: 2,
+			Search:             "xxxyyyzzz",
 			Order:              0,
 		},
 	}
@@ -93,7 +95,9 @@ func (t *TestMain) TestGetListBySearchValue(c *C) {
 
 	c.Check(r[1].ID, Equals, uint(1))
 	c.Check(r[1].Tag[0].Name, Equals, "abc")
+	c.Check(r[1].Search, Equals, "aaaaabbbbcccc")
 
 	c.Check(r[0].ID, Equals, uint(2))
 	c.Check(r[0].Tag[0].Name, Equals, "def")
+	c.Check(r[0].Search, Equals, "xxxyyyzzz")
 }

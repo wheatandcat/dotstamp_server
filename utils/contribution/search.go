@@ -5,6 +5,7 @@ import "dotstamp_server/models"
 // SearchValue 検索値
 type SearchValue struct {
 	UserContributionID int
+	Search             string
 	Order              int
 }
 
@@ -98,6 +99,7 @@ func GetSearchValueListBySearch(search string, order string, limit int, offset i
 	for key, v := range user {
 		tmp := SearchValue{
 			UserContributionID: v.UserContributionID,
+			Search:             v.Search,
 			Order:              key,
 		}
 
