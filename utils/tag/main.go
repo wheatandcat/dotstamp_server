@@ -72,6 +72,10 @@ func GetListByUserContributionID(uID int) ([]Tag, error) {
 		return tag, err
 	}
 
+	if len(tag) == 0 {
+		tag = []Tag{}
+	}
+
 	return tag, nil
 }
 
