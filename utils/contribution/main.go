@@ -2,6 +2,7 @@ package contributions
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/utils/follow"
 	"dotstamp_server/utils/tag"
 	"dotstamp_server/utils/user"
 	"errors"
@@ -240,4 +241,38 @@ func GetListBySearchValue(s []SearchValue) ([]Contribution, error) {
 	}
 
 	return r, nil
+}
+
+// GetListByFollowOrderValue フォロー順からリストを取得する
+func GetListByFollowOrderValue(f []follows.OrderValue) ([]Contribution, error) {
+	idList := []int{}
+	for _, v := range f {
+		idList = append(idList, v.UserContributionID)
+	}
+
+	u := &models.UserContribution{}
+	contributionList := []Contribution{}
+	userContribution, _, err := u.GetListByIDList(idList)
+	if err != nil {
+		return contributionList, err
+	}
+
+	m := map[int]models.UserContribution{}
+	orderMap := map[int]int{}
+	for _, v := range f {
+		orderMap[v.UserContributionID] = v.Order
+	}
+
+	keyList := []int{}
+	for _, v := range userContribution {
+		m[orderMap[int(v.ID)]] = v
+		keyList = append(keyList, int(v.ID))
+	}
+
+	userContributionList := []models.UserContribution{}
+	for v := range keyList {
+		userContributionList = append(userContributionList, m[v])
+	}
+
+	return getContributionList(userContributionList)
 }

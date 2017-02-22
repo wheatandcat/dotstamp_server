@@ -76,3 +76,10 @@ func (t *TestUserContributionFollow) TestGetByUserIDAndUserContributionID(c *C) 
 
 	c.Check(r.ID, Equals, uint(0))
 }
+
+func (t *TestUserContributionFollow) TestGetListByUserID(c *C) {
+	u := &UserContributionFollow{}
+	r, _, _ := u.GetListByUserID(1000, "ID desc", 10, 0)
+
+	c.Check(r[0].ID, Equals, uint(1))
+}

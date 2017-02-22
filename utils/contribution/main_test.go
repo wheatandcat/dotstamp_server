@@ -2,6 +2,7 @@ package contributions
 
 import (
 	test "dotstamp_server/tests"
+	"dotstamp_server/utils/follow"
 
 	. "gopkg.in/check.v1"
 )
@@ -100,4 +101,22 @@ func (t *TestMain) TestGetListBySearchValue(c *C) {
 	c.Check(r[0].ID, Equals, uint(2))
 	c.Check(len(r[0].Tag), Equals, 0)
 	c.Check(r[0].Search, Equals, "xxxyyyzzz")
+}
+
+func (t *TestMain) TestGetListByFollowOrderValue(c *C) {
+	f := []follows.OrderValue{
+		{
+			UserContributionID: 1,
+			Order:              1,
+		},
+		{
+			UserContributionID: 2,
+			Order:              0,
+		},
+	}
+
+	r, _ := GetListByFollowOrderValue(f)
+
+	c.Check(r[1].ID, Equals, uint(1))
+	c.Check(r[1].Tag[0].Name, Equals, "abc")
 }

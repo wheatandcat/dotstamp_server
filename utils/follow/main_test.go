@@ -48,3 +48,19 @@ func (t *TestMain) TestGetCountByUserIDAndUserContributionID(c *C) {
 
 	c.Check(r, Equals, 1)
 }
+
+func (t *TestMain) TestGetListByUserID(c *C) {
+	r, _ := GetListByUserID(1000, "ID desc", 10, 0)
+
+	c.Check(r[0].ID, Equals, uint(1))
+}
+
+func (t *TestMain) TestGetOrderValueListByUserID(c *C) {
+	r, _ := GetOrderValueListByUserID(1000, "ID desc", 10, 0)
+
+	c.Check(r[0].Order, Equals, 0)
+
+	r, _ = GetOrderValueListByUserID(1, "ID desc", 10, 0)
+
+	c.Check(len(r), Equals, 0)
+}

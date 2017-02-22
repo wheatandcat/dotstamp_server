@@ -67,3 +67,19 @@ func (u *UserContributionFollow) GetByUserIDAndUserContributionID(uID int, ucID 
 
 	return
 }
+
+// GetListByUserID ユーザIDからリストを取得する
+func (u *UserContributionFollow) GetListByUserID(uID int, order string, limit int, offset int) (userContributionFollow []UserContributionFollow, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+	}
+	option := map[string]interface{}{
+		"order":  order,
+		"limit":  limit,
+		"offset": offset,
+	}
+
+	db, err = GetListWhere(&userContributionFollow, "User_ID = :UserID", whereList, option)
+
+	return
+}

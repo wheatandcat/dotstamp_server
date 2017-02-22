@@ -2,6 +2,12 @@ package follows
 
 import "dotstamp_server/models"
 
+// OrderValue 順番値
+type OrderValue struct {
+	UserContributionID int
+	Order              int
+}
+
 // Add 詳細を保存する
 func Add(uID int, cID int) error {
 	u := models.UserContributionFollow{
@@ -51,4 +57,35 @@ func GetCountByUserIDAndUserContributionID(uID int, ucID int) (int, error) {
 	db.Table("user_contribution_follows").Count(&c)
 
 	return c, err
+}
+
+// GetListByUserID ユーザIDからリストを取得する
+func GetListByUserID(uID int, order string, limit int, offset int) ([]models.UserContributionFollow, error) {
+	u := models.UserContributionFollow{}
+	r, _, err := u.GetListByUserID(uID, order, limit, offset)
+
+	return r, err
+}
+
+// GetOrderValueListByUserID ユーザIDから順番値リストを取得する
+func GetOrderValueListByUserID(uID int, order string, limit int, offset int) (o []OrderValue, err error) {
+	u, err := GetListByUserID(uID, order, limit, offset)
+	if err != nil {
+		return o, err
+	}
+
+	if len(u) == 0 {
+		return o, nil
+	}
+
+	for key, v := range u {
+		tmp := OrderValue{
+			UserContributionID: v.UserContributionID,
+			Order:              key,
+		}
+
+		o = append(o, tmp)
+	}
+
+	return o, nil
 }
