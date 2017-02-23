@@ -16,6 +16,7 @@ type ShowController struct {
 type ShowResponse struct {
 	contributions.Contribution
 	FollowCount int
+	Following   bool
 }
 
 // Post 投稿詳細を取得する
@@ -38,9 +39,25 @@ func (c *ShowController) Post() {
 		return
 	}
 
+	following := false
+
+	userID := c.GetUserID()
+	if c.IsNoLogin(userID) {
+		count, err := follows.GetCountByUserIDAndUserContributionID(userID, id)
+		if err != nil {
+			c.ServerError(err, controllers.ErrCodeCommon)
+			return
+		}
+
+		if count > 0 {
+			following = true
+		}
+	}
+
 	c.Data["json"] = ShowResponse{
 		Contribution: contribution,
 		FollowCount:  followCount,
+		Following:    following,
 	}
 
 	c.ServeJSON()

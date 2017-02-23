@@ -13,6 +13,12 @@ type UploadController struct {
 
 // Post 画像アップロード
 func (c *UploadController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
+		return
+	}
+
 	_, header, _ := c.GetFile("file")
 	displayUserID := 1
 	userContributionID := 1
