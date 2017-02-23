@@ -50,7 +50,7 @@ func (u *UserContributionSearch) GetListByUserContributionIDList(id []int) (user
 	}
 	option := make(map[string]interface{})
 
-	db, err = GetWhere(&userContributionSearch, "User_contribution_ID IN :UserContributionID", whereList, option)
+	db, err = GetListWhere(&userContributionSearch, "User_contribution_ID IN :UserContributionID", whereList, option)
 
 	return
 }

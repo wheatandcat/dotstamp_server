@@ -120,7 +120,7 @@ func GetSearchValueListBySearch(search string, order string, limit int, offset i
 // SaveToFollowCount フォロー数を保存する
 func SaveToFollowCount(u []models.UserContributionSearch, m map[int]int) error {
 	for _, v := range u {
-		if _, ok := m[v.UserContributionID]; ok {
+		if v.FollowCount != m[v.UserContributionID] {
 			v.FollowCount = m[v.UserContributionID]
 			if err := v.Save(); err != nil {
 				return err
