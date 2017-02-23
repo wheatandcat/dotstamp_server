@@ -53,6 +53,14 @@ func GetSearchByUserContributionID(uID int) (models.UserContributionSearch, erro
 	return r, err
 }
 
+// GetSearchListByUserContributionIDList 投稿IDリストからリスト取得する
+func GetSearchListByUserContributionIDList(uID []int) ([]models.UserContributionSearch, error) {
+	u := models.UserContributionSearch{}
+	r, _, err := u.GetListByUserContributionIDList(uID)
+
+	return r, err
+}
+
 // AddOrSaveSearch 検索を追加か保存する
 func AddOrSaveSearch(uID int, s string) error {
 	u, err := GetSearchByUserContributionID(uID)
@@ -107,4 +115,18 @@ func GetSearchValueListBySearch(search string, order string, limit int, offset i
 	}
 
 	return s, nil
+}
+
+// SaveToFollowCount フォロー数を保存する
+func SaveToFollowCount(u []models.UserContributionSearch, m map[int]int) error {
+	for _, v := range u {
+		if _, ok := m[v.UserContributionID]; ok {
+			v.FollowCount = m[v.UserContributionID]
+			if err := v.Save(); err != nil {
+				return err
+			}
+		}
+	}
+
+	return nil
 }

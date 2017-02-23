@@ -10,6 +10,10 @@ import (
 	"github.com/astaxie/beego"
 )
 
+var followMap map[int]int
+var contributionIDList []int
+var err error
+
 // getAppPath アプリケーションパスを取得する
 func getAppPath() string {
 	_, file, _, _ := runtime.Caller(1)
@@ -21,21 +25,25 @@ func getAppPath() string {
 func init() {
 	apppath := getAppPath()
 
-	err := beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app.conf")
+	err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app.conf")
 	if err != nil {
 		panic(err)
 	}
 }
 
 func main() {
-	if err := Exec(); err != nil {
+	if err = AddContributionTotalFollows(); err != nil {
+		panic(err)
+	}
+
+	if err = SaveUserContributionSearchToFollowCount(); err != nil {
 		panic(err)
 	}
 }
 
-// Exec 実行する
-func Exec() error {
-	contributionIDList, err := contributions.GetViewStatusPublicIDList()
+// AddContributionTotalFollows フォロー数を追加する
+func AddContributionTotalFollows() error {
+	contributionIDList, err = contributions.GetViewStatusPublicIDList()
 	if err != nil {
 		return err
 	}
@@ -45,13 +53,23 @@ func Exec() error {
 		return err
 	}
 
-	followMap := follows.GetFollowCountMap(followList)
+	followMap = follows.GetFollowCountMap(followList)
 
 	follows.TruncateTotal()
 
-	if err := follows.AddTotalMap(followMap); err != nil {
+	if err = follows.AddTotalMap(followMap); err != nil {
 		return err
 	}
 
 	return nil
+}
+
+// SaveUserContributionSearchToFollowCount 検索のフォロー数を更新する
+func SaveUserContributionSearchToFollowCount() error {
+	search, err := contributions.GetSearchListByUserContributionIDList(contributionIDList)
+	if err != nil {
+		return err
+	}
+
+	return contributions.SaveToFollowCount(search, followMap)
 }

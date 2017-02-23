@@ -11,6 +11,7 @@ type UserContributionSearch struct {
 	ID                 uint   `gorm:"primary_key"`
 	UserContributionID int    `json:"user_contribution_id"`
 	Search             string `gorm:"index:search"`
+	FollowCount        int    `json:"follow_count"`
 	CreatedAt          time.Time
 	UpdatedAt          time.Time
 }
@@ -38,6 +39,18 @@ func (u *UserContributionSearch) GetByUserContributionID(id int) (userContributi
 	option := make(map[string]interface{})
 
 	db, err = GetWhere(&userContributionSearch, "User_contribution_ID = :UserContributionID", whereList, option)
+
+	return
+}
+
+// GetListByUserContributionIDList 投稿IDリストから取得する
+func (u *UserContributionSearch) GetListByUserContributionIDList(id []int) (userContributionSearch []UserContributionSearch, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"UserContributionID": id},
+	}
+	option := make(map[string]interface{})
+
+	db, err = GetWhere(&userContributionSearch, "User_contribution_ID IN :UserContributionID", whereList, option)
 
 	return
 }

@@ -14,15 +14,25 @@ func init() {
 		"user_contributions",
 		"user_contribution_follows",
 		"contribution_total_follows",
+		"user_contribution_searches",
 	})
 }
 
 func TestExec(t *testing.T) {
-	r := Exec()
+	r := AddContributionTotalFollows()
 
 	Convey("tasks/contributionTotalFollows/main.go\n", t, func() {
-		Convey("Check Error", func() {
+		Convey("AddContributionTotalFollows", func() {
 			So(r, ShouldEqual, nil)
 		})
 	})
+
+	r = SaveUserContributionSearchToFollowCount()
+
+	Convey("tasks/contributionTotalFollows/main.go\n", t, func() {
+		Convey("SaveUserContributionSearchToFollowCount", func() {
+			So(r, ShouldEqual, nil)
+		})
+	})
+
 }

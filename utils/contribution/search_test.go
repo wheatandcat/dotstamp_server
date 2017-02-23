@@ -39,6 +39,12 @@ func (t *TestUserContributionSearch) TestGetSearchByUserContributionID(c *C) {
 	c.Check(r.UserContributionID, Equals, 1)
 }
 
+func (t *TestUserContributionSearch) TestGetSearchListByUserContributionIDList(c *C) {
+	r, _ := GetSearchListByUserContributionIDList([]int{1})
+
+	c.Check(r[0].UserContributionID, Equals, 1)
+}
+
 func (t *TestUserContributionSearch) TestAddOrSaveSearch(c *C) {
 	AddOrSaveSearch(1, "ああああああいいいい")
 	r, _ := GetSearchByUserContributionID(1)
@@ -75,4 +81,16 @@ func (t *TestUserContributionSearch) TestGetSearchValueListBySearch(c *C) {
 	r, _ = GetSearchValueListBySearch("a", "ID desc", 10, 10)
 
 	c.Check(len(r), Equals, 0)
+}
+
+func (t *TestUserContributionSearch) TestSaveToFollowCount(c *C) {
+	u, _ := GetSearchListByUserContributionIDList([]int{1})
+
+	m := map[int]int{}
+	m[1] = 10
+	SaveToFollowCount(u, m)
+
+	r, _ := GetSearchByUserContributionID(1)
+
+	c.Check(r.FollowCount, Equals, 10)
 }
