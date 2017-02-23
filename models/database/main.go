@@ -8,8 +8,14 @@ import (
 	_ "github.com/ziutek/mymysql/godrv"
 )
 
+var db *sql.DB
+
 // GetDB DB取得する
 func GetDB() *sql.DB {
+	if db != nil {
+		return db
+	}
+
 	username := beego.AppConfig.String("mysqluser")
 	password := beego.AppConfig.String("mysqlpass")
 	database := beego.AppConfig.String("mysqldb")

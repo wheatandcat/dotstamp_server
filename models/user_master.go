@@ -49,6 +49,16 @@ func (u *UserMaster) GetByID(id int) (userMaster UserMaster, db *gorm.DB, err er
 	return
 }
 
+// GetScanByID ユーザIDからスキャン取得する
+func (u *UserMaster) GetScanByID(id int, dest interface{}) error {
+	whereList := []map[string]interface{}{
+		{"ID": id},
+	}
+	option := make(map[string]interface{})
+
+	return GeScanWhere(dest, "user_masters", "ID = :ID", whereList, option)
+}
+
 // GetListByIDList ユーザ IDリストからリストを取得する
 func (u *UserMaster) GetListByIDList(idList []int) (userMaster []UserMaster, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
@@ -59,4 +69,14 @@ func (u *UserMaster) GetListByIDList(idList []int) (userMaster []UserMaster, db 
 	db, err = GetListWhere(&userMaster, "ID IN :ID", whereList, option)
 
 	return
+}
+
+// GetScanByIDList ユーザIDリストからスキャン取得する
+func (u *UserMaster) GetScanByIDList(idList []int, dest interface{}) error {
+	whereList := []map[string]interface{}{
+		{"ID": idList},
+	}
+	option := make(map[string]interface{})
+
+	return GeScanWhere(dest, "user_masters", "ID IN :ID", whereList, option)
 }

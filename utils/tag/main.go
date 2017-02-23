@@ -62,12 +62,7 @@ func GetListByUserContributionID(uID int) ([]Tag, error) {
 	u := &models.UserContributionTag{}
 	tag := []Tag{}
 
-	_, db, err := u.GetListByUserContributionID(uID)
-	if err != nil {
-		return tag, err
-	}
-
-	err = db.Table("user_contribution_tags").Scan(&tag).Error
+	err := u.GetScanListByUserContributionID(uID, &tag)
 	if err != nil {
 		return tag, err
 	}
@@ -84,13 +79,8 @@ func GetMapByUserContributionIDList(uIDList []int) (map[int][]Tag, error) {
 	tagMap := map[int][]Tag{}
 
 	u := &models.UserContributionTag{}
-	_, db, err := u.GetListByUserContributionIDList(uIDList)
-	if err != nil {
-		return tagMap, err
-	}
-
 	tagList := []Tag{}
-	err = db.Table("user_contribution_tags").Scan(&tagList).Error
+	err := u.GetScanListByUserContributionIDList(uIDList, &tagList)
 	if err != nil {
 		return tagMap, err
 	}
@@ -98,7 +88,6 @@ func GetMapByUserContributionIDList(uIDList []int) (map[int][]Tag, error) {
 	for _, tag := range tagList {
 		tagMap[tag.UserContributionID] = append(tagMap[tag.UserContributionID], tag)
 	}
-
 	return tagMap, nil
 }
 

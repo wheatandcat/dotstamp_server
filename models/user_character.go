@@ -28,6 +28,16 @@ func (u *UserCharacter) GetListByUserID(uID int) (userCharacter []UserCharacter,
 	return
 }
 
+// GetScanListByUserID ユーザーIDからスキャンリストを取得する
+func (u *UserCharacter) GetScanListByUserID(uID int, dest interface{}) error {
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+	}
+	option := make(map[string]interface{})
+
+	return GeScanWhere(dest, "user_characters", "User_ID = :UserID", whereList, option)
+}
+
 // GetListByIDList IDリストからリスト取得する
 func (u *UserCharacter) GetListByIDList(id []int) (userCharacter []UserCharacter, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{

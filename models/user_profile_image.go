@@ -28,3 +28,13 @@ func (u *UserProfileImage) GetListByUserID(uID int) (userProfileImage []UserProf
 
 	return
 }
+
+// GetScanByUserID ユーザーIDからスキャン取得する
+func (u *UserProfileImage) GetScanByUserID(uID int, dest interface{}) error {
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+	}
+	option := make(map[string]interface{})
+
+	return GeScanWhere(dest, "user_profile_images", "User_ID = :UserID", whereList, option)
+}

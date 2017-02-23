@@ -1,8 +1,6 @@
 package characters
 
-import (
-	"dotstamp_server/models"
-)
+import "dotstamp_server/models"
 
 // Character キャラクター
 type Character struct {
@@ -31,9 +29,7 @@ func GetListByUserID(uID int) ([]Character, error) {
 	u := models.UserCharacter{}
 
 	character := []Character{}
-	_, db, err := u.GetListByUserID(uID)
-
-	db.Table("user_characters").Scan(&character)
+	err := u.GetScanListByUserID(uID, &character)
 
 	return character, err
 }

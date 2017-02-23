@@ -8,6 +8,9 @@ import (
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
+// ErrRecordeNotFound レコードなし
+const ErrRecordeNotFound = "record not found"
+
 var db *gorm.DB
 
 // gormConnect gorm接続を取得する
@@ -102,11 +105,38 @@ func GetWhere(dbModel interface{}, where string, bindList []map[string]interface
 	db := getDbOption(where, bindList, option)
 
 	err := db.First(dbModel).Error
-	if err != nil && err.Error() == "record not found" {
+	if err != nil && err.Error() == ErrRecordeNotFound {
 		return db, nil
 	}
 
 	return db, err
+}
+
+// GeScanWhere 条件から置き換えリストを取得する
+func GeScanWhere(dest interface{}, name string, where string, bindList []map[string]interface{}, option map[string]interface{}) error {
+	where += " AND Deleted_at IS NULL"
+
+	db := getDbOption(where, bindList, option)
+
+	err := db.Table(name).Scan(dest).Error
+	if err != nil && err.Error() == ErrRecordeNotFound {
+		return nil
+	}
+
+	return err
+}
+
+// GetCount 条件から数を取得する
+func GetCount(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (int, error) {
+	db := getDbOption(where, bindList, option)
+
+	count := 0
+	err := db.Find(dbModel).Count(&count).Error
+	if err != nil && err.Error() == ErrRecordeNotFound {
+		return 0, nil
+	}
+
+	return count, err
 }
 
 // GetListWhere 条件からリストを取得する
@@ -114,7 +144,7 @@ func GetListWhere(dbModel interface{}, where string, bindList []map[string]inter
 	db := getDbOption(where, bindList, option)
 
 	err := db.Find(dbModel).Error
-	if err != nil && err.Error() == "record not found" {
+	if err != nil && err.Error() == ErrRecordeNotFound {
 		return db, nil
 	}
 

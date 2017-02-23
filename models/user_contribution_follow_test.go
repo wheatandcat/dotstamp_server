@@ -57,6 +57,13 @@ func (t *TestUserContributionFollow) TestGetListByUserContributionID(c *C) {
 	c.Check(r[0].ID, Equals, uint(1))
 }
 
+func (t *TestUserContributionFollow) TestGetCountByUserContributionID(c *C) {
+	u := &UserContributionFollow{}
+	r, _ := u.GetCountByUserContributionID(1)
+
+	c.Check(r, Equals, 2)
+}
+
 func (t *TestUserContributionFollow) TestGetListByUserContributionIDList(c *C) {
 	u := &UserContributionFollow{}
 	r, _, _ := u.GetListByUserContributionIDList([]int{

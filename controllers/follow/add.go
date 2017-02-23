@@ -18,8 +18,9 @@ type AddRequest struct {
 
 // AddResponse 追加レスポンス
 type AddResponse struct {
-	Warning bool
-	Message string
+	Warning     bool
+	Message     string
+	FollowCount int
 }
 
 // Post 追加する
@@ -64,8 +65,9 @@ func (c *AddController) Post() {
 	}
 
 	c.Data["json"] = AddResponse{
-		Warning: false,
-		Message: "",
+		Warning:     false,
+		Message:     "",
+		FollowCount: 0,
 	}
 
 	c.ServeJSON()

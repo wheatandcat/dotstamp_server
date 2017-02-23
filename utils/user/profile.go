@@ -18,12 +18,7 @@ func GetProfileImageListByUserID(uID int) ([]Profile, error) {
 	profile := []Profile{}
 	u := models.UserProfileImage{}
 
-	_, db, err := u.GetListByUserID(uID)
-	if err != nil {
-		return profile, err
-	}
-
-	err = db.Table("user_profile_images").Scan(&profile).Error
+	err := u.GetScanByUserID(uID, &profile)
 	if err != nil {
 		return profile, err
 	}

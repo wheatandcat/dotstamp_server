@@ -37,6 +37,12 @@ func (t *TestMain) TestDelete(c *C) {
 	c.Check(r.ID, Equals, uint(0))
 }
 
+func (t *TestMain) TestGetCountByUserContributionID(c *C) {
+	r, _ := GetCountByUserContributionID(1)
+
+	c.Check(r, Equals, 2)
+}
+
 func (t *TestMain) TestGetByUserIDAndUserContributionID(c *C) {
 	r, _ := GetByUserIDAndUserContributionID(1000, 1)
 

@@ -67,12 +67,7 @@ func GetByUserID(userID int) (User, error) {
 	u := &models.UserMaster{}
 	user := User{}
 
-	_, db, err := u.GetByID(userID)
-	if err != nil {
-		return user, err
-	}
-
-	err = db.Table("user_masters").Scan(&user).Error
+	err := u.GetScanByID(userID, &user)
 	if err != nil {
 		return user, err
 	}
@@ -109,14 +104,10 @@ func Upadate(uID int, n string) error {
 // GetMaptByUserIDList ユーザIDリストからマップを取得する
 func GetMaptByUserIDList(userIDList []int) (map[int]User, error) {
 	userMap := map[int]User{}
-	u := &models.UserMaster{}
-	_, db, err := u.GetListByIDList(userIDList)
-	if err != nil {
-		return userMap, err
-	}
 
+	u := &models.UserMaster{}
 	userList := []User{}
-	err = db.Table("user_masters").Scan(&userList).Error
+	err := u.GetScanByIDList(userIDList, &userList)
 	if err != nil {
 		return userMap, err
 	}

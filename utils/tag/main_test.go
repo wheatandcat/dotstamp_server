@@ -64,9 +64,10 @@ func (t *TestMain) TestGetListByUserContributionID(c *C) {
 }
 
 func (t *TestMain) TestGetMapByUserContributionIDList(c *C) {
-	r, _ := GetMapByUserContributionIDList([]int{1})
+	r, _ := GetMapByUserContributionIDList([]int{1, 10})
 
 	c.Check(r[1][0].Name, Equals, "abc")
+
 }
 
 func (t *TestMain) TestGetTagNameJoin(c *C) {
