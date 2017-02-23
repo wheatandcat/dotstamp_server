@@ -78,11 +78,13 @@ func (t *TestModel) TestGetLisWhere(c *C) {
 		"order":  "ID desc",
 		"offset": 0,
 		"limit":  1,
+		"select": "id, name, email",
 	}
 
 	db, _ := GetListWhere(&u, "ID = :ID", whereList, option)
 
 	r := u
+
 	c.Check(r[0].ID, Equals, uint(1))
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[0].Email, Equals, "test@tedt.com")

@@ -1,6 +1,10 @@
 package models
 
-import "github.com/jinzhu/gorm"
+import (
+	"strconv"
+
+	"github.com/jinzhu/gorm"
+)
 
 // ViewStatusPublic 公開状態
 const ViewStatusPublic = 1
@@ -84,5 +88,17 @@ func (u *UserContribution) GetListByIDList(idList []int) (userContributionList [
 	optionMap := make(map[string]interface{})
 
 	db, err = GetListWhere(&userContributionList, "ID IN :IDList", whereList, optionMap)
+	return
+}
+
+// GetListByViewStatusPublic IDリストから投稿リストを取得する
+func (u *UserContribution) GetListByViewStatusPublic() (userContributionList []UserContribution, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{}
+
+	optionMap := map[string]interface{}{
+		"select": "id",
+	}
+
+	db, err = GetListWhere(&userContributionList, "View_status = "+strconv.Itoa(ViewStatusPublic), whereList, optionMap)
 	return
 }

@@ -30,3 +30,8 @@ func (c *ContributionTotalFollows) GetListByUserContributionID(uID []int) (contr
 
 	return
 }
+
+// Truncate 空にする
+func (c *ContributionTotalFollows) Truncate() error {
+	return Truncate("contribution_total_follows")
+}

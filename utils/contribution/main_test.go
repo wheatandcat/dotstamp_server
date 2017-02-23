@@ -120,3 +120,10 @@ func (t *TestMain) TestGetListByFollowOrderValue(c *C) {
 	c.Check(r[1].ID, Equals, uint(1))
 	c.Check(r[1].Tag[0].Name, Equals, "abc")
 }
+
+func (t *TestMain) TestGetViewStatusPublicIDList(c *C) {
+	r, _ := GetViewStatusPublicIDList()
+
+	c.Check(r[0], Equals, 1)
+	c.Check(r[1], Equals, 2)
+}

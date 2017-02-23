@@ -68,3 +68,12 @@ func (t *TestUserContribution) TestGetListByIDList(c *C) {
 	c.Check(r[0].ID, Equals, uint(1))
 	c.Check(r[1].ID, Equals, uint(2))
 }
+
+func (t *TestUserContribution) TestGetListByViewStatusPublic(c *C) {
+	u := &UserContribution{}
+
+	r, _, _ := u.GetListByViewStatusPublic()
+
+	c.Check(r[0].ID, Equals, uint(1))
+	c.Check(r[1].ID, Equals, uint(2))
+}

@@ -89,3 +89,27 @@ func GetOrderValueListByUserID(uID int, order string, limit int, offset int) (o 
 
 	return o, nil
 }
+
+// GetListByUserContributionIDList 投稿IDリストからフォローリストを取得する
+func GetListByUserContributionIDList(cID []int) ([]models.UserContributionFollow, error) {
+	u := models.UserContributionFollow{}
+	r, _, err := u.GetListByUserContributionIDList(cID)
+
+	return r, err
+}
+
+// GetFollowCountMap フォロー数マップを取得する
+func GetFollowCountMap(u []models.UserContributionFollow) map[int]int {
+	m := map[int]int{}
+
+	for _, v := range u {
+		id := int(v.UserContributionID)
+		if _, ok := m[id]; !ok {
+			m[id] = 0
+		}
+
+		m[id]++
+	}
+
+	return m
+}

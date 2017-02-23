@@ -2,7 +2,14 @@ package follows
 
 import "dotstamp_server/models"
 
-// AddTotal 統計に追加する
+// TruncateTotal 統計を空にする
+func TruncateTotal() error {
+	u := models.ContributionTotalFollows{}
+
+	return u.Truncate()
+}
+
+// AddTotal 統計を追加する
 func AddTotal(uID int, count int) error {
 	u := models.ContributionTotalFollows{
 		UserContributionID: uID,
@@ -10,6 +17,17 @@ func AddTotal(uID int, count int) error {
 	}
 
 	return u.Add()
+}
+
+// AddTotalMap 統計マップを追加する
+func AddTotalMap(m map[int]int) error {
+	for id, count := range m {
+		if err := AddTotal(id, count); err != nil {
+			return err
+		}
+	}
+
+	return nil
 }
 
 // GetTotalListByUserContributionIDList 投稿IDリストから統計を取得する

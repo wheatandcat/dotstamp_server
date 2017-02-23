@@ -276,3 +276,20 @@ func GetListByFollowOrderValue(f []follows.OrderValue) ([]Contribution, error) {
 
 	return getContributionList(userContributionList)
 }
+
+// GetViewStatusPublicIDList 公開状態のIDリストを取得する
+func GetViewStatusPublicIDList() ([]int, error) {
+	r := []int{}
+
+	u := models.UserContribution{}
+	user, _, err := u.GetListByViewStatusPublic()
+	if err != nil {
+		return r, err
+	}
+
+	for _, v := range user {
+		r = append(r, int(v.ID))
+	}
+
+	return r, nil
+}

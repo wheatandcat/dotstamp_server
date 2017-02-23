@@ -52,3 +52,13 @@ func (t *TestContributionTotalFollows) TestGetListByUserContributionID(c *C) {
 
 	c.Check(r[0].UserContributionID, Equals, 1)
 }
+
+func (t *TestContributionTotalFollows) TestTruncate(c *C) {
+	u := &ContributionTotalFollows{}
+
+	u.Truncate()
+
+	r, _, _ := u.GetListByUserContributionID([]int{1})
+
+	c.Check(len(r), Equals, 0)
+}

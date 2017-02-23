@@ -70,3 +70,17 @@ func (t *TestMain) TestGetOrderValueListByUserID(c *C) {
 
 	c.Check(len(r), Equals, 0)
 }
+
+func (t *TestMain) TestGetListByUserContributionIDList(c *C) {
+	r, _ := GetListByUserContributionIDList([]int{1, 2})
+
+	c.Check(r[0].UserContributionID, Equals, 1)
+	c.Check(r[1].UserContributionID, Equals, 1)
+}
+
+func (t *TestMain) TestGetFollowCountMap(c *C) {
+	u, _ := GetListByUserContributionIDList([]int{1, 2})
+
+	r := GetFollowCountMap(u)
+	c.Check(r[2], Equals, 1)
+}

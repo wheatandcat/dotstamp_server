@@ -97,6 +97,10 @@ func getDbOption(where string, bindList []map[string]interface{}, option map[str
 		db = db.Offset(offset)
 	}
 
+	if sel, ok := option["select"].(string); ok {
+		db = db.Select(sel)
+	}
+
 	return db
 }
 
@@ -170,4 +174,11 @@ func Delete(dbModel interface{}) error {
 	db := gormConnect()
 
 	return db.Delete(dbModel).Error
+}
+
+// Truncate 空にする
+func Truncate(tableName string) error {
+	db := gormConnect()
+
+	return db.Exec("TRUNCATE TABLE " + tableName).Error
 }

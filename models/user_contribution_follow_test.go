@@ -70,7 +70,7 @@ func (t *TestUserContributionFollow) TestGetListByUserContributionIDList(c *C) {
 		1,
 	})
 
-	c.Check(r[0].ID, Equals, uint(1))
+	c.Check(r[0].UserContributionID, Equals, 1)
 }
 
 func (t *TestUserContributionFollow) TestGetByUserIDAndUserContributionID(c *C) {

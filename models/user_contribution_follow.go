@@ -60,9 +60,11 @@ func (u *UserContributionFollow) GetListByUserContributionIDList(ucID []int) (us
 	whereList := []map[string]interface{}{
 		{"UserContributionID": ucID},
 	}
-	option := make(map[string]interface{})
+	optionMap := map[string]interface{}{
+		"select": "user_contribution_id",
+	}
 
-	db, err = GetListWhere(&userContributionFollow, "User_contribution_ID IN :UserContributionID", whereList, option)
+	db, err = GetListWhere(&userContributionFollow, "User_contribution_ID IN :UserContributionID", whereList, optionMap)
 
 	return
 }
