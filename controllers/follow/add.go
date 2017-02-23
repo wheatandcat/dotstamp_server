@@ -48,18 +48,24 @@ func (c *AddController) Post() {
 		return
 	}
 
-	count, err := follows.GetCountByUserIDAndUserContributionID(userID, request.UserContributionID)
+	check, err := follows.GetCountByUserIDAndUserContributionID(userID, request.UserContributionID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
-	if count > 0 {
+	if check > 0 {
 		c.ServerError(err, controllers.ErrFollowed)
 		return
 	}
 
-	if err := follows.Add(userID, request.UserContributionID); err != nil {
+	if err = follows.Add(userID, request.UserContributionID); err != nil {
+		c.ServerError(err, controllers.ErrAddFollow)
+		return
+	}
+
+	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
+	if err != nil {
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
@@ -67,7 +73,7 @@ func (c *AddController) Post() {
 	c.Data["json"] = AddResponse{
 		Warning:     false,
 		Message:     "",
-		FollowCount: 0,
+		FollowCount: count,
 	}
 
 	c.ServeJSON()

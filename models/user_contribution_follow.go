@@ -44,7 +44,7 @@ func (u *UserContributionFollow) GetListByUserContributionID(ucID int) (userCont
 }
 
 // GetCountByUserContributionID 投稿IDから数を取得する
-func (u *UserContributionFollow) GetCountByUserContributionID(ucID int) (count int, err error) {
+func (u *UserContributionFollow) GetCountByUserContributionID(ucID int) (int, error) {
 	userContributionFollow := []UserContributionFollow{}
 
 	whereList := []map[string]interface{}{
@@ -52,9 +52,7 @@ func (u *UserContributionFollow) GetCountByUserContributionID(ucID int) (count i
 	}
 	option := make(map[string]interface{})
 
-	count, err = GetCount(&userContributionFollow, "User_contribution_ID = :UserContributionID", whereList, option)
-
-	return
+	return GetCount(&userContributionFollow, "User_contribution_ID = :UserContributionID", whereList, option)
 }
 
 // GetListByUserContributionIDList 投稿IDリストから取得する
@@ -80,6 +78,19 @@ func (u *UserContributionFollow) GetByUserIDAndUserContributionID(uID int, ucID 
 	db, err = GetWhere(&userContributionFollow, "User_ID = :UserID AND User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
+}
+
+// GetCountByUserIDAndUserContributionID ユーザIDと投稿IDから数を取得する
+func (u *UserContributionFollow) GetCountByUserIDAndUserContributionID(uID int, ucID int) (int, error) {
+	userContributionFollow := []UserContributionFollow{}
+
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+		{"UserContributionID": ucID},
+	}
+	option := make(map[string]interface{})
+
+	return GetCount(&userContributionFollow, "User_ID = :UserID AND User_contribution_ID = :UserContributionID", whereList, option)
 }
 
 // GetListByUserID ユーザIDからリストを取得する

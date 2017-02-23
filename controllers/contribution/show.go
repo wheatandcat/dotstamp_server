@@ -3,12 +3,19 @@ package controllersContribution
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/contribution"
+	"dotstamp_server/utils/follow"
 	"strconv"
 )
 
 // ShowController showコントローラ
 type ShowController struct {
 	controllers.BaseController
+}
+
+// ShowResponse 確認レスポンス
+type ShowResponse struct {
+	contributions.Contribution
+	FollowCount int
 }
 
 // Post 投稿詳細を取得する
@@ -25,7 +32,16 @@ func (c *ShowController) Post() {
 		return
 	}
 
-	c.Data["json"] = contribution
+	followCount, err := follows.GetCountByUserContributionID(id)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	c.Data["json"] = ShowResponse{
+		Contribution: contribution,
+		FollowCount:  followCount,
+	}
 
 	c.ServeJSON()
 }

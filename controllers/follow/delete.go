@@ -18,8 +18,9 @@ type DeleteRequest struct {
 
 // DeleteResponse 削除レスポンス
 type DeleteResponse struct {
-	Warning bool
-	Message string
+	Warning     bool
+	Message     string
+	FollowCount int
 }
 
 // Post 削除する
@@ -58,14 +59,21 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	if err := follows.Delete(userfollow.ID); err != nil {
+	if err = follows.Delete(userfollow.ID); err != nil {
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
 
-	c.Data["json"] = AddResponse{
-		Warning: false,
-		Message: "",
+	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrAddFollow)
+		return
+	}
+
+	c.Data["json"] = DeleteResponse{
+		Warning:     false,
+		Message:     "",
+		FollowCount: count,
 	}
 
 	c.ServeJSON()

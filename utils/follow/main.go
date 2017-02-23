@@ -40,11 +40,8 @@ func GetListByUserContributionID(cID int) ([]models.UserContributionFollow, erro
 // GetCountByUserContributionID 投稿IDからフォロー数を取得する
 func GetCountByUserContributionID(cID int) (int, error) {
 	u := models.UserContributionFollow{}
-	_, db, err := u.GetListByUserContributionID(cID)
-	c := 0
-	db.Table("user_contribution_follows").Count(&c)
 
-	return c, err
+	return u.GetCountByUserContributionID(cID)
 }
 
 // GetByUserIDAndUserContributionID ユーザIDと投稿IDから取得する
@@ -58,15 +55,8 @@ func GetByUserIDAndUserContributionID(uID int, ucID int) (models.UserContributio
 // GetCountByUserIDAndUserContributionID ユーザIDと投稿IDから件数を取得する
 func GetCountByUserIDAndUserContributionID(uID int, ucID int) (int, error) {
 	u := models.UserContributionFollow{}
-	_, db, err := u.GetByUserIDAndUserContributionID(uID, ucID)
-	if err != nil {
-		return 0, err
-	}
 
-	c := 0
-	db.Table("user_contribution_follows").Count(&c)
-
-	return c, err
+	return u.GetCountByUserIDAndUserContributionID(uID, ucID)
 }
 
 // GetListByUserID ユーザIDからリストを取得する
