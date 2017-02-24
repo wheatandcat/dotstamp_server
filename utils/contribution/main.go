@@ -16,6 +16,7 @@ type Contribution struct {
 	Title             string
 	FewDaysAgoMessage string
 	Tag               []tags.Tag
+	FollowCount       int
 	Body              []GetBody
 	Search            string
 	UpdatedAt         time.Time
@@ -164,6 +165,11 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 		return contributionList, err
 	}
 
+	var followCountMap map[int]int
+	if followCountMap, err = follows.GetTotalMapByUserContributionIDList(idList); err != nil {
+		return contributionList, err
+	}
+
 	for _, val := range u {
 		if len(tagMap[int(val.ID)]) == 0 {
 			tagMap[int(val.ID)] = []tags.Tag{}
@@ -177,6 +183,7 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 			UpdatedAt:         val.UpdatedAt,
 			FewDaysAgoMessage: "",
 			Tag:               tagMap[int(val.ID)],
+			FollowCount:       followCountMap[int(val.ID)],
 		}
 		contributionList = append(contributionList, c)
 	}
