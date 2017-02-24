@@ -18,6 +18,12 @@ type SearchRequest struct {
 	Limit  int    `form:"limit"`
 }
 
+// SearchResponse 検索レスポンス
+type SearchResponse struct {
+	List  []contributions.Contribution
+	Count int
+}
+
 // Post 検索を取得を取得する
 func (c *SearchController) Post() {
 	request := SearchRequest{}
@@ -51,6 +57,10 @@ func (c *SearchController) Post() {
 		return
 	}
 
-	c.Data["json"] = contributionlist
+	c.Data["json"] = SearchResponse{
+		List:  contributionlist,
+		Count: 0,
+	}
+
 	c.ServeJSON()
 }
