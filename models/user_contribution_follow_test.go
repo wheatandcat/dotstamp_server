@@ -93,7 +93,7 @@ func (t *TestUserContributionFollow) TestGetCountByUserIDAndUserContributionID(c
 
 func (t *TestUserContributionFollow) TestGetCountByUserID(c *C) {
 	u := &UserContributionFollow{}
-	r, _ := u.GetCountByUserID(1000, "ID desc", 10, 0)
+	r, _ := u.GetCountByUserID(1000, "ID desc")
 
 	c.Check(r, Equals, 1)
 }

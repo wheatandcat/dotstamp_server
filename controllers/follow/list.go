@@ -57,8 +57,7 @@ func (c *ListController) Post() {
 		return
 	}
 
-	countLimit := request.Limit * 5
-	count, err := follows.GetCountByUserID(userID, orderMap[request.Order], countLimit, offset)
+	count, err := follows.GetCountByUserID(userID, orderMap[request.Order])
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return

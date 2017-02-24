@@ -96,17 +96,13 @@ func (u *UserContributionFollow) GetCountByUserIDAndUserContributionID(uID int, 
 }
 
 // GetCountByUserID ユーザIDから数を取得する
-func (u *UserContributionFollow) GetCountByUserID(uID int, order string, limit int, offset int) (int, error) {
+func (u *UserContributionFollow) GetCountByUserID(uID int, order string) (int, error) {
 	userContributionFollow := []UserContributionFollow{}
 
 	whereList := []map[string]interface{}{
 		{"UserID": uID},
 	}
-	option := map[string]interface{}{
-		"order":  order,
-		"limit":  limit,
-		"offset": offset,
-	}
+	option := make(map[string]interface{})
 
 	return GetCount(&userContributionFollow, "User_ID = :UserID", whereList, option)
 }
