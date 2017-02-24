@@ -113,3 +113,10 @@ func GetFollowCountMap(u []models.UserContributionFollow) map[int]int {
 
 	return m
 }
+
+// GetCountByUserID ユーザIDから数を取得する
+func GetCountByUserID(uID int, order string, limit int, offset int) (int, error) {
+	u := models.UserContributionFollow{}
+
+	return u.GetCountByUserID(uID, order, limit, offset)
+}

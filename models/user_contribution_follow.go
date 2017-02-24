@@ -95,6 +95,22 @@ func (u *UserContributionFollow) GetCountByUserIDAndUserContributionID(uID int, 
 	return GetCount(&userContributionFollow, "User_ID = :UserID AND User_contribution_ID = :UserContributionID", whereList, option)
 }
 
+// GetCountByUserID ユーザIDから数を取得する
+func (u *UserContributionFollow) GetCountByUserID(uID int, order string, limit int, offset int) (int, error) {
+	userContributionFollow := []UserContributionFollow{}
+
+	whereList := []map[string]interface{}{
+		{"UserID": uID},
+	}
+	option := map[string]interface{}{
+		"order":  order,
+		"limit":  limit,
+		"offset": offset,
+	}
+
+	return GetCount(&userContributionFollow, "User_ID = :UserID", whereList, option)
+}
+
 // GetListByUserID ユーザIDからリストを取得する
 func (u *UserContributionFollow) GetListByUserID(uID int, order string, limit int, offset int) (userContributionFollow []UserContributionFollow, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{

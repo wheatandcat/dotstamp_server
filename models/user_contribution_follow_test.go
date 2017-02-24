@@ -91,6 +91,13 @@ func (t *TestUserContributionFollow) TestGetCountByUserIDAndUserContributionID(c
 	c.Check(r, Equals, 1)
 }
 
+func (t *TestUserContributionFollow) TestGetCountByUserID(c *C) {
+	u := &UserContributionFollow{}
+	r, _ := u.GetCountByUserID(1000, "ID desc", 10, 0)
+
+	c.Check(r, Equals, 1)
+}
+
 func (t *TestUserContributionFollow) TestGetListByUserID(c *C) {
 	u := &UserContributionFollow{}
 	r, _, _ := u.GetListByUserID(1000, "ID desc", 10, 0)

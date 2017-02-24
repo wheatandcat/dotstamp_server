@@ -84,3 +84,9 @@ func (t *TestMain) TestGetFollowCountMap(c *C) {
 	r := GetFollowCountMap(u)
 	c.Check(r[2], Equals, 1)
 }
+
+func (t *TestMain) TestGetCountByUserID(c *C) {
+	r, _ := GetCountByUserID(1000, "ID desc", 10, 0)
+
+	c.Check(r, Equals, 1)
+}

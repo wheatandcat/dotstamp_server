@@ -57,9 +57,16 @@ func (c *ListController) Post() {
 		return
 	}
 
+	countLimit := request.Limit * 5
+	count, err := follows.GetCountByUserID(userID, orderMap[request.Order], countLimit, offset)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
 	c.Data["json"] = ListResponse{
 		List:  list,
-		Count: 10,
+		Count: count,
 	}
 	c.ServeJSON()
 }
