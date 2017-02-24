@@ -76,7 +76,7 @@ func (u *UserContribution) GetCountByUserID(userID int, order string) (int, erro
 
 	option := make(map[string]interface{})
 
-	return GetCount(&userContribution, "user_contributions", "User_ID = :UserID", whereList, option)
+	return GetCount(&userContribution, "user_contributions", "User_ID = :UserID AND Deleted_at IS NULL", whereList, option)
 }
 
 // GetByTop 新着から投稿リスト取得する

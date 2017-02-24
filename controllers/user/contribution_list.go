@@ -20,8 +20,9 @@ type ContributionListRequest struct {
 
 // ContributionListResponse 投稿リストレスポンス
 type ContributionListResponse struct {
-	List  []models.UserContribution
-	Count int
+	List      []models.UserContribution
+	TitleList []string
+	Count     int
 }
 
 // Post ユーザー投稿一覧を取得する
@@ -43,12 +44,19 @@ func (c *ContributionListController) Post() {
 		2: "ID asc",
 	}
 
-	offset := (request.Page - 1) * request.Limit
+	limit := 1000
+	offset := 0
 
-	userContributionlist, err := contributions.GetListByUserID(userID, orderMap[request.Order], request.Limit, offset)
+	userContributionlist, err := contributions.GetListByUserID(userID, orderMap[request.Order], limit, offset)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
+	}
+
+	title := []string{}
+
+	for _, v := range userContributionlist {
+		title = append(title, v.Title)
 	}
 
 	count, err := contributions.GetCountByUserID(userID, orderMap[request.Order])
@@ -58,8 +66,9 @@ func (c *ContributionListController) Post() {
 	}
 
 	c.Data["json"] = ContributionListResponse{
-		List:  userContributionlist,
-		Count: count,
+		List:      userContributionlist,
+		Count:     count,
+		TitleList: title,
 	}
 	c.ServeJSON()
 }
