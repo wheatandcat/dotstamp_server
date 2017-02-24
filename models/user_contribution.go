@@ -50,20 +50,33 @@ func (u *UserContribution) GetByID(id int) (userContribution UserContribution, d
 	return
 }
 
-// GetListByUserID 投稿IDから取得する
-func (u *UserContribution) GetListByUserID(userID int) (userContribution []UserContribution, db *gorm.DB, err error) {
+// GetListByUserID 投稿IDからリスト取得する
+func (u *UserContribution) GetListByUserID(userID int, order string, limit int, offset int) (userContribution []UserContribution, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserID": userID},
 	}
 
 	option := map[string]interface{}{
-		"order":  "ID desc",
-		"limit":  20,
-		"offset": 0,
+		"order":  order,
+		"limit":  limit,
+		"offset": offset,
 	}
 
 	db, err = GetListWhere(&userContribution, "User_ID = :UserID", whereList, option)
 	return
+}
+
+// GetCountByUserID 投稿IDから数を取得する
+func (u *UserContribution) GetCountByUserID(userID int, order string) (int, error) {
+	userContribution := UserContribution{}
+
+	whereList := []map[string]interface{}{
+		{"UserID": userID},
+	}
+
+	option := make(map[string]interface{})
+
+	return GetCount(&userContribution, "user_contributions", "User_ID = :UserID", whereList, option)
 }
 
 // GetByTop 新着から投稿リスト取得する

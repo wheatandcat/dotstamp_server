@@ -131,11 +131,11 @@ func GeScanWhere(dest interface{}, name string, where string, bindList []map[str
 }
 
 // GetCount 条件から数を取得する
-func GetCount(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (int, error) {
+func GetCount(dbModel interface{}, name string, where string, bindList []map[string]interface{}, option map[string]interface{}) (int, error) {
 	db := getDbOption(where, bindList, option)
 
 	count := 0
-	err := db.Find(dbModel).Count(&count).Error
+	err := db.Table(name).Count(&count).Error
 	if err != nil && err.Error() == ErrRecordeNotFound {
 		return 0, nil
 	}

@@ -30,13 +30,7 @@ func (t *DeleteController) Post() {
 		return
 	}
 
-	userContributionlist, err := contributions.GetListByUserID(userID)
-	if err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
-		return
-	}
-
-	t.Data["json"] = userContributionlist
+	t.Data["json"] = true
 
 	t.ServeJSON()
 }

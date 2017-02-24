@@ -11,7 +11,6 @@ import (
 	"dotstamp_server/controllers/user"
 	"dotstamp_server/controllers/user/forget_password"
 	"dotstamp_server/controllers/user/profile"
-	"dotstamp_server/controllers/work"
 
 	"github.com/astaxie/beego"
 )
@@ -27,8 +26,6 @@ func init() {
 	beego.Router("/contribution/edit/:id([0-9]+)", &controllersContribution.EditController{})
 	beego.Router("/contribution/delete/:id([0-9]+)", &controllersContribution.DeleteController{})
 	beego.Router("/contribution/search/", &controllersContribution.SearchController{})
-
-	beego.Router("/work/history", &controllersWork.WorkHistoryController{})
 
 	beego.Router("/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/login/new/", &controllersLogin.NewController{})

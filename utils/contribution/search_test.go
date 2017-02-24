@@ -94,3 +94,9 @@ func (t *TestUserContributionSearch) TestSaveToFollowCount(c *C) {
 
 	c.Check(r.FollowCount, Equals, 10)
 }
+
+func (t *TestUserContributionSearch) TestGetCountBySearch(c *C) {
+	r, _ := GetCountBySearch("a", "ID desc")
+
+	c.Check(r, Equals, 2)
+}

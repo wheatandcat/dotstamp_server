@@ -54,9 +54,15 @@ func (t *TestMain) TestDeleteByID(c *C) {
 }
 
 func (t *TestMain) TestGetListByUserID(c *C) {
-	r, _ := GetListByUserID(1)
+	r, _ := GetListByUserID(1, "ID", 10, 0)
 
 	c.Check(r[0].UserID, Equals, 1)
+}
+
+func (t *TestMain) TestGetCountByUserID(c *C) {
+	r, _ := GetCountByUserID(1, "ID")
+
+	c.Check(r, Equals, 1)
 }
 
 func (t *TestMain) TestGetByUserContributionID(c *C) {

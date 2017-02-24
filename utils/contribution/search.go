@@ -130,3 +130,10 @@ func SaveToFollowCount(u []models.UserContributionSearch, m map[int]int) error {
 
 	return nil
 }
+
+// GetCountBySearch 検索から数を取得する
+func GetCountBySearch(search string, order string) (int, error) {
+	u := models.UserContributionSearch{}
+
+	return u.GetCountBySearch(search, order)
+}

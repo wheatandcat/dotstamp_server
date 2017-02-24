@@ -79,3 +79,11 @@ func (t *TestUserContributionSearch) TestGetListBySearch(c *C) {
 	c.Check(r[0].Search, Equals, "abcdef")
 	c.Check(r[1].Search, Equals, "abc")
 }
+
+func (t *TestUserContributionSearch) TestGetCountBySearch(c *C) {
+	u := &UserContributionSearch{}
+
+	r, _ := u.GetCountBySearch("a", "ID desc")
+
+	c.Check(r, Equals, 2)
+}

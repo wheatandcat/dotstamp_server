@@ -60,6 +60,7 @@ func (u *UserContributionSearch) GetListBySearch(search string, order string, li
 	whereList := []map[string]interface{}{
 		{"Search": "+" + search},
 	}
+
 	option := map[string]interface{}{
 		"order":  order,
 		"limit":  limit,
@@ -69,4 +70,16 @@ func (u *UserContributionSearch) GetListBySearch(search string, order string, li
 	db, err = GetListWhere(&userContributionSearch, "MATCH(`search`) AGAINST( :Search IN BOOLEAN MODE)", whereList, option)
 
 	return
+}
+
+// GetCountBySearch 検索から数を取得する
+func (u *UserContributionSearch) GetCountBySearch(search string, order string) (int, error) {
+	userContributionSearch := UserContributionSearch{}
+
+	whereList := []map[string]interface{}{
+		{"Search": "+" + search},
+	}
+	option := make(map[string]interface{})
+
+	return GetCount(&userContributionSearch, "user_contribution_searches", "MATCH(`search`) AGAINST( :Search IN BOOLEAN MODE)", whereList, option)
 }

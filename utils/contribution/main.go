@@ -51,6 +51,7 @@ func Save(userContributionID int, userID int, title string, v int) error {
 	if err != nil {
 		return err
 	}
+
 	if u.UserID != userID {
 		return errors.New("difference UserID")
 	}
@@ -93,13 +94,20 @@ func GetByUserContributionID(userContributionID int) (models.UserContribution, e
 	return r, err
 }
 
-// GetListByUserID ユーザIDから取得する
-func GetListByUserID(userID int) ([]models.UserContribution, error) {
-	userContribution := &models.UserContribution{}
+// GetListByUserID ユーザIDからリスト取得する
+func GetListByUserID(userID int, order string, limit int, offset int) ([]models.UserContribution, error) {
+	u := &models.UserContribution{}
 
-	r, _, err := userContribution.GetListByUserID(userID)
+	r, _, err := u.GetListByUserID(userID, order, limit, offset)
 
 	return r, err
+}
+
+// GetCountByUserID ユーザIDから数を取得する
+func GetCountByUserID(userID int, order string) (int, error) {
+	u := &models.UserContribution{}
+
+	return u.GetCountByUserID(userID, order)
 }
 
 // GetContributionByUserContributionID 投稿IDから取得する

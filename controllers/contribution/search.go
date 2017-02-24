@@ -57,9 +57,15 @@ func (c *SearchController) Post() {
 		return
 	}
 
+	count, err := contributions.GetCountBySearch(request.Search, orderMap[request.Order])
+	if err != nil {
+		c.ServerError(err, controllers.ErrContributionSearch)
+		return
+	}
+
 	c.Data["json"] = SearchResponse{
 		List:  contributionlist,
-		Count: 0,
+		Count: count,
 	}
 
 	c.ServeJSON()

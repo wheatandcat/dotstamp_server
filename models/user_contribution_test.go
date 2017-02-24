@@ -47,9 +47,17 @@ func (t *TestUserContribution) TestGetByID(c *C) {
 func (t *TestUserContribution) TestGetListByUserID(c *C) {
 	u := &UserContribution{}
 
-	r, _, _ := u.GetListByUserID(1)
+	r, _, _ := u.GetListByUserID(1, "ID", 10, 0)
 
 	c.Check(r[0].ID, Equals, uint(1))
+}
+
+func (t *TestUserContribution) TestGetCountByUserID(c *C) {
+	u := &UserContribution{}
+
+	r, _ := u.GetCountByUserID(1, "ID")
+
+	c.Check(r, Equals, 1)
 }
 
 func (t *TestUserContribution) TestGetByTop(c *C) {
