@@ -52,7 +52,7 @@ func (u *UserContributionFollow) GetCountByUserContributionID(ucID int) (int, er
 	}
 	option := make(map[string]interface{})
 
-	return GetCount(&userContributionFollow, "user_contribution_follows", "User_contribution_ID = :UserContributionID", whereList, option)
+	return GetCount(&userContributionFollow, "user_contribution_follows", "User_contribution_ID = :UserContributionID AND Deleted_at IS NULL", whereList, option)
 }
 
 // GetListByUserContributionIDList 投稿IDリストから取得する
@@ -92,7 +92,7 @@ func (u *UserContributionFollow) GetCountByUserIDAndUserContributionID(uID int, 
 	}
 	option := make(map[string]interface{})
 
-	return GetCount(&userContributionFollow, "user_contribution_follows", "User_ID = :UserID AND User_contribution_ID = :UserContributionID", whereList, option)
+	return GetCount(&userContributionFollow, "user_contribution_follows", "User_ID = :UserID AND User_contribution_ID = :UserContributionID AND Deleted_at IS NULL", whereList, option)
 }
 
 // GetCountByUserID ユーザIDから数を取得する
@@ -104,7 +104,7 @@ func (u *UserContributionFollow) GetCountByUserID(uID int, order string) (int, e
 	}
 	option := make(map[string]interface{})
 
-	return GetCount(&userContributionFollow, "user_contribution_follows", "User_ID = :UserID", whereList, option)
+	return GetCount(&userContributionFollow, "user_contribution_follows", "User_ID = :UserID AND Deleted_at IS NULL", whereList, option)
 }
 
 // GetListByUserID ユーザIDからリストを取得する
