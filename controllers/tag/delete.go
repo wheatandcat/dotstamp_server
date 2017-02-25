@@ -22,7 +22,7 @@ type DeleteRequest struct {
 type DeleteResponse struct {
 	Warning bool
 	Message string
-	List    []tags.Tag
+	Tag     []tags.Tag
 }
 
 // Post 削除する
@@ -101,7 +101,7 @@ func (c *DeleteController) Post() {
 	c.Data["json"] = DeleteResponse{
 		Warning: false,
 		Message: "",
-		List:    tagList,
+		Tag:     tagList,
 	}
 
 	c.ServeJSON()
