@@ -5,6 +5,7 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/tag"
+	"errors"
 )
 
 // DeleteController 削除コントローラ
@@ -46,12 +47,12 @@ func (c *DeleteController) Post() {
 	}
 
 	if contribution.ID == uint(0) {
-		c.ServerError(err, controllers.ErrContributionNotFound)
+		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound)
 		return
 	}
 
 	if contribution.UserID != userID {
-		c.ServerError(err, controllers.ErrContributionNoUser)
+		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser)
 		return
 	}
 

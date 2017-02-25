@@ -5,6 +5,7 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/tag"
+	"errors"
 )
 
 // AddController 追加コントローラ
@@ -46,12 +47,12 @@ func (c *AddController) Post() {
 	}
 
 	if contribution.ID == uint(0) {
-		c.ServerError(err, controllers.ErrContributionNotFound)
+		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound)
 		return
 	}
 
 	if contribution.UserID != userID {
-		c.ServerError(err, controllers.ErrContributionNoUser)
+		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser)
 		return
 	}
 
@@ -62,13 +63,13 @@ func (c *AddController) Post() {
 	}
 
 	if len(tagList) > tags.TagMaxNumber {
-		c.ServerError(err, controllers.ErrTagMaxNumberOver)
+		c.ServerError(errors.New("max number over tag"), controllers.ErrTagMaxNumberOver)
 		return
 	}
 
 	for _, tag := range tagList {
 		if tag.Name == request.Name {
-			c.ServerError(err, controllers.ErrTagNameOverlap)
+			c.ServerError(errors.New("tag name overlap"), controllers.ErrTagNameOverlap)
 			return
 		}
 	}
