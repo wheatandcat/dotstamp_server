@@ -51,6 +51,6 @@ func init() {
 	beego.Router("/follow/delete/", &controllersFollow.DeleteController{})
 	beego.Router("/follow/list/", &controllersFollow.ListController{})
 
-	beego.Router("/tag/save/", &controllersTag.SaveController{})
+	beego.Router("/tag/add/", &controllersTag.AddController{})
 	beego.Router("/tag/delete/", &controllersTag.DeleteController{})
 }

@@ -9,7 +9,12 @@ type UserContributionTag struct {
 	Name               string
 }
 
-// AddList リストを保存する
+// Add 追加する
+func (uc *UserContributionTag) Add() (err error) {
+	return Create(uc)
+}
+
+// AddList リストを追加する
 func (uc *UserContributionTag) AddList(u []UserContributionTag) (err error) {
 	for _, user := range u {
 		if err = Create(&user); err != nil {

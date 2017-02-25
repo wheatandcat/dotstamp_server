@@ -2,8 +2,12 @@ package tags
 
 import (
 	"dotstamp_server/models"
+	"errors"
 	"strings"
 )
+
+// TagMaxNumber タグの最大数
+const TagMaxNumber = 10
 
 // Tag タグ
 type Tag struct {
@@ -25,15 +29,30 @@ func Save(id int, n string) (err error) {
 	return u.Save()
 }
 
-// DeleteByID IDから削除する
-func DeleteByID(id int) (err error) {
+// DeleteByIDAndUserContributionID IDと投稿IDから削除する
+func DeleteByIDAndUserContributionID(id int, cID int) (err error) {
 	u := models.UserContributionTag{}
 	u, _, err = u.GetByID(id)
+
+	if u.UserContributionID != cID {
+		return errors.New("difference UserContributionID")
+	}
+
 	if err != nil {
 		return err
 	}
 
 	return u.Delete()
+}
+
+// Add 追加する
+func Add(uID int, n string) error {
+	u := models.UserContributionTag{
+		UserContributionID: uID,
+		Name:               n,
+	}
+
+	return u.Add()
 }
 
 // AddList 追加する
@@ -98,10 +117,15 @@ func GetTagNameJoin(uID int) (string, error) {
 		return "", err
 	}
 
+	return ToTagNameJoin(t), nil
+}
+
+// ToTagNameJoin タグ名を連結する
+func ToTagNameJoin(t []Tag) string {
 	list := []string{}
 	for _, v := range t {
 		list = append(list, v.Name)
 	}
 
-	return strings.Join(list, ","), nil
+	return strings.Join(list, ",")
 }

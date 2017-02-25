@@ -61,6 +61,12 @@ const (
 	ErrContributionNotFound = 16
 	// ErrDeleteFollow フォロー削除失敗
 	ErrDeleteFollow = 17
+	// ErrTagMaxNumberOver タグの最大数を超えている
+	ErrTagMaxNumberOver = 18
+	// ErrTagNameOverlap 重複したタグ名が存在する
+	ErrTagNameOverlap = 19
+	// ErrContributionNoUser 投稿したユーザではない
+	ErrContributionNoUser = 20
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -115,6 +121,15 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrDeleteFollow: {
 		Message: "フォローの削除に失敗しました。お手数ですが、もう一度操作お願い致します。",
+	},
+	ErrTagMaxNumberOver: {
+		Message: "設定できるタグの数を超えました。追加する場合は、どれか削除してください。",
+	},
+	ErrTagNameOverlap: {
+		Message: "既に同じタグが登録されています。",
+	},
+	ErrContributionNoUser: {
+		Message: "自身の投稿ではないので、その操作は行なえません。",
 	},
 }
 

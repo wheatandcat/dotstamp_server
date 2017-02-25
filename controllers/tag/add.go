@@ -7,32 +7,32 @@ import (
 	"dotstamp_server/utils/tag"
 )
 
-// DeleteController 削除コントローラ
-type DeleteController struct {
+// AddController 追加コントローラ
+type AddController struct {
 	controllers.BaseController
 }
 
-// DeleteRequest 削除リクエスト
-type DeleteRequest struct {
-	UserContributionID int `form:"userContributionId"`
-	ID                 int `form:"id"`
+// AddRequest 追加リクエスト
+type AddRequest struct {
+	UserContributionID int    `form:"userContributionId"`
+	Name               string `form:"name"`
 }
 
-// DeleteResponse 削除レスポンス
-type DeleteResponse struct {
+// AddResponse 追加レスポンス
+type AddResponse struct {
 	Warning bool
 	Message string
 }
 
-// Post 削除する
-func (c *DeleteController) Post() {
+// Post 追加する
+func (c *AddController) Post() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := DeleteRequest{}
+	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
@@ -54,8 +54,26 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	if err := tags.DeleteByIDAndUserContributionID(request.ID, request.UserContributionID); err != nil {
-		c.ServerError(err, controllers.ErrContributionNoUser)
+	tagList, err := tags.GetListByUserContributionID(request.UserContributionID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	if len(tagList) > tags.TagMaxNumber {
+		c.ServerError(err, controllers.ErrTagMaxNumberOver)
+		return
+	}
+
+	for _, tag := range tagList {
+		if tag.Name == request.Name {
+			c.ServerError(err, controllers.ErrTagNameOverlap)
+			return
+		}
+	}
+
+	if err := tags.Add(request.UserContributionID, request.Name); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
@@ -91,7 +109,7 @@ func (c *DeleteController) Post() {
 		}
 	}
 
-	c.Data["json"] = DeleteResponse{
+	c.Data["json"] = AddResponse{
 		Warning: false,
 		Message: "",
 	}

@@ -20,6 +20,14 @@ func init() {
 	var _ = Suite(t)
 }
 
+func (t *TestMain) TestAdd(c *C) {
+	Add(100, "abc")
+
+	r, _ := GetListByUserContributionID(100)
+
+	c.Check(r[0].Name, Equals, "abc")
+}
+
 func (t *TestMain) TestSave(c *C) {
 	id := 1
 	n := "bbb"
@@ -32,10 +40,15 @@ func (t *TestMain) TestSave(c *C) {
 	c.Check(r.Name, Equals, "bbb")
 }
 
-func (t *TestMain) TestDeleteByID(c *C) {
-	DeleteByID(1)
+func (t *TestMain) TestDeleteByIDAndUserContributionID(c *C) {
+	DeleteByIDAndUserContributionID(1, 10)
 	u := models.UserContributionTag{}
 	r, _, _ := u.GetByID(1)
+
+	c.Check(r.ID, Not(Equals), uint(0))
+
+	DeleteByIDAndUserContributionID(1, 1)
+	r, _, _ = u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(0))
 }
