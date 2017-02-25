@@ -16,12 +16,35 @@ type NewRequest struct {
 	Password string `form:"password"`
 }
 
+// NewResponse 新規レスポンス
+type NewResponse struct {
+	Warning bool
+	Message string
+	UserID  uint
+}
+
 // Post 新規ログイン
 func (c *NewController) Post() {
 	request := NewRequest{}
 
 	if err := c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	u, err := user.GetByEmail(request.Email)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	if u.ID != uint(0) {
+		c.Data["json"] = NewResponse{
+			Warning: true,
+			Message: "入力されたメールアドレスは既に登録されています。",
+			UserID:  0,
+		}
+		c.ServeJSON()
 		return
 	}
 
@@ -33,7 +56,11 @@ func (c *NewController) Post() {
 
 	c.SetSession("user_id", userID)
 
-	c.Data["json"] = userID
+	c.Data["json"] = NewResponse{
+		Warning: false,
+		Message: "",
+		UserID:  userID,
+	}
 
 	c.ServeJSON()
 }
