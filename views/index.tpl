@@ -4,8 +4,7 @@
         <meta charset="utf-8">
         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/static/css/sticky-footer.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/slick.min.css" />
-        <link rel="stylesheet" type="text/css" href="/static/css/slick-theme.min.css" />
+        <link rel="stylesheet" type="text/css" href="/static/css/app.css" />
         <title>react-router</title>
     </head>
     <body>
