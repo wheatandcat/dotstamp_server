@@ -22,6 +22,7 @@ type AddRequest struct {
 type AddResponse struct {
 	Warning bool
 	Message string
+	list    []tags.Tag
 }
 
 // Post 追加する
@@ -72,7 +73,13 @@ func (c *AddController) Post() {
 		}
 	}
 
-	if err := tags.Add(request.UserContributionID, request.Name); err != nil {
+	if err = tags.Add(request.UserContributionID, request.Name); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	tagList, err = tags.GetListByUserContributionID(request.UserContributionID)
+	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
@@ -112,6 +119,7 @@ func (c *AddController) Post() {
 	c.Data["json"] = AddResponse{
 		Warning: false,
 		Message: "",
+		list:    tagList,
 	}
 
 	c.ServeJSON()

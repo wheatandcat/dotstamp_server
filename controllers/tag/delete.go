@@ -22,6 +22,7 @@ type DeleteRequest struct {
 type DeleteResponse struct {
 	Warning bool
 	Message string
+	list    []tags.Tag
 }
 
 // Post 削除する
@@ -54,8 +55,14 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	if err := tags.DeleteByIDAndUserContributionID(request.ID, request.UserContributionID); err != nil {
+	if err = tags.DeleteByIDAndUserContributionID(request.ID, request.UserContributionID); err != nil {
 		c.ServerError(err, controllers.ErrContributionNoUser)
+		return
+	}
+
+	tagList, err := tags.GetListByUserContributionID(request.UserContributionID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
@@ -94,6 +101,7 @@ func (c *DeleteController) Post() {
 	c.Data["json"] = DeleteResponse{
 		Warning: false,
 		Message: "",
+		list:    tagList,
 	}
 
 	c.ServeJSON()
