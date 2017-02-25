@@ -22,7 +22,7 @@ type AddRequest struct {
 type AddResponse struct {
 	Warning bool
 	Message string
-	list    []tags.Tag
+	List    []tags.Tag
 }
 
 // Post 追加する
@@ -119,7 +119,7 @@ func (c *AddController) Post() {
 	c.Data["json"] = AddResponse{
 		Warning: false,
 		Message: "",
-		list:    tagList,
+		List:    tagList,
 	}
 
 	c.ServeJSON()
