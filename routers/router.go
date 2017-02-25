@@ -2,6 +2,7 @@ package routers
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/controllers/bug"
 	"dotstamp_server/controllers/character"
 	"dotstamp_server/controllers/characterImage"
 	"dotstamp_server/controllers/contribution"
@@ -53,4 +54,6 @@ func init() {
 
 	beego.Router("/tag/add/", &controllersTag.AddController{})
 	beego.Router("/tag/delete/", &controllersTag.DeleteController{})
+
+	beego.Router("/bug/add/", &controllersBug.AddController{})
 }
