@@ -2,6 +2,7 @@ package controllersFollow
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
 )
@@ -37,6 +38,10 @@ func (c *AddController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
+	models.Lock("user_masters", userID)
+
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
@@ -60,15 +65,19 @@ func (c *AddController) Post() {
 	}
 
 	if err = follows.Add(userID, request.UserContributionID); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
 
 	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = AddResponse{
 		Warning:     false,

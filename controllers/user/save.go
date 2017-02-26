@@ -2,6 +2,7 @@ package controllersUser
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/user"
 )
 
@@ -35,10 +36,15 @@ func (c *SaveController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
 	if err := user.Upadate(userID, request.Name); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrUserSave)
 		return
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = SaveResponse{
 		Success: true,

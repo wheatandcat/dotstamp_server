@@ -216,3 +216,10 @@ func Commit(db *gorm.DB) {
 	db.Commit()
 	database.Transaction(nil)
 }
+
+// Lock ロックする
+func Lock(tableName string, id int) error {
+	db := database.GormConnect()
+
+	return db.Exec("select * from " + tableName + " where id = " + strconv.Itoa(id) + " for update").Error
+}

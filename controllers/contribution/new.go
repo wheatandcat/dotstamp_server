@@ -34,8 +34,11 @@ func (c *NewController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
 	userContributionID, err := contributions.Add(userID, request.Title, request.Body, request.ViewStatus)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionNew)
 		return
 	}
@@ -43,6 +46,7 @@ func (c *NewController) Post() {
 	tag := request.Tag
 	if tag != "" {
 		if err := tags.AddList(int(userContributionID), tag); err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew)
 			return
 		}
@@ -51,6 +55,7 @@ func (c *NewController) Post() {
 	if request.ViewStatus == models.ViewStatusPublic {
 		b, err := contributions.GetSearchWordBody(request.Body)
 		if err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew)
 			return
 		}
@@ -63,10 +68,13 @@ func (c *NewController) Post() {
 
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddSearch(int(userContributionID), s); err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew)
 			return
 		}
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = userContributionID
 	c.ServeJSON()

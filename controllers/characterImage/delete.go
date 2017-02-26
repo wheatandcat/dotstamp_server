@@ -2,6 +2,7 @@ package controllersCharacterImage
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/character"
 	"strconv"
 )
@@ -30,10 +31,15 @@ func (c *DeleteController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
 	if err = characters.DeleteByID(id, userID); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}
+
+	models.Commit(tx)
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {

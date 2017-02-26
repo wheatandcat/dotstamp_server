@@ -2,6 +2,7 @@ package controllersContribution
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"strconv"
 )
@@ -25,10 +26,15 @@ func (t *DeleteController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
 	if err = contributions.DeleteByID(id, userID); err != nil {
+		models.Rollback(tx)
 		t.ServerError(err, controllers.ErrCodeUserNotFound)
 		return
 	}
+
+	models.Commit(tx)
 
 	t.Data["json"] = true
 

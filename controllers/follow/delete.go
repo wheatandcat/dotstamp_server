@@ -2,6 +2,7 @@ package controllersFollow
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
 )
@@ -37,6 +38,10 @@ func (c *DeleteController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
+	models.Lock("user_masters", userID)
+
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
@@ -60,6 +65,7 @@ func (c *DeleteController) Post() {
 	}
 
 	if err = follows.Delete(userfollow.ID); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
@@ -69,6 +75,8 @@ func (c *DeleteController) Post() {
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = DeleteResponse{
 		Warning:     false,

@@ -2,6 +2,7 @@ package controllersForgetPassword
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils"
 	"dotstamp_server/utils/user"
 )
@@ -65,10 +66,15 @@ func (c *SaveController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+
 	if err := user.UpadateToPassword(e, request.Password); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = CheckResponse{
 		Warning: false,

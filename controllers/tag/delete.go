@@ -40,6 +40,9 @@ func (c *DeleteController) Post() {
 		return
 	}
 
+	tx := models.Begin()
+	models.Lock("user_masters", userID)
+
 	contribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
@@ -57,12 +60,14 @@ func (c *DeleteController) Post() {
 	}
 
 	if err = tags.DeleteByIDAndUserContributionID(request.ID, request.UserContributionID); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionNoUser)
 		return
 	}
 
 	tagList, err := tags.GetListByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
@@ -70,18 +75,21 @@ func (c *DeleteController) Post() {
 	if contribution.ViewStatus == models.ViewStatusPublic {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave)
 			return
 		}
 
 		detail, err := contributions.GetDetailByUserContributionID(request.UserContributionID)
 		if err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(detail.Body)
 		if err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew)
 			return
 		}
@@ -94,10 +102,13 @@ func (c *DeleteController) Post() {
 
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
+			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave)
 			return
 		}
 	}
+
+	models.Commit(tx)
 
 	c.Data["json"] = DeleteResponse{
 		Warning: false,

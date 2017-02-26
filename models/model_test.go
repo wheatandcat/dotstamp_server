@@ -249,3 +249,11 @@ func (t *TestModel) TestCommit(c *C) {
 
 	c.Check(r.ID, Equals, uint(3))
 }
+
+func (t *TestModel) TestLock(c *C) {
+	tx := Begin()
+
+	Lock("user_masters", 1)
+
+	Commit(tx)
+}

@@ -2,6 +2,7 @@ package controllersForgetPassword
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils"
 	"dotstamp_server/utils/mail"
 	"dotstamp_server/utils/user"
@@ -55,6 +56,8 @@ func (c *AddController) Post() {
 
 	keyword := utils.GetRandString(50)
 
+	tx := models.Begin()
+
 	if err = user.AddForgetPassword(request.Email, keyword); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
@@ -63,9 +66,12 @@ func (c *AddController) Post() {
 	var url string
 	url, err = mail.GetForgetpasswordURL(request.Email, keyword)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
+
+	models.Commit(tx)
 
 	top := beego.AppConfig.String("topurl")
 
