@@ -62,6 +62,10 @@ func AddList(uID int, n string) error {
 
 	userContributionTag := []models.UserContributionTag{}
 
+	if len(namelist) > TagMaxNumber {
+		return errors.New("max number over tag")
+	}
+
 	for _, name := range namelist {
 		u := models.UserContributionTag{
 			UserContributionID: uID,
