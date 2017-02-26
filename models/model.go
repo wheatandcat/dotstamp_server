@@ -210,3 +210,9 @@ func Rollback(db *gorm.DB) {
 	db.Rollback()
 	database.Transaction(nil)
 }
+
+// Commit コミットする
+func Commit(db *gorm.DB) {
+	db.Commit()
+	database.Transaction(nil)
+}

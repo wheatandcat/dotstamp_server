@@ -200,7 +200,7 @@ func (t *TestModel) TestInsertBatch(c *C) {
 	c.Check(r.Name, Equals, "abcdef")
 }
 
-func (t *TestModel) TestBegin(c *C) {
+func (t *TestModel) TestRollback(c *C) {
 	tx := Begin()
 
 	u := UserMaster{
@@ -223,4 +223,29 @@ func (t *TestModel) TestBegin(c *C) {
 	GetWhere(&r, "ID = :ID", whereList, option)
 
 	c.Check(r.ID, Equals, uint(0))
+}
+
+func (t *TestModel) TestCommit(c *C) {
+	tx := Begin()
+
+	u := UserMaster{
+		Name:           "abcdef",
+		Email:          "abc@com",
+		Password:       "xxxx",
+		ProfileImageID: 1,
+	}
+
+	Create(&u)
+
+	Commit(tx)
+
+	whereList := []map[string]interface{}{
+		{"ID": 3},
+	}
+	option := make(map[string]interface{})
+
+	r := UserMaster{}
+	GetWhere(&r, "ID = :ID", whereList, option)
+
+	c.Check(r.ID, Equals, uint(3))
 }
