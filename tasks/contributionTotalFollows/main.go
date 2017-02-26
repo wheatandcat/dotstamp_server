@@ -4,6 +4,7 @@ import (
 	"path/filepath"
 	"runtime"
 
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
 
@@ -32,13 +33,19 @@ func init() {
 }
 
 func main() {
+	tx := models.Begin()
+
 	if err = AddContributionTotalFollows(); err != nil {
+		models.Rollback(tx)
 		panic(err)
 	}
 
 	if err = SaveUserContributionSearchToFollowCount(); err != nil {
+		models.Rollback(tx)
 		panic(err)
 	}
+
+	models.Commit(tx)
 }
 
 // AddContributionTotalFollows フォロー数を追加する
