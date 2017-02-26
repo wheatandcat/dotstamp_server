@@ -89,7 +89,7 @@ func (u *UserContribution) GetByTop(o int, s int) (userContributionList []UserCo
 		"offset": o,
 	}
 
-	db, err = GetListWhere(&userContributionList, "", whereList, optionMap)
+	db, err = GetListWhere(&userContributionList, "View_status = "+strconv.Itoa(ViewStatusPublic), whereList, optionMap)
 	return
 }
 
