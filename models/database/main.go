@@ -7,9 +7,14 @@ import (
 )
 
 var db *gorm.DB
+var transactionDB *gorm.DB
 
 // GormConnect gorm接続を取得する
 func GormConnect() *gorm.DB {
+	if transactionDB != nil {
+		return transactionDB
+	}
+
 	if db != nil {
 		return db
 	}
@@ -33,4 +38,8 @@ func GormConnect() *gorm.DB {
 	}
 
 	return db
+}
+
+func Transaction(db *gorm.DB) {
+	transactionDB = db
 }

@@ -195,3 +195,18 @@ func InsertBatch(tableName string, add []map[string]interface{}) error {
 
 	return db.Exec(sql).Error
 }
+
+// Begin トランザクションを貼る
+func Begin() *gorm.DB {
+	db := database.GormConnect()
+	tx := db.Begin()
+	database.Transaction(tx)
+
+	return tx
+}
+
+// Rollback ロールバックする
+func Rollback(db *gorm.DB) {
+	db.Rollback()
+	database.Transaction(nil)
+}

@@ -199,3 +199,28 @@ func (t *TestModel) TestInsertBatch(c *C) {
 	c.Check(r.ID, Equals, uint(3))
 	c.Check(r.Name, Equals, "abcdef")
 }
+
+func (t *TestModel) TestBegin(c *C) {
+	tx := Begin()
+
+	u := UserMaster{
+		Name:           "abcdef",
+		Email:          "abc@com",
+		Password:       "xxxx",
+		ProfileImageID: 1,
+	}
+
+	Create(&u)
+
+	Rollback(tx)
+
+	whereList := []map[string]interface{}{
+		{"ID": 3},
+	}
+	option := make(map[string]interface{})
+
+	r := UserMaster{}
+	GetWhere(&r, "ID = :ID", whereList, option)
+
+	c.Check(r.ID, Equals, uint(0))
+}
