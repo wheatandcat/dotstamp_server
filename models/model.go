@@ -1,44 +1,17 @@
 package models
 
 import (
+	"strconv"
 	"strings"
 
-	"github.com/astaxie/beego"
+	"dotstamp_server/models/database"
+
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
 )
 
 // ErrRecordeNotFound レコードなし
 const ErrRecordeNotFound = "record not found"
-
-var db *gorm.DB
-
-// gormConnect gorm接続を取得する
-func gormConnect() *gorm.DB {
-	if db != nil {
-		return db
-	}
-
-	var err error
-	dbms := "mysql"
-	user := beego.AppConfig.String("mysqluser")
-	pass := beego.AppConfig.String("mysqlpass")
-	protocol := beego.AppConfig.String("mysqlhost")
-	database := beego.AppConfig.String("mysqldb")
-
-	connect := user + ":" + pass + "@" + protocol + "/" + database + "?parseTime=true&loc=Asia%2FTokyo"
-	db, err = gorm.Open(dbms, connect)
-
-	if err != nil {
-		panic(err.Error())
-	}
-
-	if beego.AppConfig.String("runmode") == "dev" {
-		db.LogMode(true)
-	}
-
-	return db
-}
 
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
 func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {
@@ -78,7 +51,7 @@ func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (str
 
 // getDbOption DBオプションを取得する
 func getDbOption(where string, bindList []map[string]interface{}, option map[string]interface{}) *gorm.DB {
-	db := gormConnect()
+	db := database.GormConnect()
 
 	if where != "" {
 		w, bind := getBindAndPlaceHolder(where, bindList)
@@ -157,28 +130,68 @@ func GetListWhere(dbModel interface{}, where string, bindList []map[string]inter
 
 // Create 作成する
 func Create(dbModel interface{}) error {
-	db := gormConnect()
+	db := database.GormConnect()
 
 	return db.Create(dbModel).Error
 }
 
 // Save 更新する
 func Save(dbModel interface{}) error {
-	db := gormConnect()
+	db := database.GormConnect()
 
 	return db.Save(dbModel).Error
 }
 
 // Delete 削除する
 func Delete(dbModel interface{}) error {
-	db := gormConnect()
+	db := database.GormConnect()
 
 	return db.Delete(dbModel).Error
 }
 
 // Truncate 空にする
 func Truncate(tableName string) error {
-	db := gormConnect()
+	db := database.GormConnect()
 
 	return db.Exec("TRUNCATE TABLE " + tableName).Error
+}
+
+// InsertBatch 複数挿入する
+func InsertBatch(tableName string, add []map[string]interface{}) error {
+	db := database.GormConnect()
+
+	sql := "INSERT INTO " + tableName + " (`"
+
+	column := []string{}
+
+	for k := range add[0] {
+		column = append(column, k)
+	}
+
+	val := map[int][]string{}
+
+	for k, v := range add {
+		for _, c := range column {
+			insert := v[c]
+			switch insert := insert.(type) {
+			case string:
+				val[k] = append(val[k], insert)
+			case int:
+				val[k] = append(val[k], strconv.Itoa(insert))
+			}
+		}
+	}
+
+	sql += strings.Join(column, "`,`")
+
+	sql += "`) VALUES "
+
+	s := []string{}
+	for _, v := range val {
+		s = append(s, "('"+strings.Join(v, "','")+"')")
+	}
+
+	sql += strings.Join(s, ",")
+
+	return db.Exec(sql).Error
 }

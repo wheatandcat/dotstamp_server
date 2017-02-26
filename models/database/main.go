@@ -1,37 +1,36 @@
 package database
 
 import (
-	"database/sql"
-
-	"github.com/astaxie/beedb"
 	"github.com/astaxie/beego"
+	"github.com/jinzhu/gorm"
 	_ "github.com/ziutek/mymysql/godrv"
 )
 
-var db *sql.DB
+var db *gorm.DB
 
-// GetDB DB取得する
-func GetDB() *sql.DB {
+// GormConnect gorm接続を取得する
+func GormConnect() *gorm.DB {
 	if db != nil {
 		return db
 	}
 
-	username := beego.AppConfig.String("mysqluser")
-	password := beego.AppConfig.String("mysqlpass")
+	var err error
+	dbms := "mysql"
+	user := beego.AppConfig.String("mysqluser")
+	pass := beego.AppConfig.String("mysqlpass")
+	protocol := beego.AppConfig.String("mysqlhost")
 	database := beego.AppConfig.String("mysqldb")
 
-	db, err := sql.Open("mymysql", database+"/"+username+"/"+password)
+	connect := user + ":" + pass + "@" + protocol + "/" + database + "?parseTime=true&loc=Asia%2FTokyo"
+	db, err = gorm.Open(dbms, connect)
+
 	if err != nil {
-		panic(err)
+		panic(err.Error())
+	}
+
+	if beego.AppConfig.String("runmode") == "dev" {
+		db.LogMode(true)
 	}
 
 	return db
-}
-
-// GetLink コネクションを取得する
-func GetLink() beedb.Model {
-	db := GetDB()
-	orm := beedb.New(db)
-
-	return orm
 }

@@ -151,3 +151,51 @@ func (t *TestModel) TestSave(c *C) {
 	c.Check(r.ID, Equals, uint(1))
 	c.Check(r.Name, Equals, "xyz")
 }
+
+func (t *TestModel) TestInsertBatch(c *C) {
+	Truncate("user_masters")
+
+	m := []map[string]interface{}{
+		{
+			"id":               1,
+			"name":             "abc",
+			"email":            "test@tedt.com",
+			"password":         "abc",
+			"profile_image_id": 1,
+			"created_at":       "2015-01-01 10:00:00",
+			"updated_at":       "2015-01-01 10:00:00",
+		},
+		{
+			"id":               2,
+			"name":             "def",
+			"email":            "test@tedt.com",
+			"password":         "abc",
+			"profile_image_id": 1,
+			"created_at":       "2015-01-01 10:00:00",
+			"updated_at":       "2015-01-01 10:00:00",
+		},
+		{
+			"id":               3,
+			"name":             "abcdef",
+			"email":            "test@tedt.com",
+			"password":         "abc",
+			"profile_image_id": 1,
+			"created_at":       "2015-01-01 10:00:00",
+			"updated_at":       "2015-01-01 10:00:00",
+		},
+	}
+
+	InsertBatch("user_masters", m)
+
+	u := UserMaster{}
+	whereList := []map[string]interface{}{
+		{"ID": 3},
+	}
+	option := make(map[string]interface{})
+
+	GetWhere(&u, "ID = :ID", whereList, option)
+
+	r := u
+	c.Check(r.ID, Equals, uint(3))
+	c.Check(r.Name, Equals, "abcdef")
+}

@@ -12,9 +12,7 @@ type TestMain struct {
 
 func init() {
 	var t test.Accessor = &TestMain{}
-	t.SetTableNameList([]string{
-		"user_contribution_tags",
-	})
+	t.SetTableNameList([]string{})
 
 	var _ = Suite(t)
 }
@@ -41,8 +39,7 @@ func (t *TestMain) TestGetBody(c *C) {
 		Message: "本文です",
 	}
 
-	r := GetBody(b)
-	c.Log(string(r))
+	GetBody(b)
 }
 
 func (t *TestMain) TestGetForgetpasswordBody(c *C) {
