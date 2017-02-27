@@ -2,8 +2,8 @@ package characters
 
 import (
 	"dotstamp_server/models"
-	"dotstamp_server/utils"
 	"errors"
+	"strconv"
 )
 
 // Image 画像
@@ -64,5 +64,5 @@ func DeleteByID(id int, userID int) error {
 
 // GetImageName 画像名を取得する
 func GetImageName(id uint) string {
-	return utils.IntToEncryption(int(id)) + ".jpg"
+	return strconv.Itoa(int(id)) + ".jpg"
 }

@@ -33,12 +33,14 @@ func (c *UploadController) Post() {
 
 	var code int
 	if code, err = c.SetImageFileResize(filePath, "character", 180, 180); err != nil {
+		characters.DeleteByID(int(id), userID)
 		c.ServerError(err, code)
 		return
 	}
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
+		characters.DeleteByID(int(id), userID)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
