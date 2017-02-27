@@ -2,13 +2,25 @@ package controllersContribution
 
 import (
 	"dotstamp_server/controllers"
-	"dotstamp_server/utils"
-	"fmt"
+	"dotstamp_server/utils/contribution"
+	"strconv"
 )
 
-// UploadController Uploadコントローラ
+// UploadController アップロードコントローラ
 type UploadController struct {
 	controllers.BaseController
+}
+
+// UploadRequest アップロードリクエスト
+type UploadRequest struct {
+	UserContributionID int `form:"userContributionId"`
+}
+
+// UploadResponse アップロードレスポンス
+type UploadResponse struct {
+	Warning bool
+	Message string
+	Path    string
 }
 
 // Post 画像アップロード
@@ -19,15 +31,26 @@ func (c *UploadController) Post() {
 		return
 	}
 
-	_, header, _ := c.GetFile("file")
-	displayUserID := 1
-	userContributionID := 1
+	request := UploadRequest{}
+	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
-	fileName := utils.SrringToEncryption(header.Filename)
-	filePath := fmt.Sprintf("%08d", displayUserID) + "_" + fmt.Sprintf("%08d", userContributionID) + "_" + fileName + ".jpg"
+	id, err := contributions.GetImageIDAndAdd(request.UserContributionID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
-	c.SaveToFile("file", "./static/files/talk/"+filePath)
+	filePath := strconv.Itoa(int(id)) + ".jpg"
 
-	c.Data["json"] = filePath
+	c.ToFile("./static/files/talk/" + filePath)
+
+	c.Data["json"] = UploadResponse{
+		Warning: false,
+		Message: "",
+		Path:    filePath,
+	}
 	c.ServeJSON()
 }

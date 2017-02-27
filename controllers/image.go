@@ -9,7 +9,7 @@ func (c *BaseController) SetImageFileResize(f string, p string, w uint, h uint) 
 	}
 
 	tmpPath := "./static/files/tmp/" + p + "/_tmp_" + f
-	c.SaveToFile("file", tmpPath)
+	c.ToFile(tmpPath)
 
 	tmpRootPath := "./static/files/tmp/" + p + "/" + f
 
@@ -24,4 +24,13 @@ func (c *BaseController) SetImageFileResize(f string, p string, w uint, h uint) 
 	}
 
 	return 0, nil
+}
+
+// ToFile ファイルを保存する
+func (c *BaseController) ToFile(path string) {
+	if isTest() {
+		return
+	}
+
+	c.SaveToFile("file", path)
 }
