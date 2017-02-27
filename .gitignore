@@ -30,3 +30,5 @@ dump.rdb
 !/static/files/icon/.gitkeep
 /static/files/tmp/icon/*
 !/static/files/tmp/icon/.gitkeep
+/static/files/talk/*
+!/static/files/talk/.gitkeep

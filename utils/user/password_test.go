@@ -2,6 +2,8 @@ package user
 
 import (
 	"dotstamp_server/tests"
+	"dotstamp_server/utils"
+	"time"
 
 	. "gopkg.in/check.v1"
 )
@@ -28,7 +30,15 @@ func (t *TestPassword) TestAddForgetPassword(c *C) {
 }
 
 func (t *TestPassword) TestIsUpdatePassword(c *C) {
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	utils.SetNow(time.Date(2015, 1, 1, 11, 30, 0, 0, loc))
 	r, _ := IsUpdatePassword("test@tedt.com", "abcdef")
+
+	c.Check(r, Equals, false)
+
+	utils.SetNow(time.Date(2015, 1, 1, 10, 30, 0, 0, loc))
+
+	r, _ = IsUpdatePassword("test@tedt.com", "abcdef")
 
 	c.Check(r, Equals, true)
 

@@ -1,6 +1,10 @@
 package user
 
-import "dotstamp_server/models"
+import (
+	"dotstamp_server/models"
+	"dotstamp_server/utils"
+	"time"
+)
 
 // AddForgetPassword 忘れたパスワードを追加する
 func AddForgetPassword(email string, keyword string) error {
@@ -28,6 +32,10 @@ func IsUpdatePassword(email string, keyword string) (bool, error) {
 	}
 
 	if up.Keyword != keyword {
+		return false, nil
+	}
+
+	if up.CreatedAt.Add(1*time.Hour).Unix() < utils.Now().Unix() {
 		return false, nil
 	}
 
