@@ -16,6 +16,8 @@ dump.rdb
 /doc/*
 /log/*
 !/log/.keep
+/logs/*
+!/logs/.keep
 /tmp/*
 /vendor/*
 /static/css
