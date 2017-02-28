@@ -136,18 +136,27 @@ func (t *TestMain) TestGetViewStatusPublicIDList(c *C) {
 }
 
 func (t *TestMain) TestContributionListToPublic(c *C) {
+	b := []GetBody{
+		{
+			Body: "aaa",
+		},
+	}
+
 	list := []Contribution{
 		{
 			ID:         uint(1),
 			ViewStatus: models.ViewStatusPrivate,
+			Body:       b,
 		},
 		{
 			ID:         uint(2),
 			ViewStatus: models.ViewStatusPublic,
+			Body:       b,
 		},
 	}
 
 	r := ContributionListToPublic(list)
 
-	c.Check(r[0].ID, Equals, uint(2))
+	c.Check(len(r[0].Body), Equals, 0)
+	c.Check(len(r[1].Body), Equals, 1)
 }
