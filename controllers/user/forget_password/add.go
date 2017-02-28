@@ -7,6 +7,8 @@ import (
 	"dotstamp_server/utils/mail"
 	"dotstamp_server/utils/user"
 
+	validator "gopkg.in/go-playground/validator.v9"
+
 	"github.com/astaxie/beego"
 )
 
@@ -17,7 +19,7 @@ type AddController struct {
 
 // AddRequest パスワードを忘れ追加リクエスト
 type AddRequest struct {
-	Email string `form:"email"`
+	Email string `form:"email" validate:"required,email"`
 }
 
 // AddResponse パスワードを忘れ追加レスポンス
@@ -30,6 +32,12 @@ type AddResponse struct {
 func (c *AddController) Post() {
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

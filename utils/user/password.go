@@ -6,6 +6,9 @@ import (
 	"time"
 )
 
+// PasswordMinLength パスワードの最低文字数
+const PasswordMinLength = 8
+
 // AddForgetPassword 忘れたパスワードを追加する
 func AddForgetPassword(email string, keyword string) error {
 	u := models.UserForgetPassword{

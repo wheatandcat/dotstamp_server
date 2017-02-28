@@ -129,3 +129,13 @@ func Urldecode(s string) (string, error) {
 
 	return string(data), nil
 }
+
+// InStringArray 文字列配列に含んでいる
+func InStringArray(str string, list []string) bool {
+	for _, v := range list {
+		if v == str {
+			return true
+		}
+	}
+	return false
+}

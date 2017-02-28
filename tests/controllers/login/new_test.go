@@ -24,7 +24,7 @@ func init() {
 func TestNewPost(t *testing.T) {
 	values := url.Values{}
 	values.Set("email", "test_xyz@test.com")
-	values.Set("password", "test")
+	values.Set("password", "testtest")
 
 	r, err := http.NewRequest(
 		"POST",

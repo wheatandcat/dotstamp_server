@@ -26,7 +26,7 @@ func TestSavePost(t *testing.T) {
 	values := url.Values{}
 	values.Set("email", "vHWexIhSOGxjAIjz.t.3o8DN2_cv4ozt3TOb")
 	values.Set("keyword", "gEyG9YZUN31mLKbA18GFpxVc_h8fGFdtn2dNU9SwqG7uakosOKeNU0we4Ahpvishbf4-")
-	values.Set("password", "test")
+	values.Set("password", "testtest")
 
 	r, err := http.NewRequest(
 		"POST",

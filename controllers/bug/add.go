@@ -3,6 +3,8 @@ package controllersBug
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/bug"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // AddController 追加コントローラ
@@ -12,7 +14,7 @@ type AddController struct {
 
 // AddRequest 追加リクエスト
 type AddRequest struct {
-	Body string `form:"body"`
+	Body string `form:"body" validate:"min=1"`
 }
 
 // AddResponse 追加レスポンス
@@ -30,6 +32,12 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

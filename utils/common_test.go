@@ -116,3 +116,18 @@ func (t *TestCommon) TestUrldecode(c *C) {
 
 	c.Check(r, Equals, "test@add.com")
 }
+
+func (t *TestCommon) TestInStringArray(c *C) {
+	s := []string{
+		"aaa",
+		"bbb",
+		"ccc",
+	}
+	r := InStringArray("aaa", s)
+
+	c.Check(r, Equals, true)
+
+	r = InStringArray("zzz", s)
+
+	c.Check(r, Equals, false)
+}

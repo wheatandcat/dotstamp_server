@@ -2,6 +2,7 @@ package tags
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/utils"
 	"errors"
 	"strings"
 )
@@ -66,11 +67,20 @@ func AddList(uID int, n string) error {
 		return errors.New("max number over tag")
 	}
 
+	addName := []string{}
+
 	for _, name := range namelist {
+
+		if utils.InStringArray(name, addName) {
+			continue
+		}
+
 		u := models.UserContributionTag{
 			UserContributionID: uID,
 			Name:               name,
 		}
+
+		addName = append(addName, name)
 
 		userContributionTag = append(userContributionTag, u)
 	}

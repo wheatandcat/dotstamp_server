@@ -3,6 +3,8 @@ package controllersLogin
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/user"
+
+	"gopkg.in/go-playground/validator.v9"
 )
 
 // NewController 新規登録コントローラ
@@ -12,8 +14,8 @@ type NewController struct {
 
 // NewRequest 新規リクエスト
 type NewRequest struct {
-	Email    string `form:"email"`
-	Password string `form:"password"`
+	Email    string `form:"email" validate:"required,email"`
+	Password string `form:"password" validate:"min=8,max=100"`
 }
 
 // NewResponse 新規レスポンス
@@ -28,6 +30,12 @@ func (c *NewController) Post() {
 	request := NewRequest{}
 
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

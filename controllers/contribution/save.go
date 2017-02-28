@@ -5,6 +5,8 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/tag"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // SaveController Saveコントローラ
@@ -15,8 +17,8 @@ type SaveController struct {
 // SaveRequest 保存リクエスト
 type SaveRequest struct {
 	UserContributionID int    `form:"userContributionId"`
-	Title              string `form:"title"`
-	Body               string `form:"body"`
+	Title              string `form:"title" validate:"min=1,max=100"`
+	Body               string `form:"body" validate:"min=1"`
 	ViewStatus         int    `form:"viewStatus"`
 }
 
@@ -30,6 +32,12 @@ func (c *SaveController) Post() {
 
 	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

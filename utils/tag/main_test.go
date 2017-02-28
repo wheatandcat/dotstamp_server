@@ -65,6 +65,15 @@ func (t *TestMain) TestAddList(c *C) {
 	c.Check(r[0].Name, Equals, "abc")
 	c.Check(r[1].Name, Equals, "defg")
 	c.Check(r[2].Name, Equals, "hijkl")
+
+	err := AddList(uID, "aa aa bb cc")
+	c.Check(err, Equals, nil)
+
+	err = AddList(uID, "zz xx yy ww vv uu tt ss mm nn")
+	c.Check(err, Equals, nil)
+
+	err = AddList(uID, "zz xx yy ww vv uu tt ss mm nn ll")
+	c.Check(err, Not(Equals), nil)
 }
 
 func (t *TestMain) TestGetListByUserContributionID(c *C) {

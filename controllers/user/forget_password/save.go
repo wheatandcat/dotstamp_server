@@ -5,6 +5,8 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils"
 	"dotstamp_server/utils/user"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // SaveController パスワード保存コントローラー
@@ -16,7 +18,7 @@ type SaveController struct {
 type SaveRequest struct {
 	Email    string `form:"email"`
 	Keyword  string `form:"keyword"`
-	Password string `form:"password"`
+	Password string `form:"password" validate:"min=8,max=100"`
 }
 
 // SaveResponse パスワード保存レスポンス
@@ -29,6 +31,17 @@ type SaveResponse struct {
 func (c *SaveController) Post() {
 	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

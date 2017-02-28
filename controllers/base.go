@@ -67,6 +67,8 @@ const (
 	ErrTagNameOverlap = 19
 	// ErrContributionNoUser 投稿したユーザではない
 	ErrContributionNoUser = 20
+	// ErrPasswordMinLength パスワードが最低文字数以下
+	ErrPasswordMinLength = 21
 )
 
 // errResponseMap エラーレスポンスマップ
@@ -130,6 +132,9 @@ var errResponseMap = map[int]ErrorResponse{
 	},
 	ErrContributionNoUser: {
 		Message: "自身の投稿ではないので、その操作は行なえません。",
+	},
+	ErrPasswordMinLength: {
+		Message: "パスワードは8文字以上で設定して下さい。",
 	},
 }
 

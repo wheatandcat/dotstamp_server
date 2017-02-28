@@ -5,6 +5,8 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/tag"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // NewController Newコントローラ
@@ -14,8 +16,8 @@ type NewController struct {
 
 // NewRequest 新規リクエスト
 type NewRequest struct {
-	Title      string `form:"title"`
-	Body       string `form:"body"`
+	Title      string `form:"title" validate:"min=1,max=100"`
+	Body       string `form:"body" validate:"min=1"`
 	ViewStatus int    `form:"viewStatus"`
 	Tag        string `form:"tag"`
 }
@@ -30,6 +32,12 @@ func (c *NewController) Post() {
 
 	request := NewRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
