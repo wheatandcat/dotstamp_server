@@ -315,12 +315,7 @@ func ContributionListToPublic(list []Contribution) []Contribution {
 	r := []Contribution{}
 
 	for _, v := range list {
-
-		if v.ViewStatus != models.ViewStatusPublic {
-			v = ContributionToPublic(v)
-		}
-
-		r = append(r, v)
+		r = append(r, ContributionToPublic(v))
 	}
 
 	return r
@@ -328,8 +323,10 @@ func ContributionListToPublic(list []Contribution) []Contribution {
 
 // ContributionToPublic 投稿から公開中を取得する(非公開状態は本文を空にする)
 func ContributionToPublic(c Contribution) Contribution {
-	c.Body = []GetBody{}
-	c.Tag = []tags.Tag{}
+	if c.ViewStatus != models.ViewStatusPublic {
+		c.Body = []GetBody{}
+		c.Tag = []tags.Tag{}
+	}
 
 	return c
 }
