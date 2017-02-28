@@ -11,16 +11,16 @@ import (
 
 // Contribution 投稿
 type Contribution struct {
-	ID                uint
-	User              user.User
-	Title             string
-	FewDaysAgoMessage string
-	Tag               []tags.Tag
-	FollowCount       int
-	Body              []GetBody
-	Search            string
-	UpdatedAt         time.Time
-	CreatedAt         time.Time
+	ID          uint
+	User        user.User
+	Title       string
+	Tag         []tags.Tag
+	FollowCount int
+	Body        []GetBody
+	ViewStatus  int
+	Search      string
+	UpdatedAt   time.Time
+	CreatedAt   time.Time
 }
 
 // Add 投稿する
@@ -138,13 +138,14 @@ func GetContributionByUserContributionID(userContributionID int) (c Contribution
 	}
 
 	contribution := Contribution{
-		ID:        uc.ID,
-		User:      user,
-		Title:     uc.Title,
-		Tag:       tag,
-		Body:      body,
-		UpdatedAt: uc.UpdatedAt,
-		CreatedAt: uc.CreatedAt,
+		ID:         uc.ID,
+		User:       user,
+		Title:      uc.Title,
+		Tag:        tag,
+		Body:       body,
+		ViewStatus: uc.ViewStatus,
+		UpdatedAt:  uc.UpdatedAt,
+		CreatedAt:  uc.CreatedAt,
 	}
 
 	return contribution, nil
@@ -184,14 +185,14 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 		}
 
 		c := Contribution{
-			ID:                val.ID,
-			User:              userMap[val.UserID],
-			Title:             val.Title,
-			CreatedAt:         val.CreatedAt,
-			UpdatedAt:         val.UpdatedAt,
-			FewDaysAgoMessage: "",
-			Tag:               tagMap[int(val.ID)],
-			FollowCount:       followCountMap[int(val.ID)],
+			ID:          val.ID,
+			User:        userMap[val.UserID],
+			Title:       val.Title,
+			CreatedAt:   val.CreatedAt,
+			UpdatedAt:   val.UpdatedAt,
+			ViewStatus:  val.ViewStatus,
+			Tag:         tagMap[int(val.ID)],
+			FollowCount: followCountMap[int(val.ID)],
 		}
 		contributionList = append(contributionList, c)
 	}
@@ -307,4 +308,20 @@ func GetViewStatusPublicIDList() ([]int, error) {
 	}
 
 	return r, nil
+}
+
+// ContributionListToPublic 投稿リストから公開中を取得する
+func ContributionListToPublic(list []Contribution) []Contribution {
+	r := []Contribution{}
+
+	for _, v := range list {
+
+		if v.ViewStatus == models.ViewStatusPrivate {
+			continue
+		}
+
+		r = append(r, v)
+	}
+
+	return r
 }

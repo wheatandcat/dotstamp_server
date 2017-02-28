@@ -1,6 +1,7 @@
 package contributions
 
 import (
+	"dotstamp_server/models"
 	test "dotstamp_server/tests"
 	"dotstamp_server/utils/follow"
 
@@ -132,4 +133,21 @@ func (t *TestMain) TestGetViewStatusPublicIDList(c *C) {
 
 	c.Check(r[0], Equals, 1)
 	c.Check(r[1], Equals, 2)
+}
+
+func (t *TestMain) TestContributionListToPublic(c *C) {
+	list := []Contribution{
+		{
+			ID:         uint(1),
+			ViewStatus: models.ViewStatusPrivate,
+		},
+		{
+			ID:         uint(2),
+			ViewStatus: models.ViewStatusPublic,
+		},
+	}
+
+	r := ContributionListToPublic(list)
+
+	c.Check(r[0].ID, Equals, uint(2))
 }
