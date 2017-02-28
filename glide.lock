@@ -1,5 +1,5 @@
-hash: 17469fde7c5d73543cac07c63ec709d95e9e22d5ab74f4d4b0a6dc83928f842f
-updated: 2017-02-14T07:56:41.403011424+09:00
+hash: 93d39b64a09a9e1e43a1ed34d83a83ed2ed59333e5b88e047c6e708bbab6fb15
+updated: 2017-03-01T02:37:42.250894394+09:00
 imports:
 - name: github.com/astaxie/beedb
   version: 1732292dfde40fab7b4ad38ba413492ec5633ad3
@@ -41,6 +41,8 @@ imports:
   version: db1efb556f84b25a0a13a04aad883943538ad2e0
 - name: github.com/nfnt/resize
   version: 891127d8d1b52734debe1b3c3d7e747502b6c366
+- name: github.com/Sirupsen/logrus
+  version: 0208149b40d863d2c1a2f8fe5753096a9cf2cc8b
 - name: github.com/ziutek/mymysql
   version: e08c2f35356576b3c3690c252fe5dca728ae9292
   subpackages:
@@ -78,7 +80,7 @@ imports:
 - name: gopkg.in/check.v1
   version: 20d25e2804050c1cd24a7eea1e7a6447dd0e74ec
 - name: gopkg.in/go-playground/validator.v9
-  version: 691ea5506371685479307baaf0e623e850de4dbf
+  version: 4bd19358521c53f09639f21e2a9d6883d6890f24
 - name: gopkg.in/yaml.v2
   version: 4c78c975fe7c825c6d1466c42be594d1d6f3aba6
 testImports:
