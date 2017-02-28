@@ -54,7 +54,9 @@ func (c *ShowController) Post() {
 		}
 	}
 
-	contribution = contributions.ContributionToPublic(contribution)
+	if contribution.User.ID != uint(userID) {
+		contribution = contributions.ContributionToPublic(contribution)
+	}
 
 	c.Data["json"] = ShowResponse{
 		Contribution: contribution,
