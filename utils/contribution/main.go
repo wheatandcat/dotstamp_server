@@ -318,6 +318,7 @@ func ContributionListToPublic(list []Contribution) []Contribution {
 
 		if v.ViewStatus != models.ViewStatusPublic {
 			v.Body = []GetBody{}
+			v.Tag = []tags.Tag{}
 		}
 
 		r = append(r, v)
