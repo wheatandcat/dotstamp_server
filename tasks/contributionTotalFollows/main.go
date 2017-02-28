@@ -1,10 +1,14 @@
 package main
 
 import (
+	"io"
+	"log"
+	"os"
 	"path/filepath"
 	"runtime"
 
 	"dotstamp_server/models"
+	"dotstamp_server/utils"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
 
@@ -14,6 +18,7 @@ import (
 var followMap map[int]int
 var contributionIDList []int
 var err error
+var logfile *os.File
 
 // getAppPath アプリケーションパスを取得する
 func getAppPath() string {
@@ -30,9 +35,20 @@ func init() {
 	if err != nil {
 		panic(err)
 	}
+
 }
 
 func main() {
+	logfile, err = utils.LogFile("contributionTotalFollows")
+	if err != nil {
+		panic(err)
+	}
+	defer logfile.Close()
+	log.SetOutput(io.MultiWriter(logfile))
+	log.SetFlags(log.Ldate | log.Ltime)
+
+	log.Println("start!")
+
 	tx := models.Begin()
 
 	if err = AddContributionTotalFollows(); err != nil {
@@ -46,6 +62,8 @@ func main() {
 	}
 
 	models.Commit(tx)
+
+	log.Println("finish!")
 }
 
 // AddContributionTotalFollows フォロー数を追加する
