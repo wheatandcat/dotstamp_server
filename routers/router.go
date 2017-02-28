@@ -8,6 +8,7 @@ import (
 	"dotstamp_server/controllers/contribution"
 	"dotstamp_server/controllers/follow"
 	"dotstamp_server/controllers/login"
+	"dotstamp_server/controllers/problem"
 	"dotstamp_server/controllers/tag"
 	"dotstamp_server/controllers/user"
 	"dotstamp_server/controllers/user/forget_password"
@@ -56,4 +57,6 @@ func init() {
 	beego.Router("/tag/delete/", &controllersTag.DeleteController{})
 
 	beego.Router("/bug/add/", &controllersBug.AddController{})
+
+	beego.Router("/problem/add/", &controllersProblem.AddController{})
 }
