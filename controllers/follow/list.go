@@ -13,9 +13,9 @@ type ListController struct {
 
 // ListRequest リストリクエスト
 type ListRequest struct {
-	Order int `form:"order"`
+	Order int `form:"order" validate:"min=1,max=2"`
 	Page  int `form:"page"`
-	Limit int `form:"limit"`
+	Limit int `form:"limit" validate:"min=1,max=50"`
 }
 
 // ListResponse リストレスポンス

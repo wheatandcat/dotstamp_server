@@ -13,9 +13,9 @@ type SearchController struct {
 // SearchRequest 検索リクエスト
 type SearchRequest struct {
 	Search string `form:"search"`
-	Order  int    `form:"order"`
+	Order  int    `form:"order" validate:"min=1,max=2"`
 	Page   int    `form:"page"`
-	Limit  int    `form:"limit"`
+	Limit  int    `form:"limit" validate:"min=1,max=50"`
 }
 
 // SearchResponse 検索レスポンス
@@ -34,7 +34,7 @@ func (c *SearchController) Post() {
 
 	orderMap := map[int]string{
 		1: "ID desc",
-		2: "ID asc",
+		2: "follow_count desc",
 	}
 
 	offset := (request.Page - 1) * request.Limit
