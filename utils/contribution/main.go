@@ -310,14 +310,14 @@ func GetViewStatusPublicIDList() ([]int, error) {
 	return r, nil
 }
 
-// ContributionListToPublic 投稿リストから公開中を取得する
+// ContributionListToPublic 投稿リストから公開中を取得する(非公開状態は本文を空にする)
 func ContributionListToPublic(list []Contribution) []Contribution {
 	r := []Contribution{}
 
 	for _, v := range list {
 
 		if v.ViewStatus != models.ViewStatusPublic {
-			continue
+			v.Body = []GetBody{}
 		}
 
 		r = append(r, v)

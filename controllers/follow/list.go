@@ -57,6 +57,8 @@ func (c *ListController) Post() {
 		return
 	}
 
+	list = contributions.ContributionListToPublic(list)
+
 	count, err := follows.GetCountByUserID(userID, orderMap[request.Order])
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
