@@ -75,6 +75,10 @@ func AddList(uID int, n string) error {
 			continue
 		}
 
+		if len(name) > 20 {
+			continue
+		}
+
 		u := models.UserContributionTag{
 			UserContributionID: uID,
 			Name:               name,

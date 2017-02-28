@@ -69,6 +69,9 @@ func (t *TestMain) TestAddList(c *C) {
 	err := AddList(uID, "aa aa bb cc")
 	c.Check(err, Equals, nil)
 
+	err = AddList(uID, "aaaaaaaaaaaaaaaaaaaaa aa")
+	c.Check(err, Equals, nil)
+
 	err = AddList(uID, "zz xx yy ww vv uu tt ss mm nn")
 	c.Check(err, Equals, nil)
 
