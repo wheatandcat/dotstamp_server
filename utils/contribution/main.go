@@ -316,7 +316,7 @@ func ContributionListToPublic(list []Contribution) []Contribution {
 
 	for _, v := range list {
 
-		if v.ViewStatus == models.ViewStatusPrivate {
+		if v.ViewStatus != models.ViewStatusPublic {
 			continue
 		}
 
