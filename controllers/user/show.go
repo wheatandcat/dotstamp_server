@@ -1,0 +1,42 @@
+package controllersUser
+
+import (
+	"dotstamp_server/controllers"
+	"dotstamp_server/utils/user"
+)
+
+// ShowController 詳細確認
+type ShowController struct {
+	controllers.BaseController
+}
+
+// ShowResponse 詳細レスポンス
+type ShowResponse struct {
+	User    user.User
+	Profile []user.Profile
+}
+
+// Post ユーザー情報
+func (c *ShowController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
+		return
+	}
+
+	u, err := user.GetByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeUserNotFound)
+	}
+
+	p, err := user.GetProfileImageListByUserID(userID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeUserNotFound)
+	}
+
+	c.Data["json"] = ShowResponse{
+		User:    u,
+		Profile: p,
+	}
+	c.ServeJSON()
+}
