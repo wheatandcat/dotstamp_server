@@ -3,7 +3,6 @@ package routers
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/controllers/bug"
-	"dotstamp_server/controllers/character"
 	"dotstamp_server/controllers/characterImage"
 	"dotstamp_server/controllers/contribution"
 	"dotstamp_server/controllers/follow"
@@ -42,8 +41,6 @@ func init() {
 	beego.Router("/user/forget_password/add/", &controllersForgetPassword.AddController{})
 	beego.Router("/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
 	beego.Router("/user/forget_password/save/", &controllersForgetPassword.SaveController{})
-
-	beego.Router("/character/list/", &controllersCharacter.ListController{})
 
 	beego.Router("/characterImage/list/", &controllersCharacterImage.ListController{})
 	beego.Router("/characterImage/upload/", &controllersCharacterImage.UploadController{})

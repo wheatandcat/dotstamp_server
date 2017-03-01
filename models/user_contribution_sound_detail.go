@@ -11,8 +11,8 @@ const (
 	TalkTypeImage = 2
 )
 
-// UserContributionSoundDital ユーザ投稿音声
-type UserContributionSoundDital struct {
+// UserContributionSoundDetail ユーザ投稿音声
+type UserContributionSoundDetail struct {
 	gorm.Model
 	UserContributionID int `json:"user_contribution_id"`
 	Priority           int
@@ -23,23 +23,23 @@ type UserContributionSoundDital struct {
 }
 
 // Add 追加する
-func (u *UserContributionSoundDital) Add() error {
+func (u *UserContributionSoundDetail) Add() error {
 	return Create(u)
 }
 
 // Save 保存する
-func (u *UserContributionSoundDital) Save() error {
+func (u *UserContributionSoundDetail) Save() error {
 	return Save(u)
 }
 
 // GetListByUserContributionID 投稿IDからリスト取得する
-func (u *UserContributionSoundDital) GetListByUserContributionID(uID int) (userContributionSound []UserContributionSound, db *gorm.DB, err error) {
+func (u *UserContributionSoundDetail) GetListByUserContributionID(uID int) (userContributionSoundDetail []UserContributionSoundDetail, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": uID},
 	}
 	option := make(map[string]interface{})
 
-	db, err = GetWhere(&userContributionSound, "User_contribution_ID = :UserContributionID", whereList, option)
+	db, err = GetWhere(&userContributionSoundDetail, "User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
 }

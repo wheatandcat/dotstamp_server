@@ -6,12 +6,12 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-type TestUserContributionSoundDital struct {
+type TestUserContributionSoundDetail struct {
 	test.TSuite
 }
 
 func init() {
-	var t test.Accessor = &TestUserContributionSoundDital{}
+	var t test.Accessor = &TestUserContributionSoundDetail{}
 	t.SetTableNameList([]string{
 		"user_contribution_sound_details",
 	})
@@ -19,8 +19,8 @@ func init() {
 	var _ = Suite(t)
 }
 
-func (t *TestUserContributionSoundDital) TestAdd(c *C) {
-	u := &UserContributionSoundDital{
+func (t *TestUserContributionSoundDetail) TestAdd(c *C) {
+	u := &UserContributionSoundDetail{
 		UserContributionID: 100,
 		Priority:           1,
 		TalkType:           1,

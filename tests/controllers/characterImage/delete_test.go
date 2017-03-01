@@ -14,7 +14,6 @@ import (
 func init() {
 	test.Setup()
 	test.SetupFixture([]string{
-		"user_characters",
 		"user_character_images",
 		"user_masters",
 	})

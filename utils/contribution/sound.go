@@ -28,7 +28,7 @@ func AddSoundDetail(uID int, b GetBody) error {
 		s = b.Body
 	}
 
-	u := models.UserContributionSoundDital{
+	u := models.UserContributionSoundDetail{
 		UserContributionID: uID,
 		Priority:           b.Priority,
 		TalkType:           b.TalkType,
