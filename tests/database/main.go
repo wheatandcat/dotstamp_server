@@ -6,6 +6,12 @@ import (
 	"strings"
 )
 
+// ErrRecordeNotFound レコードなし
+const ErrRecordeNotFound = "record not found"
+
+// ErrFileTypeUnMatch レコードなし
+const ErrFileTypeUnMatch = "file type unmatch"
+
 // Execute クエリを実行する
 func Execute(query string) error {
 	db := database.GormConnect()
@@ -13,11 +19,29 @@ func Execute(query string) error {
 	return db.Exec(query).Error
 }
 
+func checkError(err error) error {
+	if err == nil {
+		return nil
+	}
+
+	if err.Error() == ErrRecordeNotFound {
+		return nil
+	}
+
+	if err.Error() == ErrFileTypeUnMatch {
+		return nil
+	}
+
+	return err
+}
+
 // Truncate 空にする
 func Truncate(tableName string) error {
 	db := database.GormConnect()
 
-	return db.Exec("TRUNCATE TABLE " + tableName).Error
+	err := db.Exec("TRUNCATE TABLE " + tableName).Error
+
+	return checkError(err)
 }
 
 // GetFindAll 全て取得する

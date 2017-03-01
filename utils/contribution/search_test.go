@@ -6,12 +6,12 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-type TestUserContributionSearch struct {
+type TestSearch struct {
 	test.TSuite
 }
 
 func init() {
-	var t test.Accessor = &TestUserContributionSearch{}
+	var t test.Accessor = &TestSearch{}
 	t.SetTableNameList([]string{
 		"user_contribution_searches",
 	})
@@ -19,33 +19,33 @@ func init() {
 	var _ = Suite(t)
 }
 
-func (t *TestUserContributionSearch) TestGetSearchWordBody(c *C) {
+func (t *TestSearch) TestGetSearchWordBody(c *C) {
 	s := `[{"priority":0,"body":"あああ","character":{"Id":128,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":1,"body":"あああ","character":{"Id":125,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":2,"body":"いいいい","character":{"Id":126,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false}]`
 	r, _ := GetSearchWordBody(s)
 
 	c.Check(r, Equals, "ああああああいいいい")
 }
 
-func (t *TestUserContributionSearch) TestAddSearch(c *C) {
+func (t *TestSearch) TestAddSearch(c *C) {
 	AddSearch(10, "aaaaaa")
 	r, _ := GetSearchByUserContributionID(10)
 
 	c.Check(r.UserContributionID, Equals, 10)
 }
 
-func (t *TestUserContributionSearch) TestGetSearchByUserContributionID(c *C) {
+func (t *TestSearch) TestGetSearchByUserContributionID(c *C) {
 	r, _ := GetSearchByUserContributionID(1)
 
 	c.Check(r.UserContributionID, Equals, 1)
 }
 
-func (t *TestUserContributionSearch) TestGetSearchListByUserContributionIDList(c *C) {
+func (t *TestSearch) TestGetSearchListByUserContributionIDList(c *C) {
 	r, _ := GetSearchListByUserContributionIDList([]int{1})
 
 	c.Check(r[0].UserContributionID, Equals, 1)
 }
 
-func (t *TestUserContributionSearch) TestAddOrSaveSearch(c *C) {
+func (t *TestSearch) TestAddOrSaveSearch(c *C) {
 	AddOrSaveSearch(1, "ああああああいいいい")
 	r, _ := GetSearchByUserContributionID(1)
 
@@ -57,7 +57,7 @@ func (t *TestUserContributionSearch) TestAddOrSaveSearch(c *C) {
 	c.Check(r.Search, Equals, "ああああああいいいい")
 }
 
-func (t *TestUserContributionSearch) TestDeleteSearchByUserContributionID(c *C) {
+func (t *TestSearch) TestDeleteSearchByUserContributionID(c *C) {
 	DeleteSearchByUserContributionID(1)
 
 	r, _ := GetSearchByUserContributionID(1)
@@ -69,7 +69,7 @@ func (t *TestUserContributionSearch) TestDeleteSearchByUserContributionID(c *C) 
 	c.Check(r.ID, Equals, uint(0))
 }
 
-func (t *TestUserContributionSearch) TestGetSearchValueListBySearch(c *C) {
+func (t *TestSearch) TestGetSearchValueListBySearch(c *C) {
 	r, _ := GetSearchValueListBySearch("a", "ID desc", 10, 0)
 
 	c.Check(r[0].UserContributionID, Equals, 3)
@@ -83,7 +83,7 @@ func (t *TestUserContributionSearch) TestGetSearchValueListBySearch(c *C) {
 	c.Check(len(r), Equals, 0)
 }
 
-func (t *TestUserContributionSearch) TestSaveToFollowCount(c *C) {
+func (t *TestSearch) TestSaveToFollowCount(c *C) {
 	u, _ := GetSearchListByUserContributionIDList([]int{1})
 
 	m := map[int]int{}
@@ -95,7 +95,7 @@ func (t *TestUserContributionSearch) TestSaveToFollowCount(c *C) {
 	c.Check(r.FollowCount, Equals, 10)
 }
 
-func (t *TestUserContributionSearch) TestGetCountBySearch(c *C) {
+func (t *TestSearch) TestGetCountBySearch(c *C) {
 	r, _ := GetCountBySearch("a", "ID desc")
 
 	c.Check(r, Equals, 2)

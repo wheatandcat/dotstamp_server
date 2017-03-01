@@ -31,8 +31,9 @@ type GetBody struct {
 
 // GetCharacter 取得キャラクター
 type GetCharacter struct {
-	ID       int
-	FileName string
+	ID        int
+	FileName  string
+	VoiceType int
 }
 
 // SaveDetail 詳細を保存する

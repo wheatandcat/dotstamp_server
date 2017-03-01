@@ -13,6 +13,9 @@ import (
 // ErrRecordeNotFound レコードなし
 const ErrRecordeNotFound = "record not found"
 
+// ErrFileTypeUnMatch レコードなし
+const ErrFileTypeUnMatch = "file type unmatch"
+
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
 func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {
 	bind := []interface{}{}
@@ -77,12 +80,28 @@ func getDbOption(where string, bindList []map[string]interface{}, option map[str
 	return db
 }
 
+func checkError(err error) error {
+	if err == nil {
+		return nil
+	}
+
+	if err.Error() == ErrRecordeNotFound {
+		return nil
+	}
+
+	if err.Error() == ErrFileTypeUnMatch {
+		return nil
+	}
+
+	return err
+}
+
 // GetWhere 条件から取得する
 func GetWhere(dbModel interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (*gorm.DB, error) {
 	db := getDbOption(where, bindList, option)
 
 	err := db.First(dbModel).Error
-	if err != nil && err.Error() == ErrRecordeNotFound {
+	if err = checkError(err); err != nil {
 		return db, nil
 	}
 
@@ -96,7 +115,7 @@ func GeScanWhere(dest interface{}, name string, where string, bindList []map[str
 	db := getDbOption(where, bindList, option)
 
 	err := db.Table(name).Scan(dest).Error
-	if err != nil && err.Error() == ErrRecordeNotFound {
+	if err = checkError(err); err != nil {
 		return nil
 	}
 
@@ -109,7 +128,7 @@ func GetCount(dbModel interface{}, name string, where string, bindList []map[str
 
 	count := 0
 	err := db.Table(name).Count(&count).Error
-	if err != nil && err.Error() == ErrRecordeNotFound {
+	if err = checkError(err); err != nil {
 		return 0, nil
 	}
 
@@ -121,7 +140,7 @@ func GetListWhere(dbModel interface{}, where string, bindList []map[string]inter
 	db := getDbOption(where, bindList, option)
 
 	err := db.Find(dbModel).Error
-	if err != nil && err.Error() == ErrRecordeNotFound {
+	if err = checkError(err); err != nil {
 		return db, nil
 	}
 
@@ -153,7 +172,9 @@ func Delete(dbModel interface{}) error {
 func Truncate(tableName string) error {
 	db := database.GormConnect()
 
-	return db.Exec("TRUNCATE TABLE " + tableName).Error
+	err := db.Exec("TRUNCATE TABLE " + tableName).Error
+
+	return checkError(err)
 }
 
 // InsertBatch 複数挿入する

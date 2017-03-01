@@ -12,7 +12,7 @@ const ViewStatusPublic = 1
 // ViewStatusPrivate プライベート状態
 const ViewStatusPrivate = 2
 
-// UserContribution ユーザー投稿
+// UserContribution ユーザ投稿
 type UserContribution struct {
 	gorm.Model
 	UserID     int `json:"user_id"`
