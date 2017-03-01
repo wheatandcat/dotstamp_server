@@ -15,9 +15,9 @@ dump.rdb
 # Ignore all logfiles and tempfiles.
 /doc/*
 /log/*
-!/log/.keep
+!/log/.gitkeep
 /logs/*
-!/logs/.keep
+!/logs/.gitkeep
 /tmp/*
 /vendor/*
 /static/css
