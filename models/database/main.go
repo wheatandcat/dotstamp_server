@@ -40,6 +40,7 @@ func GormConnect() *gorm.DB {
 	return db
 }
 
+// Transaction トランザクション
 func Transaction(db *gorm.DB) {
 	transactionDB = db
 }

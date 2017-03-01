@@ -11,11 +11,12 @@
 metas/
 dotstamp_server
 dump.rdb
+.remote-sync.json
 
 # Ignore all logfiles and tempfiles.
 /doc/*
-/log/*
-!/log/.gitkeep
+/tool/*
+!/tool/.gitkeep
 /logs/*
 !/logs/.gitkeep
 /tmp/*
@@ -24,6 +25,8 @@ dump.rdb
 /static/js
 /static/fonts
 /static/images
+/static/files/sound/*
+!/static/files/sound/.gitkeep
 /static/files/character/*
 !/static/files/character/.gitkeep
 /static/files/tmp/character/*
