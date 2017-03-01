@@ -27,6 +27,8 @@ dump.rdb
 /static/images
 /static/files/sound/*
 !/static/files/sound/.gitkeep
+/static/files/tmp/sound/*
+!/static/files/tmp/sound/.gitkeep
 /static/files/character/*
 !/static/files/character/.gitkeep
 /static/files/tmp/character/*
