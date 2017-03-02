@@ -35,3 +35,11 @@ func (t *TestUserContributionSoundDetail) TestAdd(c *C) {
 
 	c.Check(r[0].UserContributionID, Equals, 100)
 }
+
+func (t *TestUserContributionSoundDetail) TestGetByID(c *C) {
+	u := &UserContributionSoundDetail{}
+
+	r, _, _ := u.GetByID(1)
+
+	c.Check(r.ID, Equals, uint(1))
+}

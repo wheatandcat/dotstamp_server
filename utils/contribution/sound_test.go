@@ -14,6 +14,7 @@ type TestSound struct {
 func init() {
 	var t test.Accessor = &TestSound{}
 	t.SetTableNameList([]string{
+		"user_contributions",
 		"user_contribution_sounds",
 		"user_contribution_sound_details",
 	})
@@ -60,6 +61,22 @@ func (t *TestSound) TestAddSoundDetailList(c *C) {
 
 	c.Check(r[1].UserContributionID, Equals, 100)
 	c.Check(r[1].BodySound, Equals, "defajhg")
+}
+
+func (t *TestSound) TestSaveSoundDetailToBodySound(c *C) {
+	err := SaveSoundDetailToBodySound(uint(1), "abcdef", 1)
+	c.Check(err, Equals, nil)
+
+	err = SaveSoundDetailToBodySound(uint(1), "abcdef", 2)
+	c.Check(err, Not(Equals), nil)
+}
+
+func (t *TestSound) TestSaveSoundDetailTVoiceType(c *C) {
+	err := SaveSoundDetailTVoiceType(uint(1), 1, 1)
+	c.Check(err, Equals, nil)
+
+	err = SaveSoundDetailTVoiceType(uint(1), 1, 2)
+	c.Check(err, Not(Equals), nil)
 }
 
 func (t *TestSound) TestMakeSoundFile(c *C) {

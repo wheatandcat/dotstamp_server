@@ -43,3 +43,15 @@ func (u *UserContributionSoundDetail) GetListByUserContributionID(uID int) (user
 
 	return
 }
+
+// GetByID IDから取得する
+func (u *UserContributionSoundDetail) GetByID(id uint) (userContributionSoundDetail UserContributionSoundDetail, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"ID": id},
+	}
+	option := make(map[string]interface{})
+
+	db, err = GetWhere(&userContributionSoundDetail, "ID = :ID", whereList, option)
+
+	return
+}

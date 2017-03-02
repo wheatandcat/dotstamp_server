@@ -3,6 +3,8 @@ package contributions
 import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/sound"
+	"errors"
+	"log"
 	"regexp"
 	"strconv"
 )
@@ -65,6 +67,60 @@ func AddSoundDetail(uID int, b GetBody) error {
 	}
 
 	return u.Add()
+}
+
+func getByID(id uint) (models.UserContributionSoundDetail, error) {
+	u := models.UserContributionSoundDetail{}
+	r, _, err := u.GetByID(id)
+
+	log.Println(r)
+	if r.ID == uint(0) {
+		return r, errors.New("not found ID")
+	}
+
+	return r, err
+}
+
+// SaveSoundDetailToBodySound 音声本文を保存する
+func SaveSoundDetailToBodySound(id uint, body string, userID int) error {
+	u, err := getByID(id)
+	if err != nil {
+		return err
+	}
+
+	c, err := GetByUserContributionID(u.UserContributionID)
+	if err != nil {
+		return err
+	}
+
+	if userID != c.UserID {
+		return errors.New("difference UserID")
+	}
+
+	u.BodySound = body
+
+	return u.Save()
+}
+
+// SaveSoundDetailTVoiceType ボイスタイプを保存する
+func SaveSoundDetailTVoiceType(id uint, v int, userID int) error {
+	u, err := getByID(id)
+	if err != nil {
+		return err
+	}
+
+	c, err := GetByUserContributionID(u.UserContributionID)
+	if err != nil {
+		return err
+	}
+
+	if userID != c.UserID {
+		return errors.New("difference UserID")
+	}
+
+	u.VoiceType = v
+
+	return u.Save()
 }
 
 // AddSoundDetailList 音声詳細リストを追加する

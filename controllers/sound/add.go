@@ -6,6 +6,8 @@ import (
 	"dotstamp_server/utils/character"
 	"dotstamp_server/utils/contribution"
 	"errors"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // AddController 追加コントローラ
@@ -35,6 +37,12 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
