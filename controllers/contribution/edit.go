@@ -6,9 +6,15 @@ import (
 	"strconv"
 )
 
-// EditController Editコントローラ
+// EditController 編集コントローラ
 type EditController struct {
 	controllers.BaseController
+}
+
+// EditResponse 編集レスポンス
+type EditResponse struct {
+	contributions.Contribution
+	Sound bool
 }
 
 // Post 編集する
@@ -36,7 +42,16 @@ func (t *EditController) Post() {
 		return
 	}
 
-	t.Data["json"] = c
+	s, err := contributions.GetSoundByUserContributionID(id)
+	if err != nil {
+		t.ServerError(err, controllers.ErrParameter)
+		return
+	}
+
+	t.Data["json"] = EditResponse{
+		Contribution: c,
+		Sound:        (s.ID != uint(0)),
+	}
 
 	t.ServeJSON()
 }
