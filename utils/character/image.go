@@ -3,6 +3,7 @@ package characters
 import (
 	"dotstamp_server/models"
 	"errors"
+	"log"
 	"strconv"
 )
 
@@ -11,6 +12,7 @@ type Image struct {
 	ID          uint
 	CharacterID int
 	Priority    int
+	VoiceType   int
 	FileName    string
 }
 
@@ -27,6 +29,26 @@ func AddImage(uID int, cID int, p int) (uint, error) {
 	return u.ID, e
 }
 
+// SaveToVoiceType 音声状態を保存する
+func SaveToVoiceType(id int, v int, userID int) error {
+	u := models.UserCharacterImage{}
+
+	log.Println(id)
+	user, _, err := u.GetByID(id)
+	log.Println(user)
+	if err != nil {
+		return err
+	}
+
+	if userID != user.UserID {
+		return errors.New("User_ID is wrong")
+	}
+
+	user.VoiceType = v
+
+	return user.Save()
+}
+
 // GetImageListByUserID ユーザーIDからリストを取得する
 func GetImageListByUserID(uID int) ([]Image, error) {
 	u := models.UserCharacterImage{}
@@ -38,6 +60,7 @@ func GetImageListByUserID(uID int) ([]Image, error) {
 			ID:          v.ID,
 			CharacterID: v.CharacterID,
 			Priority:    v.Priority,
+			VoiceType:   v.VoiceType,
 			FileName:    GetImageName(v.ID),
 		}
 

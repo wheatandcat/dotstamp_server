@@ -47,7 +47,7 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	c.Data["json"] = UploadResponse{
+	c.Data["json"] = DeleteResponse{
 		Image: image,
 	}
 

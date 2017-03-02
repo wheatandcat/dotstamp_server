@@ -39,7 +39,7 @@ func (u *UserContributionSoundDetail) GetListByUserContributionID(uID int) (user
 	}
 	option := make(map[string]interface{})
 
-	db, err = GetWhere(&userContributionSoundDetail, "User_contribution_ID = :UserContributionID", whereList, option)
+	db, err = GetListWhere(&userContributionSoundDetail, "User_contribution_ID = :UserContributionID", whereList, option)
 
 	return
 }

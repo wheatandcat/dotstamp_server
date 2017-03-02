@@ -36,6 +36,7 @@ func GormConnect() *gorm.DB {
 	if beego.AppConfig.String("runmode") == "dev" {
 		db.LogMode(true)
 	}
+	db.LogMode(true)
 
 	return db
 }

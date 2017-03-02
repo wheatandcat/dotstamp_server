@@ -1,6 +1,7 @@
 package contributions
 
 import (
+	"dotstamp_server/models"
 	"dotstamp_server/tests"
 
 	. "gopkg.in/check.v1"
@@ -14,6 +15,7 @@ func init() {
 	var t test.Accessor = &TestSound{}
 	t.SetTableNameList([]string{
 		"user_contribution_sounds",
+		"user_contribution_sound_details",
 	})
 
 	var _ = Suite(t)
@@ -31,4 +33,57 @@ func (t *TestSound) TestAddSound(c *C) {
 	r, _ := GetSoundByUserContributionID(100)
 
 	c.Check(r.UserContributionID, Equals, 100)
+}
+
+func (t *TestSound) TestAddSoundDetailList(c *C) {
+	char := GetCharacter{
+		VoiceType: 1,
+	}
+
+	list := []GetBody{
+		{
+			Body:      "abc",
+			TalkType:  models.TalkTypeImage,
+			Priority:  1,
+			Character: char,
+		},
+		{
+			Body:      "def'a!-jhg",
+			TalkType:  models.TalkTypeText,
+			Priority:  2,
+			Character: char,
+		},
+	}
+
+	AddSoundDetailList(100, list)
+	r, _ := GetSoundDetailListByUserContributionID(100)
+
+	c.Check(r[1].UserContributionID, Equals, 100)
+	c.Check(r[1].BodySound, Equals, "defajhg")
+}
+
+func (t *TestSound) TestMakeSoundFile(c *C) {
+	list := []models.UserContributionSoundDetail{
+		{
+			UserContributionID: 0,
+			Priority:           1,
+			VoiceType:          VoiceTypeMeiNormal,
+			BodySound:          "今日は雨だ",
+		},
+		{
+			UserContributionID: 0,
+			Priority:           2,
+			VoiceType:          VoiceTypeMeiNormal,
+			BodySound:          "",
+		},
+		{
+			UserContributionID: 0,
+			Priority:           3,
+			VoiceType:          0,
+			BodySound:          "家の中で遊ぼう",
+		},
+	}
+
+	r := MakeSoundFile(0, list)
+	c.Check(r, Equals, nil)
 }

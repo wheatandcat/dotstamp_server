@@ -1,4 +1,4 @@
-package controllersFollow
+package controllersCharacterImage
 
 import (
 	_ "dotstamp_server/routers"
@@ -13,24 +13,24 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func setupAdd() {
+func setupSave() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_masters",
-		"user_contributions",
-		"user_contribution_follows",
+		"user_character_images",
 	})
 }
 
-func TestAddPost(t *testing.T) {
-	setupAdd()
+func TestSavePost(t *testing.T) {
+	setupSave()
 
 	values := url.Values{}
-	values.Set("userContributionId", "1")
+	values.Set("id", "1")
+	values.Set("voiceType", "2")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/follow/add/",
+		"/characterImage/save/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -43,7 +43,7 @@ func TestAddPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/follow/add/\n", t, func() {
+	Convey("/characterImage/save/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

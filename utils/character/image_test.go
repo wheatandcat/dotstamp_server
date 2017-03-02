@@ -30,6 +30,16 @@ func (t *TestImage) TestAddImage(c *C) {
 	c.Check(r[0].CharacterID, Equals, 1)
 }
 
+func (t *TestImage) TestSaveToVoiceType(c *C) {
+	SaveToVoiceType(1, 10, 1)
+
+	u := models.UserCharacterImage{}
+
+	r, _, _ := u.GetByID(1)
+
+	c.Check(r.VoiceType, Equals, 10)
+}
+
 func (t *TestImage) TestGetImageListByUserID(c *C) {
 
 	r, _ := GetImageListByUserID(1)

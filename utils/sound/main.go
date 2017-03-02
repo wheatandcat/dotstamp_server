@@ -26,11 +26,8 @@ func add(text string, file string, v string) error {
 	cmd := "echo " + text + " | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
 
 	_, err := exec.Command("sh", "-c", cmd).Output()
-	if err != nil {
-		return err
-	}
 
-	return nil
+	return err
 }
 
 // Join 結合する
@@ -42,12 +39,25 @@ func Join(list []string, file string) error {
 		cmd += " " + path + "static/files/tmp/sound/" + v + ".wav"
 	}
 
-	cmd += " " + path + "static/files/sound/" + file + ".wav"
+	cmd += " " + path + "static/files/tmp/sound/" + file + ".wav"
 
-	_, err := exec.Command("sh", "-c", cmd).Output()
-	if err != nil {
+	if _, err := exec.Command("sh", "-c", cmd).Output(); err != nil {
 		return err
 	}
 
-	return nil
+	return toMp3(file)
+}
+
+// toMp3 mp3を変換する
+func toMp3(file string) error {
+	path := getRootPath()
+
+	src := path + "static/files/tmp/sound/" + file + ".wav"
+	dest := path + "static/files/sound/" + file + ".mp3"
+
+	cmd := "lame -V2 " + src + " " + dest
+
+	_, err := exec.Command("sh", "-c", cmd).Output()
+
+	return err
 }

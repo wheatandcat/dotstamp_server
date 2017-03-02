@@ -36,6 +36,18 @@ func (t *TestUserCharacterImage) TestAdd(c *C) {
 	c.Check(u.ID, Equals, uint(3))
 }
 
+func (t *TestUserCharacterImage) TestSave(c *C) {
+	u := &UserCharacterImage{}
+
+	user, _, _ := u.GetByID(1)
+	user.VoiceType = 10
+	user.Save()
+
+	r, _, _ := u.GetByID(1)
+
+	c.Check(r.VoiceType, Equals, 10)
+}
+
 func (t *TestUserCharacterImage) TestGetListByUserID(c *C) {
 	u := &UserCharacterImage{}
 	r, _, _ := u.GetListByUserID(2)

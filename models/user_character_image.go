@@ -8,11 +8,17 @@ type UserCharacterImage struct {
 	UserID      int `json:"user_id"`
 	CharacterID int `json:"character_id"`
 	Priority    int
+	VoiceType   int `json:"voice_type"`
 }
 
 // Add 追加する
 func (u *UserCharacterImage) Add() error {
 	return Create(u)
+}
+
+// Save 保存する
+func (u *UserCharacterImage) Save() error {
+	return Save(u)
 }
 
 // GetListByUserID ユーザーIDからリストを取得する

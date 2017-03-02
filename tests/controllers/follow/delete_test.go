@@ -13,15 +13,18 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setupDelete() {
 	test.Setup()
 	test.SetupFixture([]string{
+		"user_masters",
 		"user_contributions",
 		"user_contribution_follows",
 	})
 }
 
 func TestDeletePost(t *testing.T) {
+	setupDelete()
+
 	values := url.Values{}
 	values.Set("userContributionId", "1")
 

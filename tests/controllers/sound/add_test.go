@@ -1,4 +1,4 @@
-package controllersFollow
+package controllersSound
 
 import (
 	_ "dotstamp_server/routers"
@@ -13,24 +13,26 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func setupAdd() {
+func setUpAdd() {
 	test.Setup()
 	test.SetupFixture([]string{
-		"user_masters",
 		"user_contributions",
-		"user_contribution_follows",
+		"user_contribution_details",
+		"user_character_images",
+		"user_contribution_sounds",
+		"user_contribution_sound_details",
 	})
 }
 
 func TestAddPost(t *testing.T) {
-	setupAdd()
+	setUpAdd()
 
 	values := url.Values{}
-	values.Set("userContributionId", "1")
+	values.Set("userContributionId", "2")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/follow/add/",
+		"/sound/add/?user_id=2",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -43,7 +45,7 @@ func TestAddPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/follow/add/\n", t, func() {
+	Convey("/sound/add/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

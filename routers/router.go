@@ -8,6 +8,7 @@ import (
 	"dotstamp_server/controllers/follow"
 	"dotstamp_server/controllers/login"
 	"dotstamp_server/controllers/problem"
+	"dotstamp_server/controllers/sound"
 	"dotstamp_server/controllers/tag"
 	"dotstamp_server/controllers/user"
 	"dotstamp_server/controllers/user/forget_password"
@@ -45,6 +46,7 @@ func init() {
 	beego.Router("/characterImage/list/", &controllersCharacterImage.ListController{})
 	beego.Router("/characterImage/upload/", &controllersCharacterImage.UploadController{})
 	beego.Router("/characterImage/delete/:id([0-9]+)", &controllersCharacterImage.DeleteController{})
+	beego.Router("/characterImage/save/", &controllersCharacterImage.SaveController{})
 
 	beego.Router("/follow/add/", &controllersFollow.AddController{})
 	beego.Router("/follow/delete/", &controllersFollow.DeleteController{})
@@ -56,4 +58,7 @@ func init() {
 	beego.Router("/bug/add/", &controllersBug.AddController{})
 
 	beego.Router("/problem/add/", &controllersProblem.AddController{})
+
+	beego.Router("/sound/add/", &controllersSound.AddController{})
+	beego.Router("/sound/make/", &controllersSound.MakeController{})
 }
