@@ -3,6 +3,7 @@ package sound
 import (
 	"dotstamp_server/utils"
 	"os/exec"
+	"strings"
 )
 
 // getRootPath パスを取得する
@@ -23,7 +24,9 @@ func add(text string, file string, v string) error {
 	voice := path + "tool/open-jtalk/voice/" + v
 	output := path + "static/files/" + file + ".wav"
 
-	cmd := "echo " + text + " | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
+	text = strings.Replace(text, "\n", "。", -1)
+
+	cmd := "echo '" + text + "' | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
 
 	_, err := exec.Command("sh", "-c", cmd).Output()
 
