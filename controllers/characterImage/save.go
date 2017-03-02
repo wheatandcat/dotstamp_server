@@ -16,7 +16,7 @@ type SaveController struct {
 // SaveRequest 保存リクエスト
 type SaveRequest struct {
 	ID        int `form:"id" validate:"min=1"`
-	VoiceType int `form:"voiceType" validate:"min=1,max=2"`
+	VoiceType int `form:"voiceType" validate:"min=1"`
 }
 
 // SaveResponse 保存レスポンス
