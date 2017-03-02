@@ -120,8 +120,14 @@ func (t *TestSound) TestMakeSoundFile(c *C) {
 		{
 			UserContributionID: 0,
 			Priority:           7,
-			VoiceType:          VoiceTypeM100,
+			VoiceType:          VoiceTypeMeiSad,
 			BodySound:          "来週も晴れるといいな",
+		},
+		{
+			UserContributionID: 0,
+			Priority:           8,
+			VoiceType:          VoiceTypeM100,
+			BodySound:          "来月も晴れるといいな",
 		},
 	}
 

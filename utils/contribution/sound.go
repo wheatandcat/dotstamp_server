@@ -18,8 +18,10 @@ const (
 	VoiceTypeMeiBashful = 3
 	// VoiceTypeMeiHappy 音声タイプ:mei_happy
 	VoiceTypeMeiHappy = 4
+	// VoiceTypeMeiSad 音声タイプ:mei_sad
+	VoiceTypeMeiSad = 5
 	// VoiceTypeM100 音声タイプ:m100
-	VoiceTypeM100 = 5
+	VoiceTypeM100 = 6
 )
 
 // GetSoundByUserContributionID 投稿IDから音声を取得する
@@ -152,6 +154,8 @@ func getVoiceTypeFile(voiceType int) string {
 		return "mei/mei_bashful.htsvoice"
 	case VoiceTypeMeiHappy:
 		return "mei/mei_happy.htsvoice"
+	case VoiceTypeMeiSad:
+		return "mei/mei_sad.htsvoice"
 	case VoiceTypeM100:
 		return "m100/nitech_jp_atr503_m001.htsvoice"
 	default:
