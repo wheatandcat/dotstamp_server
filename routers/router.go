@@ -61,6 +61,7 @@ func init() {
 
 	beego.Router("/sound/add/", &controllersSound.AddController{})
 	beego.Router("/sound/make/", &controllersSound.MakeController{})
+	beego.Router("/sound/show/", &controllersSound.ShowController{})
 	beego.Router("/sound/saveBody/", &controllersSound.SaveBodyController{})
 	beego.Router("/sound/saveVoice/", &controllersSound.SaveVoiceController{})
 }
