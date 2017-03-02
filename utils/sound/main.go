@@ -20,7 +20,7 @@ func add(text string, file string, v string) error {
 	path := getRootPath()
 
 	dic := path + "tool/open-jtalk/dic/"
-	voice := path + "tool/open-jtalk/voice/mei/" + v
+	voice := path + "tool/open-jtalk/voice/" + v
 	output := path + "static/files/" + file + ".wav"
 
 	cmd := "echo " + text + " | open_jtalk -x " + dic + " -m " + voice + " -ow " + output

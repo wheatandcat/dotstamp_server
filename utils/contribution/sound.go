@@ -12,6 +12,14 @@ import (
 const (
 	// VoiceTypeMeiNormal 音声タイプ:mei_normal
 	VoiceTypeMeiNormal = 1
+	// VoiceTypeMeiAngry 音声タイプ:mei_angry
+	VoiceTypeMeiAngry = 2
+	// VoiceTypeMeiBashful 音声タイプ:mei_bashful
+	VoiceTypeMeiBashful = 3
+	// VoiceTypeMeiHappy 音声タイプ:mei_happy
+	VoiceTypeMeiHappy = 4
+	// VoiceTypeM100 音声タイプ:m100
+	VoiceTypeM100 = 5
 )
 
 // GetSoundByUserContributionID 投稿IDから音声を取得する
@@ -137,9 +145,17 @@ func AddSoundDetailList(uID int, list []GetBody) error {
 func getVoiceTypeFile(voiceType int) string {
 	switch voiceType {
 	case VoiceTypeMeiNormal:
-		return "mei_normal.htsvoice"
+		return "mei/mei_normal.htsvoice"
+	case VoiceTypeMeiAngry:
+		return "mei/mei_angry.htsvoice"
+	case VoiceTypeMeiBashful:
+		return "mei/mei_bashful.htsvoice"
+	case VoiceTypeMeiHappy:
+		return "mei/mei_happy.htsvoice"
+	case VoiceTypeM100:
+		return "m100/nitech_jp_atr503_m001.htsvoice"
 	default:
-		return "mei_normal.htsvoice"
+		return "mei/mei_normal.htsvoice"
 	}
 }
 

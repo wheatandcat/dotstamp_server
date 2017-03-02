@@ -18,10 +18,10 @@ func init() {
 }
 
 func (t *TestMain) TestAddSound(c *C) {
-	AddTmpSound("こんにちは", "0_1", "mei_normal.htsvoice")
-	AddTmpSound("おはようございます", "0_2", "mei_normal.htsvoice")
-	AddTmpSound("今日はいい天気ですね", "0_3", "mei_normal.htsvoice")
-	AddTmpSound("散歩に行きましょう", "0_4", "mei_normal.htsvoice")
+	AddTmpSound("こんにちは", "0_1", "mei/mei_normal.htsvoice")
+	AddTmpSound("おはようございます", "0_2", "mei/mei_normal.htsvoice")
+	AddTmpSound("今日はいい天気ですね", "0_3", "mei/mei_normal.htsvoice")
+	AddTmpSound("散歩に行きましょう", "0_4", "mei/mei_normal.htsvoice")
 }
 
 func (t *TestMain) TestJoin(c *C) {
@@ -32,10 +32,10 @@ func (t *TestMain) TestJoin(c *C) {
 		"0_4",
 	}
 
-	AddTmpSound("こんにちは", list[0], "mei_normal.htsvoice")
-	AddTmpSound("おはようございます", list[1], "mei_normal.htsvoice")
-	AddTmpSound("今日はいい天気ですね", list[2], "mei_normal.htsvoice")
-	AddTmpSound("散歩に行きましょう", list[3], "mei_normal.htsvoice")
+	AddTmpSound("こんにちは", list[0], "mei/mei_normal.htsvoice")
+	AddTmpSound("おはようございます", list[1], "mei/mei_normal.htsvoice")
+	AddTmpSound("今日はいい天気ですね", list[2], "mei/mei_normal.htsvoice")
+	AddTmpSound("散歩に行きましょう", list[3], "mei/mei_normal.htsvoice")
 
 	Join(list, "0")
 }
