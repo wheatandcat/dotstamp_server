@@ -14,7 +14,10 @@ const ErrFileTypeUnMatch = "file type unmatch"
 
 // Execute クエリを実行する
 func Execute(query string) error {
-	db := database.GormConnect()
+	db, err := database.GormConnect()
+	if err != nil {
+		return err
+	}
 
 	return db.Exec(query).Error
 }
@@ -37,23 +40,32 @@ func checkError(err error) error {
 
 // Truncate 空にする
 func Truncate(tableName string) error {
-	db := database.GormConnect()
+	db, err := database.GormConnect()
+	if err != nil {
+		return err
+	}
 
-	err := db.Exec("TRUNCATE TABLE " + tableName).Error
+	err = db.Exec("TRUNCATE TABLE " + tableName).Error
 
 	return checkError(err)
 }
 
 // GetFindAll 全て取得する
 func GetFindAll(dbModel interface{}) error {
-	db := database.GormConnect()
+	db, err := database.GormConnect()
+	if err != nil {
+		return err
+	}
 
 	return db.Find(dbModel).Error
 }
 
 // InsertBatch 複数挿入する
 func InsertBatch(tableName string, add []map[string]interface{}) error {
-	db := database.GormConnect()
+	db, err := database.GormConnect()
+	if err != nil {
+		return err
+	}
 
 	sql := "INSERT INTO " + tableName + " (`"
 

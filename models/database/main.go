@@ -10,13 +10,13 @@ var db *gorm.DB
 var transactionDB *gorm.DB
 
 // GormConnect gorm接続を取得する
-func GormConnect() *gorm.DB {
+func GormConnect() (*gorm.DB, error) {
 	if transactionDB != nil {
-		return transactionDB
+		return transactionDB, nil
 	}
 
 	if db != nil {
-		return db
+		return db, nil
 	}
 
 	var err error
@@ -30,14 +30,14 @@ func GormConnect() *gorm.DB {
 	db, err = gorm.Open(dbms, connect)
 
 	if err != nil {
-		panic(err.Error())
+		return db, err
 	}
 
 	if beego.AppConfig.String("runmode") == "dev" {
 		db.LogMode(true)
 	}
 
-	return db
+	return db, nil
 }
 
 // Transaction トランザクション
