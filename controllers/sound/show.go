@@ -21,8 +21,9 @@ type ShowRequest struct {
 
 // ShowResponse 確認レスポンス
 type ShowResponse struct {
-	List      []models.UserContributionSoundDetail
-	SoundFile bool
+	List        []models.UserContributionSoundDetail
+	SoundStatus int
+	SoundFile   bool
 }
 
 // Post 確認する
@@ -74,8 +75,9 @@ func (c *ShowController) Post() {
 	}
 
 	c.Data["json"] = ShowResponse{
-		List:      list,
-		SoundFile: contributions.ExistsSound(request.UserContributionID),
+		List:        list,
+		SoundFile:   contributions.ExistsSound(request.UserContributionID),
+		SoundStatus: s.SoundStatus,
 	}
 
 	c.ServeJSON()
