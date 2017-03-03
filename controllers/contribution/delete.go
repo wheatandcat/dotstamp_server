@@ -13,16 +13,16 @@ type DeleteController struct {
 }
 
 // Post 画像を削除する
-func (t *DeleteController) Post() {
-	userID := t.GetUserID()
-	if !t.IsNoLogin(userID) {
-		t.ServerLoginNotFound()
+func (c *DeleteController) Post() {
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.ServerLoginNotFound()
 		return
 	}
 
-	id, err := strconv.Atoi(t.Ctx.Input.Param(":id"))
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter)
 		return
 	}
 
@@ -30,13 +30,19 @@ func (t *DeleteController) Post() {
 
 	if err = contributions.DeleteByID(id, userID); err != nil {
 		models.Rollback(tx)
-		t.ServerError(err, controllers.ErrContributionNotFound)
+		c.ServerError(err, controllers.ErrContributionNotFound)
+		return
+	}
+
+	if err = contributions.DeleteSearchByUserContributionID(id); err != nil {
+		models.Rollback(tx)
+		c.ServerError(err, controllers.ErrContributionSave)
 		return
 	}
 
 	models.Commit(tx)
 
-	t.Data["json"] = true
+	c.Data["json"] = true
 
-	t.ServeJSON()
+	c.ServeJSON()
 }
