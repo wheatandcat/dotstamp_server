@@ -30,7 +30,7 @@ func (t *DeleteController) Post() {
 
 	if err = contributions.DeleteByID(id, userID); err != nil {
 		models.Rollback(tx)
-		t.ServerError(err, controllers.ErrCodeUserNotFound)
+		t.ServerError(err, controllers.ErrContributionNotFound)
 		return
 	}
 
