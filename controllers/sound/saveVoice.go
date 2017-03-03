@@ -46,7 +46,6 @@ func (c *SaveVoiceController) Post() {
 	}
 
 	tx := models.Begin()
-	models.Lock("user_masters", userID)
 
 	if err := contributions.SaveSoundDetailTVoiceType(request.ID, request.VoiceType, userID); err != nil {
 		models.Rollback(tx)

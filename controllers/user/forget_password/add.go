@@ -67,6 +67,7 @@ func (c *AddController) Post() {
 	tx := models.Begin()
 
 	if err = user.AddForgetPassword(request.Email, keyword); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

@@ -46,7 +46,6 @@ func (c *SaveBodyController) Post() {
 	}
 
 	tx := models.Begin()
-	models.Lock("user_masters", userID)
 
 	if err := contributions.SaveSoundDetailToBodySound(request.ID, request.Body, userID); err != nil {
 		models.Rollback(tx)

@@ -51,17 +51,20 @@ func (c *ReflectController) Post() {
 
 	u, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if userID != u.UserID {
+		models.Rollback(tx)
 		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon)
 		return
 	}
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
@@ -74,6 +77,7 @@ func (c *ReflectController) Post() {
 
 	body, err := contributions.GetBodyByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
@@ -84,6 +88,7 @@ func (c *ReflectController) Post() {
 
 	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}

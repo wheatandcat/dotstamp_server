@@ -40,7 +40,11 @@ func (c *AddController) Post() {
 
 	tx := models.Begin()
 
-	models.Lock("user_masters", userID)
+	if err := models.Lock("user_masters", userID); err != nil {
+		models.Rollback(tx)
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {

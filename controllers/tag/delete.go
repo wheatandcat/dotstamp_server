@@ -41,20 +41,27 @@ func (c *DeleteController) Post() {
 	}
 
 	tx := models.Begin()
-	models.Lock("user_masters", userID)
+	if err := models.Lock("user_masters", userID); err != nil {
+		models.Rollback(tx)
+		c.ServerError(err, controllers.ErrCodeCommon)
+		return
+	}
 
 	contribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if contribution.ID == uint(0) {
+		models.Rollback(tx)
 		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound)
 		return
 	}
 
 	if contribution.UserID != userID {
+		models.Rollback(tx)
 		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser)
 		return
 	}

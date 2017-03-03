@@ -3,7 +3,6 @@ package controllersLogin
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/user"
-	"log"
 )
 
 // AuthController 認証コントローラ
@@ -20,8 +19,6 @@ type AuthResponse struct {
 // Post ログイン中か判定する
 func (c *AuthController) Post() {
 	userID := c.GetUserID()
-	log.Println("login")
-	log.Println(userID)
 
 	var response AuthResponse
 	if !c.IsNoLogin(userID) {

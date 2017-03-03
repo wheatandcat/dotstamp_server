@@ -52,22 +52,26 @@ func (c *AddController) Post() {
 
 	u, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if userID != u.UserID {
+		models.Rollback(tx)
 		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon)
 		return
 	}
 
 	s, err := contributions.GetSoundByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if s.ID != uint(0) {
+		models.Rollback(tx)
 		c.ServerError(errors.New("is added sound"), controllers.ErrCodeCommon)
 		return
 	}
