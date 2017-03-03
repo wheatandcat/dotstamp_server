@@ -9,31 +9,33 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// ShowController 確認コントローラ
-type ShowController struct {
+// SaveController 追加コントローラ
+type SaveController struct {
 	controllers.BaseController
 }
 
-// ShowRequest 確認リクエスト
-type ShowRequest struct {
+// SaveRequest 追加リクエスト
+type SaveRequest struct {
 	UserContributionID int `form:"userContributionId" validate:"min=1"`
+	SoundStatus        int `form:"soundStatus" validate:"min=1,max=2"`
 }
 
-// ShowResponse 確認レスポンス
-type ShowResponse struct {
-	List      []models.UserContributionSoundDetail
-	SoundFile bool
+// SaveResponse 追加レスポンス
+type SaveResponse struct {
+	Warning     bool
+	Message     string
+	FollowCount int
 }
 
-// Post 確認する
-func (c *ShowController) Post() {
+// Post 保存する
+func (c *SaveController) Post() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := ShowRequest{}
+	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
@@ -63,19 +65,29 @@ func (c *ShowController) Post() {
 	}
 
 	if s.ID == uint(0) {
-		c.ServerError(errors.New("not dound ID"), controllers.ErrCodeCommon)
+		c.ServerError(errors.New("is added sound"), controllers.ErrCodeCommon)
 		return
 	}
 
-	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
-	if err != nil {
+	if !contributions.ExistsSound(request.UserContributionID) {
+		c.ServerError(errors.New("not exists file"), controllers.ErrCodeCommon)
+		return
+	}
+
+	tx := models.Begin()
+
+	s.SoundStatus = request.SoundStatus
+	if err := s.Save(); err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
-	c.Data["json"] = ShowResponse{
-		List:      list,
-		SoundFile: contributions.ExistsSound(request.UserContributionID),
+	models.Commit(tx)
+
+	c.Data["json"] = AddResponse{
+		Warning: false,
+		Message: "",
 	}
 
 	c.ServeJSON()

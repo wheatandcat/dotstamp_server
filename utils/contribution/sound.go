@@ -2,11 +2,13 @@ package contributions
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/utils"
 	"dotstamp_server/utils/sound"
 	"errors"
-	"log"
 	"regexp"
 	"strconv"
+
+	"github.com/astaxie/beego"
 )
 
 const (
@@ -83,7 +85,6 @@ func getByID(id uint) (models.UserContributionSoundDetail, error) {
 	u := models.UserContributionSoundDetail{}
 	r, _, err := u.GetByID(id)
 
-	log.Println(r)
 	if r.ID == uint(0) {
 		return r, errors.New("not found ID")
 	}
@@ -186,4 +187,12 @@ func MakeSoundFile(uID int, list []models.UserContributionSoundDetail) error {
 	}
 
 	return sound.Join(fileList, strconv.Itoa(uID))
+}
+
+// ExistsSound 音声ファイルの存在判定する
+func ExistsSound(uID int) bool {
+	dir := beego.AppConfig.String("soundDir")
+	root := utils.GetAppPath()
+
+	return utils.ExistsFile(root + "/../" + dir + strconv.Itoa(uID) + ".mp3")
 }

@@ -131,3 +131,12 @@ func (t *TestCommon) TestInStringArray(c *C) {
 
 	c.Check(r, Equals, false)
 }
+
+func (t *TestCommon) TestExistsFile(c *C) {
+	imageRoot := "../tests/files/"
+	inputPath := imageRoot + "input/def.png"
+
+	r := ExistsFile(inputPath)
+
+	c.Check(r, Equals, true)
+}

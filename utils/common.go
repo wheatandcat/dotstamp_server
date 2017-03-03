@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/base64"
 	"errors"
+	"os"
 	"path/filepath"
 	"reflect"
 	"runtime"
@@ -138,4 +139,10 @@ func InStringArray(str string, list []string) bool {
 		}
 	}
 	return false
+}
+
+// ExistsFile ファイル存在する
+func ExistsFile(filename string) bool {
+	_, err := os.Stat(filename)
+	return err == nil
 }

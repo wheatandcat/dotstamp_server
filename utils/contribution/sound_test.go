@@ -134,3 +134,9 @@ func (t *TestSound) TestMakeSoundFile(c *C) {
 	r := MakeSoundFile(0, list)
 	c.Check(r, Equals, nil)
 }
+
+func (t *TestSound) TestExistsSound(c *C) {
+	r := ExistsSound(0)
+
+	c.Check(r, Equals, true)
+}
