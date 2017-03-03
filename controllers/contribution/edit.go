@@ -2,6 +2,7 @@ package controllersContribution
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"strconv"
 )
@@ -14,7 +15,8 @@ type EditController struct {
 // EditResponse 編集レスポンス
 type EditResponse struct {
 	contributions.Contribution
-	Sound bool
+	Sound     bool
+	SoundFile bool
 }
 
 // Post 編集する
@@ -48,9 +50,15 @@ func (t *EditController) Post() {
 		return
 	}
 
+	soundFile := false
+	if s.SoundStatus == models.SoundStatusPublic {
+		soundFile = contributions.ExistsSound(id)
+	}
+
 	t.Data["json"] = EditResponse{
 		Contribution: c,
 		Sound:        (s.ID != uint(0)),
+		SoundFile:    soundFile,
 	}
 
 	t.ServeJSON()
