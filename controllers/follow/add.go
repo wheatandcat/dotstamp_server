@@ -44,22 +44,26 @@ func (c *AddController) Post() {
 
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if userContribution.ID == uint(0) {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionNotFound)
 		return
 	}
 
 	check, err := follows.GetCountByUserIDAndUserContributionID(userID, request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if check > 0 {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrFollowed)
 		return
 	}

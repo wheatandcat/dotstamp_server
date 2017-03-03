@@ -44,22 +44,26 @@ func (c *DeleteController) Post() {
 
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if userContribution.ID == uint(0) {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionNotFound)
 		return
 	}
 
 	userfollow, err := follows.GetByUserIDAndUserContributionID(userID, request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
 
 	if userfollow.ID == uint(0) {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon)
 		return
 	}
@@ -72,6 +76,7 @@ func (c *DeleteController) Post() {
 
 	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
 	if err != nil {
+		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrAddFollow)
 		return
 	}
