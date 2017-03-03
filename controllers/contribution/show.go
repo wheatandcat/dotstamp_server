@@ -72,6 +72,8 @@ func (c *ShowController) Post() {
 		soundFile = contributions.ExistsSound(id)
 	}
 
+	contributions.AddLog(userID, id)
+
 	c.Data["json"] = ShowResponse{
 		Contribution: contribution,
 		FollowCount:  followCount,

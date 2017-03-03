@@ -18,6 +18,7 @@ func init() {
 		"user_contributions",
 		"user_contribution_details",
 		"user_contribution_tags",
+		"log_user_contributions",
 	})
 }
 
