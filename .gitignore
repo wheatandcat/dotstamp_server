@@ -12,6 +12,7 @@ metas/
 dotstamp_server
 dump.rdb
 .remote-sync.json
+nohup.out
 
 # Ignore all logfiles and tempfiles.
 /doc/*
