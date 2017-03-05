@@ -3,6 +3,7 @@ package test
 import (
 	"dotstamp_server/tests/database"
 	"io/ioutil"
+	"os"
 	"path/filepath"
 	"runtime"
 	"time"
@@ -86,4 +87,11 @@ func addFixture(tableName string) error {
 	}
 
 	return nil
+}
+
+// removeLogFile ログファイル削除する
+func removeLogFile(file string) error {
+	apppath := getAppPath()
+
+	return os.Remove(apppath + "/logs/" + file + ".log")
 }
