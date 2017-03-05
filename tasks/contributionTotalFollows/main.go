@@ -1,16 +1,14 @@
 package main
 
 import (
-	"io"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
 
 	"dotstamp_server/models"
-	"dotstamp_server/utils"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
+	"dotstamp_server/utils/log"
 
 	"github.com/astaxie/beego"
 )
@@ -43,15 +41,11 @@ func init() {
 }
 
 func main() {
-	logfile, err = utils.LogFile("contributionTotalFollows")
 	if err != nil {
 		panic(err)
 	}
-	defer logfile.Close()
-	log.SetOutput(io.MultiWriter(logfile))
-	log.SetFlags(log.Ldate | log.Ltime)
 
-	log.Println("start!")
+	logs.Batch("start", "contributionTotalFollows")
 
 	tx := models.Begin()
 
@@ -67,7 +61,7 @@ func main() {
 
 	models.Commit(tx)
 
-	log.Println("finish!")
+	logs.Batch("finish", "contributionTotalFollows")
 }
 
 // AddContributionTotalFollows フォロー数を追加する

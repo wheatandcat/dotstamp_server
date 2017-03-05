@@ -28,6 +28,9 @@ type Accessor interface {
 // SetUpSuite テストスイーツセットアップ
 func (t *TSuite) SetUpSuite(c *C) {
 	Setup()
+
+	removeLogFile("error")
+	removeLogFile("batch")
 }
 
 // SetUpTest テストセットアップ
