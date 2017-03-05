@@ -31,7 +31,11 @@ func getAppPath() string {
 func init() {
 	apppath := getAppPath()
 
-	err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app.conf")
+	if os.Getenv("ENV_CONF") == "prod" {
+		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod.conf")
+	} else {
+		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_dev.conf")
+	}
 	if err != nil {
 		panic(err)
 	}
