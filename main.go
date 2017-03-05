@@ -2,7 +2,6 @@ package main
 
 import (
 	_ "dotstamp_server/routers"
-	"log"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -18,10 +17,9 @@ func main() {
 	apppath := getAppPath()
 
 	var err error
-	if os.Getenv("ENV_CONF") == "PROD_BLUE" {
+	if os.Getenv("ENV_CONF") == "prod_blue" {
 		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod_blue.conf")
-	} else if os.Getenv("ENV_CONF") == "PROD_GREEN" {
-		log.Println("PROD_GREEN")
+	} else if os.Getenv("ENV_CONF") == "prod_green" {
 		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod_green.conf")
 	} else {
 		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_dev.conf")
