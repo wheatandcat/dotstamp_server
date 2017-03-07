@@ -8,6 +8,7 @@ import (
 	"dotstamp_server/controllers/follow"
 	"dotstamp_server/controllers/login"
 	"dotstamp_server/controllers/problem"
+	"dotstamp_server/controllers/question"
 	"dotstamp_server/controllers/sound"
 	"dotstamp_server/controllers/tag"
 	"dotstamp_server/controllers/user"
@@ -66,4 +67,6 @@ func init() {
 	beego.Router("/sound/saveBody/", &controllersSound.SaveBodyController{})
 	beego.Router("/sound/saveVoice/", &controllersSound.SaveVoiceController{})
 	beego.Router("/sound/reflect/", &controllersSound.ReflectController{})
+
+	beego.Router("/question/add/", &controllersQuestion.AddController{})
 }
