@@ -6,7 +6,7 @@
         <link rel="stylesheet" type="text/css" href="/static/css/bootstrap.min.css">
         <link rel="stylesheet" type="text/css" href="/static/css/sticky-footer.css" />
         <link rel="stylesheet" type="text/css" href="/static/css/app.min.css" />
-        <title>react-router</title>
+        <title>.stamp</title>
     </head>
     <body>
         <div id="root"></div>

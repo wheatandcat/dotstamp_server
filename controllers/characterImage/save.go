@@ -35,13 +35,13 @@ func (c *SaveController) Post() {
 
 	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -49,7 +49,7 @@ func (c *SaveController) Post() {
 
 	if err := characters.SaveToVoiceType(request.ID, request.VoiceType, int(userID)); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 		return
 	}
 

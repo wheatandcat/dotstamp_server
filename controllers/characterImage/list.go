@@ -25,7 +25,7 @@ func (c *ListController) Post() {
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

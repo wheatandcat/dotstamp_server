@@ -34,7 +34,7 @@ func (c *ListController) Post() {
 
 	request := ListRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -47,13 +47,13 @@ func (c *ListController) Post() {
 
 	orderList, err := follows.GetOrderValueListByUserID(userID, orderMap[request.Order], request.Limit, offset)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	list, err := contributions.GetListByFollowOrderValue(orderList)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -61,7 +61,7 @@ func (c *ListController) Post() {
 
 	count, err := follows.GetCountByUserID(userID, orderMap[request.Order])
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

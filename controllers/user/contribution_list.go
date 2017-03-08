@@ -36,7 +36,7 @@ func (c *ContributionListController) Post() {
 
 	request := ContributionListRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -50,7 +50,7 @@ func (c *ContributionListController) Post() {
 
 	userContributionlist, err := contributions.GetListByUserID(userID, orderMap[request.Order], limit, offset)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -70,7 +70,7 @@ func (c *ContributionListController) Post() {
 
 	count, err := contributions.GetCountByUserID(userID, orderMap[request.Order])
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

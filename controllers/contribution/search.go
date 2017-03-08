@@ -28,7 +28,7 @@ type SearchResponse struct {
 func (c *SearchController) Post() {
 	request := SearchRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -41,7 +41,7 @@ func (c *SearchController) Post() {
 
 	searchValue, err := contributions.GetSearchValueListBySearch(request.Search, orderMap[request.Order], request.Limit, offset)
 	if err != nil {
-		c.ServerError(err, controllers.ErrContributionSearch)
+		c.ServerError(err, controllers.ErrContributionSearch, 0)
 		return
 	}
 
@@ -53,13 +53,13 @@ func (c *SearchController) Post() {
 
 	contributionlist, err := contributions.GetListBySearchValue(searchValue)
 	if err != nil {
-		c.ServerError(err, controllers.ErrContributionSearch)
+		c.ServerError(err, controllers.ErrContributionSearch, 0)
 		return
 	}
 
 	count, err := contributions.GetCountBySearch(request.Search, orderMap[request.Order])
 	if err != nil {
-		c.ServerError(err, controllers.ErrContributionSearch)
+		c.ServerError(err, controllers.ErrContributionSearch, 0)
 		return
 	}
 

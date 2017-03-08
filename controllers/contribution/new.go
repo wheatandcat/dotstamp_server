@@ -32,13 +32,13 @@ func (c *NewController) Post() {
 
 	request := NewRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -47,7 +47,7 @@ func (c *NewController) Post() {
 	userContributionID, err := contributions.Add(userID, request.Title, request.Body, request.ViewStatus)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionNew)
+		c.ServerError(err, controllers.ErrContributionNew, userID)
 		return
 	}
 
@@ -55,7 +55,7 @@ func (c *NewController) Post() {
 	if tag != "" {
 		if err := tags.AddList(int(userContributionID), tag); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 	}
@@ -64,7 +64,7 @@ func (c *NewController) Post() {
 		b, err := contributions.GetSearchWordBody(request.Body)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 
@@ -77,7 +77,7 @@ func (c *NewController) Post() {
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddSearch(int(userContributionID), s); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 	}

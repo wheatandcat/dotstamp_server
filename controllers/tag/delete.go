@@ -36,46 +36,46 @@ func (c *DeleteController) Post() {
 
 	request := DeleteRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	tx := models.Begin()
 	if err := models.Lock("user_masters", userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	contribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if contribution.ID == uint(0) {
 		models.Rollback(tx)
-		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound)
+		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound, userID)
 		return
 	}
 
 	if contribution.UserID != userID {
 		models.Rollback(tx)
-		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser)
+		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser, userID)
 		return
 	}
 
 	if err = tags.DeleteByIDAndUserContributionID(request.ID, request.UserContributionID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionNoUser)
+		c.ServerError(err, controllers.ErrContributionNoUser, userID)
 		return
 	}
 
 	tagList, err := tags.GetListByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -83,21 +83,21 @@ func (c *DeleteController) Post() {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		detail, err := contributions.GetDetailByUserContributionID(request.UserContributionID)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(detail.Body)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 
@@ -110,7 +110,7 @@ func (c *DeleteController) Post() {
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}

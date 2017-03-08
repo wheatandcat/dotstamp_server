@@ -3,6 +3,8 @@ package controllers
 import (
 	"errors"
 
+	"dotstamp_server/utils/log"
+
 	"github.com/astaxie/beego"
 )
 
@@ -158,12 +160,13 @@ func (c *BaseController) IsNoLogin(userID int) bool {
 
 // ServerLoginNotFound ログイン無しで観覧できない
 func (c *BaseController) ServerLoginNotFound() {
-	c.ServerError(errors.New("login not found"), ErrCodeLoginNotFound)
+	c.ServerError(errors.New("login not found"), ErrCodeLoginNotFound, noUserID)
 }
 
 // ServerError サーバーエラーにする
-func (c *BaseController) ServerError(err error, errCode int) {
+func (c *BaseController) ServerError(err error, errCode int, userID int) {
 	beego.Error("Error :", err.Error())
+	logs.Err(err.Error(), userID)
 
 	c.Ctx.ResponseWriter.WriteHeader(500)
 	c.Data["json"] = getErroResponse(errCode)

@@ -36,41 +36,41 @@ func (c *ShowController) Post() {
 
 	request := ShowRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	u, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if userID != u.UserID {
-		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon)
+		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	s, err := contributions.GetSoundByUserContributionID(request.UserContributionID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if s.ID == uint(0) {
-		c.ServerError(errors.New("not dound ID"), controllers.ErrCodeCommon)
+		c.ServerError(errors.New("not dound ID"), controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

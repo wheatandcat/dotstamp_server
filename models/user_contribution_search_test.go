@@ -55,6 +55,13 @@ func (t *TestUserContributionSearch) TestDelete(c *C) {
 	c.Check(r.ID, Equals, uint(0))
 }
 
+func (t *TestUserContributionSearch) TestTruncate(c *C) {
+	u := &UserContributionSearch{}
+	r := u.Truncate()
+
+	c.Check(r, Equals, nil)
+}
+
 func (t *TestUserContributionSearch) TestGetByUserContributionID(c *C) {
 	u := &UserContributionSearch{}
 

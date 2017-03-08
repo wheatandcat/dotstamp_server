@@ -34,7 +34,7 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -42,46 +42,46 @@ func (c *AddController) Post() {
 
 	if err := models.Lock("user_masters", userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if userContribution.ID == uint(0) {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionNotFound)
+		c.ServerError(err, controllers.ErrContributionNotFound, userID)
 		return
 	}
 
 	check, err := follows.GetCountByUserIDAndUserContributionID(userID, request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if check > 0 {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrFollowed)
+		c.ServerError(err, controllers.ErrFollowed, userID)
 		return
 	}
 
 	if err = follows.Add(userID, request.UserContributionID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrAddFollow)
+		c.ServerError(err, controllers.ErrAddFollow, userID)
 		return
 	}
 
 	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrAddFollow)
+		c.ServerError(err, controllers.ErrAddFollow, userID)
 		return
 	}
 

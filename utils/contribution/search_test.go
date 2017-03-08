@@ -100,3 +100,9 @@ func (t *TestSearch) TestGetCountBySearch(c *C) {
 
 	c.Check(r, Equals, 2)
 }
+
+func (t *TestSearch) TestTruncateSearch(c *C) {
+	r := TruncateSearch()
+
+	c.Check(r, Equals, nil)
+}

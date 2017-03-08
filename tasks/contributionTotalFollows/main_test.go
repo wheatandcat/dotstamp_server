@@ -1,4 +1,4 @@
-package main
+package contributionTotalFollows
 
 import (
 	_ "dotstamp_server/routers"

@@ -21,13 +21,13 @@ func (c *CheckController) Post() {
 	request := CheckRequest{}
 
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	u, err := user.GetByEmailAndPassword(request.Email, request.Password)
 	if err != nil {
-		c.ServerError(err, controllers.ErrUserOrPasswordDifferent)
+		c.ServerError(err, controllers.ErrUserOrPasswordDifferent, 0)
 		return
 	}
 

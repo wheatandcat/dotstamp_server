@@ -22,7 +22,7 @@ func (c *DeleteController) Post() {
 
 	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
@@ -30,13 +30,13 @@ func (c *DeleteController) Post() {
 
 	if err = contributions.DeleteByID(id, userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionNotFound)
+		c.ServerError(err, controllers.ErrContributionNotFound, userID)
 		return
 	}
 
 	if err = contributions.DeleteSearchByUserContributionID(id); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionSave)
+		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
 	}
 

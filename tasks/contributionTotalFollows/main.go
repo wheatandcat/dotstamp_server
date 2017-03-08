@@ -1,16 +1,13 @@
-package main
+package contributionTotalFollows
 
 import (
 	"os"
-	"path/filepath"
-	"runtime"
 
 	"dotstamp_server/models"
+	"dotstamp_server/tasks"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/follow"
 	"dotstamp_server/utils/log"
-
-	"github.com/astaxie/beego"
 )
 
 var followMap map[int]int
@@ -18,45 +15,27 @@ var contributionIDList []int
 var err error
 var logfile *os.File
 
-// getAppPath アプリケーションパスを取得する
-func getAppPath() string {
-	_, file, _, _ := runtime.Caller(1)
-	apppath, _ := filepath.Abs(filepath.Dir(filepath.Join(file, "../../.."+string(filepath.Separator))))
-
-	return apppath
-}
-
 func init() {
-	apppath := getAppPath()
-
-	if os.Getenv("ENV_CONF") == "prod" {
-		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod.conf")
-	} else {
-		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_dev.conf")
+	if err = tasks.SetConfig(); err != nil {
+		tasks.Err(err, "contributionTotalFollows")
 	}
-	if err != nil {
-		panic(err)
-	}
-
 }
 
 func main() {
-	if err != nil {
-		panic(err)
-	}
-
 	logs.Batch("start", "contributionTotalFollows")
 
 	tx := models.Begin()
 
 	if err = AddContributionTotalFollows(); err != nil {
 		models.Rollback(tx)
-		panic(err)
+		tasks.Err(err, "contributionTotalFollows")
+		return
 	}
 
 	if err = SaveUserContributionSearchToFollowCount(); err != nil {
 		models.Rollback(tx)
-		panic(err)
+		tasks.Err(err, "contributionTotalFollows")
+		return
 	}
 
 	models.Commit(tx)

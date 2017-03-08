@@ -29,24 +29,24 @@ func (t *EditController) Post() {
 
 	id, err := strconv.Atoi(t.Ctx.Input.Param(":id"))
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter)
+		t.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
 	c, err := contributions.GetContributionByUserContributionID(id)
 	if err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon)
+		t.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if int(c.User.ID) != userID {
-		t.ServerError(err, controllers.ErrCodeUserNotFound)
+		t.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 		return
 	}
 
 	s, err := contributions.GetSoundByUserContributionID(id)
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter)
+		t.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 

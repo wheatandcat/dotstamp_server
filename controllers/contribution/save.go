@@ -32,13 +32,13 @@ func (c *SaveController) Post() {
 
 	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -46,13 +46,13 @@ func (c *SaveController) Post() {
 
 	if err := contributions.Save(request.UserContributionID, userID, request.Title, request.ViewStatus); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionSave)
+		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
 	}
 
 	if err := contributions.SaveDetail(request.UserContributionID, request.Body); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrContributionSave)
+		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
 	}
 
@@ -60,14 +60,14 @@ func (c *SaveController) Post() {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(request.Body)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 
@@ -80,14 +80,14 @@ func (c *SaveController) Post() {
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 	} else {
 		if err := contributions.DeleteSearchByUserContributionID(request.UserContributionID); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}
