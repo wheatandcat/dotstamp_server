@@ -1,6 +1,7 @@
 package main
 
 import (
+	"log"
 	"os"
 
 	"dotstamp_server/models"
@@ -48,7 +49,7 @@ func ResetSearch() error {
 		return err
 	}
 
-	for id := range contributionIDList {
+	for _, id := range contributionIDList {
 		u, err := contributions.GetByUserContributionID(id)
 		if err != nil {
 			return err
@@ -64,9 +65,15 @@ func ResetSearch() error {
 			return err
 		}
 
+		log.Println(detail.Body)
+		b, err := contributions.GetSearchWordBody(detail.Body)
+		if err != nil {
+			return err
+		}
+
 		searchWord := contributions.SearchWord{
 			Title: u.Title,
-			Body:  detail.Body,
+			Body:  b,
 			Tag:   t,
 		}
 
