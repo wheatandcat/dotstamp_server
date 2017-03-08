@@ -1,4 +1,4 @@
-package contributionTotalFollows
+package main
 
 import (
 	"os"
