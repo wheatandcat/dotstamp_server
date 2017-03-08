@@ -27,6 +27,8 @@ dotstamp_server.tar.gz
 /static/js
 /static/fonts
 /static/images
+/static/json
+/static/txt
 /static/files/sound/*
 !/static/files/sound/.gitkeep
 /static/files/tmp/sound/*
