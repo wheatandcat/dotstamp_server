@@ -38,73 +38,73 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	tx := models.Begin()
 	if err := models.Lock("user_masters", userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	contribution, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if contribution.ID == uint(0) {
 		models.Rollback(tx)
-		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound)
+		c.ServerError(errors.New("not found UserContributionID"), controllers.ErrContributionNotFound, userID)
 		return
 	}
 
 	if contribution.UserID != userID {
 		models.Rollback(tx)
-		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser)
+		c.ServerError(errors.New("difference UserID"), controllers.ErrContributionNoUser, userID)
 		return
 	}
 
 	tagList, err := tags.GetListByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if len(tagList) > tags.TagMaxNumber {
 		models.Rollback(tx)
-		c.ServerError(errors.New("max number over tag"), controllers.ErrTagMaxNumberOver)
+		c.ServerError(errors.New("max number over tag"), controllers.ErrTagMaxNumberOver, userID)
 		return
 	}
 
 	for _, tag := range tagList {
 		if tag.Name == request.Name {
 			models.Rollback(tx)
-			c.ServerError(errors.New("tag name overlap"), controllers.ErrTagNameOverlap)
+			c.ServerError(errors.New("tag name overlap"), controllers.ErrTagNameOverlap, userID)
 			return
 		}
 	}
 
 	if err = tags.Add(request.UserContributionID, request.Name); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	tagList, err = tags.GetListByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -112,21 +112,21 @@ func (c *AddController) Post() {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		detail, err := contributions.GetDetailByUserContributionID(request.UserContributionID)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(detail.Body)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionNew)
+			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 
@@ -139,7 +139,7 @@ func (c *AddController) Post() {
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrContributionSave)
+			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}

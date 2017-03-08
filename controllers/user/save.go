@@ -34,13 +34,13 @@ func (c *SaveController) Post() {
 	request := SaveRequest{}
 
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -48,7 +48,7 @@ func (c *SaveController) Post() {
 
 	if err := user.Upadate(userID, request.Name); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrUserSave)
+		c.ServerError(err, controllers.ErrUserSave, userID)
 		return
 	}
 

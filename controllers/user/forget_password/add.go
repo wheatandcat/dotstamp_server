@@ -32,19 +32,19 @@ type AddResponse struct {
 func (c *AddController) Post() {
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	u, err := user.GetByEmail(request.Email)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -58,7 +58,7 @@ func (c *AddController) Post() {
 	}
 
 	if err = user.DeleteByEmail(request.Email); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -68,7 +68,7 @@ func (c *AddController) Post() {
 
 	if err = user.AddForgetPassword(request.Email, keyword); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -76,7 +76,7 @@ func (c *AddController) Post() {
 	url, err = mail.GetForgetpasswordURL(request.Email, keyword)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -99,7 +99,7 @@ func (c *AddController) Post() {
 
 	err = mail.Send(request.Email, mail.GetBody(b))
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 

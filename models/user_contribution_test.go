@@ -30,10 +30,22 @@ func (t *TestUserContribution) TestGetIDAndAdd(c *C) {
 	c.Check(r, Equals, uint(3))
 }
 
+func (t *TestUserContribution) TestSave(c *C) {
+	u := &UserContribution{}
+	uc, _, _ := u.GetByID(1)
+	uc.Title = "test"
+
+	r := uc.Save()
+
+	c.Check(r, Equals, nil)
+}
+
 func (t *TestUserContribution) TestDelete(c *C) {
 	u := &UserContribution{}
 	uc, _, _ := u.GetByID(1)
-	uc.Delete()
+	r := uc.Delete()
+
+	c.Check(r, Equals, nil)
 }
 
 func (t *TestUserContribution) TestGetByID(c *C) {

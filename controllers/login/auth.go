@@ -30,7 +30,7 @@ func (c *AuthController) Post() {
 
 		u, err := user.GetByUserID(userID)
 		if err != nil {
-			c.ServerError(err, controllers.ErrCodeUserNotFound)
+			c.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 		}
 
 		response = AuthResponse{

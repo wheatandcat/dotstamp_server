@@ -33,13 +33,13 @@ func (c *UploadController) Post() {
 
 	request := UploadRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	id, err := contributions.GetImageIDAndAdd(request.UserContributionID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 

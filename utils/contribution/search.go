@@ -137,3 +137,10 @@ func GetCountBySearch(search string, order string) (int, error) {
 
 	return u.GetCountBySearch(search, order)
 }
+
+// TruncateSearch 検索を空にする
+func TruncateSearch() error {
+	u := models.UserContributionSearch{}
+
+	return u.Truncate()
+}

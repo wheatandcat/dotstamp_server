@@ -30,19 +30,19 @@ func (c *NewController) Post() {
 	request := NewRequest{}
 
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	u, err := user.GetByEmail(request.Email)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -58,7 +58,7 @@ func (c *NewController) Post() {
 
 	userID, err := user.Add(request.Email, request.Email, request.Password)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCreateUser)
+		c.ServerError(err, controllers.ErrCreateUser, 0)
 		return
 	}
 

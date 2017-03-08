@@ -32,18 +32,18 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if err := bug.Add(userID, request.Body); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

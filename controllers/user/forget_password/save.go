@@ -31,51 +31,51 @@ type SaveResponse struct {
 func (c *SaveController) Post() {
 	request := SaveRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	email, err := utils.Urldecode(request.Email)
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	e, err := utils.Decrypter([]byte(email))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	keyword, err := utils.Urldecode(request.Keyword)
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	k, err := utils.Decrypter([]byte(keyword))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	r, err := user.IsUpdatePassword(e, k)
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	if r == false {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
@@ -83,7 +83,7 @@ func (c *SaveController) Post() {
 
 	if err := user.UpadateToPassword(e, request.Password); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 

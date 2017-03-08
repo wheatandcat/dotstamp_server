@@ -27,7 +27,7 @@ func (c *DeleteController) Post() {
 
 	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
@@ -35,7 +35,7 @@ func (c *DeleteController) Post() {
 
 	if err = characters.DeleteByID(id, userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 		return
 	}
 
@@ -43,7 +43,7 @@ func (c *DeleteController) Post() {
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

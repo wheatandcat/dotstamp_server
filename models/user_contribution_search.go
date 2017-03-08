@@ -31,6 +31,11 @@ func (u *UserContributionSearch) Delete() error {
 	return Delete(u)
 }
 
+// Truncate 空にする
+func (u *UserContributionSearch) Truncate() error {
+	return Truncate("user_contribution_searches")
+}
+
 // GetByUserContributionID 投稿IDから取得する
 func (u *UserContributionSearch) GetByUserContributionID(id int) (userContributionSearch UserContributionSearch, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{

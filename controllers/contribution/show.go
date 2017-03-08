@@ -25,19 +25,19 @@ type ShowResponse struct {
 func (c *ShowController) Post() {
 	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	contribution, err := contributions.GetContributionByUserContributionID(id)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
 	followCount, err := follows.GetCountByUserContributionID(id)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
@@ -48,7 +48,7 @@ func (c *ShowController) Post() {
 		var count int
 		count, err = follows.GetCountByUserIDAndUserContributionID(userID, id)
 		if err != nil {
-			c.ServerError(err, controllers.ErrCodeCommon)
+			c.ServerError(err, controllers.ErrCodeCommon, 0)
 			return
 		}
 
@@ -63,7 +63,7 @@ func (c *ShowController) Post() {
 
 	s, err := contributions.GetSoundByUserContributionID(id)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 

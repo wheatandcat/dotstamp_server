@@ -31,12 +31,12 @@ func (c *AddController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if err := problem.Add(userID, request.UserContributionID, request.Type); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 

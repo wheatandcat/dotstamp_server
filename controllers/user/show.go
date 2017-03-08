@@ -26,12 +26,12 @@ func (c *ShowController) Post() {
 
 	u, err := user.GetByUserID(userID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 	}
 
 	p, err := user.GetProfileImageListByUserID(userID)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeUserNotFound)
+		c.ServerError(err, controllers.ErrCodeUserNotFound, userID)
 	}
 
 	c.Data["json"] = ShowResponse{

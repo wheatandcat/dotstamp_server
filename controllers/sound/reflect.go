@@ -36,13 +36,13 @@ func (c *ReflectController) Post() {
 
 	request := AddRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -52,20 +52,20 @@ func (c *ReflectController) Post() {
 	u, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	if userID != u.UserID {
 		models.Rollback(tx)
-		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon)
+		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	image, err := characters.GetImageListByUserID(userID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -78,7 +78,7 @@ func (c *ReflectController) Post() {
 	body, err := contributions.GetBodyByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -89,7 +89,7 @@ func (c *ReflectController) Post() {
 	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
 	if err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -108,7 +108,7 @@ func (c *ReflectController) Post() {
 		v.Body = bodyMap[v.Priority].Body
 		if err = v.Save(); err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrCodeCommon)
+			c.ServerError(err, controllers.ErrCodeCommon, userID)
 			return
 		}
 	}
@@ -120,7 +120,7 @@ func (c *ReflectController) Post() {
 		err = contributions.AddSoundDetailList(request.UserContributionID, addBody)
 		if err != nil {
 			models.Rollback(tx)
-			c.ServerError(err, controllers.ErrCodeCommon)
+			c.ServerError(err, controllers.ErrCodeCommon, userID)
 			return
 		}
 	}

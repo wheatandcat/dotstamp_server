@@ -21,29 +21,29 @@ type CheckResponse struct {
 func (c *CheckController) Post() {
 	email, err := utils.Urldecode(c.Ctx.Input.Param(":email"))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	e, err := utils.Decrypter([]byte(email))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	keyword, err := utils.Urldecode(c.Ctx.Input.Param(":keyword"))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	k, err := utils.Decrypter([]byte(keyword))
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	r, err := user.IsUpdatePassword(e, k)
 	if err != nil {
-		c.ServerError(err, controllers.ErrParameter)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 

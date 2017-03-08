@@ -35,13 +35,13 @@ func (c *SaveBodyController) Post() {
 
 	request := SaveBodydRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -49,7 +49,7 @@ func (c *SaveBodyController) Post() {
 
 	if err := contributions.SaveSoundDetailToBodySound(request.ID, request.Body, userID); err != nil {
 		models.Rollback(tx)
-		c.ServerError(err, controllers.ErrCodeCommon)
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
