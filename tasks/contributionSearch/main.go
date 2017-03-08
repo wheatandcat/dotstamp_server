@@ -71,7 +71,7 @@ func ResetSearch() error {
 		}
 
 		s := contributions.JoinSearchWord(searchWord)
-		if err := contributions.AddOrSaveSearch(id, s); err != nil {
+		if err := contributions.AddSearch(id, s); err != nil {
 			return err
 		}
 	}
