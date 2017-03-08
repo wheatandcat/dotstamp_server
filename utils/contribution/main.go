@@ -133,8 +133,9 @@ func GetContributionByUserContributionID(userContributionID int) (c Contribution
 	}
 
 	user := user.User{
-		ID:   u.ID,
-		Name: u.Name,
+		ID:             u.ID,
+		Name:           u.Name,
+		ProfileImageID: u.ProfileImageID,
 	}
 
 	contribution := Contribution{
