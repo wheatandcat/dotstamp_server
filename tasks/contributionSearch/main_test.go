@@ -1,4 +1,4 @@
-package contributionSearch
+package main
 
 import (
 	_ "dotstamp_server/routers"
