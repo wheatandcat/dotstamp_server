@@ -14,6 +14,7 @@ dump.rdb
 .remote-sync.json
 nohup.out
 dotstamp_server.tar.gz
+bin/
 
 # Ignore all logfiles and tempfiles.
 /doc/*
