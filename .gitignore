@@ -35,6 +35,7 @@ dotstamp_server.tar.gz
 !/static/files/tmp/sound/.gitkeep
 /static/files/character/*
 !/static/files/character/.gitkeep
+!/static/files/character/default*.png
 /static/files/tmp/character/*
 !/static/files/tmp/character/.gitkeep
 /static/files/icon/*
