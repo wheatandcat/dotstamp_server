@@ -80,7 +80,11 @@ func StirngToGetBody(body string) (b []GetBody, err error) {
 	}
 
 	for k, v := range b {
-		b[k].Character.FileName = characters.GetImageName(uint(v.Character.ID))
+		if v.Character.ID == 0 {
+			b[k].Character.FileName = v.Character.FileName
+		} else {
+			b[k].Character.FileName = characters.GetImageName(uint(v.Character.ID))
+		}
 	}
 
 	return b, err
