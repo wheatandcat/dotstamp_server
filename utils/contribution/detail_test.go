@@ -41,7 +41,7 @@ func (t *TestDetail) TestStirngToSaveBody(c *C) {
 }
 
 func (t *TestDetail) TestStirngToGetBody(c *C) {
-	b := `[{"priority":0,"body":"あああ","character":{"Id":128,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":1,"body":"あああ","character":{"Id":125,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":2,"body":"あああ","character":{"Id":126,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false}]`
+	b := `[{"priority":0,"body":"あああ","character":{"Id":128,"Character_id":0,"Priority":0,"FileName":"default1.png","imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":1,"body":"あああ","character":{"Id":125,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false},{"priority":2,"body":"あああ","character":{"Id":126,"Character_id":0,"Priority":0,"imageType":4},"directionType":1,"talkType":1,"edit":false}]`
 
 	r, _ := StirngToGetBody(b)
 
