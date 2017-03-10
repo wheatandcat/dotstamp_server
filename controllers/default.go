@@ -1,6 +1,10 @@
 package controllers
 
-import "github.com/astaxie/beego"
+import (
+	"log"
+
+	"github.com/astaxie/beego"
+)
 
 // MainController メインコントローラ
 type MainController struct {
@@ -9,8 +13,8 @@ type MainController struct {
 
 // Get 取得する
 func (c *MainController) Get() {
-	c.Data["Website"] = "beego.me"
-	c.Data["Email"] = "astaxie@gmail.com"
+	c.Data["StaticUrl"] = beego.AppConfig.String("staticUrl")
+	log.Println(c.Data["staticUrl"])
 
 	c.TplName = "index.tpl"
 }

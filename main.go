@@ -15,15 +15,13 @@ func main() {
 	var err error
 	if os.Getenv("ENV_CONF") == "prod_blue" {
 		err = beego.LoadAppConfig("ini", "./conf/app_prod_blue.conf")
-		beego.SetStaticPath("/static", "blue/static")
-
 	} else if os.Getenv("ENV_CONF") == "prod_green" {
 		err = beego.LoadAppConfig("ini", "./conf/app_prod_green.conf")
-		beego.SetStaticPath("/static", "green/static")
-
 	} else {
 		err = beego.LoadAppConfig("ini", "./conf/app_dev.conf")
 	}
+
+	beego.BConfig.WebConfig.StaticExtensionsToGzip = []string{".css", ".js"}
 
 	if err != nil {
 		panic(err)
