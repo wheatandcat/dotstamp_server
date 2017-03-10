@@ -19,6 +19,8 @@ productionDB/
 conf/app_prod.conf
 conf/app_prod_green.conf
 conf/app_prod_blue.conf
+green/*
+blue/*
 
 # Ignore all logfiles and tempfiles.
 /doc/*
