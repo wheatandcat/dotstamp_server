@@ -1,26 +1,17 @@
 package logs
 
 import (
+	"dotstamp_server/utils"
 	"io"
 	"log"
 	"os"
-	"path/filepath"
-	"runtime"
 )
-
-// getAppPath アプリケーションパスを取得する
-func getAppPath() string {
-	_, file, _, _ := runtime.Caller(1)
-	apppath, _ := filepath.Abs(filepath.Dir(filepath.Join(file, "../.."+string(filepath.Separator))))
-
-	return apppath
-}
 
 // LogFile ログファイルを開く
 func LogFile(file string) (*os.File, error) {
-	apppath := getAppPath()
+	apppath := utils.GetAppPath()
 
-	return os.OpenFile(apppath+"/logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	return os.OpenFile(apppath+"/../logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 }
 
 // Err エラーを出力する
@@ -50,7 +41,7 @@ func output(file string, v interface{}, t interface{}) error {
 
 // RemoveLogFile ログファイル削除する
 func RemoveLogFile(file string) error {
-	apppath := getAppPath()
+	apppath := utils.GetAppPath()
 
-	return os.Remove(apppath + "/logs/" + file + ".log")
+	return os.Remove(apppath + "/..//logs/" + file + ".log")
 }

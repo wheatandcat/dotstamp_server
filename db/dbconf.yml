@@ -7,10 +7,6 @@ development:
     driver: mymysql
     open: stamp/stamp/stamp
 
-production:
-    driver: postgres
-    open: user=liam dbname=tester sslmode=verify-full
-
 customimport:
     driver: customdriver
     open: customdriver open
