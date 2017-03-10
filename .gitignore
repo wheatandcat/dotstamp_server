@@ -15,6 +15,7 @@ dump.rdb
 nohup.out
 dotstamp_server.tar.gz
 bin/
+productionDB/
 
 # Ignore all logfiles and tempfiles.
 /doc/*

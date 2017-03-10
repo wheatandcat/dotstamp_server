@@ -3,8 +3,6 @@ package main
 import (
 	_ "dotstamp_server/routers"
 	"os"
-	"path/filepath"
-	"runtime"
 
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/session/redis"
@@ -14,15 +12,13 @@ import (
 )
 
 func main() {
-	apppath := getAppPath()
-
 	var err error
 	if os.Getenv("ENV_CONF") == "prod_blue" {
-		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod_blue.conf")
+		err = beego.LoadAppConfig("ini", "./conf/app_prod_blue.conf")
 	} else if os.Getenv("ENV_CONF") == "prod_green" {
-		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_prod_green.conf")
+		err = beego.LoadAppConfig("ini", "./conf/app_prod_green.conf")
 	} else {
-		err = beego.LoadAppConfig("ini", apppath+"/dotstamp_server/conf/app_dev.conf")
+		err = beego.LoadAppConfig("ini", "./conf/app_dev.conf")
 	}
 
 	if err != nil {
@@ -30,12 +26,4 @@ func main() {
 	}
 
 	beego.Run()
-}
-
-// getAppPath アプリケーションパスを取得する
-func getAppPath() string {
-	_, file, _, _ := runtime.Caller(1)
-	apppath, _ := filepath.Abs(filepath.Dir(filepath.Join(file, ".."+string(filepath.Separator))))
-
-	return apppath
 }
