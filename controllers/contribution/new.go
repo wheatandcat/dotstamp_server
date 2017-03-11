@@ -60,10 +60,11 @@ func (c *NewController) Post() {
 		}
 	}
 
+	models.Commit(tx)
+
 	if request.ViewStatus == models.ViewStatusPublic {
 		b, err := contributions.GetSearchWordBody(request.Body)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
@@ -76,13 +77,10 @@ func (c *NewController) Post() {
 
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddSearch(int(userContributionID), s); err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
 	}
-
-	models.Commit(tx)
 
 	c.Data["json"] = userContributionID
 	c.ServeJSON()

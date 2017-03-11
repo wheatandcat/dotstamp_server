@@ -108,24 +108,23 @@ func (c *AddController) Post() {
 		return
 	}
 
+	models.Commit(tx)
+
 	if contribution.ViewStatus == models.ViewStatusPublic {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		detail, err := contributions.GetDetailByUserContributionID(request.UserContributionID)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(detail.Body)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
@@ -138,13 +137,10 @@ func (c *AddController) Post() {
 
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}
-
-	models.Commit(tx)
 
 	c.Data["json"] = AddResponse{
 		Warning: false,
