@@ -34,13 +34,12 @@ func (c *DeleteController) Post() {
 		return
 	}
 
+	models.Commit(tx)
+
 	if err = contributions.DeleteSearchByUserContributionID(id); err != nil {
-		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
 	}
-
-	models.Commit(tx)
 
 	c.Data["json"] = true
 
