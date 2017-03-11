@@ -32,13 +32,12 @@ func main() {
 		return
 	}
 
+	models.Commit(tx)
+
 	if err = SaveUserContributionSearchToFollowCount(); err != nil {
-		models.Rollback(tx)
 		tasks.Err(err, "contributionTotalFollows")
 		return
 	}
-
-	models.Commit(tx)
 
 	logs.Batch("finish", "contributionTotalFollows")
 }
