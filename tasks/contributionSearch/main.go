@@ -4,7 +4,6 @@ import (
 	"log"
 	"os"
 
-	"dotstamp_server/models"
 	"dotstamp_server/tasks"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/log"
@@ -25,15 +24,10 @@ func init() {
 func main() {
 	logs.Batch("start", "contributionSearch")
 
-	tx := models.Begin()
-
 	if err = ResetSearch(); err != nil {
-		models.Rollback(tx)
 		tasks.Err(err, "contributionSearch")
 		return
 	}
-
-	models.Commit(tx)
 
 	logs.Batch("finish", "contributionSearch")
 }
