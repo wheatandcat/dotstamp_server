@@ -17,7 +17,9 @@ type SaveBody struct {
 
 // SaveCharacter 保存キャラクター
 type SaveCharacter struct {
-	ID int
+	ID        int
+	FileName  string
+	VoiceType int
 }
 
 // GetBody 取得本文

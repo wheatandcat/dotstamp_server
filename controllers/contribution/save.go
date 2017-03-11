@@ -56,17 +56,17 @@ func (c *SaveController) Post() {
 		return
 	}
 
+	models.Commit(tx)
+
 	if request.ViewStatus == models.ViewStatusPublic {
 		t, err := tags.GetTagNameJoin(request.UserContributionID)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 		b, err := contributions.GetSearchWordBody(request.Body)
 		if err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionNew, userID)
 			return
 		}
@@ -79,20 +79,16 @@ func (c *SaveController) Post() {
 
 		s := contributions.JoinSearchWord(searchWord)
 		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 	} else {
 		if err := contributions.DeleteSearchByUserContributionID(request.UserContributionID); err != nil {
-			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}
-
-	models.Commit(tx)
 
 	c.Data["json"] = request.UserContributionID
 	c.ServeJSON()
