@@ -3,7 +3,6 @@ package characters
 import (
 	"dotstamp_server/models"
 	"errors"
-	"log"
 	"strconv"
 )
 
@@ -33,9 +32,7 @@ func AddImage(uID int, cID int, p int) (uint, error) {
 func SaveToVoiceType(id int, v int, userID int) error {
 	u := models.UserCharacterImage{}
 
-	log.Println(id)
 	user, _, err := u.GetByID(id)
-	log.Println(user)
 	if err != nil {
 		return err
 	}

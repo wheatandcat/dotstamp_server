@@ -1,7 +1,6 @@
 package main
 
 import (
-	"log"
 	"os"
 
 	"dotstamp_server/tasks"
@@ -59,7 +58,6 @@ func ResetSearch() error {
 			return err
 		}
 
-		log.Println(detail.Body)
 		b, err := contributions.GetSearchWordBody(detail.Body)
 		if err != nil {
 			return err
