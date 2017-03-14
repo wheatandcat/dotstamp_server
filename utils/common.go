@@ -6,7 +6,6 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
-	"runtime"
 	"strings"
 	"time"
 
@@ -28,11 +27,8 @@ func StringToDate(s string) (time.Time, error) {
 }
 
 // GetAppPath アプリケーションパスを取得する
-func GetAppPath() string {
-	_, f, _, _ := runtime.Caller(1)
-	p, _ := filepath.Abs(filepath.Dir(filepath.Join(f, ".."+string(filepath.Separator))))
-
-	return p
+func GetAppPath() (string, error) {
+	return filepath.Abs(filepath.Dir(os.Args[0]))
 }
 
 // GetArrayCombile 配列をkeyと結合させる
