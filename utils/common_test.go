@@ -27,7 +27,8 @@ func (t *TestCommon) TestStringToDate(c *C) {
 }
 
 func (t *TestCommon) TestGetAppPath(c *C) {
-	r := GetAppPath()
+	r, _ := GetAppPath()
+
 	c.Check(r, Not(IsNil))
 }
 
