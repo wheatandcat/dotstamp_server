@@ -2,6 +2,7 @@ package sound
 
 import (
 	"dotstamp_server/utils"
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -27,6 +28,7 @@ func add(text string, file string, v string) error {
 	text = strings.Replace(text, "\n", "。", -1)
 
 	cmd := "echo '" + text + "' | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
+	log.Println(cmd)
 
 	_, err := exec.Command("sh", "-c", cmd).Output()
 
@@ -43,6 +45,7 @@ func Join(list []string, file string) error {
 	}
 
 	cmd += " " + path + "static/files/tmp/sound/" + file + ".wav"
+	log.Println(cmd)
 
 	if _, err := exec.Command("sh", "-c", cmd).Output(); err != nil {
 		return err
@@ -59,6 +62,7 @@ func toMp3(file string) error {
 	dest := path + "static/files/sound/" + file + ".mp3"
 
 	cmd := "lame -V2 " + src + " " + dest
+	log.Println(cmd)
 
 	_, err := exec.Command("sh", "-c", cmd).Output()
 
