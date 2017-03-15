@@ -65,7 +65,7 @@ func getBodySoundFormat(str string) string {
 func AddSoundDetail(uID int, b GetBody) error {
 	s := ""
 
-	if b.TalkType == models.TalkTypeText {
+	if b.TalkType <= models.TalkTypeText {
 		s = getBodySoundFormat(b.Body)
 	}
 
