@@ -8,8 +8,11 @@ import (
 )
 
 // LogFile ログファイルを開く
-func LogFile(file string) (*os.File, error) {
-	apppath := utils.GetAppPath()
+func LogFile(file string) (o *os.File, err error) {
+	apppath, err := utils.GetAppPath()
+	if err != nil {
+		return o, err
+	}
 
 	return os.OpenFile(apppath+"/../logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 }
@@ -41,7 +44,10 @@ func output(file string, v interface{}, t interface{}) error {
 
 // RemoveLogFile ログファイル削除する
 func RemoveLogFile(file string) error {
-	apppath := utils.GetAppPath()
+	apppath, err := utils.GetAppPath()
+	if err != nil {
+		return err
+	}
 
 	return os.Remove(apppath + "/..//logs/" + file + ".log")
 }

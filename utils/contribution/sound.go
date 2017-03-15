@@ -192,7 +192,7 @@ func MakeSoundFile(uID int, list []models.UserContributionSoundDetail) error {
 // ExistsSound 音声ファイルの存在判定する
 func ExistsSound(uID int) bool {
 	dir := beego.AppConfig.String("soundDir")
-	root := utils.GetAppPath()
+	root, _ := utils.GetAppPath()
 
 	return utils.ExistsFile(root + "/../" + dir + strconv.Itoa(uID) + ".mp3")
 }

@@ -6,6 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"reflect"
+	"runtime"
 	"strings"
 	"time"
 
@@ -28,7 +29,13 @@ func StringToDate(s string) (time.Time, error) {
 
 // GetAppPath アプリケーションパスを取得する
 func GetAppPath() (string, error) {
-	return filepath.Abs(filepath.Dir(os.Args[0]))
+	currentSrc := beego.AppConfig.String("currentSrc")
+	if currentSrc != "" {
+		return currentSrc, nil
+	}
+
+	_, f, _, _ := runtime.Caller(1)
+	return filepath.Abs(filepath.Dir(filepath.Join(f, ".."+string(filepath.Separator))))
 }
 
 // GetArrayCombile 配列をkeyと結合させる

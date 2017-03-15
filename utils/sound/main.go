@@ -8,8 +8,13 @@ import (
 )
 
 // getRootPath パスを取得する
-func getRootPath() string {
-	return utils.GetAppPath() + "/../"
+func getRootPath() (string, error) {
+	p, err := utils.GetAppPath()
+	if err != nil {
+		return "", err
+	}
+
+	return p + "/../", nil
 }
 
 // AddTmpSound 一時音声を追加する
@@ -19,7 +24,10 @@ func AddTmpSound(text string, file string, v string) error {
 
 // add 追加する
 func add(text string, file string, v string) error {
-	path := getRootPath()
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
 
 	dic := path + "tool/open-jtalk/dic/"
 	voice := path + "tool/open-jtalk/voice/" + v
@@ -30,7 +38,7 @@ func add(text string, file string, v string) error {
 	cmd := "echo '" + text + "' | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
 	log.Println(cmd)
 
-	_, err := exec.Command("sh", "-c", cmd).Output()
+	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
 }
@@ -38,7 +46,10 @@ func add(text string, file string, v string) error {
 // Join 結合する
 func Join(list []string, file string) error {
 	cmd := "sox"
-	path := getRootPath()
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
 
 	for _, v := range list {
 		cmd += " " + path + "static/files/tmp/sound/" + v + ".wav"
@@ -56,7 +67,10 @@ func Join(list []string, file string) error {
 
 // toMp3 mp3を変換する
 func toMp3(file string) error {
-	path := getRootPath()
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
 
 	src := path + "static/files/tmp/sound/" + file + ".wav"
 	dest := path + "static/files/sound/" + file + ".mp3"
@@ -64,7 +78,7 @@ func toMp3(file string) error {
 	cmd := "lame -V2 " + src + " " + dest
 	log.Println(cmd)
 
-	_, err := exec.Command("sh", "-c", cmd).Output()
+	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
 }

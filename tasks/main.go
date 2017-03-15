@@ -11,7 +11,7 @@ import (
 
 // SetConfig コンフィグを設定する
 func SetConfig() (err error) {
-	apppath := utils.GetAppPath()
+	apppath, _ := utils.GetAppPath()
 
 	if os.Getenv("ENV_CONF") == "prod" {
 		err = beego.LoadAppConfig("ini", apppath+"/conf/app_prod.conf")
