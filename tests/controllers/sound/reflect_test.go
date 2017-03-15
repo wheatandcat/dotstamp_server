@@ -28,6 +28,7 @@ func TestReflectPost(t *testing.T) {
 
 	values := url.Values{}
 	values.Set("userContributionId", "1")
+	values.Set("overwrite", "true")
 
 	r, err := http.NewRequest(
 		"POST",

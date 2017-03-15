@@ -3,7 +3,6 @@ package utils
 import (
 	"encoding/base64"
 	"errors"
-	"log"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -38,7 +37,6 @@ func GetAppPath() (string, error) {
 	_, f, _, _ := runtime.Caller(0)
 	p, err := filepath.Abs(filepath.Dir(filepath.Join(f, ".."+string(filepath.Separator))))
 
-	log.Println(p)
 	return p, err
 }
 

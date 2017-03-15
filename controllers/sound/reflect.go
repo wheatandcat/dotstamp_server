@@ -17,7 +17,8 @@ type ReflectController struct {
 
 // ReflectRequest 反映リクエスト
 type ReflectRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
+	UserContributionID int  `form:"userContributionId" validate:"min=1"`
+	Overwrite          bool `form:"overwrite"`
 }
 
 // ReflectResponse 反映レスポンス
@@ -34,7 +35,7 @@ func (c *ReflectController) Post() {
 		return
 	}
 
-	request := AddRequest{}
+	request := ReflectRequest{}
 	if err := c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -106,6 +107,15 @@ func (c *ReflectController) Post() {
 		}
 
 		v.Body = bodyMap[v.Priority].Body
+		if request.Overwrite {
+			v.BodySound, err = contributions.ReplaceBodeySound(bodyMap[v.Priority].Body)
+			if err != nil {
+				models.Rollback(tx)
+				c.ServerError(err, controllers.ErrCodeCommon, userID)
+				return
+			}
+		}
+
 		if err = v.Save(); err != nil {
 			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrCodeCommon, userID)

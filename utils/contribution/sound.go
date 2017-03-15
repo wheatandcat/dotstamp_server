@@ -2,11 +2,13 @@ package contributions
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/models/csv_models"
 	"dotstamp_server/utils"
 	"dotstamp_server/utils/sound"
 	"errors"
 	"regexp"
 	"strconv"
+	"strings"
 
 	"github.com/astaxie/beego"
 )
@@ -64,9 +66,13 @@ func getBodySoundFormat(str string) string {
 // AddSoundDetail 音声詳細を追加する
 func AddSoundDetail(uID int, b GetBody) error {
 	s := ""
+	var err error
 
 	if b.TalkType <= models.TalkTypeText {
-		s = getBodySoundFormat(b.Body)
+		s, err = ReplaceBodeySound(s)
+		if err != nil {
+			return err
+		}
 	}
 
 	u := models.UserContributionSoundDetail{
@@ -212,4 +218,21 @@ func UpdateSoundToMakeStatus(uID int, makeStatus int) error {
 	u := models.UserContributionSoundDetail{}
 
 	return u.UpdateToMakeStatusByUserContributionID(uID, makeStatus)
+}
+
+// ReplaceBodeySound 音声本文を置き換える
+func ReplaceBodeySound(s string) (string, error) {
+	s = getBodySoundFormat(s)
+
+	c := csvModels.ContributionSoundBodyReplace{}
+	list, err := c.GetStructAll()
+	if err != nil {
+		return "", err
+	}
+
+	for _, v := range list {
+		s = strings.Replace(s, v.Text, v.Replace, -1)
+	}
+
+	return s, nil
 }
