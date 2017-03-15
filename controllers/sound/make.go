@@ -2,6 +2,7 @@ package controllersSound
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"errors"
 
@@ -62,6 +63,11 @@ func (c *MakeController) Post() {
 	}
 
 	if err := contributions.MakeSoundFile(request.UserContributionID, list); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	if err := contributions.UpdateSoundToMakeStatus(request.UserContributionID, models.MakeStatusMade); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

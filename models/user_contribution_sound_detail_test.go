@@ -36,10 +36,31 @@ func (t *TestUserContributionSoundDetail) TestAdd(c *C) {
 	c.Check(r[0].UserContributionID, Equals, 100)
 }
 
+func (t *TestUserContributionSoundDetail) TestSave(c *C) {
+	u := &UserContributionSoundDetail{}
+
+	uc, _, _ := u.GetByID(1)
+	uc.Body = "aaaaa"
+
+	r := uc.Save()
+
+	c.Check(r, Equals, nil)
+}
+
 func (t *TestUserContributionSoundDetail) TestGetByID(c *C) {
 	u := &UserContributionSoundDetail{}
 
 	r, _, _ := u.GetByID(1)
 
 	c.Check(r.ID, Equals, uint(1))
+}
+
+func (t *TestUserContributionSoundDetail) TestUpdateToMakeStatusByUserContributionID(c *C) {
+	u := &UserContributionSoundDetail{}
+
+	u.UpdateToMakeStatusByUserContributionID(1, 1)
+
+	r, _, _ := u.GetListByUserContributionID(1)
+
+	c.Check(r[0].MakeStatus, Equals, 1)
 }

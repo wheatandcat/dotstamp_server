@@ -23,6 +23,7 @@ type SaveVoicedRequest struct {
 type SaveVoiceResponse struct {
 	Warning bool
 	Message string
+	ID      uint
 }
 
 // Post ボイス保存する
@@ -55,9 +56,22 @@ func (c *SaveVoiceController) Post() {
 
 	models.Commit(tx)
 
+	u := models.UserContributionSoundDetail{}
+	r, _, err := u.GetByID(request.ID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	if err := contributions.AddTmpSound(r); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
 	c.Data["json"] = SaveVoiceResponse{
 		Warning: false,
 		Message: "",
+		ID:      request.ID,
 	}
 
 	c.ServeJSON()

@@ -109,6 +109,7 @@ func SaveSoundDetailToBodySound(id uint, body string, userID int) error {
 	}
 
 	u.BodySound = body
+	u.MakeStatus = models.MakeStatusMade
 
 	return u.Save()
 }
@@ -130,6 +131,7 @@ func SaveSoundDetailTVoiceType(id uint, v int, userID int) error {
 	}
 
 	u.VoiceType = v
+	u.MakeStatus = models.MakeStatusMade
 
 	return u.Save()
 }
@@ -168,6 +170,14 @@ func getFileName(u models.UserContributionSoundDetail) string {
 	return strconv.Itoa(u.UserContributionID) + "_" + strconv.Itoa(u.Priority)
 }
 
+// AddTmpSound 一時音声ファイルを追加する
+func AddTmpSound(u models.UserContributionSoundDetail) error {
+	file := getFileName(u)
+	voice := getVoiceTypeFile(u.VoiceType)
+
+	return sound.AddTmpSound(u.BodySound, file, voice)
+}
+
 // MakeSoundFile 音声ファイルを作成する
 func MakeSoundFile(uID int, list []models.UserContributionSoundDetail) error {
 	fileList := []string{}
@@ -177,13 +187,13 @@ func MakeSoundFile(uID int, list []models.UserContributionSoundDetail) error {
 			continue
 		}
 
-		file := getFileName(u)
-		voice := getVoiceTypeFile(u.VoiceType)
-		if err := sound.AddTmpSound(u.BodySound, file, voice); err != nil {
-			return err
+		if u.MakeStatus == models.MakeStatusUncreated {
+			if err := AddTmpSound(u); err != nil {
+				return err
+			}
 		}
 
-		fileList = append(fileList, file)
+		fileList = append(fileList, getFileName(u))
 	}
 
 	return sound.Join(fileList, strconv.Itoa(uID))
@@ -195,4 +205,11 @@ func ExistsSound(uID int) bool {
 	root, _ := utils.GetAppPath()
 
 	return utils.ExistsFile(root + "/" + dir + strconv.Itoa(uID) + ".mp3")
+}
+
+// UpdateSoundToMakeStatus 投稿IDから作成状態を更新する
+func UpdateSoundToMakeStatus(uID int, makeStatus int) error {
+	u := models.UserContributionSoundDetail{}
+
+	return u.UpdateToMakeStatusByUserContributionID(uID, makeStatus)
 }

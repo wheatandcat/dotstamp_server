@@ -140,3 +140,9 @@ func (t *TestSound) TestExistsSound(c *C) {
 
 	c.Check(r, Equals, true)
 }
+
+func (t *TestSound) TestUpdateSoundToMakeStatus(c *C) {
+	r := UpdateSoundToMakeStatus(1, 1)
+
+	c.Check(r, Equals, nil)
+}

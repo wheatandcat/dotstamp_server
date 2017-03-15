@@ -162,6 +162,21 @@ func GetListWhere(dbModel interface{}, where string, bindList []map[string]inter
 	return db, err
 }
 
+// Update 条件から更新する
+func Update(dbModel interface{}, s []interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (*gorm.DB, error) {
+	db, err := getDbOption(where, bindList, option)
+	if err != nil {
+		return db, err
+	}
+
+	err = db.Model(dbModel).Update(s...).Error
+	if err = checkError(err); err != nil {
+		return db, nil
+	}
+
+	return db, err
+}
+
 // Create 作成する
 func Create(dbModel interface{}) error {
 	db, err := database.GormConnect()
