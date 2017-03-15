@@ -194,5 +194,5 @@ func ExistsSound(uID int) bool {
 	dir := beego.AppConfig.String("soundDir")
 	root, _ := utils.GetAppPath()
 
-	return utils.ExistsFile(root + "/../" + dir + strconv.Itoa(uID) + ".mp3")
+	return utils.ExistsFile(root + "/" + dir + strconv.Itoa(uID) + ".mp3")
 }

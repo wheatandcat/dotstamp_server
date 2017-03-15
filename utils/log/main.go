@@ -13,8 +13,9 @@ func LogFile(file string) (o *os.File, err error) {
 	if err != nil {
 		return o, err
 	}
+	log.Println(apppath)
 
-	return os.OpenFile(apppath+"/../logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+	return os.OpenFile(apppath+"/logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 }
 
 // Err エラーを出力する

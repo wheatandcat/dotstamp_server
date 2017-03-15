@@ -14,7 +14,7 @@ func getRootPath() (string, error) {
 		return "", err
 	}
 
-	return p + "/../", nil
+	return p + "/", nil
 }
 
 // AddTmpSound 一時音声を追加する

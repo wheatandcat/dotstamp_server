@@ -3,6 +3,7 @@ package utils
 import (
 	"encoding/base64"
 	"errors"
+	"log"
 	"os"
 	"path/filepath"
 	"reflect"
@@ -34,8 +35,11 @@ func GetAppPath() (string, error) {
 		return currentSrc, nil
 	}
 
-	_, f, _, _ := runtime.Caller(1)
-	return filepath.Abs(filepath.Dir(filepath.Join(f, ".."+string(filepath.Separator))))
+	_, f, _, _ := runtime.Caller(0)
+	p, err := filepath.Abs(filepath.Dir(filepath.Join(f, ".."+string(filepath.Separator))))
+
+	log.Println(p)
+	return p, err
 }
 
 // GetArrayCombile 配列をkeyと結合させる
