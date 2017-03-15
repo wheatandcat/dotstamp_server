@@ -69,7 +69,7 @@ func AddSoundDetail(uID int, b GetBody) error {
 	var err error
 
 	if b.TalkType <= models.TalkTypeText {
-		s, err = ReplaceBodeySound(s)
+		s, err = ReplaceBodeySound(b.Body)
 		if err != nil {
 			return err
 		}
