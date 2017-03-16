@@ -12,7 +12,7 @@ import (
 // LogFile ログファイルを開く
 func LogFile(file string) (o *os.File, err error) {
 	logDir := beego.AppConfig.String("logDir")
-	if logDir != "" {
+	if logDir == "" {
 		apppath, err := utils.GetAppPath()
 		if err != nil {
 			return o, err
