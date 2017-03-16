@@ -114,6 +114,8 @@ func (c *ReflectController) Post() {
 				c.ServerError(err, controllers.ErrCodeCommon, userID)
 				return
 			}
+
+			v.MakeStatus = models.MakeStatusUncreated
 		}
 
 		if err = v.Save(); err != nil {
