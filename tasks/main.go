@@ -1,6 +1,7 @@
 package tasks
 
 import (
+	"log"
 	"os"
 
 	"dotstamp_server/utils"
@@ -11,11 +12,12 @@ import (
 
 // SetConfig コンフィグを設定する
 func SetConfig() (err error) {
-	apppath, _ := utils.GetAppPath()
+	log.Println(os.Getenv("ENV_CONF_BATCH"))
 
-	if os.Getenv("ENV_CONF") == "prod" {
-		err = beego.LoadAppConfig("ini", apppath+"/conf/app_prod.conf")
+	if os.Getenv("ENV_CONF_BATCH") == "prod" {
+		err = beego.LoadAppConfig("ini", "/project/blue/dotstamp_deploy/conf/app_prod_blue.conf")
 	} else {
+		apppath, _ := utils.GetAppPath()
 		err = beego.LoadAppConfig("ini", apppath+"/conf/app_dev.conf")
 	}
 

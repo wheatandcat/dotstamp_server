@@ -5,17 +5,23 @@ import (
 	"io"
 	"log"
 	"os"
+
+	"github.com/astaxie/beego"
 )
 
 // LogFile ログファイルを開く
 func LogFile(file string) (o *os.File, err error) {
-	apppath, err := utils.GetAppPath()
-	if err != nil {
-		return o, err
-	}
-	log.Println(apppath)
+	logDir := beego.AppConfig.String("logDir")
+	if logDir != "" {
+		apppath, err := utils.GetAppPath()
+		if err != nil {
+			return o, err
+		}
 
-	return os.OpenFile(apppath+"/logs/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
+		logDir = apppath + "/logs"
+	}
+
+	return os.OpenFile(logDir+"/"+file+".log", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0666)
 }
 
 // Err エラーを出力する
@@ -50,5 +56,5 @@ func RemoveLogFile(file string) error {
 		return err
 	}
 
-	return os.Remove(apppath + "/..//logs/" + file + ".log")
+	return os.Remove(apppath + "/logs/" + file + ".log")
 }
