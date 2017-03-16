@@ -4,7 +4,7 @@ stampのサーバーリポジトリ
 
 ## projectリポジトリ一覧
 * サーバー（go言語）　
-  * [dotstamp_server](https://github.com/wheatandcat/dotstamp_server)
+  * [dotstamp_server](https://github.com/wheatandcat/dotstamp_server)
 * クライアント（react + redux）　
   * [dotstamp_client](https://github.com/wheatandcat/dotstamp_client)
 * 環境構築（Ansible）
