@@ -28,6 +28,18 @@ func (t *TestSound) TestGetByUserContributionID(c *C) {
 	c.Check(r.UserContributionID, Equals, 1)
 }
 
+func (t *TestSound) TestGetSoundListByUserContributionIDList(c *C) {
+	r, _ := GetSoundListByUserContributionIDList([]int{1})
+
+	c.Check(r[0].UserContributionID, Equals, 1)
+}
+
+func (t *TestSound) TestGetSoundMapByUserContributionIDList(c *C) {
+	r, _ := GetSoundMapByUserContributionIDList([]int{1})
+
+	c.Check(r[1].UserContributionID, Equals, 1)
+}
+
 func (t *TestSound) TestAddSound(c *C) {
 	AddSound(100, 1)
 

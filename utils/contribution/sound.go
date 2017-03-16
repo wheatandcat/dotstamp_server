@@ -37,6 +37,31 @@ func GetSoundByUserContributionID(uID int) (models.UserContributionSound, error)
 	return r, err
 }
 
+// GetSoundListByUserContributionIDList 投稿IDリストから音声リストを取得する
+func GetSoundListByUserContributionIDList(uID []int) ([]models.UserContributionSound, error) {
+	u := models.UserContributionSound{}
+
+	r, _, err := u.GetListByUserContributionIDList(uID)
+
+	return r, err
+}
+
+// GetSoundMapByUserContributionIDList 投稿IDリストから音声マップを取得する
+func GetSoundMapByUserContributionIDList(uID []int) (map[int]models.UserContributionSound, error) {
+	m := map[int]models.UserContributionSound{}
+
+	list, err := GetSoundListByUserContributionIDList(uID)
+	if err != nil {
+		return m, err
+	}
+
+	for _, v := range list {
+		m[v.UserContributionID] = v
+	}
+
+	return m, nil
+}
+
 // AddSound 音声を追加する
 func AddSound(uID int, s int) error {
 	u := models.UserContributionSound{

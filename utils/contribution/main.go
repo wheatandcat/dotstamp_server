@@ -19,6 +19,7 @@ type Contribution struct {
 	Body        []GetBody
 	ViewStatus  int
 	Search      string
+	SoundStatus int
 	UpdatedAt   time.Time
 	CreatedAt   time.Time
 }
@@ -180,6 +181,11 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 		return contributionList, err
 	}
 
+	soundMap, err := GetSoundMapByUserContributionIDList(idList)
+	if err != nil {
+		return contributionList, err
+	}
+
 	for _, val := range u {
 		if len(tagMap[int(val.ID)]) == 0 {
 			tagMap[int(val.ID)] = []tags.Tag{}
@@ -194,6 +200,7 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 			ViewStatus:  val.ViewStatus,
 			Tag:         tagMap[int(val.ID)],
 			FollowCount: followCountMap[int(val.ID)],
+			SoundStatus: soundMap[int(val.ID)].SoundStatus,
 		}
 		contributionList = append(contributionList, c)
 	}

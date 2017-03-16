@@ -39,3 +39,15 @@ func (u *UserContributionSound) GetByUserContributionID(uID int) (userContributi
 
 	return
 }
+
+// GetListByUserContributionIDList 投稿IDリストからリスト取得する
+func (u *UserContributionSound) GetListByUserContributionIDList(uID []int) (userContributionSound []UserContributionSound, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{
+		{"UserContributionID": uID},
+	}
+	option := make(map[string]interface{})
+
+	db, err = GetListWhere(&userContributionSound, "User_contribution_ID IN :UserContributionID", whereList, option)
+
+	return
+}
