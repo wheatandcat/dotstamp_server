@@ -6,6 +6,7 @@ import (
 	"dotstamp_server/utils/character"
 	"dotstamp_server/utils/contribution"
 	"errors"
+	"log"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -101,20 +102,29 @@ func (c *ReflectController) Post() {
 		bodyMap[v.Priority] = v
 	}
 
+	var bodySound string
+
 	for _, v := range list {
-		if bodyMap[v.Priority].Body == v.Body {
+		if bodyMap[v.Priority].Body == v.Body && !request.Overwrite {
 			continue
 		}
 
 		v.Body = bodyMap[v.Priority].Body
 		if request.Overwrite {
-			v.BodySound, err = contributions.ReplaceBodeySound(bodyMap[v.Priority].Body)
+			bodySound, err = contributions.ReplaceBodeySound(bodyMap[v.Priority].Body)
+			log.Println(bodySound)
 			if err != nil {
 				models.Rollback(tx)
 				c.ServerError(err, controllers.ErrCodeCommon, userID)
 				return
 			}
 
+			// 元のデータと一致する場合は更新しない
+			if bodySound == v.BodySound {
+				continue
+			}
+
+			v.BodySound = bodySound
 			v.MakeStatus = models.MakeStatusUncreated
 		}
 
