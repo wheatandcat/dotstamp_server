@@ -47,11 +47,11 @@ bee run
 ```
 http://192.168.33.10:8080/
 ```
+## その他コマンド
 全体テスト
 ```
 go test -p 1 $(glide novendor)
 ```
-## その他コマンド
 指定部分のみテスト
 ```
 go test -p 1 ./models/ -cover TestModel
