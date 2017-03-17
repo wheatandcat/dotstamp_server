@@ -3,7 +3,7 @@
 <img src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" data-canonical-src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" width="200" />
 
 ## 概要
-.stampのサーバーサイド
+.stampのサーバーサイド　  
 webサービス：[.stamp](http://dotstamp.com/)
 
 ## projectリポジトリ一覧
