@@ -43,10 +43,15 @@ bee run
 ```
 ./dotstamp_server
 ```
+アクセス(vagrantから実行した場合)
+```
+http://192.168.33.10:8080/
+```
 全体テスト
 ```
 go test -p 1 $(glide novendor)
 ```
+## その他コマンド
 指定部分のみテスト
 ```
 go test -p 1 ./models/ -cover TestModel
@@ -54,6 +59,10 @@ go test -p 1 ./models/ -cover TestModel
 テスト & 監視
 ```
 goconvey -packages 1
+```
+db確認
+```
+dbweb -home=$GOPATH/src/github.com/go-xorm/dbweb/
 ```
 ## ライセンス
 BSDライセンス
