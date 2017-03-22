@@ -39,3 +39,9 @@ func (t *TestMain) TestJoin(c *C) {
 
 	Join(list, "0")
 }
+
+func (t *TestMain) TestToM4a(c *C) {
+	r := ToM4a("0")
+
+	c.Check(r, Equals, nil)
+}

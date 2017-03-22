@@ -2,6 +2,7 @@ package sound
 
 import (
 	"dotstamp_server/utils"
+	"log"
 	"os/exec"
 	"strings"
 )
@@ -62,7 +63,7 @@ func Join(list []string, file string) error {
 	return toMp3(file)
 }
 
-// toMp3 mp3を変換する
+// toMp3 mp3に変換する
 func toMp3(file string) error {
 	path, err := getRootPath()
 	if err != nil {
@@ -73,6 +74,24 @@ func toMp3(file string) error {
 	dest := path + "static/files/sound/" + file + ".mp3"
 
 	cmd := "lame -V2 " + src + " " + dest
+
+	_, err = exec.Command("sh", "-c", cmd).Output()
+
+	return err
+}
+
+// ToM4a m4aに変換する
+func ToM4a(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	src := path + "static/files/sound/" + file + ".mp3"
+	dest := path + "static/files/tmp/sound/" + file + ".m4a"
+
+	cmd := "ffmpeg -y -i " + src + " -vn -ac 2 -vol 256 -ab 112k " + dest
+	log.Println(cmd)
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
