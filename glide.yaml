@@ -19,6 +19,7 @@ import:
 - package: google.golang.org/api
   subpackages:
   - oauth2/v2
+  - youtube/v3
 - package: google.golang.org/appengine
   version: ^1.0.0
 - package: gopkg.in/check.v1
@@ -33,6 +34,9 @@ import:
 - package: github.com/Sirupsen/logrus
   version: ^0.11.4
 - package: github.com/kardianos/osext
+- package: golang.org/x/net
+  subpackages:
+  - context
 testImport:
 - package: github.com/smartystreets/goconvey
   version: ^1.6.2

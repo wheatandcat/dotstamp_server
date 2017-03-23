@@ -22,3 +22,17 @@ func (t *TestMain) TestMake(c *C) {
 
 	c.Check(r, Equals, nil)
 }
+
+func (t *TestMain) TestUploadYoutube(c *C) {
+	u := Upload{
+		UserContributionID: "1",
+		Title:              "abc",
+		Description:        "abc",
+		CategoryID:         "22",
+		VideoStatus:        "public",
+	}
+
+	r := UploadYoutube(u)
+
+	c.Check(r, Equals, nil)
+}

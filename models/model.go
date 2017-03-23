@@ -16,6 +16,15 @@ const ErrRecordeNotFound = "record not found"
 // ErrFileTypeUnMatch レコードなし
 const ErrFileTypeUnMatch = "file type unmatch"
 
+const (
+	// StatusPublic 状態；公開
+	StatusPublic = 1
+	// StatusPrivate 状態；非公開
+	StatusPrivate = 2
+	// StatusError 状態：エラー
+	StatusError = 3
+)
+
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
 func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {
 	bind := []interface{}{}
