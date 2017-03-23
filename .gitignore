@@ -36,6 +36,8 @@ blue/*
 /static/images
 /static/json
 /static/txt
+/static/files/movie/*
+!/static/files/movie/.gitkeep
 /static/files/sound/*
 !/static/files/sound/.gitkeep
 /static/files/tmp/sound/*
