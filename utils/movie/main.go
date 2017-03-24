@@ -2,8 +2,11 @@ package movie
 
 import (
 	"dotstamp_server/utils"
-	"log"
+	"net/http"
+	"os"
 	"os/exec"
+
+	youtube "google.golang.org/api/youtube/v3"
 )
 
 // Upload アップロード
@@ -43,28 +46,48 @@ func Make(file string) error {
 	return err
 }
 
-// UploadYoutube Youtubeにアップロードする
-func UploadYoutube(u Upload) error {
+// UploadToYoutube YouTubeにアップロードする
+func UploadToYoutube(client *http.Client, u Upload) (string, error) {
+	if utils.IsTest() {
+		return "", nil
+	}
+
 	path, err := getRootPath()
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	title := "-title='" + u.Title + "'"
-	description := "-description='" + u.Description + "'"
-	categoryID := "-categoryId='" + u.CategoryID + "'"
-	videoStatus := "-videoStatus='" + u.VideoStatus + "'"
-	cachetoken := "-cachetoken=false"
-	option := title + " " + description + " " + categoryID + " " + videoStatus + " " + cachetoken
+	filename := path + "static/files/movie/" + u.UserContributionID + ".mp4"
 
-	file := path + "static/files/movie/" + u.UserContributionID + ".mp4"
-
-	cmd := path + "tasks/youtubeUpload/youtubeUpload " + option + " youtube " + file
-	log.Println(cmd)
-	if utils.IsTest() {
-		log.Println(cmd)
-		return nil
+	service, err := youtube.New(client)
+	if err != nil {
+		return "", err
 	}
 
-	return exec.Command("sh", "-c", cmd).Start()
+	upload := &youtube.Video{
+		Snippet: &youtube.VideoSnippet{
+			Title:       u.Title,
+			Description: u.Description,
+			CategoryId:  u.CategoryID,
+		},
+		Status: &youtube.VideoStatus{PrivacyStatus: u.VideoStatus},
+	}
+
+	upload.Snippet.Tags = []string{"test", "upload", "api"}
+
+	call := service.Videos.Insert("snippet,status", upload)
+
+	file, err := os.Open(filename)
+	defer file.Close()
+
+	if err != nil {
+		return "", err
+	}
+
+	response, err := call.Media(file).Do()
+	if err != nil {
+		return "", err
+	}
+
+	return response.Id, nil
 }

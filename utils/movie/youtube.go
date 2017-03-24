@@ -1,13 +1,9 @@
-// Copyright 2011 Google Inc. All rights reserved.
-// Use of this source code is governed by a BSD-style
-// license that can be found in the LICENSE file.
-package main
+package movie
 
 import (
-	"dotstamp_server/tasks"
+	"context"
 	"encoding/gob"
 	"errors"
-	"flag"
 	"fmt"
 	"hash/fnv"
 	"io/ioutil"
@@ -22,79 +18,58 @@ import (
 	"strings"
 	"time"
 
-	"github.com/astaxie/beego"
+	"dotstamp_server/utils"
 
-	"golang.org/x/net/context"
+	"github.com/astaxie/beego"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
-
-var (
-	cacheToken = flag.Bool("cachetoken", true, "cache the OAuth 2.0 token")
-	debug      = flag.Bool("debug", false, "show HTTP traffic")
-)
-
-var err error
-
-func usage() {
-	fmt.Fprintf(os.Stderr, "Usage: go-api-demo <api-demo-name> [api name args]\n\nPossible APIs:\n\n")
-	for n := range demoFunc {
-		fmt.Fprintf(os.Stderr, "  * %s\n", n)
-	}
-
-	os.Exit(2)
-}
-
-func init() {
-	if err = tasks.SetConfig(); err != nil {
-		tasks.Err(err, "yotubeUpload")
-	}
-}
-
-func main() {
-	flag.Parse()
-	if flag.NArg() == 0 {
-		usage()
-	}
-
-	name := flag.Arg(0)
-	demo, ok := demoFunc[name]
-	log.Println(name)
-	log.Println(flag.Args()[1:])
-
-	if !ok {
-		usage()
-	}
-
-	config := &oauth2.Config{
-		ClientID:     beego.AppConfig.String("youtubeClientID"),
-		ClientSecret: beego.AppConfig.String("youtubeClientSecret"),
-		Endpoint:     google.Endpoint,
-		Scopes:       []string{demoScope[name]},
-	}
-
-	ctx := context.Background()
-	if *debug {
-		ctx = context.WithValue(ctx, oauth2.HTTPClient, &http.Client{
-			Transport: &logTransport{http.DefaultTransport},
-		})
-	}
-
-	c := newOAuthClient(ctx, config)
-	demo(c, flag.Args()[1:])
-}
 
 var (
 	demoFunc  = make(map[string]func(*http.Client, []string))
 	demoScope = make(map[string]string)
 )
 
-func registerDemo(name, scope string, main func(c *http.Client, argv []string)) {
-	if demoFunc[name] != nil {
-		panic(name + " already registered")
+// GetConnect 接続を取得する
+func GetConnect() (h *http.Client) {
+	if utils.IsTest() {
+		return h
 	}
-	demoFunc[name] = main
-	demoScope[name] = scope
+
+	config := &oauth2.Config{
+		ClientID:     beego.AppConfig.String("youtubeClientID"),
+		ClientSecret: beego.AppConfig.String("youtubeClientSecret"),
+		Endpoint:     google.Endpoint,
+		Scopes:       []string{"https://www.googleapis.com/auth/youtube.upload"},
+	}
+
+	ctx := context.Background()
+
+	return newOAuthClient(ctx, config)
+}
+
+func saveToken(file string, token *oauth2.Token) {
+	f, err := os.Create(file)
+	if err != nil {
+		log.Printf("Warning: failed to cache oauth token: %v", err)
+		return
+	}
+
+	defer f.Close()
+	gob.NewEncoder(f).Encode(token)
+}
+
+func newOAuthClient(ctx context.Context, config *oauth2.Config) *http.Client {
+	cacheFile := tokenCacheFile(config)
+	token, err := tokenFromFile(cacheFile, false)
+	if err != nil {
+		token = tokenFromWeb(ctx, config)
+		saveToken(cacheFile, token)
+	} else {
+		log.Printf("Using cached token %#v from %q", token, cacheFile)
+	}
+
+	return config.Client(ctx, token)
 }
 
 func osUserCacheDir() string {
@@ -113,11 +88,12 @@ func tokenCacheFile(config *oauth2.Config) string {
 	hash.Write([]byte(config.ClientSecret))
 	hash.Write([]byte(strings.Join(config.Scopes, " ")))
 	fn := fmt.Sprintf("go-api-demo-tok%v", hash.Sum32())
+
 	return filepath.Join(osUserCacheDir(), url.QueryEscape(fn))
 }
 
-func tokenFromFile(file string) (*oauth2.Token, error) {
-	if !*cacheToken {
+func tokenFromFile(file string, cache bool) (*oauth2.Token, error) {
+	if !cache {
 		return nil, errors.New("--cachetoken is false")
 	}
 
@@ -129,29 +105,6 @@ func tokenFromFile(file string) (*oauth2.Token, error) {
 	t := new(oauth2.Token)
 	err = gob.NewDecoder(f).Decode(t)
 	return t, err
-}
-
-func saveToken(file string, token *oauth2.Token) {
-	f, err := os.Create(file)
-	if err != nil {
-		log.Printf("Warning: failed to cache oauth token: %v", err)
-		return
-	}
-	defer f.Close()
-	gob.NewEncoder(f).Encode(token)
-}
-
-func newOAuthClient(ctx context.Context, config *oauth2.Config) *http.Client {
-	cacheFile := tokenCacheFile(config)
-	token, err := tokenFromFile(cacheFile)
-	if err != nil {
-		token = tokenFromWeb(ctx, config)
-		saveToken(cacheFile, token)
-	} else {
-		log.Printf("Using cached token %#v from %q", token, cacheFile)
-	}
-
-	return config.Client(ctx, token)
 }
 
 func tokenFromWeb(ctx context.Context, config *oauth2.Config) (token *oauth2.Token) {
@@ -179,6 +132,7 @@ func tokenFromWeb(ctx context.Context, config *oauth2.Config) (token *oauth2.Tok
 		log.Printf("no code")
 		http.Error(rw, "", 500)
 	}))
+
 	defer ts.Close()
 
 	config.RedirectURL = ts.URL

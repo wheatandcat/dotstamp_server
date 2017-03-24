@@ -6,19 +6,18 @@ import (
 	. "gopkg.in/check.v1"
 )
 
-type TestMain struct {
+type TestYoutube struct {
 	test.TSuite
 }
 
 func init() {
-	var t test.Accessor = &TestMain{}
+	var t test.Accessor = &TestYoutube{}
 	t.SetTableNameList([]string{})
 
 	var _ = Suite(t)
 }
 
-func (t *TestMain) TestMake(c *C) {
-	r := Make("0")
+func (t *TestYoutube) TestUploadToYoutube(c *C) {
 
-	c.Check(r, Equals, nil)
+	GetConnect()
 }
