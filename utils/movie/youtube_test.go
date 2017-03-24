@@ -16,8 +16,3 @@ func init() {
 
 	var _ = Suite(t)
 }
-
-func (t *TestYoutube) TestUploadToYoutube(c *C) {
-
-	GetConnect()
-}

@@ -1,15 +1,12 @@
 package controllersMovie
 
 import (
+	"context"
 	"dotstamp_server/controllers"
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
-	"dotstamp_server/utils/sound"
-	"errors"
-	"strconv"
-
-	validator "gopkg.in/go-playground/validator.v9"
+	"log"
 )
 
 // MakeController 作成コントローラ
@@ -19,7 +16,8 @@ type MakeController struct {
 
 // MakeRequest 作成リクエスト
 type MakeRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
+	Code  string `form:"code"`
+	State string `form:"state"`
 }
 
 // MakeResponse 作成レスポンス
@@ -28,70 +26,49 @@ type MakeResponse struct {
 	Message string
 }
 
-// Post 作成する
-func (c *MakeController) Post() {
-	userID := c.GetUserID()
-	if !c.IsNoLogin(userID) {
-		c.ServerLoginNotFound()
-		return
-	}
-
+// Get 作成する
+func (c *MakeController) Get() {
 	request := MakeRequest{}
 	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
+	log.Println(request)
+	context := context.Background()
 
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	config := movie.GetConnect()
+
+	tok, err := config.Exchange(context, request.Code)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		log.Println("aaaa")
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
-	if userID != u.UserID {
-		c.ServerError(errors.New("diff UserID"), controllers.ErrCodeCommon, userID)
+	if tok.Valid() == false {
+		log.Println("aaaa")
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
-	if !contributions.ExistsSound(request.UserContributionID) {
-		c.ServerError(errors.New("not exists file"), controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if err = sound.ToM4a(strconv.Itoa(request.UserContributionID)); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if err = movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
+	client := config.Client(context, tok)
 
 	m := movie.Upload{
-		UserContributionID: strconv.Itoa(request.UserContributionID),
-		Title:              u.Title,
-		Description:        "URL: http://dotstamp.com/#/contribution/show/" + strconv.Itoa(request.UserContributionID),
+		UserContributionID: "1",
+		Title:              "test",
+		Description:        "test",
 		CategoryID:         "22",
-		VideoStatus:        "public",
+		VideoStatus:        "unlisted",
 	}
-
-	client := movie.GetConnect()
 
 	id, err := movie.UploadToYoutube(client, m)
 	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		contributions.AddOrSaveMovie(request.UserContributionID, "", models.MovieTypeYoutube, models.StatusError)
+		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}
 
-	contributions.AddOrSaveMovie(request.UserContributionID, id, models.MovieTypeYoutube, models.StatusPublic)
+	contributions.AddOrSaveMovie(1, id, models.MovieTypeYoutube, models.StatusPublic)
 
 	c.Data["json"] = MakeResponse{
 		Warning: false,

@@ -2,8 +2,7 @@ package controllersMovie
 
 import (
 	"dotstamp_server/controllers"
-
-	validator "gopkg.in/go-playground/validator.v9"
+	"dotstamp_server/utils/movie"
 )
 
 // ConnectController 接続コントローラ
@@ -23,31 +22,11 @@ type ConnectResponse struct {
 	Message string
 }
 
-// Post 接続する
-func (c *ConnectController) Post() {
-	userID := c.GetUserID()
-	if !c.IsNoLogin(userID) {
-		c.ServerLoginNotFound()
-		return
-	}
+// Get 接続する
+func (c *ConnectController) Get() {
+	config := movie.GetConnect()
 
-	request := ConnectRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
+	url := config.AuthCodeURL("st001")
 
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	c.Data["json"] = ConnectResponse{
-		Warning: false,
-		Message: "",
-	}
-
-	c.ServeJSON()
-
+	c.Redirect(url, 302)
 }
