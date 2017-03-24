@@ -30,6 +30,23 @@ var (
 	demoScope = make(map[string]string)
 )
 
+// GetConnectURL URLを取得する
+func GetConnectURL() string {
+	if utils.IsTest() {
+		return ""
+	}
+
+	config := &oauth2.Config{
+		ClientID:     beego.AppConfig.String("youtubeClientID"),
+		ClientSecret: beego.AppConfig.String("youtubeClientSecret"),
+		Endpoint:     google.Endpoint,
+		Scopes:       []string{"https://www.googleapis.com/auth/youtube.upload"},
+		RedirectURL:  beego.AppConfig.String("topurl") + "movie/youtube",
+	}
+
+	return config.AuthCodeURL("st001")
+}
+
 // GetConnect 接続を取得する
 func GetConnect() (h *http.Client) {
 	if utils.IsTest() {
@@ -138,6 +155,7 @@ func tokenFromWeb(ctx context.Context, config *oauth2.Config) (token *oauth2.Tok
 	config.RedirectURL = ts.URL
 
 	authURL := config.AuthCodeURL(randState)
+
 	go openURL(authURL)
 	code := <-ch
 
