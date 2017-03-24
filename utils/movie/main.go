@@ -60,7 +60,7 @@ func UploadYoutube(u Upload) error {
 	file := path + "static/files/movie/" + u.UserContributionID + ".mp4"
 
 	cmd := path + "tasks/youtubeUpload/youtubeUpload " + option + " youtube " + file
-
+	log.Println(cmd)
 	if utils.IsTest() {
 		log.Println(cmd)
 		return nil
