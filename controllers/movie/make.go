@@ -38,6 +38,7 @@ func (c *MakeController) Get() {
 	context := context.Background()
 
 	config := movie.GetConnect()
+	config.RedirectURL = "http://192.168.33.10.xip.io:8080/movie/make"
 
 	tok, err := config.Exchange(context, request.Code)
 	if err != nil {
@@ -55,7 +56,7 @@ func (c *MakeController) Get() {
 	client := config.Client(context, tok)
 
 	m := movie.Upload{
-		UserContributionID: "1",
+		UserContributionID: "21",
 		Title:              "test",
 		Description:        "test",
 		CategoryID:         "22",

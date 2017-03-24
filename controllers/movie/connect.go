@@ -25,6 +25,7 @@ type ConnectResponse struct {
 // Get 接続する
 func (c *ConnectController) Get() {
 	config := movie.GetConnect()
+	config.RedirectURL = "http://192.168.33.10.xip.io:8080/movie/make"
 
 	url := config.AuthCodeURL("st001")
 
