@@ -2,6 +2,10 @@ package contributions
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/utils"
+	"strconv"
+
+	"github.com/astaxie/beego"
 )
 
 // AddMovie 動画を追加する
@@ -39,4 +43,12 @@ func GetMovie(uID int, t int) (models.UserContributionMovie, error) {
 	r, _, err := u.GetByUserContributionID(uID, t)
 
 	return r, err
+}
+
+// ExistsMovie 動画ファイルの存在判定する
+func ExistsMovie(uID int) bool {
+	dir := beego.AppConfig.String("movieDir")
+	root, _ := utils.GetAppPath()
+
+	return utils.ExistsFile(root + "/" + dir + strconv.Itoa(uID) + ".mp4")
 }

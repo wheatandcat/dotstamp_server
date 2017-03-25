@@ -2,7 +2,13 @@ package controllersMovie
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
+	"strconv"
+
+	"github.com/astaxie/beego"
+
+	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // ConnectController 接続コントローラ
@@ -24,10 +30,42 @@ type ConnectResponse struct {
 
 // Get 接続する
 func (c *ConnectController) Get() {
-	config := movie.GetConnect()
-	config.RedirectURL = "http://192.168.33.10.xip.io:8080/movie/make"
+	userID := c.GetUserID()
+	if !c.IsNoLogin(userID) {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
 
-	url := config.AuthCodeURL("st001")
+	request := ConnectRequest{}
+	if err := c.ParseForm(&request); err != nil {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
+
+	validate := validator.New()
+	if err := validate.Struct(request); err != nil {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
+
+	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	if err != nil {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
+
+	if userID != u.UserID {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
+
+	if !contributions.ExistsMovie(request.UserContributionID) {
+		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		return
+	}
+
+	config := movie.GetConnect()
+	url := config.AuthCodeURL(strconv.Itoa(request.UserContributionID))
 
 	c.Redirect(url, 302)
 }

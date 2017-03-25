@@ -71,6 +71,7 @@ func init() {
 
 	beego.Router("/movie/make/", &controllersMovie.MakeController{})
 	beego.Router("/movie/connect/", &controllersMovie.ConnectController{})
+	beego.Router("/movie/callback/", &controllersMovie.CallbackController{})
 
 	beego.Router("/question/add/", &controllersQuestion.AddController{})
 }

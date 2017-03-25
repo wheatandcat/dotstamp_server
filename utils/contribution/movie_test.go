@@ -41,3 +41,9 @@ func (t *TestSound) TestAddOrSaveMovie(c *C) {
 
 	c.Check(r, Equals, nil)
 }
+
+func (t *TestSound) TestExistsMovie(c *C) {
+	r := ExistsMovie(1)
+
+	c.Check(r, Equals, true)
+}
