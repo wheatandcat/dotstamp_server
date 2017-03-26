@@ -4,21 +4,13 @@ import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
+	"errors"
 	"strconv"
-
-	"github.com/astaxie/beego"
-
-	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // ConnectController 接続コントローラ
 type ConnectController struct {
 	controllers.BaseController
-}
-
-// ConnectRequest 接続リクエスト
-type ConnectRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
 }
 
 // ConnectResponse 接続レスポンス
@@ -32,40 +24,35 @@ type ConnectResponse struct {
 func (c *ConnectController) Get() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(errors.New("login not found"), 0)
 		return
 	}
 
-	request := ConnectRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
-		return
-	}
-
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
-		return
-	}
-
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(err, userID)
+		return
+	}
+
+	u, err := contributions.GetByUserContributionID(id)
+	if err != nil {
+		c.RedirectError(err, userID)
 		return
 	}
 
 	if userID != u.UserID {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(errors.New("diff user_id"), userID)
 		return
 	}
 
-	if !contributions.ExistsMovie(request.UserContributionID) {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+	if !contributions.ExistsMovie(id) {
+		c.RedirectError(errors.New("not found movie"), userID)
 		return
 	}
 
 	config := movie.GetConnect()
-	url := config.AuthCodeURL(strconv.Itoa(request.UserContributionID))
+
+	url := config.AuthCodeURL(strconv.Itoa(id))
 
 	c.Redirect(url, 302)
 }

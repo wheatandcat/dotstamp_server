@@ -45,7 +45,7 @@ func (t *TestUserContributionMovie) TestSave(c *C) {
 
 func (t *TestUserContributionMovie) TestGetListByUserContributionIDList(c *C) {
 	u := &UserContributionMovie{}
-	r, _, _ := u.GetListByUserContributionIDList([]int{1})
+	r, _, _ := u.GetListByUserContributionIDList([]int{1}, 1)
 
 	c.Check(r[0].ID, Equals, uint(1))
 }

@@ -24,6 +24,8 @@ type ShowResponse struct {
 	List        []models.UserContributionSoundDetail
 	SoundStatus int
 	SoundFile   bool
+	MovieFile   bool
+	Movie       models.UserContributionMovie
 }
 
 // Post 確認する
@@ -74,10 +76,18 @@ func (c *ShowController) Post() {
 		return
 	}
 
+	movie, err := contributions.GetMovie(request.UserContributionID, models.MovieTypeYoutube)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
 	c.Data["json"] = ShowResponse{
 		List:        list,
 		SoundFile:   contributions.ExistsSound(request.UserContributionID),
 		SoundStatus: s.SoundStatus,
+		MovieFile:   contributions.ExistsMovie(request.UserContributionID),
+		Movie:       movie,
 	}
 
 	c.ServeJSON()

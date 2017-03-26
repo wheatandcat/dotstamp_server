@@ -70,7 +70,7 @@ func init() {
 	beego.Router("/sound/reflect/", &controllersSound.ReflectController{})
 
 	beego.Router("/movie/make/", &controllersMovie.MakeController{})
-	beego.Router("/movie/connect/", &controllersMovie.ConnectController{})
+	beego.Router("/movie/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
 	beego.Router("/movie/callback/", &controllersMovie.CallbackController{})
 
 	beego.Router("/question/add/", &controllersQuestion.AddController{})

@@ -6,6 +6,8 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
+	"errors"
+	"fmt"
 	"strconv"
 
 	"github.com/astaxie/beego"
@@ -24,17 +26,13 @@ type CallbackRequest struct {
 
 // Get コールバックする
 func (c *CallbackController) Get() {
-	userID := c.GetUserID()
-	if !c.IsNoLogin(userID) {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+	request := CallbackRequest{}
+	if err := c.ParseForm(&request); err != nil {
+		c.RedirectError(err, 0)
 		return
 	}
 
-	request := CallbackRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
-		return
-	}
+	fmt.Println("中・・・")
 
 	context := context.Background()
 
@@ -42,12 +40,12 @@ func (c *CallbackController) Get() {
 
 	tok, err := config.Exchange(context, request.Code)
 	if err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(err, 0)
 		return
 	}
 
 	if tok.Valid() == false {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(errors.New("vaild token"), 0)
 		return
 	}
 
@@ -55,19 +53,27 @@ func (c *CallbackController) Get() {
 
 	u, err := contributions.GetByUserContributionID(request.UserContributionID)
 	if err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
-		return
-	}
-
-	if userID != u.UserID {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(err, 0)
 		return
 	}
 
 	if !contributions.ExistsMovie(request.UserContributionID) {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		c.RedirectError(errors.New("not found movie"), 0)
 		return
 	}
+
+	userMovie, err := contributions.GetMovie(int(u.ID), models.MovieTypeYoutube)
+	if err != nil {
+		c.RedirectError(err, 0)
+		return
+	}
+
+	if userMovie.MovieStatus == models.StatusRunning {
+		c.RedirectError(errors.New("making movie"), 0)
+		return
+	}
+
+	contributions.AddOrSaveMovie(int(u.ID), "", models.MovieTypeYoutube, models.StatusRunning)
 
 	videoStatus := "unlisted"
 	if beego.AppConfig.String("runmode") == "prod" {
@@ -85,7 +91,8 @@ func (c *CallbackController) Get() {
 
 	id, err := movie.UploadToYoutube(client, m)
 	if err != nil {
-		c.Redirect(beego.AppConfig.String("errorUrl"), 302)
+		contributions.AddOrSaveMovie(int(u.ID), "", models.MovieTypeYoutube, models.StatusError)
+		c.RedirectError(errors.New("diff user_id"), 0)
 		return
 	}
 

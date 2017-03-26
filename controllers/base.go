@@ -2,6 +2,7 @@ package controllers
 
 import (
 	"errors"
+	"log"
 
 	"dotstamp_server/utils/log"
 
@@ -181,4 +182,12 @@ func isTest() bool {
 	}
 
 	return false
+}
+
+// RedirectError エラーにリダレクトする
+func (c *BaseController) RedirectError(err error, userID int) {
+	log.Println(err.Error())
+	logs.Err(err.Error(), userID)
+
+	c.Redirect(beego.AppConfig.String("errorUrl"), 302)
 }

@@ -44,13 +44,14 @@ func (u *UserContributionMovie) GetByUserContributionID(uID int, t int) (userCon
 }
 
 // GetListByUserContributionIDList 投稿IDリストからリスト取得する
-func (u *UserContributionMovie) GetListByUserContributionIDList(uID []int) (userContributionMovie []UserContributionMovie, db *gorm.DB, err error) {
+func (u *UserContributionMovie) GetListByUserContributionIDList(uID []int, t int) (userContributionMovie []UserContributionMovie, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{
 		{"UserContributionID": uID},
+		{"MovieType": t},
 	}
 	option := make(map[string]interface{})
 
-	db, err = GetListWhere(&userContributionMovie, "User_contribution_ID IN :UserContributionID AND movie_status = "+strconv.Itoa(StatusPublic), whereList, option)
+	db, err = GetListWhere(&userContributionMovie, "User_contribution_ID IN :UserContributionID AND movie_type = :MovieType AND movie_status = "+strconv.Itoa(StatusPublic), whereList, option)
 
 	return
 }

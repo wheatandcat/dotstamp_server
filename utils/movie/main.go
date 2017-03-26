@@ -2,6 +2,7 @@ package movie
 
 import (
 	"dotstamp_server/utils"
+	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -37,9 +38,28 @@ func Make(file string) error {
 
 	movie := path + "static/movie/input.mp4"
 	sound := path + "static/files/tmp/sound/" + file + ".m4a"
-	dist := path + "static/files/movie/" + file + ".mp4"
+	dist := path + "static/files/tmp/movie/" + file + ".mp4"
 
 	cmd := "ffmpeg -y -i " + movie + " -i " + sound + " -map 0:0 -map 1:0 -movflags faststart -vcodec libx264 -acodec copy " + dist
+
+	_, err = exec.Command("sh", "-c", cmd).Output()
+
+	return err
+}
+
+// ToFilter フィルターする
+func ToFilter(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	filter := path + "static/movie/complex.mp4"
+	src := path + "static/files/tmp/movie/" + file + ".mp4"
+	dist := path + "static/files/movie/" + file + ".mp4"
+
+	cmd := "ffmpeg -y -i " + src + " -i " + filter + " -filter_complex 'concat=n=2:v=1:a=1' " + dist
+	log.Println(cmd)
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
 

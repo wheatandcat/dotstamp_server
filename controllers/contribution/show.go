@@ -19,6 +19,7 @@ type ShowResponse struct {
 	FollowCount int
 	Following   bool
 	SoundFile   bool
+	Movie       models.UserContributionMovie
 }
 
 // Post 投稿詳細を取得する
@@ -72,6 +73,11 @@ func (c *ShowController) Post() {
 		soundFile = contributions.ExistsSound(id)
 	}
 
+	movie, err := contributions.GetMovie(id, models.MovieTypeYoutube)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
 	contributions.AddLog(userID, id)
 
 	c.Data["json"] = ShowResponse{
@@ -79,6 +85,7 @@ func (c *ShowController) Post() {
 		FollowCount:  followCount,
 		Following:    following,
 		SoundFile:    soundFile,
+		Movie:        movie,
 	}
 
 	c.ServeJSON()

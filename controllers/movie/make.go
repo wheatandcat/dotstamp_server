@@ -2,6 +2,7 @@ package controllersMovie
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
 	"dotstamp_server/utils/sound"
@@ -63,14 +64,34 @@ func (c *MakeController) Post() {
 		return
 	}
 
-	if err := sound.ToM4a(strconv.Itoa(request.UserContributionID)); err != nil {
+	if err = sound.ToM4a(strconv.Itoa(request.UserContributionID)); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	if err := movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
+	if err = movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
+	}
+
+	if err = movie.ToFilter(strconv.Itoa(request.UserContributionID)); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	userMovie, err := contributions.GetMovie(request.UserContributionID, models.MovieTypeYoutube)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	if userMovie.MovieStatus != 0 && userMovie.MovieStatus != models.StatusReMeake {
+		userMovie.MovieStatus = models.StatusReMeake
+
+		if err = userMovie.Save(); err != nil {
+			c.ServerError(err, controllers.ErrCodeCommon, userID)
+			return
+		}
 	}
 
 	c.Data["json"] = MakeResponse{

@@ -45,6 +45,23 @@ func GetMovie(uID int, t int) (models.UserContributionMovie, error) {
 	return r, err
 }
 
+// GetMovieMapByUserContributionIDList 投稿IDリストから動画マップを取得する
+func GetMovieMapByUserContributionIDList(uID []int, t int) (map[int]models.UserContributionMovie, error) {
+	m := map[int]models.UserContributionMovie{}
+
+	u := models.UserContributionMovie{}
+	list, _, err := u.GetListByUserContributionIDList(uID, t)
+	if err != nil {
+		return m, err
+	}
+
+	for _, v := range list {
+		m[v.UserContributionID] = v
+	}
+
+	return m, err
+}
+
 // ExistsMovie 動画ファイルの存在判定する
 func ExistsMovie(uID int) bool {
 	dir := beego.AppConfig.String("movieDir")

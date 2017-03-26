@@ -23,6 +23,10 @@ const (
 	StatusPrivate = 2
 	// StatusError 状態：エラー
 	StatusError = 3
+	// StatusRunning 状態：実行中
+	StatusRunning = 4
+	// StatusReMeake 状態：作り直し
+	StatusReMeake = 5
 )
 
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する

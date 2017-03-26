@@ -20,6 +20,7 @@ type Contribution struct {
 	ViewStatus  int
 	Search      string
 	SoundStatus int
+	Movie       models.UserContributionMovie
 	UpdatedAt   time.Time
 	CreatedAt   time.Time
 }
@@ -163,7 +164,7 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 	var userIDList []int
 	for _, val := range u {
 		idList = append(idList, int(val.ID))
-		userIDList = append(idList, int(val.UserID))
+		userIDList = append(userIDList, int(val.UserID))
 	}
 
 	var tagMap map[int][]tags.Tag
@@ -186,6 +187,11 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 		return contributionList, err
 	}
 
+	movieMap, err := GetMovieMapByUserContributionIDList(idList, models.MovieTypeYoutube)
+	if err != nil {
+		return contributionList, err
+	}
+
 	for _, val := range u {
 		if len(tagMap[int(val.ID)]) == 0 {
 			tagMap[int(val.ID)] = []tags.Tag{}
@@ -201,6 +207,7 @@ func getContributionList(u []models.UserContribution) (contributionList []Contri
 			Tag:         tagMap[int(val.ID)],
 			FollowCount: followCountMap[int(val.ID)],
 			SoundStatus: soundMap[int(val.ID)].SoundStatus,
+			Movie:       movieMap[int(val.ID)],
 		}
 		contributionList = append(contributionList, c)
 	}
