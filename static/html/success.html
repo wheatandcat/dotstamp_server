@@ -8,18 +8,31 @@
 </head>
 
 <body>
+    <script type="text/javascript">
+        function setup() {
+            // 親ウィンドウの存在チェック
+            if (!window.opener || window.opener.closed){
+                // 親ウィンドウが存在しない場合
+                window.alert("元のページが閉じられたためアップロードの実行できませんでした。");
+            }else{
+                console.log (window.opener.document)
+                window.opener.document.getElementById("uploadToken").value = "on"
+                window.opener.document.getElementById("uploadToken").onchange();
+                window.close()
+                console.log ("OK")
+            }
+        }
+
+        setup()
+    </script>
     <div class="container">
         <br />
         <br />
         <div class="panel panel-success">
         	<div class="panel-heading">
-        		動画アップロード完了しました。
+        		認証完了しました。
         	</div>
         	<div class="panel-body">
-                <br />
-                <a  class="btn btn-link" href="https://www.youtube.com/my_videos">YouTubeマイチャンネルを確認する</a>
-                <br />
-                <br />
         		<button class="btn btn-default" onClick="window.close(); return false;">閉じる</button>
         	</div>
         </div>

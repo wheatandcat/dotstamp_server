@@ -7,7 +7,6 @@ import (
 	"dotstamp_server/utils/movie"
 	"dotstamp_server/utils/sound"
 	"errors"
-	"log"
 	"strconv"
 
 	validator "gopkg.in/go-playground/validator.v9"
@@ -84,7 +83,6 @@ func (c *MakeController) Post() {
 
 	// 動画ファイル作成
 	if err = movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
-		log.Println("001-1")
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

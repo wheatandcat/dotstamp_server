@@ -9,6 +9,8 @@
         <title>.stamp</title>
     </head>
     <body>
+        <input type="hidden" name="uploadToken" id="uploadToken" value="uploadToken"/>
+
         <div id="root"></div>
         <script src="{{.StaticUrl}}js/bundle.js{{.Version}}"></script>
     </body>

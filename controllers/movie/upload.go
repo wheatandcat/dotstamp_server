@@ -22,7 +22,7 @@ type UploadController struct {
 
 // UploadRequest アップロードリクエスト
 type UploadRequest struct {
-	UserContributionID int `form:"user_contribution_id"`
+	UserContributionID int `form:"userContributionId"`
 }
 
 // UploadResponse アップロードレスポンス
@@ -84,6 +84,7 @@ func (c *UploadController) Post() {
 	if err != nil {
 		contributions.AddOrSaveMovie(int(u.ID), "", models.MovieTypeYoutube, models.StatusError)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
 	}
 
 	if err = contributions.AddOrSaveMovie(int(u.ID), id, models.MovieTypeYoutube, models.StatusPublic); err != nil {
@@ -127,7 +128,6 @@ func uploadYoutube(u models.UserContribution, token string) (string, error) {
 	videoStatus := "unlisted"
 	if beego.AppConfig.String("runmode") == "prod" {
 		videoStatus = "public"
-
 	}
 
 	m := movie.Upload{
