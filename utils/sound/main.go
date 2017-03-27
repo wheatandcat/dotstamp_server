@@ -2,7 +2,6 @@ package sound
 
 import (
 	"dotstamp_server/utils"
-	"log"
 	"os/exec"
 	"strings"
 )
@@ -91,7 +90,6 @@ func ToM4a(file string) error {
 	dest := path + "static/files/tmp/sound/" + file + ".m4a"
 
 	cmd := "ffmpeg -y -i " + src + " -vn -ac 2 -vol 256 -ab 112k " + dest
-	log.Println(cmd)
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
 

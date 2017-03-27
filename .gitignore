@@ -41,9 +41,9 @@ blue/*
 /static/files/sound/*
 !/static/files/sound/.gitkeep
 /static/files/tmp/sound/*
-!/static/files/tmp/movie/.gitkeep
-/static/files/tmp/movie/*
 !/static/files/tmp/sound/.gitkeep
+/static/files/tmp/movie/*
+!/static/files/tmp/movie/.gitkeep
 /static/files/character/*
 !/static/files/character/.gitkeep
 !/static/files/character/default*.png

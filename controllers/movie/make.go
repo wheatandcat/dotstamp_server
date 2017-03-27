@@ -7,6 +7,7 @@ import (
 	"dotstamp_server/utils/movie"
 	"dotstamp_server/utils/sound"
 	"errors"
+	"log"
 	"strconv"
 
 	validator "gopkg.in/go-playground/validator.v9"
@@ -59,8 +60,20 @@ func (c *MakeController) Post() {
 		return
 	}
 
-	if !contributions.ExistsSound(request.UserContributionID) {
-		c.ServerError(errors.New("not exists file"), controllers.ErrCodeCommon, userID)
+	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
+	if err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	// 音声ファイル作成
+	if err = contributions.MakeSoundFile(request.UserContributionID, list); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	if err = contributions.UpdateSoundToMakeStatus(request.UserContributionID, models.MakeStatusMade); err != nil {
+		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
@@ -69,7 +82,9 @@ func (c *MakeController) Post() {
 		return
 	}
 
+	// 動画ファイル作成
 	if err = movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
+		log.Println("001-1")
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
