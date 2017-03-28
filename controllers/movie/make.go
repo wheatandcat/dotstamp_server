@@ -100,6 +100,7 @@ func (c *MakeController) Post() {
 
 	if userMovie.MovieStatus != 0 && userMovie.MovieStatus != models.StatusReMeake {
 		userMovie.MovieStatus = models.StatusReMeake
+		userMovie.MovieID = ""
 
 		if err = userMovie.Save(); err != nil {
 			c.ServerError(err, controllers.ErrCodeCommon, userID)
