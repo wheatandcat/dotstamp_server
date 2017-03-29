@@ -13,24 +13,23 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func setUpMake() {
+func setUpCheck() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_contributions",
-		"user_contribution_sound_details",
 		"user_contribution_movies",
 	})
 }
 
-func TestMakePost(t *testing.T) {
-	setUpMake()
+func TestCheckPost(t *testing.T) {
+	setUpCheck()
 
 	values := url.Values{}
 	values.Set("userContributionId", "1")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/movie/make/",
+		"/movie/check/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -43,7 +42,7 @@ func TestMakePost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/movie/make/\n", t, func() {
+	Convey("/movie/check/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

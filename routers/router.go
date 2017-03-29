@@ -73,6 +73,7 @@ func init() {
 	beego.Router("/movie/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
 	beego.Router("/movie/callback/", &controllersMovie.CallbackController{})
 	beego.Router("/movie/upload/", &controllersMovie.UploadController{})
+	beego.Router("/movie/check/", &controllersMovie.CheckController{})
 
 	beego.Router("/question/add/", &controllersQuestion.AddController{})
 }

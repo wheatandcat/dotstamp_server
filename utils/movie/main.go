@@ -2,10 +2,12 @@ package movie
 
 import (
 	"dotstamp_server/utils"
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
+	"strconv"
+
+	"github.com/astaxie/beego"
 
 	youtube "google.golang.org/api/youtube/v3"
 )
@@ -41,7 +43,7 @@ func Make(file string) error {
 	dist := path + "static/files/tmp/movie/" + file + ".mp4"
 
 	cmd := "ffmpeg -y -i " + movie + " -i " + sound + " -map 0:0 -map 1:0 -movflags faststart -vcodec libx264 -acodec copy " + dist
-	log.Println(cmd)
+
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -63,6 +65,18 @@ func ToFilter(file string) error {
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
+}
+
+// ExecMakeMovie 動画作成を実行する
+func ExecMakeMovie(id int) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	cmd := "ENV_CONF_BATCH=" + beego.AppConfig.String("runmode") + " " + path + "tasks/makeMovie/makeMovie -userContributionId=" + strconv.Itoa(id)
+
+	return exec.Command("sh", "-c", cmd).Start()
 }
 
 // UploadToYoutube YouTubeにアップロードする

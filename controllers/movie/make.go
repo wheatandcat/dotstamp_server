@@ -2,12 +2,9 @@ package controllersMovie
 
 import (
 	"dotstamp_server/controllers"
-	"dotstamp_server/models"
 	"dotstamp_server/utils/contribution"
 	"dotstamp_server/utils/movie"
-	"dotstamp_server/utils/sound"
 	"errors"
-	"strconv"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -59,53 +56,9 @@ func (c *MakeController) Post() {
 		return
 	}
 
-	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
-	if err != nil {
+	if err = movie.ExecMakeMovie(request.UserContributionID); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
-	}
-
-	// 音声ファイル作成
-	if err = contributions.MakeSoundFile(request.UserContributionID, list); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if err = contributions.UpdateSoundToMakeStatus(request.UserContributionID, models.MakeStatusMade); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if err = sound.ToM4a(strconv.Itoa(request.UserContributionID)); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	// 動画ファイル作成
-	if err = movie.Make(strconv.Itoa(request.UserContributionID)); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if err = movie.ToFilter(strconv.Itoa(request.UserContributionID)); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	userMovie, err := contributions.GetMovie(request.UserContributionID, models.MovieTypeYoutube)
-	if err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	if userMovie.MovieStatus != 0 && userMovie.MovieStatus != models.StatusReMeake {
-		userMovie.MovieStatus = models.StatusReMeake
-		userMovie.MovieID = ""
-
-		if err = userMovie.Save(); err != nil {
-			c.ServerError(err, controllers.ErrCodeCommon, userID)
-			return
-		}
 	}
 
 	c.Data["json"] = MakeResponse{
@@ -114,5 +67,4 @@ func (c *MakeController) Post() {
 	}
 
 	c.ServeJSON()
-
 }

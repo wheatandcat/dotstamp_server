@@ -22,3 +22,15 @@ func (t *TestMain) TestMake(c *C) {
 
 	c.Check(r, Equals, nil)
 }
+
+func (t *TestMain) TestToFilter(c *C) {
+	r := ToFilter("0")
+
+	c.Check(r, Equals, nil)
+}
+
+func (t *TestMain) TestExecMakeMovie(c *C) {
+	r := ExecMakeMovie(0)
+
+	c.Check(r, Equals, nil)
+}

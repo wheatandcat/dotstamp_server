@@ -27,6 +27,10 @@ const (
 	StatusRunning = 4
 	// StatusReMeake 状態：作り直し
 	StatusReMeake = 5
+	// StatusUploading 状態：アップロード中
+	StatusUploading = 6
+	// StatusMade 状態：作成済み
+	StatusMade = 7
 )
 
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
