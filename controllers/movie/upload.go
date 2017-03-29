@@ -74,6 +74,14 @@ func (c *UploadController) Post() {
 		return
 	}
 
+	if userMovie.MovieStatus == models.StatusUploading {
+		c.ServerError(errors.New("uploading"), controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	userMovie.MovieStatus = models.StatusUploading
+	userMovie.Save()
+
 	upload, err := contributions.GetUploadByUserContributionID(request.UserContributionID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
