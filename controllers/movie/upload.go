@@ -141,7 +141,7 @@ func uploadYoutube(u models.UserContribution, token string) (string, error) {
 	m := movie.Upload{
 		UserContributionID: strconv.Itoa(int(u.ID)),
 		Title:              u.Title,
-		Description:        beego.AppConfig.String("topurl") + "contribution/show/" + strconv.Itoa(int(u.ID)),
+		Description:        "元記事はこちら（" + beego.AppConfig.String("topurl") + "#/contribution/show/" + strconv.Itoa(int(u.ID)) + "）",
 		CategoryID:         "22",
 		VideoStatus:        videoStatus,
 	}
