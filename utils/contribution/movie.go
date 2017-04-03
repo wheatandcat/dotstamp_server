@@ -85,7 +85,7 @@ func GetMovieListBySpecifiedDays(list []models.UserContributionMovie, day int) [
 	r := []models.UserContributionMovie{}
 
 	for _, v := range list {
-		if v.UpdatedAt.Unix() < limit {
+		if v.UpdatedAt.Unix() > limit {
 			continue
 		}
 

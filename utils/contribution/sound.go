@@ -277,7 +277,8 @@ func GetSoudDetailListBySpecifiedDays(list []models.UserContributionSoundDetail,
 	r := []models.UserContributionSoundDetail{}
 
 	for _, v := range list {
-		if v.UpdatedAt.Unix() < limit {
+
+		if v.UpdatedAt.Unix() > limit {
 			continue
 		}
 
