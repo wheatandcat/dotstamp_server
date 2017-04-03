@@ -9,6 +9,7 @@ import (
 	"regexp"
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/astaxie/beego"
 )
@@ -260,4 +261,28 @@ func ReplaceBodeySound(s string) (string, error) {
 	}
 
 	return s, nil
+}
+
+// GetSoundDetailListByMakeStatusMade 作成済みの音声詳細を取得する
+func GetSoundDetailListByMakeStatusMade() ([]models.UserContributionSoundDetail, error) {
+	u := models.UserContributionSoundDetail{}
+	r, _, err := u.GetListByMakeStatusMade()
+
+	return r, err
+}
+
+// GetSoudDetailListBySpecifiedDays 指定に日数内の音声詳細を取得する
+func GetSoudDetailListBySpecifiedDays(list []models.UserContributionSoundDetail, day int) []models.UserContributionSoundDetail {
+	limit := utils.Now().Add(-1 * time.Duration(day) * 24 * time.Hour).Unix()
+	r := []models.UserContributionSoundDetail{}
+
+	for _, v := range list {
+		if v.UpdatedAt.Unix() < limit {
+			continue
+		}
+
+		r = append(r, v)
+	}
+
+	return r
 }

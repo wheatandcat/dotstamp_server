@@ -40,8 +40,36 @@ func (t *TestMain) TestJoin(c *C) {
 	Join(list, "0")
 }
 
-func (t *TestMain) TestToM4a(c *C) {
+func (t *TestMain) TestRemoveDetailFile(c *C) {
+	list := []string{
+		"0_1",
+	}
+
+	AddTmpSound("こんにちは", list[0], "mei/mei_normal.htsvoice")
+
+	r := RemoveDetailFile(list[0])
+
+	c.Check(r, Equals, nil)
+
+	r = RemoveDetailFile(list[0])
+
+	c.Check(r, Not(Equals), nil)
+}
+
+func (t *TestMain) TestRemoveJoinFile(c *C) {
+	list := []string{
+		"0_1",
+		"0_2",
+	}
+
+	AddTmpSound("こんにちは", list[0], "mei/mei_normal.htsvoice")
+	AddTmpSound("おはようございます", list[1], "mei/mei_normal.htsvoice")
+	Join(list, "0")
+
 	r := ToM4a("0")
+	c.Check(r, Equals, nil)
+
+	r = RemoveJoinFile("0")
 
 	c.Check(r, Equals, nil)
 }

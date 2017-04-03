@@ -4,6 +4,7 @@ import (
 	"dotstamp_server/models"
 	"dotstamp_server/utils"
 	"strconv"
+	"time"
 
 	"github.com/astaxie/beego"
 )
@@ -68,4 +69,28 @@ func ExistsMovie(uID int) bool {
 	root, _ := utils.GetAppPath()
 
 	return utils.ExistsFile(root + "/" + dir + strconv.Itoa(uID) + ".mp4")
+}
+
+// GetMovieListByMovieStatusPublic 公開中の動画リストを取得する
+func GetMovieListByMovieStatusPublic() ([]models.UserContributionMovie, error) {
+	u := models.UserContributionMovie{}
+	r, _, err := u.GetListByMovieStatusPublic()
+
+	return r, err
+}
+
+// GetMovieListBySpecifiedDays 指定に日数内の音声詳細を取得する
+func GetMovieListBySpecifiedDays(list []models.UserContributionMovie, day int) []models.UserContributionMovie {
+	limit := utils.Now().Add(-1 * time.Duration(day) * 24 * time.Hour).Unix()
+	r := []models.UserContributionMovie{}
+
+	for _, v := range list {
+		if v.UpdatedAt.Unix() < limit {
+			continue
+		}
+
+		r = append(r, v)
+	}
+
+	return r
 }

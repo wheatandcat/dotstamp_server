@@ -6,7 +6,6 @@ import (
 	"dotstamp_server/utils/character"
 	"dotstamp_server/utils/contribution"
 	"errors"
-	"log"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -112,7 +111,6 @@ func (c *ReflectController) Post() {
 		v.Body = bodyMap[v.Priority].Body
 		if request.Overwrite {
 			bodySound, err = contributions.ReplaceBodeySound(bodyMap[v.Priority].Body)
-			log.Println(bodySound)
 			if err != nil {
 				models.Rollback(tx)
 				c.ServerError(err, controllers.ErrCodeCommon, userID)

@@ -25,6 +25,8 @@ func setUpUpload() {
 func TestUploadPost(t *testing.T) {
 	setUpUpload()
 
+	test.CopyTestFile(1)
+
 	values := url.Values{}
 	values.Set("userContributionId", "1")
 

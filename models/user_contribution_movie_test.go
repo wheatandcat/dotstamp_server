@@ -49,3 +49,10 @@ func (t *TestUserContributionMovie) TestGetListByUserContributionIDList(c *C) {
 
 	c.Check(r[0].ID, Equals, uint(1))
 }
+
+func (t *TestUserContributionMovie) TestGetListByMovieStatusPublic(c *C) {
+	u := &UserContributionMovie{}
+	r, _, _ := u.GetListByMovieStatusPublic()
+
+	c.Check(r[0].MovieStatus, Equals, StatusPublic)
+}

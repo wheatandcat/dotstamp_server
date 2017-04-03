@@ -17,12 +17,17 @@ func setUpMake() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_contributions",
+		"user_contribution_details",
+		"user_contribution_sounds",
 		"user_contribution_sound_details",
+		"user_contribution_movies",
 	})
 }
 
 func TestMakePost(t *testing.T) {
 	setUpMake()
+
+	test.CopyTestFile(1)
 
 	values := url.Values{}
 	values.Set("userContributionId", "1")

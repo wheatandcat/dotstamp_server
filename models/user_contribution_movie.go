@@ -55,3 +55,13 @@ func (u *UserContributionMovie) GetListByUserContributionIDList(uID []int, t int
 
 	return
 }
+
+// GetListByMovieStatusPublic 公開中のリスト取得する
+func (u *UserContributionMovie) GetListByMovieStatusPublic() (userContributionMovie []UserContributionMovie, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{}
+	option := make(map[string]interface{})
+
+	db, err = GetListWhere(&userContributionMovie, "movie_status = "+strconv.Itoa(StatusPublic), whereList, option)
+
+	return
+}

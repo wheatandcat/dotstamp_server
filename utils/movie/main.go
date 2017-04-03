@@ -124,3 +124,23 @@ func UploadToYoutube(client *http.Client, u Upload) (string, error) {
 
 	return response.Id, nil
 }
+
+// RemoveFile ファイル削除する
+func RemoveFile(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	tmp := path + "static/files/tmp/movie/" + file + ".mp4"
+	if err := os.Remove(tmp); err != nil {
+		return err
+	}
+
+	mp4 := path + "static/files/movie/" + file + ".mp4"
+	if err := os.Remove(mp4); err != nil {
+		return err
+	}
+
+	return nil
+}

@@ -64,3 +64,11 @@ func (t *TestUserContributionSoundDetail) TestUpdateToMakeStatusByUserContributi
 
 	c.Check(r[0].MakeStatus, Equals, 1)
 }
+
+func (t *TestUserContributionSoundDetail) TestGetListByMakeStatusMade(c *C) {
+	u := &UserContributionSoundDetail{}
+
+	r, _, _ := u.GetListByMakeStatusMade()
+
+	c.Check(r[0].MakeStatus, Equals, 1)
+}

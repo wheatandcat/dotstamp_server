@@ -3,6 +3,8 @@ package contributions
 import (
 	"dotstamp_server/models"
 	"dotstamp_server/tests"
+	"dotstamp_server/utils"
+	"time"
 
 	. "gopkg.in/check.v1"
 )
@@ -163,4 +165,21 @@ func (t *TestSound) TestReplaceBodeySound(c *C) {
 	r, _ := ReplaceBodeySound("映画通とガンダム00")
 
 	c.Check(r, Equals, "えいがつうとガンダムダブルオー")
+}
+
+func (t *TestSound) TestGetSoundDetailListByMakeStatusMade(c *C) {
+	r, _ := GetSoundDetailListByMakeStatusMade()
+
+	c.Check(r[0].MakeStatus, Equals, models.MakeStatusMade)
+}
+
+func (t *TestSound) TestGetSoudDetailListBySpecifiedDays(c *C) {
+	loc, _ := time.LoadLocation("Asia/Tokyo")
+	utils.SetNow(time.Date(2015, 1, 3, 11, 00, 0, 0, loc))
+
+	u, _ := GetSoundDetailListByMakeStatusMade()
+
+	r := GetSoudDetailListBySpecifiedDays(u, 2)
+
+	c.Check(len(r), Equals, 1)
 }

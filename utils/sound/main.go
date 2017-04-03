@@ -2,6 +2,7 @@ package sound
 
 import (
 	"dotstamp_server/utils"
+	"os"
 	"os/exec"
 	"strings"
 )
@@ -54,7 +55,6 @@ func Join(list []string, file string) error {
 	}
 
 	cmd += " " + path + "static/files/tmp/sound/" + file + ".wav"
-
 	if _, err := exec.Command("sh", "-c", cmd).Output(); err != nil {
 		return err
 	}
@@ -73,7 +73,6 @@ func toMp3(file string) error {
 	dest := path + "static/files/sound/" + file + ".mp3"
 
 	cmd := "lame -V2 " + src + " " + dest
-
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -94,4 +93,43 @@ func ToM4a(file string) error {
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
+}
+
+// RemoveDetailFile 詳細ファイルを削除する
+func RemoveDetailFile(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	if err := os.Remove(path + "static/files/tmp/sound/" + file + ".wav"); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// RemoveJoinFile 連結ファイルを削除する
+func RemoveJoinFile(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	wav := path + "static/files/tmp/sound/" + file + ".wav"
+	if err := os.Remove(wav); err != nil {
+		return err
+	}
+
+	mp3 := path + "static/files/sound/" + file + ".mp3"
+	if err := os.Remove(mp3); err != nil {
+		return err
+	}
+
+	m4a := path + "static/files/tmp/sound/" + file + ".m4a"
+	if err := os.Remove(m4a); err != nil {
+		return err
+	}
+
+	return nil
 }

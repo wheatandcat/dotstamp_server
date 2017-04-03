@@ -1,6 +1,8 @@
 package models
 
 import (
+	"strconv"
+
 	"github.com/jinzhu/gorm"
 )
 
@@ -75,6 +77,16 @@ func (u *UserContributionSoundDetail) GetByID(id uint) (userContributionSoundDet
 	option := make(map[string]interface{})
 
 	db, err = GetWhere(&userContributionSoundDetail, "ID = :ID", whereList, option)
+
+	return
+}
+
+// GetListByMakeStatusMade 作成済みのリスト取得する
+func (u *UserContributionSoundDetail) GetListByMakeStatusMade() (userContributionSoundDetail []UserContributionSoundDetail, db *gorm.DB, err error) {
+	whereList := []map[string]interface{}{}
+	option := make(map[string]interface{})
+
+	db, err = GetListWhere(&userContributionSoundDetail, "Make_status = "+strconv.Itoa(MakeStatusMade), whereList, option)
 
 	return
 }

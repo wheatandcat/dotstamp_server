@@ -11,19 +11,22 @@ import (
 func init() {
 	test.Setup()
 	test.SetupFixture([]string{
-		"user_contributions",
 		"user_contribution_sound_details",
 		"user_contribution_movies",
 	})
 }
 
 func TestExec(t *testing.T) {
-	test.CopyTestFile(1)
+	Convey("tasks/removeContribution/main.go\n", t, func() {
+		r := RemoveSoundDetail()
 
-	r := MakeMovie(1)
+		Convey("RemoveSoundDetail", func() {
+			So(r, ShouldEqual, nil)
+		})
 
-	Convey("tasks/makeMovie/main.go\n", t, func() {
-		Convey("MakeMovie", func() {
+		r = RemoveJoinFile()
+
+		Convey("RemoveJoinFile", func() {
 			So(r, ShouldEqual, nil)
 		})
 	})

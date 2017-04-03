@@ -6,3 +6,11 @@
     movie_status: 1
     created_at: "2015-01-01 10:00:00"
     updated_at: "2015-01-01 10:00:00"
+2:
+    id: 2
+    user_contribution_id: 2
+    movie_type: 1
+    movie_id: "abcdef"
+    movie_status: 1
+    created_at: "2015-01-01 10:00:00"
+    updated_at: "2015-01-01 12:00:00"
