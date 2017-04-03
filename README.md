@@ -64,5 +64,15 @@ db確認
 ```
 dbweb -home=$GOPATH/src/github.com/go-xorm/dbweb/
 ```
+## バッチ  
+ファイルパス：tasks/
+
+| ファイル名 | 内容 | 備考 |
+|:-----------|:------------|:------------|
+| contributionSearch       | 投稿の検索テーブルを一括更新する | 新しい検索処理を追加時の再設定用 |
+| contributionTotalFollows       | フォロー数の総数を設定する | crontabで15分毎に実行 |
+| makeMovie       | 動画ファイルを作成する |  |
+| removeContribution       | 不要ファイルを削除する | 1日1回実行 |
+
 ## ライセンス
 BSDライセンス
