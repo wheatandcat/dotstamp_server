@@ -12,7 +12,7 @@ const (
 	// TalkTypeImage 会話タイプ:画像
 	TalkTypeImage = 2
 	// MakeStatusUncreated 状態:未作成
-	MakeStatusUncreated = 0
+	MakeStatusUncreated = 2
 	// MakeStatusMade 状態:作成済み
 	MakeStatusMade = 1
 )
@@ -76,6 +76,7 @@ func (u *UserContributionSoundDetail) UpdatesToMakeStatusAndVoiceTypeByUserContr
 	whereList := []map[string]interface{}{
 		{"UserContributionID": uID},
 	}
+
 	option := make(map[string]interface{})
 	update := UserContributionSoundDetail{
 		MakeStatus: makeStatus,

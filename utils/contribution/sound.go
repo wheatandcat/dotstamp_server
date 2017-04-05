@@ -219,7 +219,7 @@ func MakeSoundFile(uID int, list []models.UserContributionSoundDetail) error {
 			continue
 		}
 
-		if u.MakeStatus == models.MakeStatusUncreated {
+		if u.MakeStatus != models.MakeStatusMade {
 			if err := AddTmpSound(u); err != nil {
 				return err
 			}
