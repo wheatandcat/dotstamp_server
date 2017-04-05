@@ -17,7 +17,7 @@ type SaveVoiceListController struct {
 // SaveVoiceListRequest ボイスリスト更新リクエスト
 type SaveVoiceListRequest struct {
 	UserContributionID int `form:"userContributionId" validate:"min=1"`
-	VoiceType          int `form:"voice_type" validate:"min=1"`
+	VoiceType          int `form:"voiceType" validate:"min=1"`
 }
 
 // SaveVoiceListResponse ボイスリスト更新レスポンス
