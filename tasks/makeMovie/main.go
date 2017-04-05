@@ -76,6 +76,10 @@ func MakeMovie(id int) error {
 		return err
 	}
 
+	if err = contributions.UpdateSoundToMakeStatus(id, models.MakeStatusMade); err != nil {
+		return err
+	}
+
 	if err = sound.ToM4a(strconv.Itoa(id)); err != nil {
 		return err
 	}
