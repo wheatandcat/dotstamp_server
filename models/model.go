@@ -194,6 +194,21 @@ func Update(dbModel interface{}, s []interface{}, where string, bindList []map[s
 	return db, err
 }
 
+// Updates 条件から複数更新する
+func Updates(dbModel interface{}, s interface{}, where string, bindList []map[string]interface{}, option map[string]interface{}) (*gorm.DB, error) {
+	db, err := getDbOption(where, bindList, option)
+	if err != nil {
+		return db, err
+	}
+
+	err = db.Model(dbModel).Updates(s).Error
+	if err = checkError(err); err != nil {
+		return db, nil
+	}
+
+	return db, err
+}
+
 // Create 作成する
 func Create(dbModel interface{}) error {
 	db, err := database.GormConnect()

@@ -115,6 +115,27 @@ func (t *TestModel) TestUpdate(c *C) {
 	c.Check(r.Name, Equals, "hellow")
 }
 
+func (t *TestModel) TestUpdates(c *C) {
+	u := []UserMaster{}
+	whereList := []map[string]interface{}{
+		{"ID": 1},
+	}
+	option := make(map[string]interface{})
+
+	p := UserMaster{
+		Name:  "Hellow",
+		Email: "test100@a.com",
+	}
+
+	Updates(&u, p, "ID = :ID", whereList, option)
+
+	r := UserMaster{}
+	GetWhere(&r, "ID = :ID", whereList, option)
+
+	c.Check(r.Name, Equals, "Hellow")
+	c.Check(r.Email, Equals, "test100@a.com")
+}
+
 func (t *TestModel) TestGetLisWhereRecordNotFound(c *C) {
 	u := []UserMaster{}
 	whereList := []map[string]interface{}{

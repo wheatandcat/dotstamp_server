@@ -246,6 +246,13 @@ func UpdateSoundToMakeStatus(uID int, makeStatus int) error {
 	return u.UpdateToMakeStatusByUserContributionID(uID, makeStatus)
 }
 
+// UpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID 投稿IDから作成状態をとボイスタイプを更新する
+func UpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID(uID int, makeStatus int, voiceType int) error {
+	u := models.UserContributionSoundDetail{}
+
+	return u.UpdatesToMakeStatusAndVoiceTypeByUserContributionID(uID, makeStatus, voiceType)
+}
+
 // ReplaceBodeySound 音声本文を置き換える
 func ReplaceBodeySound(s string) (string, error) {
 	s = getBodySoundFormat(s)

@@ -69,6 +69,24 @@ func (u *UserContributionSoundDetail) UpdateToMakeStatusByUserContributionID(uID
 	return
 }
 
+// UpdatesToMakeStatusAndVoiceTypeByUserContributionID 投稿IDから作成状態とボイスタイプを更新する
+func (u *UserContributionSoundDetail) UpdatesToMakeStatusAndVoiceTypeByUserContributionID(uID int, makeStatus int, voiceType int) (err error) {
+	userContributionSoundDetail := []UserContributionSoundDetail{}
+
+	whereList := []map[string]interface{}{
+		{"UserContributionID": uID},
+	}
+	option := make(map[string]interface{})
+	update := UserContributionSoundDetail{
+		MakeStatus: makeStatus,
+		VoiceType:  voiceType,
+	}
+
+	_, err = Updates(&userContributionSoundDetail, update, "User_contribution_ID = :UserContributionID", whereList, option)
+
+	return
+}
+
 // GetByID IDから取得する
 func (u *UserContributionSoundDetail) GetByID(id uint) (userContributionSoundDetail UserContributionSoundDetail, db *gorm.DB, err error) {
 	whereList := []map[string]interface{}{

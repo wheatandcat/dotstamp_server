@@ -65,6 +65,17 @@ func (t *TestUserContributionSoundDetail) TestUpdateToMakeStatusByUserContributi
 	c.Check(r[0].MakeStatus, Equals, 1)
 }
 
+func (t *TestUserContributionSoundDetail) TestUpdatesToMakeStatusAndVoiceTypeByUserContributionID(c *C) {
+	u := &UserContributionSoundDetail{}
+
+	u.UpdatesToMakeStatusAndVoiceTypeByUserContributionID(1, 1, 2)
+
+	r, _, _ := u.GetListByUserContributionID(1)
+
+	c.Check(r[0].MakeStatus, Equals, 1)
+	c.Check(r[0].VoiceType, Equals, 2)
+}
+
 func (t *TestUserContributionSoundDetail) TestGetListByMakeStatusMade(c *C) {
 	u := &UserContributionSoundDetail{}
 

@@ -161,6 +161,12 @@ func (t *TestSound) TestUpdateSoundToMakeStatus(c *C) {
 	c.Check(r, Equals, nil)
 }
 
+func (t *TestSound) TestUpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID(c *C) {
+	r := UpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID(1, 1, 2)
+
+	c.Check(r, Equals, nil)
+}
+
 func (t *TestSound) TestReplaceBodeySound(c *C) {
 	r, _ := ReplaceBodeySound("映画通とガンダム00")
 
