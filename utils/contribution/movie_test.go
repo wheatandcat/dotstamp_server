@@ -46,6 +46,8 @@ func (t *TestMovie) TestAddOrSaveMovie(c *C) {
 }
 
 func (t *TestMovie) TestExistsMovie(c *C) {
+	test.CopyTestFile(1)
+
 	r := ExistsMovie(1)
 
 	c.Check(r, Equals, true)
