@@ -14,21 +14,6 @@ import (
 	"github.com/astaxie/beego"
 )
 
-const (
-	// VoiceTypeMeiNormal 音声タイプ:mei_normal
-	VoiceTypeMeiNormal = 1
-	// VoiceTypeMeiAngry 音声タイプ:mei_angry
-	VoiceTypeMeiAngry = 2
-	// VoiceTypeMeiBashful 音声タイプ:mei_bashful
-	VoiceTypeMeiBashful = 3
-	// VoiceTypeMeiHappy 音声タイプ:mei_happy
-	VoiceTypeMeiHappy = 4
-	// VoiceTypeMeiSad 音声タイプ:mei_sad
-	VoiceTypeMeiSad = 5
-	// VoiceTypeM100 音声タイプ:m100
-	VoiceTypeM100 = 6
-)
-
 // GetSoundByUserContributionID 投稿IDから音声を取得する
 func GetSoundByUserContributionID(uID int) (models.UserContributionSound, error) {
 	u := models.UserContributionSound{}
@@ -179,25 +164,6 @@ func AddSoundDetailList(uID int, list []GetBody) error {
 	return nil
 }
 
-func getVoiceTypeFile(voiceType int) string {
-	switch voiceType {
-	case VoiceTypeMeiNormal:
-		return "mei/mei_normal.htsvoice"
-	case VoiceTypeMeiAngry:
-		return "mei/mei_angry.htsvoice"
-	case VoiceTypeMeiBashful:
-		return "mei/mei_bashful.htsvoice"
-	case VoiceTypeMeiHappy:
-		return "mei/mei_happy.htsvoice"
-	case VoiceTypeMeiSad:
-		return "mei/mei_sad.htsvoice"
-	case VoiceTypeM100:
-		return "m100/nitech_jp_atr503_m001.htsvoice"
-	default:
-		return "mei/mei_normal.htsvoice"
-	}
-}
-
 func getFileName(u models.UserContributionSoundDetail) string {
 	return strconv.Itoa(u.UserContributionID) + "_" + strconv.Itoa(u.Priority)
 }
@@ -205,9 +171,8 @@ func getFileName(u models.UserContributionSoundDetail) string {
 // AddTmpSound 一時音声ファイルを追加する
 func AddTmpSound(u models.UserContributionSoundDetail) error {
 	file := getFileName(u)
-	voice := getVoiceTypeFile(u.VoiceType)
 
-	return sound.AddTmpSound(u.BodySound, file, voice)
+	return sound.AddTmpSound(u.BodySound, file, u.VoiceType)
 }
 
 // MakeSoundFile 音声ファイルを作成する

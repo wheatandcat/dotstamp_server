@@ -1,0 +1,8 @@
+"id","name","VoiceSystemType","VoiceType","priority","delete"
+"1","女性音声-普通(mei_normal)","1","mei/mei_normal.htsvoice","1","0"
+"2","女性音声-怒っている(mei_angry)","1","mei/mei_angry.htsvoice","2","0"
+"3","女性音声-嬉しい(mei_happy)","1","mei/mei_happy.htsvoice","3","0"
+"4","女性音声-恥ずかしい(mei_bashful)","1","mei/mei_bashful.htsvoice","4","0"
+"5","女性音声-悲しい(mei_sad)","1","mei/mei_sad.htsvoice","5","0"
+"6","男性音声-普通(m100)","1","m100/nitech_jp_atr503_m001.htsvoice","6","0"
+"7","ゆっくり","2","","1","0"

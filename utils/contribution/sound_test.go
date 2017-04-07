@@ -2,6 +2,7 @@ package contributions
 
 import (
 	"dotstamp_server/models"
+	"dotstamp_server/models/csv_models"
 	"dotstamp_server/tests"
 	"dotstamp_server/utils"
 	"time"
@@ -98,13 +99,13 @@ func (t *TestSound) TestMakeSoundFile(c *C) {
 		{
 			UserContributionID: 0,
 			Priority:           1,
-			VoiceType:          VoiceTypeMeiNormal,
+			VoiceType:          csvModels.VoiceTypeMeiNormal,
 			BodySound:          "今日は雨だ",
 		},
 		{
 			UserContributionID: 0,
 			Priority:           2,
-			VoiceType:          VoiceTypeMeiAngry,
+			VoiceType:          csvModels.VoiceTypeMeiAngry,
 			BodySound:          "",
 		},
 		{
@@ -116,31 +117,31 @@ func (t *TestSound) TestMakeSoundFile(c *C) {
 		{
 			UserContributionID: 0,
 			Priority:           4,
-			VoiceType:          VoiceTypeMeiAngry,
+			VoiceType:          csvModels.VoiceTypeMeiAngry,
 			BodySound:          "でも、そのあと雨だ",
 		},
 		{
 			UserContributionID: 0,
 			Priority:           5,
-			VoiceType:          VoiceTypeMeiBashful,
+			VoiceType:          csvModels.VoiceTypeMeiBashful,
 			BodySound:          "明後日は曇りだ",
 		},
 		{
 			UserContributionID: 0,
 			Priority:           6,
-			VoiceType:          VoiceTypeMeiHappy,
+			VoiceType:          csvModels.VoiceTypeMeiHappy,
 			BodySound:          "3日後は晴れる",
 		},
 		{
 			UserContributionID: 0,
 			Priority:           7,
-			VoiceType:          VoiceTypeMeiSad,
+			VoiceType:          csvModels.VoiceTypeMeiSad,
 			BodySound:          "来週も晴れるといいな",
 		},
 		{
 			UserContributionID: 0,
 			Priority:           8,
-			VoiceType:          VoiceTypeM100,
+			VoiceType:          csvModels.VoiceTypeM100,
 			BodySound:          "来月も晴れるといいな",
 		},
 	}

@@ -1,6 +1,7 @@
 package movie
 
 import (
+	"dotstamp_server/models/csv_models"
 	"dotstamp_server/tests"
 	"dotstamp_server/utils/sound"
 
@@ -30,8 +31,8 @@ func (t *TestMain) TestRemoveFile(c *C) {
 		"0_2",
 	}
 
-	sound.AddTmpSound("こんにちは", list[0], "mei/mei_normal.htsvoice")
-	sound.AddTmpSound("おはようございます", list[1], "mei/mei_normal.htsvoice")
+	sound.AddTmpSound("こんにちは", list[0], csvModels.VoiceTypeMeiNormal)
+	sound.AddTmpSound("おはようございます", list[1], csvModels.VoiceTypeMeiNormal)
 	sound.Join(list, "0")
 
 	sound.ToM4a("0")

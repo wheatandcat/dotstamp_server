@@ -27,7 +27,7 @@ func TestSaveVoiceListPost(t *testing.T) {
 
 	values := url.Values{}
 	values.Set("userContributionId", "1")
-	values.Set("voice_type", "1")
+	values.Set("voiceType", "1")
 
 	r, err := http.NewRequest(
 		"POST",
