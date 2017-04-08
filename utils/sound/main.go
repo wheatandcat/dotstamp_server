@@ -66,8 +66,30 @@ func addOpenJtalk(text string, file string, v string) error {
 	return err
 }
 
+func toAqk2k(text string) (string, error) {
+	path, err := getRootPath()
+	if err != nil {
+		return "", err
+	}
+
+	voice := path + "tool/aqk2k/Kanji2KoeCmd"
+	dic := path + "tool/aqk2k/aq_dic"
+
+	text = strings.Replace(text, "\n", "。", -1)
+	cmd := "echo '" + text + "' | " + voice + " " + dic
+
+	r, err := exec.Command("sh", "-c", cmd).Output()
+
+	return string(r), err
+}
+
 // addAquesTalk AquesTalkを追加する
 func addAquesTalk(text string, file string) error {
+	text, err := toAqk2k(text)
+	if err != nil {
+		return err
+	}
+
 	path, err := getRootPath()
 	if err != nil {
 		return err
@@ -77,8 +99,9 @@ func addAquesTalk(text string, file string) error {
 	output := path + "static/files/" + file + ".wav"
 
 	text = strings.Replace(text, "\n", "。", -1)
+	text = strings.Replace(text, "'", `\'`, -1)
 
-	cmd := "echo '" + text + "' | " + voice + " > " + output
+	cmd := "echo " + text + " | " + voice + " > " + output
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
