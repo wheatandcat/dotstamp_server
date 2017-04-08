@@ -79,6 +79,7 @@ func addAquesTalk(text string, file string) error {
 	text = strings.Replace(text, "\n", "。", -1)
 
 	cmd := "echo '" + text + "' | " + voice + " > " + output
+
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
