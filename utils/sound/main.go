@@ -3,6 +3,7 @@ package sound
 import (
 	"dotstamp_server/models/csv_models"
 	"dotstamp_server/utils"
+	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -97,6 +98,7 @@ func addSoundless(file string) error {
 	soundless := path + "static/sound/soundless.wav"
 
 	cmd := "sox " + output + " " + soundless + " " + output
+	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
