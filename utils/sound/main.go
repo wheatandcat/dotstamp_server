@@ -77,6 +77,7 @@ func toAqk2k(text string) (string, error) {
 
 	text = strings.Replace(text, "\n", "。", -1)
 	text = strings.Replace(text, "'", "", -1)
+	text = strings.Replace(text, "・", "、", -1)
 
 	cmd := "echo '" + text + "' | " + voice + " " + dic
 
