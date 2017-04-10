@@ -86,6 +86,22 @@ func toAqk2k(text string) (string, error) {
 	return string(r), err
 }
 
+// addSoundless 無音を追加する
+func addSoundless(file string) error {
+	path, err := getRootPath()
+	if err != nil {
+		return err
+	}
+
+	output := path + "static/files/" + file + ".wav"
+	soundless := path + "static/sound/soundless.wav"
+
+	cmd := "sox " + output + " " + soundless + " " + output
+	_, err = exec.Command("sh", "-c", cmd).Output()
+
+	return err
+}
+
 // addAquesTalk AquesTalkを追加する
 func addAquesTalk(text string, file string) error {
 	text, err := toAqk2k(text)
@@ -107,8 +123,11 @@ func addAquesTalk(text string, file string) error {
 	cmd := "echo '" + text + "' | " + voice + " > " + output
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
+	if err != nil {
+		return err
+	}
 
-	return err
+	return addSoundless(file)
 }
 
 // Join 結合する
