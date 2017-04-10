@@ -3,7 +3,6 @@ package sound
 import (
 	"dotstamp_server/models/csv_models"
 	"dotstamp_server/utils"
-	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -94,11 +93,12 @@ func addSoundless(file string) error {
 		return err
 	}
 
-	output := path + "static/files/" + file + ".wav"
+	src := path + "static/files/" + file + "_tmp.wav"
 	soundless := path + "static/sound/soundless.wav"
+	output := path + "static/files/" + file + ".wav"
 
-	cmd := "sox " + output + " " + soundless + " " + output
-	log.Println(cmd)
+	cmd := "sox " + src + " " + soundless + " " + output
+
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -117,7 +117,7 @@ func addAquesTalk(text string, file string) error {
 	}
 
 	voice := path + "tool/aques-talk/Talk"
-	output := path + "static/files/" + file + ".wav"
+	output := path + "static/files/" + file + "_tmp.wav"
 
 	text = strings.Replace(text, "\n", "。", -1)
 	text = strings.Replace(text, "'", "", -1)
