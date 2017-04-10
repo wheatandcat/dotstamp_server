@@ -70,6 +70,10 @@ func StirngToSaveBody(body string) (b []SaveBody, err error) {
 		return b, err
 	}
 
+	for k := range b {
+		b[k].Priority = k
+	}
+
 	return b, err
 }
 
