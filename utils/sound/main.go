@@ -76,6 +76,8 @@ func toAqk2k(text string) (string, error) {
 	dic := path + "tool/aqk2k/aq_dic"
 
 	text = strings.Replace(text, "\n", "。", -1)
+	text = strings.Replace(text, "'", "", -1)
+
 	cmd := "echo '" + text + "' | " + voice + " " + dic
 
 	r, err := exec.Command("sh", "-c", cmd).Output()
@@ -99,9 +101,9 @@ func addAquesTalk(text string, file string) error {
 	output := path + "static/files/" + file + ".wav"
 
 	text = strings.Replace(text, "\n", "。", -1)
-	text = strings.Replace(text, "'", `\'`, -1)
+	text = strings.Replace(text, "'", "", -1)
 
-	cmd := "echo " + text + " | " + voice + " > " + output
+	cmd := "echo '" + text + "' | " + voice + " > " + output
 
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
