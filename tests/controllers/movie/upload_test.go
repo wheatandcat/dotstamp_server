@@ -32,7 +32,7 @@ func TestUploadPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/movie/upload/",
+		"/api/movie/upload/",
 		strings.NewReader(values.Encode()),
 	)
 

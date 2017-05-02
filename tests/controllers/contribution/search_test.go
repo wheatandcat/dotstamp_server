@@ -33,7 +33,7 @@ func TestSearchPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/search/",
+		"/api/contribution/search/",
 		strings.NewReader(values.Encode()),
 	)
 

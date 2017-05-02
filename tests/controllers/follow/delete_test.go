@@ -30,7 +30,7 @@ func TestDeletePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/follow/delete/?user_id=1000",
+		"/api/follow/delete/?user_id=1000",
 		strings.NewReader(values.Encode()),
 	)
 

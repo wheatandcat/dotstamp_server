@@ -29,7 +29,7 @@ func TestDeletePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/tag/delete/",
+		"/api/tag/delete/",
 		strings.NewReader(values.Encode()),
 	)
 

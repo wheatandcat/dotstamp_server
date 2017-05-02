@@ -31,7 +31,7 @@ func TestSaveBodyPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/saveBody/",
+		"/api/sound/saveBody/",
 		strings.NewReader(values.Encode()),
 	)
 

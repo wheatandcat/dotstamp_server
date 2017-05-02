@@ -30,7 +30,7 @@ func TestMakePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/movie/make/",
+		"/api/movie/make/",
 		strings.NewReader(values.Encode()),
 	)
 

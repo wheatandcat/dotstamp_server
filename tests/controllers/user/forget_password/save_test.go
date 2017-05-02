@@ -30,7 +30,7 @@ func TestSavePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/user/forget_password/save/",
+		"/api/user/forget_password/save/",
 		strings.NewReader(values.Encode()),
 	)
 

@@ -29,7 +29,7 @@ func TestCheckPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/movie/check/",
+		"/api/movie/check/",
 		strings.NewReader(values.Encode()),
 	)
 

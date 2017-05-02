@@ -34,7 +34,7 @@ func TestMakePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/make/",
+		"/api/sound/make/",
 		strings.NewReader(values.Encode()),
 	)
 

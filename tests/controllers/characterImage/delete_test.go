@@ -22,7 +22,7 @@ func init() {
 func TestDeletePost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/characterImage/delete/1",
+		"/api/characterImage/delete/1",
 		nil,
 	)
 

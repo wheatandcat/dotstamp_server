@@ -29,7 +29,7 @@ func TestAddPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/tag/add/",
+		"/api/tag/add/",
 		strings.NewReader(values.Encode()),
 	)
 

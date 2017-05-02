@@ -25,7 +25,7 @@ func init() {
 func TestShowPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/show/1",
+		"/api/contribution/show/1",
 		nil,
 	)
 	if err != nil {

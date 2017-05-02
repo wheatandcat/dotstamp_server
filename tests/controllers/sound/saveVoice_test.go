@@ -31,7 +31,7 @@ func TestSaveVoicePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/saveVoice/",
+		"/api/sound/saveVoice/",
 		strings.NewReader(values.Encode()),
 	)
 

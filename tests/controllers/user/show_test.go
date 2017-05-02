@@ -22,7 +22,7 @@ func init() {
 func TestShowPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/user/show/",
+		"/api/user/show/",
 		nil,
 	)
 

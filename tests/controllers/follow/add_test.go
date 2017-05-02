@@ -30,7 +30,7 @@ func TestAddPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/follow/add/",
+		"/api/follow/add/",
 		strings.NewReader(values.Encode()),
 	)
 

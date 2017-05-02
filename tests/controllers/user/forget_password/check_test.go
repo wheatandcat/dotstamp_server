@@ -24,7 +24,7 @@ func TestCheckPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/user/forget_password/check/rH.Zw7xSMXghDIT_/uXiJ05lV/",
+		"/api/user/forget_password/check/rH.Zw7xSMXghDIT_/uXiJ05lV/",
 		nil,
 	)
 

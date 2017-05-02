@@ -32,7 +32,7 @@ func TestAddPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/add/?user_id=2",
+		"/api/sound/add/?user_id=2",
 		strings.NewReader(values.Encode()),
 	)
 

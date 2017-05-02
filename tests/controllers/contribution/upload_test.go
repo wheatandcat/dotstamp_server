@@ -28,7 +28,7 @@ func TestUoloadPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/upload",
+		"/api/contribution/upload",
 		strings.NewReader(values.Encode()),
 	)
 	if err != nil {

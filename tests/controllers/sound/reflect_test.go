@@ -32,7 +32,7 @@ func TestReflectPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/reflect/",
+		"/api/sound/reflect/",
 		strings.NewReader(values.Encode()),
 	)
 

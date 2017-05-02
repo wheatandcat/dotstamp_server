@@ -30,7 +30,7 @@ func TestShowPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/sound/show/",
+		"/api/sound/show/",
 		strings.NewReader(values.Encode()),
 	)
 

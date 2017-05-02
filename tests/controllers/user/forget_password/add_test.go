@@ -29,7 +29,7 @@ func TestAddPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/user/forget_password/add/",
+		"/api/user/forget_password/add/",
 		strings.NewReader(values.Encode()),
 	)
 

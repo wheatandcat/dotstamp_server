@@ -30,7 +30,7 @@ func TestSavePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/characterImage/save/",
+		"/api/characterImage/save/",
 		strings.NewReader(values.Encode()),
 	)
 

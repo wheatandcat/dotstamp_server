@@ -18,7 +18,7 @@ func init() {
 func TestLogoutPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/login/logout/",
+		"/api/login/logout/",
 		nil,
 	)
 

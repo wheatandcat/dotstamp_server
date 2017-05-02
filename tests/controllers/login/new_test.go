@@ -28,7 +28,7 @@ func TestNewPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/login/new/",
+		"/api/login/new/",
 		strings.NewReader(values.Encode()),
 	)
 

@@ -29,7 +29,7 @@ func TestListPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/contribution/list/",
+		"/api/contribution/list/",
 		strings.NewReader(values.Encode()),
 	)
 	if err != nil {

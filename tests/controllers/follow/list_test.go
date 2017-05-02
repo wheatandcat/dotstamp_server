@@ -34,7 +34,7 @@ func TestListPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/follow/list/?user_id=1000",
+		"/api/follow/list/?user_id=1000",
 		strings.NewReader(values.Encode()),
 	)
 

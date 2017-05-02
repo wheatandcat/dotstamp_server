@@ -22,7 +22,7 @@ func init() {
 func TestUploadPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/user/profile/upload/",
+		"/api/user/profile/upload/",
 		nil,
 	)
 

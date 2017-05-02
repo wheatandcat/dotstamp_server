@@ -22,7 +22,7 @@ func init() {
 func TestListPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/characterImage/list",
+		"/api/characterImage/list",
 		nil,
 	)
 
