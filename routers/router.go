@@ -20,10 +20,6 @@ import (
 )
 
 func init() {
-	beego.ErrorController(&controllers.ErrorController{})
-
-	beego.Router("/", &controllers.MainController{})
-
 	beego.Router("/api/contribution/new/", &controllersContribution.NewController{})
 	beego.Router("/api/contribution/list/", &controllersContribution.ListController{})
 	beego.Router("/api/contribution/upload/", &controllersContribution.UploadController{})
@@ -79,4 +75,6 @@ func init() {
 	beego.Router("/api/movie/check/", &controllersMovie.CheckController{})
 
 	beego.Router("/api/question/add/", &controllersQuestion.AddController{})
+
+	beego.Router("/*", &controllers.MainController{})
 }

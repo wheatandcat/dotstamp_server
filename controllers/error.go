@@ -11,5 +11,5 @@ type ErrorController struct {
 
 // Error404 エラー:404
 func (c *ErrorController) Error404() {
-	c.Redirect(beego.AppConfig.String("topUrl"), 200)
+	c.Redirect("http://192.168.33.10:8080/", 200)
 }
