@@ -20,7 +20,7 @@ func GetConnect() *oauth2.Config {
 		ClientSecret: beego.AppConfig.String("youtubeClientSecret"),
 		Endpoint:     google.Endpoint,
 		Scopes:       []string{"https://www.googleapis.com/auth/youtube.upload"},
-		RedirectURL:  beego.AppConfig.String("callBackUrl") + "movie/callback",
+		RedirectURL:  beego.AppConfig.String("callBackUrl") + "api/movie/callback",
 	}
 
 	return config
