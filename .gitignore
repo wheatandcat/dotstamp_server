@@ -16,11 +16,14 @@ nohup.out
 dotstamp_server.tar.gz
 bin/
 productionDB/
+conf/app_platform.conf
 conf/app_prod.conf
 conf/app_prod_green.conf
 conf/app_prod_blue.conf
 green/*
 blue/*
+coverage/*
+!coverage/.gitkeep
 
 # Ignore all logfiles and tempfiles.
 /doc/*

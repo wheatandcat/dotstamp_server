@@ -26,7 +26,7 @@ func TestSavePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/contribution/new/",
+		"/api/contribution/save/",
 		strings.NewReader(values.Encode()),
 	)
 
