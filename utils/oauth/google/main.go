@@ -20,7 +20,7 @@ func GetConnect() *oauth2.Config {
 			TokenURL: tokenEndpoint,
 		},
 		Scopes:      []string{"openid", "email", "profile"},
-		RedirectURL: beego.AppConfig.String("callBackUrl") + "api/login/google/callback",
+		RedirectURL: beego.AppConfig.String("callBackUrl") + "api/google/callback",
 	}
 
 	return config
