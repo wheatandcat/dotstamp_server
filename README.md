@@ -63,6 +63,11 @@ go test -p 1 ./models/ -cover TestModel
 ```
 goconvey -packages 1
 ```
+全体カバレッジ出力 & 出力
+```
+sh scripts/coverage.sh
+go tool cover -func=coverage/all.coverage.out
+```
 db確認
 ```
 dbweb -home=$GOPATH/src/github.com/go-xorm/dbweb/
