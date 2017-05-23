@@ -1,5 +1,5 @@
 hash: 496b2cad86aeb90613c411a8d99320b95bd57d4dee217a44e0da2d4bd3a851f0
-updated: 2017-05-15T02:59:08.493966608+09:00
+updated: 2017-05-24T04:47:05.447825489+09:00
 imports:
 - name: cloud.google.com/go
   version: 7050ae8919c454e5119ddeb65c678014a52e5d57
@@ -8,10 +8,11 @@ imports:
 - name: github.com/astaxie/beedb
   version: 1732292dfde40fab7b4ad38ba413492ec5633ad3
 - name: github.com/astaxie/beego
-  version: 7452151beec2f43c42122fd91b7523bcbccf05be
+  version: cab8458c1c4a5a3b4bf5192922be620e6dede15b
   subpackages:
   - config
   - context
+  - context/param
   - grace
   - logs
   - session
@@ -21,7 +22,7 @@ imports:
 - name: github.com/garyburd/go-oauth
   version: 4f191fd0442e75c0c73bd00e4f5f27d4c08312ee
 - name: github.com/garyburd/redigo
-  version: 8873b2f1995f59d4bcdd2b0dc9858e2cb9bf0c13
+  version: 433969511232c397de61b1442f9fd49ec06ae9ba
   subpackages:
   - internal
   - redis
