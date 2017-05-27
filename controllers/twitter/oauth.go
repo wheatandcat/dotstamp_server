@@ -6,13 +6,13 @@ import (
 	"github.com/astaxie/beego"
 )
 
-// Oauth2Controller Oauth2コントローラー
-type Oauth2Controller struct {
+// OauthController Oauth2コントローラー
+type OauthController struct {
 	beego.Controller
 }
 
 // Get 認証する
-func (c *Oauth2Controller) Get() {
+func (c *OauthController) Get() {
 	c.StartSession()
 
 	config := twitter.GetConnect()

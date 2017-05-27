@@ -5,6 +5,7 @@ import (
 	"dotstamp_server/controllers/bug"
 	"dotstamp_server/controllers/characterImage"
 	"dotstamp_server/controllers/contribution"
+	"dotstamp_server/controllers/facebook"
 	"dotstamp_server/controllers/follow"
 	"dotstamp_server/controllers/forget_password"
 	"dotstamp_server/controllers/google"
@@ -15,6 +16,7 @@ import (
 	"dotstamp_server/controllers/question"
 	"dotstamp_server/controllers/sound"
 	"dotstamp_server/controllers/tag"
+	"dotstamp_server/controllers/twitter"
 	"dotstamp_server/controllers/user"
 
 	"github.com/astaxie/beego"
@@ -37,6 +39,12 @@ func init() {
 	beego.Router("/api/login/callback/", &controllersLogin.CallbackController{})
 	beego.Router("/api/google/oauth/", &controllersGoogle.OauthController{})
 	beego.Router("/api/google/callback/", &controllersGoogle.CallbackController{})
+
+	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
+	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
+
+	beego.Router("/api/facebook/oauth/", &controllersFacebook.OauthController{})
+	beego.Router("/api/facebook/callback/", &controllersFacebook.CallbackController{})
 
 	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
