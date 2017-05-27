@@ -3,9 +3,10 @@ package controllersGoogle
 import (
 	"context"
 	"dotstamp_server/controllers"
-	"dotstamp_server/utils"
 	"dotstamp_server/utils/oauth/google"
+	"dotstamp_server/utils/user"
 	"errors"
+	"net/url"
 
 	"github.com/astaxie/beego"
 
@@ -20,7 +21,7 @@ type CallbackController struct {
 // CallbackRequest コールバックリクエスト
 type CallbackRequest struct {
 	Code  string `form:"code"`
-	State int    `form:"state"`
+	State string `form:"state"`
 }
 
 // Get コールバックする
@@ -62,12 +63,18 @@ func (c *CallbackController) Get() {
 		return
 	}
 
-	e, err := utils.Encrypter([]byte(info.Email))
+	u, err := user.GetByEmail(info.Email)
 	if err != nil {
 		c.RedirectError(err, 0)
 		return
 	}
 
-	url := beego.AppConfig.String("topurl") + "/oauth/" + utils.Urlencode(e)
+	if u.ID != 0 {
+		c.SetSession("user_id", u.ID)
+		c.Redirect(beego.AppConfig.String("topurl"), 302)
+		return
+	}
+
+	url := beego.AppConfig.String("topurl") + "oauth/?email=" + url.QueryEscape(info.Email)
 	c.Redirect(url, 302)
 }
