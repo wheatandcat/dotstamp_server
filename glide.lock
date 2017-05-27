@@ -1,5 +1,5 @@
-hash: 496b2cad86aeb90613c411a8d99320b95bd57d4dee217a44e0da2d4bd3a851f0
-updated: 2017-05-24T04:47:05.447825489+09:00
+hash: 448bcb8ab476fba0e16cd614a8490626dd26bd946219dfa3733a2eaf4edea1dc
+updated: 2017-05-27T17:46:17.499330454+09:00
 imports:
 - name: cloud.google.com/go
   version: 7050ae8919c454e5119ddeb65c678014a52e5d57
@@ -21,6 +21,8 @@ imports:
   - utils
 - name: github.com/garyburd/go-oauth
   version: 4f191fd0442e75c0c73bd00e4f5f27d4c08312ee
+  subpackages:
+  - oauth
 - name: github.com/garyburd/redigo
   version: 433969511232c397de61b1442f9fd49ec06ae9ba
   subpackages:

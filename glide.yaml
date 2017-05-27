@@ -38,6 +38,8 @@ import:
   subpackages:
   - context
 - package: github.com/garyburd/go-oauth
+  subpackages:
+  - oauth
 - package: github.com/huandu/facebook
   version: ^1.8.1
 - package: github.com/google/go-querystring
