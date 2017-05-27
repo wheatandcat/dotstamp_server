@@ -2,9 +2,9 @@ package controllersFacebook
 
 import (
 	"dotstamp_server/controllers"
+	"dotstamp_server/utils/oauth/facebook"
 	"dotstamp_server/utils/user"
 	"errors"
-	"example-golang-oauth2/lib/facebook"
 	"net/url"
 
 	"github.com/astaxie/beego"
