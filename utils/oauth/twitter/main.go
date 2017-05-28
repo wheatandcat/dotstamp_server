@@ -10,22 +10,12 @@ import (
 	"github.com/garyburd/go-oauth/oauth"
 )
 
-var (
-	tempCredKey  string
-	tokenCredKey string
-)
-
 // Account アカウント
 type Account struct {
 	ID              string `json:"id_str"`
 	ScreenName      string `json:"screen_name"`
 	ProfileImageURL string `json:"profile_image_url"`
 	Email           string `json:"email"`
-}
-
-func init() {
-	tempCredKey = beego.AppConfig.String("twitterConsumerKey")
-	tokenCredKey = beego.AppConfig.String("twitterConsumerSecret")
 }
 
 // GetConnect 接続を取得する
@@ -35,8 +25,8 @@ func GetConnect() *oauth.Client {
 		ResourceOwnerAuthorizationURI: "https://api.twitter.com/oauth/authorize",
 		TokenRequestURI:               "https://api.twitter.com/oauth/access_token",
 		Credentials: oauth.Credentials{
-			Token:  tempCredKey,
-			Secret: tokenCredKey,
+			Token:  beego.AppConfig.String("twitterConsumerKey"),
+			Secret: beego.AppConfig.String("twitterConsumerSecret"),
 		},
 	}
 }

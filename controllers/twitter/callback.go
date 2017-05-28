@@ -3,6 +3,7 @@ package controllersTwitter
 import (
 	"dotstamp_server/controllers"
 	"dotstamp_server/utils/oauth/twitter"
+	"dotstamp_server/utils/user"
 	"net/url"
 
 	"github.com/astaxie/beego"
@@ -47,6 +48,18 @@ func (c *CallbackController) Get() {
 	account := twitter.Account{}
 	if err = twitter.GetMe(at, &account); err != nil {
 		c.RedirectError(err, 0)
+	}
+
+	u, err := user.GetByEmail(account.Email)
+	if err != nil {
+		c.RedirectError(err, 0)
+		return
+	}
+
+	if u.ID != 0 {
+		c.SetSession("user_id", u.ID)
+		c.Redirect(beego.AppConfig.String("topurl"), 302)
+		return
 	}
 
 	url := beego.AppConfig.String("topurl") + "oauth/?email=" + url.QueryEscape(account.Email)
