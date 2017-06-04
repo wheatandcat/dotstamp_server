@@ -14,6 +14,7 @@
 						margin: 3em auto 1em auto !important;
 					}
 					table.htable th {
+                        width: 264px !important;
 						border-left: 10px solid #e5e5e5 !important;
 					}
 					footer {
