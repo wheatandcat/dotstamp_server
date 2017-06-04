@@ -72,6 +72,11 @@ db確認
 ```
 dbweb -home=$GOPATH/src/github.com/go-xorm/dbweb/
 ```
+db定義書生成
+```
+mysqldump --no-data --xml -uroot stamp_test > db/stamp_test.xml
+xsltproc -o db/stamp_test.html db/style.xsl db/stamp_test.xml
+```
 ## バッチ  
 ファイルパス：tasks/
 
