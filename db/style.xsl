@@ -45,7 +45,7 @@
                 <xsl:attribute name="href">
                     #<xsl:value-of select="@name" />
                 </xsl:attribute>
-                <xsl:value-of select="@name" />
+                <xsl:value-of select="@name" />（<xsl:value-of select="options/@Comment"/>）
             </a>
         </li>
 	</xsl:template>
