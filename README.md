@@ -1,6 +1,7 @@
 # dotstamp_server
 
 [![Build Status](https://travis-ci.org/wheatandcat/dotstamp_server.svg?branch=master)](https://travis-ci.org/wheatandcat/dotstamp_server)
+[![DB Document](https://img.shields.io/badge/database-doc-brightgreen.svg)](https://wheatandcat.github.io/dotstamp_server/db/stamp_test.html)
 [![BSD License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 
 <img src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" data-canonical-src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" width="200" />
