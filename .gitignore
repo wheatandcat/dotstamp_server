@@ -17,6 +17,7 @@ dotstamp_server.tar.gz
 bin/
 productionDB/
 conf/app_platform.conf
+conf/app_platform_dev.conf
 conf/app_prod.conf
 conf/app_prod_green.conf
 conf/app_prod_blue.conf
@@ -58,3 +59,5 @@ coverage/*
 !/static/files/tmp/icon/.gitkeep
 /static/files/talk/*
 !/static/files/talk/.gitkeep
+db/stamp_test.html
+db/stamp_test.xml

@@ -2,7 +2,7 @@ package models
 
 import "github.com/jinzhu/gorm"
 
-// LogBugReport ユーザー投稿フォロー総数
+// LogBugReport バグレポート
 type LogBugReport struct {
 	gorm.Model
 	UserID int `json:"user_id"`
