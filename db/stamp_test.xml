@@ -1,0 +1,244 @@
+<?xml version="1.0"?>
+<mysqldump xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<database name="stamp_test">
+	<table_structure name="contribution_total_follows">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="count" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="フォロー数" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="contribution_total_follows" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="contribution_total_follows" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="contribution_total_follows" Engine="InnoDB" Version="10" Row_format="Compact" Rows="0" Avg_row_length="0" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="1" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿統計フォロワー" />
+	</table_structure>
+	<table_structure name="goose_db_version">
+		<field Field="id" Type="bigint(20) unsigned" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="version_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="" />
+		<field Field="is_applied" Type="tinyint(1)" Null="NO" Key="" Extra="" Comment="" />
+		<field Field="tstamp" Type="timestamp" Null="YES" Key="" Default="CURRENT_TIMESTAMP" Extra="" Comment="" />
+		<key Table="goose_db_version" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="42" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="goose_db_version" Non_unique="0" Key_name="id" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="42" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="goose_db_version" Engine="InnoDB" Version="10" Row_format="Compact" Rows="42" Avg_row_length="390" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="47" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="DBバージョン" />
+	</table_structure>
+	<table_structure name="log_bug_reports">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザID" />
+		<field Field="body" Type="text" Null="YES" Key="" Extra="" Comment="本文" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="log_bug_reports" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="log_bug_reports" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="バグレポートログ" />
+	</table_structure>
+	<table_structure name="log_contribution_images">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="投稿ID" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="log_contribution_images" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="log_contribution_images" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿画像ログ" />
+	</table_structure>
+	<table_structure name="log_problem_contribution_reports">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="投稿ID" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザID" />
+		<field Field="type" Type="int(11)" Null="YES" Key="" Extra="" Comment="タイプ" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="log_problem_contribution_reports" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="log_problem_contribution_reports" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="不適切投稿レポートログ" />
+	</table_structure>
+	<table_structure name="log_questions">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザID" />
+		<field Field="email" Type="varchar(100)" Null="NO" Key="" Extra="" Comment="メールアドレス" />
+		<field Field="body" Type="text" Null="YES" Key="" Extra="" Comment="本文" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="log_questions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="log_questions" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="質問ログ" />
+	</table_structure>
+	<table_structure name="log_user_contributions">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザID" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="log_user_contributions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="log_user_contributions" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="log_user_contributions" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿ログ" />
+	</table_structure>
+	<table_structure name="user_character_images">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザID" />
+		<field Field="character_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザキャラクタID" />
+		<field Field="priority" Type="int(11)" Null="YES" Key="" Extra="" Comment="優先度" />
+		<field Field="voice_type" Type="int(11)" Null="NO" Key="" Default="1" Extra="" Comment="音声状態" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_character_images" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_character_images" Non_unique="1" Key_name="user_id_index" Seq_in_index="1" Column_name="user_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_character_images" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="キャラクタ画像" />
+	</table_structure>
+	<table_structure name="user_contribution_details">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="body" Type="text" Null="YES" Key="" Extra="" Comment="本文" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_details" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_details" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿詳細" />
+	</table_structure>
+	<table_structure name="user_contribution_follows">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザID" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_follows" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_follows" Non_unique="1" Key_name="user_id_user_contribution_id_index" Seq_in_index="1" Column_name="user_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_follows" Non_unique="1" Key_name="user_id_user_contribution_id_index" Seq_in_index="2" Column_name="user_contribution_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_follows" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_follows" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="2" Column_name="user_contribution_id" Collation="A" Cardinality="3" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_follows" Engine="InnoDB" Version="10" Row_format="Compact" Rows="3" Avg_row_length="5461" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="0" Auto_increment="4" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿フォロー" />
+	</table_structure>
+	<table_structure name="user_contribution_movies">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="movie_type" Type="int(3)" Null="YES" Key="" Default="1" Extra="" Comment="動画タイプ" />
+		<field Field="movie_id" Type="varchar(100)" Null="YES" Key="" Extra="" Comment="動画ID" />
+		<field Field="movie_status" Type="int(3)" Null="YES" Key="MUL" Default="1" Extra="" Comment="動画状態" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_movies" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="user_contribution_id_movie_status_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="user_contribution_id_movie_status_index" Seq_in_index="2" Column_name="movie_status" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="user_contribution_id_movie_type_movie_status_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="user_contribution_id_movie_type_movie_status_index" Seq_in_index="2" Column_name="movie_type" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="user_contribution_id_movie_type_movie_status_index" Seq_in_index="3" Column_name="movie_status" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_movies" Non_unique="1" Key_name="movie_status_index" Seq_in_index="1" Column_name="movie_status" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_movies" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="49152" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿動画" />
+	</table_structure>
+	<table_structure name="user_contribution_searches">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="search" Type="text" Null="YES" Key="MUL" Extra="" Comment="検索" />
+		<field Field="follow_count" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="フォロー数" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<key Table="user_contribution_searches" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_searches" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_searches" Non_unique="1" Key_name="search" Seq_in_index="1" Column_name="search" Null="YES" Index_type="FULLTEXT" Comment="" Index_comment="" />
+		<options Name="user_contribution_searches" Engine="Mroonga" Version="10" Row_format="Dynamic" Rows="0" Avg_row_length="0" Data_length="4538368" Max_data_length="0" Index_length="0" Data_free="0" Auto_increment="1" Collation="utf8_general_ci" Create_options="" Comment="投稿検索" />
+	</table_structure>
+	<table_structure name="user_contribution_sound_details">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="priority" Type="int(11)" Null="YES" Key="" Extra="" Comment="優先度" />
+		<field Field="talk_type" Type="int(11)" Null="YES" Key="" Extra="" Comment="会話タイプ" />
+		<field Field="body" Type="varchar(256)" Null="YES" Key="" Extra="" Comment="本文" />
+		<field Field="body_sound" Type="varchar(256)" Null="YES" Key="" Extra="" Comment="本文読み上げ" />
+		<field Field="voice_type" Type="int(11)" Null="YES" Key="" Extra="" Comment="音声タイプ" />
+		<field Field="make_status" Type="int(11)" Null="NO" Key="MUL" Default="0" Extra="" Comment="作成状態" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_sound_details" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_sound_details" Non_unique="1" Key_name="user_contribution_id_priority_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_sound_details" Non_unique="1" Key_name="user_contribution_id_priority_index" Seq_in_index="2" Column_name="priority" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_sound_details" Non_unique="1" Key_name="make_status" Seq_in_index="1" Column_name="make_status" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_sound_details" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿音声詳細" />
+	</table_structure>
+	<table_structure name="user_contribution_sounds">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="sound_status" Type="int(10)" Null="YES" Key="" Default="1" Extra="" Comment="音声状態" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_sounds" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="1" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_sounds" Non_unique="1" Key_name="user_contribution_id_sound_status_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="1" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_sounds" Non_unique="1" Key_name="user_contribution_id_sound_status_index" Seq_in_index="2" Column_name="sound_status" Collation="A" Cardinality="1" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_sounds" Engine="InnoDB" Version="10" Row_format="Compact" Rows="1" Avg_row_length="16384" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="2" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿音声" />
+	</table_structure>
+	<table_structure name="user_contribution_tags">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="name" Type="varchar(20)" Null="YES" Key="" Extra="" Comment="タグ名" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_tags" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_tags" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_tags" Engine="InnoDB" Version="10" Row_format="Compact" Rows="0" Avg_row_length="0" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="2" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿タグ" />
+	</table_structure>
+	<table_structure name="user_contribution_uploads">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="ユーザID" />
+		<field Field="user_contribution_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザ投稿ID" />
+		<field Field="token" Type="text" Null="NO" Key="" Extra="" Comment="トークン" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contribution_uploads" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contribution_uploads" Non_unique="1" Key_name="user_contribution_id_index" Seq_in_index="1" Column_name="user_contribution_id" Collation="A" Cardinality="0" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contribution_uploads" Engine="InnoDB" Version="10" Row_format="Compact" Rows="0" Avg_row_length="0" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="2" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿アップロード" />
+	</table_structure>
+	<table_structure name="user_contributions">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザID" />
+		<field Field="title" Type="varchar(100)" Null="YES" Key="" Extra="" Comment="タイトル" />
+		<field Field="view_status" Type="int(10)" Null="YES" Key="MUL" Default="1" Extra="" Comment="表示状態" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_contributions" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contributions" Non_unique="1" Key_name="user_id_index" Seq_in_index="1" Column_name="user_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_contributions" Non_unique="1" Key_name="view_status_index" Seq_in_index="1" Column_name="view_status" Collation="A" Cardinality="2" Null="YES" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_contributions" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="32768" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="投稿" />
+	</table_structure>
+	<table_structure name="user_forget_passwords">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="email" Type="varchar(100)" Null="NO" Key="MUL" Extra="" Comment="メールアドレス" />
+		<field Field="keyword" Type="text" Null="NO" Key="" Extra="" Comment="キーワード" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_forget_passwords" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_forget_passwords" Non_unique="1" Key_name="email_index" Seq_in_index="1" Column_name="email" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_forget_passwords" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="忘れたパスワード" />
+	</table_structure>
+	<table_structure name="user_masters">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="name" Type="varchar(100)" Null="NO" Key="" Extra="" Comment="ユーザ名" />
+		<field Field="email" Type="varchar(100)" Null="NO" Key="MUL" Extra="" Comment="メールアドレス" />
+		<field Field="password" Type="text" Null="NO" Key="" Extra="" Comment="パスワード" />
+		<field Field="profile_image_id" Type="bigint(20)" Null="NO" Key="" Extra="" Comment="プロフィール画像ID" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_masters" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_masters" Non_unique="1" Key_name="email_index" Seq_in_index="1" Column_name="email" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_masters" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="ユーザ" />
+	</table_structure>
+	<table_structure name="user_profile_images">
+		<field Field="id" Type="bigint(20)" Null="NO" Key="PRI" Extra="auto_increment" Comment="" />
+		<field Field="user_id" Type="bigint(20)" Null="NO" Key="MUL" Extra="" Comment="ユーザID" />
+		<field Field="created_at" Type="datetime" Null="YES" Key="" Extra="" Comment="作成日時" />
+		<field Field="updated_at" Type="datetime" Null="YES" Key="" Extra="" Comment="更新日時" />
+		<field Field="deleted_at" Type="datetime" Null="YES" Key="" Extra="" Comment="削除日時" />
+		<key Table="user_profile_images" Non_unique="0" Key_name="PRIMARY" Seq_in_index="1" Column_name="id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<key Table="user_profile_images" Non_unique="1" Key_name="user_id_index" Seq_in_index="1" Column_name="user_id" Collation="A" Cardinality="2" Null="" Index_type="BTREE" Comment="" Index_comment="" />
+		<options Name="user_profile_images" Engine="InnoDB" Version="10" Row_format="Compact" Rows="2" Avg_row_length="8192" Data_length="16384" Max_data_length="0" Index_length="16384" Data_free="0" Auto_increment="3" Create_time="2017-06-04 11:16:03" Collation="utf8_general_ci" Create_options="" Comment="プロフィール画像" />
+	</table_structure>
+</database>
+</mysqldump>

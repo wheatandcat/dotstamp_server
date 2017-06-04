@@ -59,5 +59,4 @@ coverage/*
 !/static/files/tmp/icon/.gitkeep
 /static/files/talk/*
 !/static/files/talk/.gitkeep
-db/stamp_test.html
 db/stamp_test.xml
