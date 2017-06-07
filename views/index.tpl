@@ -8,6 +8,7 @@
         <link rel="stylesheet" type="text/css" href="{{.StaticUrl}}css/app.min.css{{.Version}}" />
         <link rel="stylesheet" type="text/css" href="{{.StaticUrl}}css/app.min.css{{.Version}}" />
         <link rel="stylesheet" type="text/css" href="{{.StaticUrl}}css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+        <meta name="google-site-verification" content="X_MoWaVqc6TZ71QXiM4WNzVVPx5PNsvn1EFHaMVPoEQ" />
         <title>.stamp</title>
     </head>
     <body>
