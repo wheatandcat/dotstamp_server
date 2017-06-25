@@ -5,4 +5,4 @@ ALTER TABLE `user_contribution_follows` ADD INDEX `user_contribution_id_index` (
 
 -- +goose Down
 -- SQL section 'Down' is executed when this migration is rolled back
-ALTER TABLE `user_contribution_follows` DROP INDEX `user_id_user_contribution_id_index`;
+ALTER TABLE `user_contribution_follows` DROP INDEX `user_contribution_id_index`;

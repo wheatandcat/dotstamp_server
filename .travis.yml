@@ -11,6 +11,10 @@ install:
   - go get bitbucket.org/liamstask/goose/cmd/goose
 before_script:
   - mysql -uroot -e "create database stamp_test"
+  - mysql -uroot -e "INSTALL PLUGIN Mroonga SONAME 'ha_mroonga.so';"
+  - mysql -uroot -e "CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME 'ha_mroonga.so';"
+  - mysql -uroot -e "CREATE FUNCTION mroonga_command RETURNS STRING SONAME 'ha_mroonga.so';"
+  - mysql -uroot -e "CREATE FUNCTION mroonga_escape RETURNS STRING SONAME 'ha_mroonga.so';"
   - goose -env test up
 script:
   - glide install
