@@ -2,7 +2,9 @@
 language: go
 go:
   - 1.7.x
-sudo: false
+sudo: required
+before_install:
+  - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
 addons:
   mariadb: '10.2.6'
 install:
