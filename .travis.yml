@@ -3,8 +3,13 @@ language: go
 go:
   - 1.7.x
 sudo: false
+addons:
+  mariadb: '10.2.6'
 install:
   - go get github.com/Masterminds/glide
   - go get github.com/golang/lint/golint
+  - go get bitbucket.org/liamstask/goose/cmd/goose
+before_script:
+  - goose -env test up
 script:
   - glide install
