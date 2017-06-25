@@ -52,6 +52,8 @@
             </a></li>
 <li class="list-group-item"><a href="#user_contribution_sound_details">user_contribution_sound_details（投稿音声詳細）
             </a></li>
+<li class="list-group-item"><a href="#user_contribution_sound_lengths">user_contribution_sound_lengths（投稿音声長さ）
+            </a></li>
 <li class="list-group-item"><a href="#user_contribution_sounds">user_contribution_sounds（投稿音声）
             </a></li>
 <li class="list-group-item"><a href="#user_contribution_tags">user_contribution_tags（投稿タグ）
@@ -65,6 +67,8 @@
 <li class="list-group-item"><a href="#user_masters">user_masters（ユーザ）
             </a></li>
 <li class="list-group-item"><a href="#user_profile_images">user_profile_images（プロフィール画像）
+            </a></li>
+<li class="list-group-item"><a href="#user_work_histories">user_work_histories（）
             </a></li>
 </ul>
 <table class="table table-bordered htable" id="contribution_total_follows"><tbody>
@@ -209,7 +213,7 @@
 <td>tstamp</td>
 <td>timestamp</td>
 <td><span class="glyphicon glyphicon-ok"></span></td>
-<td>CURRENT_TIMESTAMP</td>
+<td>current_timestamp()</td>
 <td></td>
 <td></td>
 </tr>
@@ -1239,6 +1243,100 @@
 </tr>
 </tbody>
 </table>
+<table class="table table-bordered htable" id="user_contribution_sound_lengths"><tbody>
+<tr class="active">
+<th>テーブル名</th>
+<td>投稿音声長さ</td>
+</tr>
+<tr class="active">
+<th>スキーマ</th>
+<td>user_contribution_sound_lengths</td>
+</tr>
+</tbody></table>
+<table class="table table-condensed">
+<thead><tr>
+<th class="text-right">#</th>
+<th>論理名</th>
+<th>物理名</th>
+<th>型</th>
+<th>NULL</th>
+<th>デフォルト値</th>
+<th>主キー</th>
+<th>ユニーク</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="text-right">1</td>
+<td></td>
+<td>id</td>
+<td>bigint(20)</td>
+<td></td>
+<td></td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">2</td>
+<td>ユーザ投稿ID</td>
+<td>user_contribution_id</td>
+<td>bigint(20)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">3</td>
+<td>再生時間</td>
+<td>second</td>
+<td>int(10)</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">4</td>
+<td>文字数</td>
+<td>length</td>
+<td>int(10)</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td>0</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">5</td>
+<td>作成日時</td>
+<td>created_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">6</td>
+<td>更新日時</td>
+<td>updated_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">7</td>
+<td>削除日時</td>
+<td>deleted_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
 <table class="table table-bordered htable" id="user_contribution_sounds"><tbody>
 <tr class="active">
 <th>テーブル名</th>
@@ -1847,6 +1945,90 @@
 </tr>
 <tr>
 <td class="text-right">5</td>
+<td>削除日時</td>
+<td>deleted_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table class="table table-bordered htable" id="user_work_histories"><tbody>
+<tr class="active">
+<th>テーブル名</th>
+<td></td>
+</tr>
+<tr class="active">
+<th>スキーマ</th>
+<td>user_work_histories</td>
+</tr>
+</tbody></table>
+<table class="table table-condensed">
+<thead><tr>
+<th class="text-right">#</th>
+<th>論理名</th>
+<th>物理名</th>
+<th>型</th>
+<th>NULL</th>
+<th>デフォルト値</th>
+<th>主キー</th>
+<th>ユニーク</th>
+</tr></thead>
+<tbody>
+<tr>
+<td class="text-right">1</td>
+<td></td>
+<td>id</td>
+<td>bigint(20)</td>
+<td></td>
+<td></td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">2</td>
+<td>ユーザID</td>
+<td>user_id</td>
+<td>bigint(20)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">3</td>
+<td>作品ID</td>
+<td>work_id</td>
+<td>bigint(20)</td>
+<td></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">4</td>
+<td>作成日時</td>
+<td>created_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">5</td>
+<td>更新日時</td>
+<td>updated_at</td>
+<td>datetime</td>
+<td><span class="glyphicon glyphicon-ok"></span></td>
+<td></td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td class="text-right">6</td>
 <td>削除日時</td>
 <td>deleted_at</td>
 <td>datetime</td>
