@@ -10,6 +10,8 @@ install:
   - go get github.com/golang/lint/golint
   - go get bitbucket.org/liamstask/goose/cmd/goose
 before_script:
+  - mysql -uroot -e "create database stamp_test"
   - goose -env test up
 script:
   - glide install
+  - go build main.go
