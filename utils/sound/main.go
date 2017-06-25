@@ -3,6 +3,7 @@ package sound
 import (
 	"dotstamp_server/models/csv_models"
 	"dotstamp_server/utils"
+	"encoding/json"
 	"os"
 	"os/exec"
 	"strconv"
@@ -17,6 +18,21 @@ func getRootPath() (string, error) {
 	}
 
 	return p + "/", nil
+}
+
+// static 静的パスを取得する
+func static() (string, error) {
+	p, err := getRootPath()
+	if err != nil {
+		return "", err
+	}
+
+	files := "static"
+	if utils.IsTest() {
+		files = "tests"
+	}
+
+	return p + files + "/files/", nil
 }
 
 // AddTmpSound 一時音声を追加する
@@ -222,4 +238,36 @@ func RemoveJoinFile(file string) error {
 	}
 
 	return nil
+}
+
+// Info 情報
+type Info struct {
+	Streams []struct {
+		Duration float64 `json:"duration,string"`
+	} `json:"streams"`
+}
+
+// GetLength 再生時間を取得する
+func GetLength(file string) (len float64, err error) {
+	path, err := static()
+	if err != nil {
+		return len, err
+	}
+
+	src := path + "sound/" + file + ".mp3"
+
+	if !utils.ExistsFile(src) {
+		return len, nil
+	}
+
+	cmd := "ffprobe -show_streams -print_format json " + src
+
+	out, err := exec.Command("sh", "-c", cmd).Output()
+	if err != nil {
+		return len, err
+	}
+
+	var info Info
+	err = json.Unmarshal(out, &info)
+	return info.Streams[0].Duration, err
 }

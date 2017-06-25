@@ -259,3 +259,29 @@ func GetSoudDetailListBySpecifiedDays(list []models.UserContributionSoundDetail,
 
 	return r
 }
+
+// AddOrSaveSoundLength 長さを追加 or 保存する
+func AddOrSaveSoundLength(uID int, second int, length int) error {
+	u := models.UserContributionSoundLength{}
+	u, _, err := u.GetByUserContributionID(uID)
+	if err != nil {
+		return err
+	}
+
+	if u.ID == uint(0) {
+		u = models.UserContributionSoundLength{
+			Second: second,
+			Length: length,
+		}
+
+		return u.Add()
+	}
+
+	if u.Second == second {
+		return nil
+	}
+
+	u.Second = second
+	u.Length = length
+	return u.Save()
+}

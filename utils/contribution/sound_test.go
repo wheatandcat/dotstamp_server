@@ -20,6 +20,7 @@ func init() {
 		"user_contributions",
 		"user_contribution_sounds",
 		"user_contribution_sound_details",
+		"user_contribution_sound_lengths",
 	})
 
 	var _ = Suite(t)
@@ -189,4 +190,15 @@ func (t *TestSound) TestGetSoudDetailListBySpecifiedDays(c *C) {
 	r := GetSoudDetailListBySpecifiedDays(u, 2)
 
 	c.Check(len(r), Equals, 1)
+}
+
+func (t *TestSound) TestAddOrSaveSoundLength(c *C) {
+	r := AddOrSaveSoundLength(1, 2, 3)
+	c.Check(r, Equals, nil)
+
+	r = AddOrSaveSoundLength(1, 2, 3)
+	c.Check(r, Equals, nil)
+
+	r = AddOrSaveSoundLength(2, 2, 3)
+	c.Check(r, Equals, nil)
 }

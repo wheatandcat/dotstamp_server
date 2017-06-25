@@ -78,6 +78,7 @@ func init() {
 	beego.Router("/api/sound/saveVoice/", &controllersSound.SaveVoiceController{})
 	beego.Router("/api/sound/saveVoiceList/", &controllersSound.SaveVoiceListController{})
 	beego.Router("/api/sound/reflect/", &controllersSound.ReflectController{})
+	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
 
 	beego.Router("/api/movie/make/", &controllersMovie.MakeController{})
 	beego.Router("/api/movie/connect/:id([0-9]+)", &controllersMovie.ConnectController{})

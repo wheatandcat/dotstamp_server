@@ -1,5 +1,5 @@
-hash: 448bcb8ab476fba0e16cd614a8490626dd26bd946219dfa3733a2eaf4edea1dc
-updated: 2017-05-27T17:46:17.499330454+09:00
+hash: c367691f21886f1bafec401e3b083b75ddbf6a1dfc4f9a0940fe38e9f02b6e76
+updated: 2017-06-08T03:08:32.851825369+09:00
 imports:
 - name: cloud.google.com/go
   version: 7050ae8919c454e5119ddeb65c678014a52e5d57
@@ -58,6 +58,8 @@ imports:
   version: 891127d8d1b52734debe1b3c3d7e747502b6c366
 - name: github.com/Sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
+- name: github.com/snabb/sitemap
+  version: 83b92297a76a19329ad9f68411d9d8857b3b01c5
 - name: github.com/ziutek/mymysql
   version: e08c2f35356576b3c3690c252fe5dca728ae9292
   subpackages:

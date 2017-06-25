@@ -1,7 +1,7 @@
 
 test:
     driver: mymysql
-    open: stamp_test/stamp/stamp
+    open: stamp_test/root/
 
 development:
     driver: mymysql

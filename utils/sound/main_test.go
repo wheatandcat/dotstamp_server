@@ -76,3 +76,11 @@ func (t *TestMain) TestRemoveJoinFile(c *C) {
 
 	c.Check(r, Equals, nil)
 }
+
+func (t *TestMain) TestGetLength(c *C) {
+	_, r := GetLength("-1")
+	c.Check(r, Equals, nil)
+
+	_, r = GetLength("0")
+	c.Check(r, Equals, nil)
+}

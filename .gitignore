@@ -60,3 +60,11 @@ coverage/*
 /static/files/talk/*
 !/static/files/talk/.gitkeep
 db/stamp_test.xml
+tasks/sitemap/public
+tasks/contributionSearch/contributionSearch
+tasks/contributionTotalFollows/contributionTotalFollows
+tasks/makeMovie/makeMovie
+tasks/moveTime/moveTime
+tasks/removeContribution/removeContribution
+tasks/sitemap/sitemap
+robots.txt
