@@ -2,7 +2,7 @@
 language: go
 go:
   - 1.7.x
-sudo: true
+sudo: required
 before_install:
   - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
 addons:
