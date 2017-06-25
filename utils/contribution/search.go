@@ -1,6 +1,6 @@
 package contributions
 
-import "dotstamp_server/models"
+import "github.com/wheatandcat/dotstamp_server/models"
 
 // SearchValue 検索値
 type SearchValue struct {

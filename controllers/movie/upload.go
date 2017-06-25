@@ -2,11 +2,11 @@ package controllersMovie
 
 import (
 	"context"
-	"dotstamp_server/controllers"
-	"dotstamp_server/models"
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/contribution"
-	"dotstamp_server/utils/movie"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/utils/movie"
 	"errors"
 	"strconv"
 

@@ -1,6 +1,6 @@
 package follows
 
-import "dotstamp_server/models"
+import "github.com/wheatandcat/dotstamp_server/models"
 
 // OrderValue 順番値
 type OrderValue struct {

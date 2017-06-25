@@ -1,8 +1,8 @@
 package controllersSound
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/models"
 )
 
 // LengthController コントローラ

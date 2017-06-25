@@ -1,6 +1,6 @@
 package follows
 
-import "dotstamp_server/models"
+import "github.com/wheatandcat/dotstamp_server/models"
 
 // TruncateTotal 統計を空にする
 func TruncateTotal() error {

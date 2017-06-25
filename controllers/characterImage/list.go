@@ -1,8 +1,8 @@
 package controllersCharacterImage
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/character"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/character"
 )
 
 // ListController listコントローラ

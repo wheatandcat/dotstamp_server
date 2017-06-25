@@ -1,8 +1,8 @@
 package controllersFollow
 
 import (
-	_ "dotstamp_server/routers"
-	"dotstamp_server/tests"
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"

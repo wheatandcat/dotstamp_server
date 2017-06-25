@@ -1,8 +1,8 @@
 package controllersContribution
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 )
 
 // SearchController 検索コントローラ

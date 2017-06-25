@@ -1,8 +1,8 @@
 package controllersQuestion
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/question"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/question"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )

@@ -3,8 +3,8 @@ package tasks
 import (
 	"os"
 
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/log"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/log"
 
 	"github.com/astaxie/beego"
 )

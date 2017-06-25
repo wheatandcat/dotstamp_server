@@ -1,6 +1,6 @@
 package controllers
 
-import "dotstamp_server/utils/image"
+import "github.com/wheatandcat/dotstamp_server/utils/image"
 
 // SetImageFileResize リサイズするファイルを指定する
 func (c *BaseController) SetImageFileResize(f string, p string, w uint, h uint) (int, error) {

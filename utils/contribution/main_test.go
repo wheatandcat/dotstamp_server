@@ -1,9 +1,9 @@
 package contributions
 
 import (
-	"dotstamp_server/models"
-	test "dotstamp_server/tests"
-	"dotstamp_server/utils/follow"
+	"github.com/wheatandcat/dotstamp_server/models"
+	test "github.com/wheatandcat/dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/utils/follow"
 
 	. "gopkg.in/check.v1"
 )

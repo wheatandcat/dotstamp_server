@@ -1,8 +1,8 @@
 package sound
 
 import (
-	"dotstamp_server/models/csv_models"
-	"dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/models/csv_models"
+	"github.com/wheatandcat/dotstamp_server/utils"
 	"encoding/json"
 	"os"
 	"os/exec"

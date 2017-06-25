@@ -1,8 +1,8 @@
 package controllersLogin
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/user"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/user"
 )
 
 // CheckController 登録確認コントローラ

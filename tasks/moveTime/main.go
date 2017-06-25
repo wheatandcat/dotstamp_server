@@ -1,9 +1,9 @@
 package main
 
 import (
-	"dotstamp_server/tasks"
-	"dotstamp_server/utils/contribution"
-	"dotstamp_server/utils/sound"
+	"github.com/wheatandcat/dotstamp_server/tasks"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 	"math"
 	"strconv"
 	"unicode/utf8"

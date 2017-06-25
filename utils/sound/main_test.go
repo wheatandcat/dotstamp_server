@@ -1,8 +1,8 @@
 package sound
 
 import (
-	"dotstamp_server/models/csv_models"
-	"dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/models/csv_models"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	. "gopkg.in/check.v1"
 )

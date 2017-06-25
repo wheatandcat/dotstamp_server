@@ -1,7 +1,7 @@
 package contributions
 
 import (
-	"dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/models"
 )
 
 // AddLog ログを追加する

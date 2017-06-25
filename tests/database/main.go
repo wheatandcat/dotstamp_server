@@ -1,7 +1,7 @@
 package testsDatabase
 
 import (
-	"dotstamp_server/models/database"
+	"github.com/wheatandcat/dotstamp_server/models/database"
 	"strconv"
 	"strings"
 )

@@ -1,8 +1,8 @@
 package tags
 
 import (
-	"dotstamp_server/models"
-	"dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	. "gopkg.in/check.v1"
 )

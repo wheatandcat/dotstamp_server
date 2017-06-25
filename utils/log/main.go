@@ -1,7 +1,7 @@
 package logs
 
 import (
-	"dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils"
 	"io"
 	"log"
 	"os"

@@ -1,10 +1,10 @@
 package contributions
 
 import (
-	"dotstamp_server/models"
-	"dotstamp_server/utils/follow"
-	"dotstamp_server/utils/tag"
-	"dotstamp_server/utils/user"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/utils/follow"
+	"github.com/wheatandcat/dotstamp_server/utils/tag"
+	"github.com/wheatandcat/dotstamp_server/utils/user"
 	"errors"
 	"time"
 )

@@ -1,7 +1,7 @@
 package models
 
 import (
-	"dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	. "gopkg.in/check.v1"
 )

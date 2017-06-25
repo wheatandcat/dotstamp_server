@@ -1,7 +1,7 @@
 package utils
 
 import (
-	"dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/tests"
 	"time"
 
 	"github.com/jinzhu/gorm"

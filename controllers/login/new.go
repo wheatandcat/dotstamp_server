@@ -1,8 +1,8 @@
 package controllersLogin
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/user"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/user"
 
 	"gopkg.in/go-playground/validator.v9"
 )

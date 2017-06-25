@@ -1,7 +1,7 @@
 package characters
 
 import (
-	"dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/models"
 	"errors"
 	"strconv"
 )

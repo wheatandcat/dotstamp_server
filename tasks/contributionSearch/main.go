@@ -3,10 +3,10 @@ package main
 import (
 	"os"
 
-	"dotstamp_server/tasks"
-	"dotstamp_server/utils/contribution"
-	"dotstamp_server/utils/log"
-	"dotstamp_server/utils/tag"
+	"github.com/wheatandcat/dotstamp_server/tasks"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/utils/log"
+	"github.com/wheatandcat/dotstamp_server/utils/tag"
 )
 
 var followMap map[int]int

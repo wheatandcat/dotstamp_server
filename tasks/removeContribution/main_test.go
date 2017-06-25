@@ -1,8 +1,8 @@
 package main
 
 import (
-	_ "dotstamp_server/routers"
-	"dotstamp_server/tests"
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 	"testing"
 
 	. "github.com/smartystreets/goconvey/convey"

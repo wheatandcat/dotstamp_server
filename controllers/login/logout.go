@@ -1,6 +1,6 @@
 package controllersLogin
 
-import "dotstamp_server/controllers"
+import "github.com/wheatandcat/dotstamp_server/controllers"
 
 // LogoutController ログアウトコントローラ
 type LogoutController struct {

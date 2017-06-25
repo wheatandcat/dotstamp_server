@@ -3,7 +3,7 @@ package controllers
 import (
 	"errors"
 
-	"dotstamp_server/utils/log"
+	"github.com/wheatandcat/dotstamp_server/utils/log"
 
 	"github.com/astaxie/beego"
 )

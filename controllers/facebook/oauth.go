@@ -1,8 +1,8 @@
 package controllersFacebook
 
 import (
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/oauth/facebook"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/oauth/facebook"
 
 	"github.com/astaxie/beego"
 )

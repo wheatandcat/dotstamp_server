@@ -1,6 +1,6 @@
 package contributions
 
-import "dotstamp_server/models"
+import "github.com/wheatandcat/dotstamp_server/models"
 
 // GetImageIDAndAdd 追加して画像IDを取得する
 func GetImageIDAndAdd(userContributionID int) (uint, error) {

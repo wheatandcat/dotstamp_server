@@ -1,7 +1,7 @@
 package main
 
 import (
-	_ "dotstamp_server/routers"
+	_ "github.com/wheatandcat/dotstamp_server/routers"
 	"os"
 	"path/filepath"
 

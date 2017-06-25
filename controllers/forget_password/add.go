@@ -1,11 +1,11 @@
 package controllersForgetPassword
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/models"
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/mail"
-	"dotstamp_server/utils/user"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/mail"
+	"github.com/wheatandcat/dotstamp_server/utils/user"
 
 	validator "gopkg.in/go-playground/validator.v9"
 

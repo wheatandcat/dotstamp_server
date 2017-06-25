@@ -1,7 +1,7 @@
 package csvModels
 
 import (
-	"dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils"
 	"encoding/csv"
 	"io"
 	"os"

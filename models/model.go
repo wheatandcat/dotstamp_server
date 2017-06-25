@@ -4,7 +4,7 @@ import (
 	"strconv"
 	"strings"
 
-	"dotstamp_server/models/database"
+	"github.com/wheatandcat/dotstamp_server/models/database"
 
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"

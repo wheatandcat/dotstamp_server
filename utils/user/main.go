@@ -1,8 +1,8 @@
 package user
 
 import (
-	"dotstamp_server/models"
-	"dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/utils"
 	"errors"
 
 	"github.com/astaxie/beego"

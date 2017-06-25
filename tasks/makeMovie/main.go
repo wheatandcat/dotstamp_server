@@ -6,11 +6,11 @@ import (
 	"os"
 	"strconv"
 
-	"dotstamp_server/models"
-	"dotstamp_server/tasks"
-	"dotstamp_server/utils/contribution"
-	"dotstamp_server/utils/movie"
-	"dotstamp_server/utils/sound"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/tasks"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/utils/movie"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 )
 
 var followMap map[int]int

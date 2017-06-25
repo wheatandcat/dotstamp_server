@@ -1,8 +1,8 @@
 package controllersProblem
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/problem"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/problem"
 )
 
 // AddController 追加コントローラ

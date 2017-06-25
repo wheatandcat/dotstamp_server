@@ -1,7 +1,7 @@
 package test
 
 import (
-	"dotstamp_server/tests/database"
+	"github.com/wheatandcat/dotstamp_server/tests/database"
 	"io/ioutil"
 	"os"
 	"os/exec"

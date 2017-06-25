@@ -1,10 +1,10 @@
 package contributions
 
 import (
-	"dotstamp_server/models"
-	"dotstamp_server/models/csv_models"
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/sound"
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/models/csv_models"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 	"errors"
 	"regexp"
 	"strconv"

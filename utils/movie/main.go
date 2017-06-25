@@ -1,7 +1,7 @@
 package movie
 
 import (
-	"dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils"
 	"net/http"
 	"os"
 	"os/exec"

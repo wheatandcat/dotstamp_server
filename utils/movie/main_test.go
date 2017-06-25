@@ -1,9 +1,9 @@
 package movie
 
 import (
-	"dotstamp_server/models/csv_models"
-	"dotstamp_server/tests"
-	"dotstamp_server/utils/sound"
+	"github.com/wheatandcat/dotstamp_server/models/csv_models"
+	"github.com/wheatandcat/dotstamp_server/tests"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 
 	. "gopkg.in/check.v1"
 )

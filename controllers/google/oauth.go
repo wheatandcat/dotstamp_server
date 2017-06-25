@@ -1,8 +1,8 @@
 package controllersGoogle
 
 import (
-	"dotstamp_server/utils"
-	"dotstamp_server/utils/oauth/google"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/oauth/google"
 
 	"github.com/astaxie/beego"
 )

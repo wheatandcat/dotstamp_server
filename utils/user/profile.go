@@ -1,7 +1,7 @@
 package user
 
 import (
-	"dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/models"
 	"time"
 )
 

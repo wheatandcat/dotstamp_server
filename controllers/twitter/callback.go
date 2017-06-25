@@ -1,9 +1,9 @@
 package controllersTwitter
 
 import (
-	"dotstamp_server/controllers"
-	"dotstamp_server/utils/oauth/twitter"
-	"dotstamp_server/utils/user"
+	"github.com/wheatandcat/dotstamp_server/controllers"
+	"github.com/wheatandcat/dotstamp_server/utils/oauth/twitter"
+	"github.com/wheatandcat/dotstamp_server/utils/user"
 	"net/url"
 
 	"github.com/astaxie/beego"
