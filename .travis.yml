@@ -20,6 +20,5 @@ before_script:
   - goose -env test up
 script:
   - glide install
-  - pwd
-  - echo $GOPATH
   - go build main.go
+  - go test -p 1 $(glide novendor)
