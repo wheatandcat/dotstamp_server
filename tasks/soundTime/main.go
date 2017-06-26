@@ -1,13 +1,22 @@
 package main
 
 import (
-	"github.com/wheatandcat/dotstamp_server/tasks"
-	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"github.com/wheatandcat/dotstamp_server/utils/sound"
 	"math"
 	"strconv"
 	"unicode/utf8"
+
+	"github.com/wheatandcat/dotstamp_server/tasks"
+	"github.com/wheatandcat/dotstamp_server/utils/contribution"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 )
+
+var err error
+
+func init() {
+	if err = tasks.SetConfig(); err != nil {
+		tasks.Err(err, "makeMovie")
+	}
+}
 
 func main() {
 	contribution()
@@ -24,6 +33,10 @@ func contribution() error {
 		second, err := sound.GetLength(strconv.Itoa(id))
 		if err != nil {
 			return err
+		}
+
+		if second == 0 {
+			continue
 		}
 
 		detail, err := contributions.GetDetailByUserContributionID(id)

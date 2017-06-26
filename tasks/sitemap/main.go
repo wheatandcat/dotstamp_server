@@ -1,13 +1,22 @@
 package main
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/tasks"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"strconv"
 
 	"github.com/astaxie/beego"
 	"github.com/ikeikeikeike/go-sitemap-generator/stm"
 )
+
+var err error
+
+func init() {
+	if err = tasks.SetConfig(); err != nil {
+		tasks.Err(err, "makeMovie")
+	}
+}
 
 func main() {
 	sm := create()

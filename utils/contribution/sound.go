@@ -1,15 +1,16 @@
 package contributions
 
 import (
-	"github.com/wheatandcat/dotstamp_server/models"
-	"github.com/wheatandcat/dotstamp_server/models/csv_models"
-	"github.com/wheatandcat/dotstamp_server/utils"
-	"github.com/wheatandcat/dotstamp_server/utils/sound"
 	"errors"
 	"regexp"
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/models/csv_models"
+	"github.com/wheatandcat/dotstamp_server/utils"
+	"github.com/wheatandcat/dotstamp_server/utils/sound"
 
 	"github.com/astaxie/beego"
 )
@@ -270,8 +271,9 @@ func AddOrSaveSoundLength(uID int, second int, length int) error {
 
 	if u.ID == uint(0) {
 		u = models.UserContributionSoundLength{
-			Second: second,
-			Length: length,
+			UserContributionID: uID,
+			Second:             second,
+			Length:             length,
 		}
 
 		return u.Add()
@@ -281,6 +283,7 @@ func AddOrSaveSoundLength(uID int, second int, length int) error {
 		return nil
 	}
 
+	u.UserContributionID = uID
 	u.Second = second
 	u.Length = length
 	return u.Save()
