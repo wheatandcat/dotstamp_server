@@ -1,5 +1,5 @@
-hash: c367691f21886f1bafec401e3b083b75ddbf6a1dfc4f9a0940fe38e9f02b6e76
-updated: 2017-06-08T03:08:32.851825369+09:00
+hash: 11545889e7f720d5a4ad71eff7d60f9be52bd54b18d0fd7d9f513544ec8a4801
+updated: 2017-06-26T22:54:19.590816911+09:00
 imports:
 - name: cloud.google.com/go
   version: 7050ae8919c454e5119ddeb65c678014a52e5d57
@@ -19,6 +19,10 @@ imports:
   - session/redis
   - toolbox
   - utils
+- name: github.com/beevik/etree
+  version: 09746331a38f3da8c023a85a65c8c152070de725
+- name: github.com/fatih/structs
+  version: 7e5a8eef611ee84dd359503f3969f80df4c50723
 - name: github.com/garyburd/go-oauth
   version: 4f191fd0442e75c0c73bd00e4f5f27d4c08312ee
   subpackages:
@@ -44,6 +48,12 @@ imports:
   version: 53e6ce116135b80d037921a7fdd5138cf32d7a8a
 - name: github.com/huandu/facebook
   version: efe962f32209aa6e7430fb779bdf29bbcdb716e1
+- name: github.com/ikeikeikeike/go-sitemap-generator
+  version: e3c3d374db77838e92e5981ba81f26d1ecea4aa8
+  subpackages:
+  - stm
+- name: github.com/imdario/mergo
+  version: e3000cb3d28c72b837601cac94debd91032d19fe
 - name: github.com/jinzhu/gorm
   version: 5174cc5c242a728b435ea2be8a2f7f998e15429b
   subpackages:
@@ -101,7 +111,7 @@ imports:
 - name: gopkg.in/check.v1
   version: 20d25e2804050c1cd24a7eea1e7a6447dd0e74ec
 - name: gopkg.in/go-playground/validator.v9
-  version: 6d8c18553ea1ac493d049edd6f102f52e618f085
+  version: fb68f39656d7ebf8aa339ad4917aa0c260ecc237
 - name: gopkg.in/yaml.v2
   version: 4c78c975fe7c825c6d1466c42be594d1d6f3aba6
 testImports:

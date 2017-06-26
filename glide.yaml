@@ -44,6 +44,9 @@ import:
   version: ^1.8.1
 - package: github.com/google/go-querystring
 - package: github.com/snabb/sitemap
+- package: github.com/ikeikeikeike/go-sitemap-generator
+  subpackages:
+  - stm
 testImport:
 - package: github.com/smartystreets/goconvey
   version: ^1.6.2
