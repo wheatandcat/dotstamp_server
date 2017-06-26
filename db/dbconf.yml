@@ -5,7 +5,7 @@ test:
 
 development:
     driver: mymysql
-    open: stamp/stamp/stamp
+    open: stamp/root
 
 customimport:
     driver: customdriver

@@ -25,6 +25,7 @@ green/*
 blue/*
 coverage/*
 !coverage/.gitkeep
+docker-compose.yml
 
 # Ignore all logfiles and tempfiles.
 /doc/*
