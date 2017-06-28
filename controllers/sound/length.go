@@ -12,7 +12,7 @@ type LengthController struct {
 
 // LengthResponse レスポンス
 type LengthResponse struct {
-	Character int
+	Character float32
 }
 
 // Get 1文字あたりの長さを取得する
@@ -35,7 +35,7 @@ func (c *LengthController) Get() {
 	}
 
 	c.Data["json"] = LengthResponse{
-		Character: int(s / l),
+		Character: float32(s) / float32(l),
 	}
 	c.ServeJSON()
 }
