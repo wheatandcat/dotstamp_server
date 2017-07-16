@@ -5,12 +5,126 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
+## bug [/bug]
+
+### バグを報告する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "body": "foo"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                warning: false,
+                message: ""
+            }
+
+## character [/character]
+
+### キャラクタを取得する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                images: [
+                    {
+                        "id": 1,
+                        "characterID": 1,
+                        "priority": 1,
+                        "voiceType": 1,
+                        "fileName": "1.jpg"
+                    }
+                ]
+            }
+
+### キャラクタをアップロードする [POST]
+
++ Request  (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                images: [
+                    {
+                        "id": 1,
+                        "characterID": 1,
+                        "priority": 1,
+                        "voiceType": 1,
+                        "fileName": "1.jpg"
+                    }
+                ]
+            }
+            
+### キャラクタを更新する [PUT]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "id": 1,
+            "voiceType": 1,
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## character/{id} [/character/{id}]
+    
++ Parameters
+    + id - 投稿ID
+
+### キャラクタを削除する [DELETE]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                images: [
+                    {
+                        "id": 1,
+                        "characterID": 1,
+                        "priority": 1,
+                        "voiceType": 1,
+                        "fileName": "1.jpg"
+                    }
+                ]
+            }
+
+## contribution/upload{?id} [/contribution/upload{?id}]
+
 ## contribution/{id} [/contribution/{id}]
     
 + Parameters
     + id - 投稿ID
 
-### 取得する [GET]
+### 投稿を取得する [GET]
 
 + Response 200 (application/json)
 
@@ -113,7 +227,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             
 ## contribution/list [/contribution/list]
 
-### リストを取得する [GET]
+### 投稿リストを取得する [GET]
 
 + Response 200 (application/json)
 
@@ -168,7 +282,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 + Parameters
     + id - 投稿ID
 
-### 編集情報を取得する [GET]
+### 投稿の編集情報を取得する [GET]
 
 + Response 200 (application/json)
 
@@ -244,10 +358,10 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 count: 1,
             }
             
-## contribution/upload{?id} [/contribution/upload{?id}]
+## contribution/upload/{?id} [/contribution/upload/{?id}]
 
 + Parameters
-    + id - 投稿ID
+    + id -投稿ID
 
 ### 画像をアップロードする [POST]
 
