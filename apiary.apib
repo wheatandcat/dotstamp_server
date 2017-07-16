@@ -5,12 +5,33 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
+## bug [/bug]
+
+### バグを報告する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "body": "foo"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                warning: false,
+                message: ""
+            }
+
+## contribution/upload{?id} [/contribution/upload{?id}]
+
 ## contribution/{id} [/contribution/{id}]
     
 + Parameters
     + id - 投稿ID
 
-### 取得する [GET]
+### 投稿を取得する [GET]
 
 + Response 200 (application/json)
 
@@ -113,7 +134,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             
 ## contribution/list [/contribution/list]
 
-### リストを取得する [GET]
+### 投稿リストを取得する [GET]
 
 + Response 200 (application/json)
 
@@ -168,7 +189,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 + Parameters
     + id - 投稿ID
 
-### 編集情報を取得する [GET]
+### 投稿の編集情報を取得する [GET]
 
 + Response 200 (application/json)
 
@@ -244,10 +265,10 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 count: 1,
             }
             
-## contribution/upload{?id} [/contribution/upload{?id}]
+## contribution/upload/{?id} [/contribution/upload/{?id}]
 
 + Parameters
-    + id - 投稿ID
+    + id -投稿ID
 
 ### 画像をアップロードする [POST]
 
