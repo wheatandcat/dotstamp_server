@@ -1,9 +1,10 @@
 package controllersContribution
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"strconv"
 )
 
 // UploadController アップロードコントローラ
@@ -18,9 +19,9 @@ type UploadRequest struct {
 
 // UploadResponse アップロードレスポンス
 type UploadResponse struct {
-	Warning bool
-	Message string
-	Path    string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
+	Path    string `json:"path"`
 }
 
 // Post 画像アップロード

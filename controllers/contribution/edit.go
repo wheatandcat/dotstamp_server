@@ -1,10 +1,11 @@
 package controllersContribution
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"strconv"
 )
 
 // EditController 編集コントローラ
@@ -15,8 +16,8 @@ type EditController struct {
 // EditResponse 編集レスポンス
 type EditResponse struct {
 	contributions.Contribution
-	Sound     bool
-	SoundFile bool
+	Sound     bool `json:"sound"`
+	SoundFile bool `json:"soundFile"`
 }
 
 // Post 編集する

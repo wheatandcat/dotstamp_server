@@ -20,8 +20,8 @@ type SearchRequest struct {
 
 // SearchResponse 検索レスポンス
 type SearchResponse struct {
-	List  []contributions.Contribution
-	Count int
+	List  []contributions.Contribution `json:"list"`
+	Count int                          `json:"count"`
 }
 
 // Post 検索を取得を取得する

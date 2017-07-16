@@ -1,11 +1,12 @@
 package controllersContribution
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/follow"
-	"strconv"
 )
 
 // ShowController showコントローラ
@@ -16,14 +17,14 @@ type ShowController struct {
 // ShowResponse 確認レスポンス
 type ShowResponse struct {
 	contributions.Contribution
-	FollowCount int
-	Following   bool
-	SoundFile   bool
-	Movie       models.UserContributionMovie
+	FollowCount int                          `json:"followCount"`
+	Following   bool                         `json:"following"`
+	SoundFile   bool                         `json:"soundFile"`
+	Movie       models.UserContributionMovie `json:"movie"`
 }
 
-// Post 投稿詳細を取得する
-func (c *ShowController) Post() {
+// Get 投稿詳細を取得する
+func (c *ShowController) Get() {
 	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter, 0)

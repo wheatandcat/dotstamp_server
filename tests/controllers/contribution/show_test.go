@@ -25,7 +25,7 @@ func init() {
 
 func TestShowPost(t *testing.T) {
 	r, err := http.NewRequest(
-		"POST",
+		"GET",
 		"/api/contributions/show/1",
 		nil,
 	)
@@ -33,7 +33,7 @@ func TestShowPost(t *testing.T) {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", " application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
