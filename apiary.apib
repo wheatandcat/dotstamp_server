@@ -196,7 +196,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             
 ### 投稿を削除する [DELETE]
 
-+ Response 200 (application/x-www-form-urlencoded)
++ Response 200 (application/json)
 
     + Body
 
@@ -408,7 +408,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
 ### フォローを削除する [DELETE]
 
-+ Response 200 (application/x-www-form-urlencoded)
++ Response 200 (application/json)
 
     + Body
 
@@ -439,3 +439,58 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             ],
             count: 1
         }
+
+## forget_password [/forget_password]
+
+### パスワード変更を登録する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "foo@bar.com",
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+            }
+
+### パスワードを変更する [PUT]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "foo@bar.com",
+            "keyword": "********",
+            "password": "*********"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+            }
+
+## forget_password/check/{email}/{keyword} [/forget_password/check/{email}/{keyword}]
+
++ Parameters
+    + email - メールアドレス
+    + keyword - キーワード
+
+### パスワード変更可能を判定する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+            }
