@@ -2,17 +2,16 @@ package controllersMovie
 
 import (
 	"context"
+	"errors"
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/movie"
-	"errors"
-	"strconv"
 
 	"github.com/astaxie/beego"
-
-	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // UploadController アップロードコントローラ
@@ -20,16 +19,11 @@ type UploadController struct {
 	controllers.BaseController
 }
 
-// UploadRequest アップロードリクエスト
-type UploadRequest struct {
-	UserContributionID int `form:"userContributionId"`
-}
-
 // UploadResponse アップロードレスポンス
 type UploadResponse struct {
-	Warning bool
-	Message string
-	MovieID string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
+	MovieID string `json:"movieID"`
 }
 
 // Post アップロードする
@@ -40,25 +34,19 @@ func (c *UploadController) Post() {
 		return
 	}
 
-	request := UploadRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+	cid, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(cid)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	if !contributions.ExistsMovie(request.UserContributionID) {
+	if !contributions.ExistsMovie(cid) {
 		c.ServerError(errors.New("not found movie"), controllers.ErrCodeCommon, userID)
 		return
 	}
@@ -82,7 +70,7 @@ func (c *UploadController) Post() {
 	userMovie.MovieStatus = models.StatusUploading
 	userMovie.Save()
 
-	upload, err := contributions.GetUploadByUserContributionID(request.UserContributionID)
+	upload, err := contributions.GetUploadByUserContributionID(cid)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return

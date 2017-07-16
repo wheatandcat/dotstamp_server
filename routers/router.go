@@ -53,6 +53,11 @@ func init() {
 	beego.Router("/api/google/oauth/", &controllersGoogle.OauthController{})
 	beego.Router("/api/google/callback/", &controllersGoogle.CallbackController{})
 
+	beego.Router("/api/movies/:id([0-9]+)", &controllersMovie.MainController{})
+	beego.Router("/api/movies/:id([0-9]+)/upload/", &controllersMovie.UploadController{})
+	beego.Router("/api/movies/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
+	beego.Router("/api/movies/callback/", &controllersMovie.CallbackController{})
+
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
@@ -76,12 +81,6 @@ func init() {
 	beego.Router("/api/sound/saveVoiceList/", &controllersSound.SaveVoiceListController{})
 	beego.Router("/api/sound/reflect/", &controllersSound.ReflectController{})
 	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
-
-	beego.Router("/api/movie/make/", &controllersMovie.MakeController{})
-	beego.Router("/api/movie/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
-	beego.Router("/api/movie/callback/", &controllersMovie.CallbackController{})
-	beego.Router("/api/movie/upload/", &controllersMovie.UploadController{})
-	beego.Router("/api/movie/check/", &controllersMovie.CheckController{})
 
 	beego.Router("/api/question/add/", &controllersQuestion.AddController{})
 

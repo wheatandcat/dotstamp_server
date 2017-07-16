@@ -1,23 +1,17 @@
 package controllersMovie
 
 import (
+	"errors"
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/movie"
-	"errors"
-	"strconv"
 )
 
 // ConnectController 接続コントローラ
 type ConnectController struct {
 	controllers.BaseController
-}
-
-// ConnectResponse 接続レスポンス
-type ConnectResponse struct {
-	URL     string
-	Warning bool
-	Message string
 }
 
 // Get 接続する

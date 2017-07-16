@@ -1,13 +1,12 @@
 package controllersMovie
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -27,13 +26,10 @@ func TestUploadPost(t *testing.T) {
 
 	test.CopyTestFile(1)
 
-	values := url.Values{}
-	values.Set("userContributionId", "1")
-
 	r, err := http.NewRequest(
 		"POST",
-		"/api/movie/upload/",
-		strings.NewReader(values.Encode()),
+		"/api/movies/1/upload/",
+		nil,
 	)
 
 	if err != nil {
@@ -45,7 +41,7 @@ func TestUploadPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/movie/upload/\n", t, func() {
+	Convey("/movies/1/upload/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
