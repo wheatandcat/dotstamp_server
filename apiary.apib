@@ -5,9 +5,112 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## Contribution List [/contribution/list]
+## contribution/{id} [/contribution/{id}]
 
 ### 取得する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "title": "foo",
+                "tag": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": 1
+                    }
+                ],
+                "followCount": 1,
+                "body": [
+                    {
+                        "priority": 1,
+                        "body": "foo",
+                        "directionType": 1,
+                        "character": {
+                            "id": 1,
+                            "fileName": "foo",
+                            "voiceType": 1
+                        }
+                    }
+                ],
+                "viewStatus": 1,
+                "search": "foo",
+                "soundStatus": 1,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1,
+                    "CreatedAt": "2017-04-24T22:45:00+09:00",
+                    "DeletedAt": NULL,
+                    "UpdatedAt": "2017-04-24T22:45:00+09:00"
+                },
+                "createdAt": "2017-04-24T22:45:00+09:00",
+                "updatedAt": "2017-04-24T22:45:00+09:00",
+                "following": true,
+                "soundFile": true
+            }
+
+### 投稿を更新する [PUT]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "title": "foo",
+            "body": "{[投稿データ]}",
+            "viewStatus": 1,
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "{id}"
+            }
+            
+### 投稿を削除する [DELETE]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                true
+            }
+
+## contribution/new [/contribution/new]
+
+### 投稿を作成する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "title": "foo",
+            "body": "{[投稿データ]}",
+            "viewStatus": 1,
+            "tag": "foo,bar,foobar"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "{id}"
+            }
+            
+## contribution/list [/contribution/list]
+
+### リストを取得する [GET]
 
 + Response 200 (application/json)
 
@@ -24,7 +127,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                     {
                         "id": 1,
                         "userContributionID": 1,
-                        "name": 1,
+                        "name": 1
                     }
                 ],
                 "followCount": 1,
@@ -36,7 +139,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                         "character": {
                             "id": 1,
                             "fileName": "foo",
-                            "voiceType": 1,
+                            "voiceType": 1
                         }
                     }
                 ],
@@ -57,47 +160,108 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-## Contribution New [/contribution/new]
+## contribution/edit/{id} [/contribution/edit/{id}]
 
-### 投稿を作成する [POST]
+### 編集情報を取得する [GET]
 
-You may create your own question using this action. It takes a JSON
-object containing a question and a collection of answers in the
-form of choices.
-
-+ Request (application/json)
-
-        {
-            "title": "foo",
-            "body": "{[投稿データ]}",
-            "viewStatus": 1,
-            "tag": "foo,bar,foobar"
-        }
-
-+ Response 201 (application/json)
-
-    + Headers
-
-            Location: /questions/2
++ Response 200 (application/json)
 
     + Body
 
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "title": "foo",
+                "tag": [
                     {
-                        "choice": "Swift",
-                        "votes": 0
-                    }, {
-                        "choice": "Python",
-                        "votes": 0
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 0
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 0
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": 1
                     }
-                ]
+                ],
+                "followCount": 1,
+                "body": [
+                    {
+                        "priority": 1,
+                        "body": "foo",
+                        "directionType": 1,
+                        "character": {
+                            "id": 1,
+                            "fileName": "foo",
+                            "voiceType": 1
+                        }
+                    }
+                ],
+                "viewStatus": 1,
+                "search": "foo",
+                "soundStatus": 1,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1,
+                    "CreatedAt": "2017-04-24T22:45:00+09:00",
+                    "DeletedAt": NULL,
+                    "UpdatedAt": "2017-04-24T22:45:00+09:00"
+                },
+                "createdAt": "2017-04-24T22:45:00+09:00",
+                "updatedAt": "2017-04-24T22:45:00+09:00",
+                "sound": true,
+                "soundFile": true
+            }
+
+## contribution/search [/contribution/search]
+
+### 検索する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "search": "foo",
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                list: [
+                    {"投稿情報"}
+                ],
+                count: 1,
+            }
+            
+## contribution/upload{?userContributionId} [/contribution/upload{?userContributionId}]
+
+### 画像をアップロードする [POST]
+
++ Request  (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                warning: false,
+                message: "",
+                path: "14.jpg",
             }
