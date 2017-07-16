@@ -24,7 +24,7 @@ import (
 
 func init() {
 	beego.Router("/api/contribution/new/", &controllersContribution.NewController{})
-	beego.Router("/api/contribution/list/", &controllersContribution.ListController{})
+	beego.Router("/api/contribution/list/:order([0-9]+)", &controllersContribution.ListController{})
 	beego.Router("/api/contribution/upload/", &controllersContribution.UploadController{})
 	beego.Router("/api/contribution/save/", &controllersContribution.SaveController{})
 	beego.Router("/api/contribution/show/:id([0-9]+)", &controllersContribution.ShowController{})

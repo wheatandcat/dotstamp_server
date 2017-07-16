@@ -1,6 +1,8 @@
 package controllersContribution
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 )
@@ -10,26 +12,21 @@ type ListController struct {
 	controllers.BaseController
 }
 
-// ListRequest リストリクエスト
-type ListRequest struct {
-	Order int `form:"order"`
-}
-
-// Post 一覧を取得する
-func (t *ListController) Post() {
-	request := ListRequest{}
-	if err := t.ParseForm(&request); err != nil {
-		t.ServerError(err, controllers.ErrCodeCommon, 0)
+// Get 一覧を取得する
+func (c *ListController) Get() {
+	order, err := strconv.Atoi(c.Ctx.Input.Param(":order"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
-	contributionlist, err := contributions.GetListByTop(0, (request.Order+1)*10)
+	contributionlist, err := contributions.GetListByTop(0, (order+1)*10)
 
 	if err != nil {
-		t.ServerError(err, controllers.ErrParameter, 0)
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
-	t.Data["json"] = contributionlist
-	t.ServeJSON()
+	c.Data["json"] = contributionlist
+	c.ServeJSON()
 }

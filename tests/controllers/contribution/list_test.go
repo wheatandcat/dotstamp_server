@@ -1,13 +1,12 @@
 package controllersContribution
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -24,13 +23,10 @@ func init() {
 }
 
 func TestListPost(t *testing.T) {
-	values := url.Values{}
-	values.Set("order", "2")
-
 	r, err := http.NewRequest(
-		"POST",
-		"/api/contribution/list/",
-		strings.NewReader(values.Encode()),
+		"GET",
+		"/api/contribution/list/2",
+		nil,
 	)
 	if err != nil {
 		panic(err)
