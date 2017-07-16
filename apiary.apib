@@ -388,3 +388,54 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 message: "",
                 path: "14.jpg",
             }
+
+## follow/{id} [/follow/{id}]
+
++ Parameters
+    + id - 投稿ID
+
+### フォローする [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "followCount": 1
+            }
+
+### フォローを削除する [DELETE]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "followCount": 0
+            }
+
+## follow/list [/follow/list]
+
+### フォローリストを取得する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/json)
+
+
+        {
+            "list": [
+                "{投稿データ}"
+            ],
+            count: 1
+        }
