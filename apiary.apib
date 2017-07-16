@@ -5,9 +5,9 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## Questions Collection [/questions]
+## Contribution List [/contribution/list]
 
-### List All Questions [GET]
+### 取得する [GET]
 
 + Response 200 (application/json)
 
@@ -57,7 +57,9 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-### Create a New Question [POST]
+## Contribution New [/contribution/new]
+
+### 投稿を作成する [POST]
 
 You may create your own question using this action. It takes a JSON
 object containing a question and a collection of answers in the
@@ -66,13 +68,10 @@ form of choices.
 + Request (application/json)
 
         {
-            "question": "Favourite programming language?",
-            "choices": [
-                "Swift",
-                "Python",
-                "Objective-C",
-                "Ruby"
-            ]
+            "title": "foo",
+            "body": "{[投稿データ]}",
+            "viewStatus": 1,
+            "tag": "foo,bar,foobar"
         }
 
 + Response 201 (application/json)
