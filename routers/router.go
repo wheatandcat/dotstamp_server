@@ -41,6 +41,9 @@ func init() {
 	beego.Router("/api/follow/:id([0-9]+)", &controllersFollow.MainController{})
 	beego.Router("/api/follow/list/", &controllersFollow.ListController{})
 
+	beego.Router("/api/forget_password/", &controllersForgetPassword.MainController{})
+	beego.Router("/api/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
+
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/api/login/new/", &controllersLogin.NewController{})
 	beego.Router("/api/login/check/", &controllersLogin.CheckController{})
@@ -56,9 +59,6 @@ func init() {
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
 	beego.Router("/api/user/show/", &controllersUser.ShowController{})
 	beego.Router("/api/user/profile/upload/", &controllersUserProfile.UploadController{})
-	beego.Router("/api/user/forget_password/add/", &controllersForgetPassword.AddController{})
-	beego.Router("/api/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
-	beego.Router("/api/user/forget_password/save/", &controllersForgetPassword.SaveController{})
 
 	beego.Router("/api/tag/add/", &controllersTag.AddController{})
 	beego.Router("/api/tag/delete/", &controllersTag.DeleteController{})

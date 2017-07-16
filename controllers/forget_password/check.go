@@ -13,12 +13,12 @@ type CheckController struct {
 
 // CheckResponse パスワードを忘れ確認レスポンス
 type CheckResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
-// Post パスワード忘れ確認
-func (c *CheckController) Post() {
+// Get パスワード忘れ確認
+func (c *CheckController) Get() {
 	email, err := utils.Urldecode(c.Ctx.Input.Param(":email"))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter, 0)

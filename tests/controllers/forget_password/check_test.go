@@ -1,17 +1,18 @@
 package controllersForgetPassword
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpCheck() {
 	test.Setup()
 
 	test.SetupFixture([]string{
@@ -20,11 +21,12 @@ func init() {
 	})
 }
 
-func TestCheckPost(t *testing.T) {
+func TestCheck(t *testing.T) {
+	setUpCheck()
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/user/forget_password/check/rH.Zw7xSMXghDIT_/uXiJ05lV/",
+		"GET",
+		"/api/forget_password/check/rH.Zw7xSMXghDIT_/uXiJ05lV/",
 		nil,
 	)
 
@@ -32,12 +34,12 @@ func TestCheckPost(t *testing.T) {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/user/forget_password/check/\n", t, func() {
+	Convey("/forget_password/check/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
