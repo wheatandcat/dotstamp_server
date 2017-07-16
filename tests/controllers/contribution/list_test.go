@@ -25,7 +25,7 @@ func init() {
 func TestListPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"GET",
-		"/api/contribution/list/2",
+		"/api/contributions/list/2",
 		nil,
 	)
 	if err != nil {

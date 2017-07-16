@@ -1,13 +1,14 @@
 package controllersContribution
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -28,7 +29,7 @@ func TestUoloadPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/contribution/upload",
+		"/api/contributions/upload",
 		strings.NewReader(values.Encode()),
 	)
 	if err != nil {

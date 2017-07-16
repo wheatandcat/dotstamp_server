@@ -1,41 +1,42 @@
 package contributions
 
 import (
+	"encoding/json"
+
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/character"
-	"encoding/json"
 )
 
 // SaveBody 本本
 type SaveBody struct {
-	Priority      int
-	Body          string
-	DirectionType int
-	TalkType      int
-	Character     SaveCharacter
+	Priority      int           `json:"priority"`
+	Body          string        `json:"body"`
+	DirectionType int           `json:"directionType"`
+	TalkType      int           `json:"talkType"`
+	Character     SaveCharacter `json:"character"`
 }
 
 // SaveCharacter 保存キャラクター
 type SaveCharacter struct {
-	ID        int
-	FileName  string
-	VoiceType int
+	ID        int    `json:"id"`
+	FileName  string `json:"fileName"`
+	VoiceType int    `json:"voiceType"`
 }
 
 // GetBody 取得本文
 type GetBody struct {
-	Priority      int
-	Body          string
-	DirectionType int
-	TalkType      int
-	Character     GetCharacter
+	Priority      int          `json:"priority"`
+	Body          string       `json:"body"`
+	DirectionType int          `json:"directionType"`
+	TalkType      int          `json:"talkType"`
+	Character     GetCharacter `json:"character"`
 }
 
 // GetCharacter 取得キャラクター
 type GetCharacter struct {
-	ID        int
-	FileName  string
-	VoiceType int
+	ID        int    `json:"id"`
+	FileName  string `json:"fileName"`
+	VoiceType int    `json:"voiceType"`
 }
 
 // SaveDetail 詳細を保存する

@@ -1,9 +1,10 @@
 package user
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils"
-	"errors"
 
 	"github.com/astaxie/beego"
 	"gopkg.in/go-playground/validator.v9"
@@ -11,9 +12,9 @@ import (
 
 // User ユーザー情報
 type User struct {
-	ID             uint
-	Name           string
-	ProfileImageID int
+	ID             uint   `json:"id"`
+	Name           string `json:"name"`
+	ProfileImageID int    `json:"profileImageID"`
 }
 
 // GetPassword パスワードを取得する

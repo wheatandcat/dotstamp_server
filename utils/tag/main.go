@@ -1,10 +1,11 @@
 package tags
 
 import (
-	"github.com/wheatandcat/dotstamp_server/models"
-	"github.com/wheatandcat/dotstamp_server/utils"
 	"errors"
 	"strings"
+
+	"github.com/wheatandcat/dotstamp_server/models"
+	"github.com/wheatandcat/dotstamp_server/utils"
 )
 
 // TagMaxNumber タグの最大数
@@ -12,9 +13,9 @@ const TagMaxNumber = 10
 
 // Tag タグ
 type Tag struct {
-	ID                 uint
-	UserContributionID int
-	Name               string
+	ID                 uint   `json:"id"`
+	UserContributionID int    `json:"userContributionID"`
+	Name               string `json:"name"`
 }
 
 // Save 保存する

@@ -1,11 +1,12 @@
 package controllersContribution
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -25,7 +26,7 @@ func init() {
 func TestShowPost(t *testing.T) {
 	r, err := http.NewRequest(
 		"POST",
-		"/api/contribution/show/1",
+		"/api/contributions/show/1",
 		nil,
 	)
 	if err != nil {

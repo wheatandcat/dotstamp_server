@@ -23,14 +23,14 @@ import (
 )
 
 func init() {
-	beego.Router("/api/contribution/new/", &controllersContribution.NewController{})
-	beego.Router("/api/contribution/list/:order([0-9]+)", &controllersContribution.ListController{})
-	beego.Router("/api/contribution/upload/", &controllersContribution.UploadController{})
-	beego.Router("/api/contribution/save/", &controllersContribution.SaveController{})
-	beego.Router("/api/contribution/show/:id([0-9]+)", &controllersContribution.ShowController{})
-	beego.Router("/api/contribution/edit/:id([0-9]+)", &controllersContribution.EditController{})
-	beego.Router("/api/contribution/delete/:id([0-9]+)", &controllersContribution.DeleteController{})
-	beego.Router("/api/contribution/search/", &controllersContribution.SearchController{})
+	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
+	beego.Router("/api/contributions/new/", &controllersContribution.NewController{})
+	beego.Router("/api/contributions/upload/", &controllersContribution.UploadController{})
+	beego.Router("/api/contributions/save/", &controllersContribution.SaveController{})
+	beego.Router("/api/contributions/show/:id([0-9]+)", &controllersContribution.ShowController{})
+	beego.Router("/api/contributions/edit/:id([0-9]+)", &controllersContribution.EditController{})
+	beego.Router("/api/contributions/delete/:id([0-9]+)", &controllersContribution.DeleteController{})
+	beego.Router("/api/contributions/search/", &controllersContribution.SearchController{})
 
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/api/login/new/", &controllersLogin.NewController{})

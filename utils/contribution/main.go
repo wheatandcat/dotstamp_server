@@ -1,28 +1,29 @@
 package contributions
 
 import (
+	"errors"
+	"time"
+
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/follow"
 	"github.com/wheatandcat/dotstamp_server/utils/tag"
 	"github.com/wheatandcat/dotstamp_server/utils/user"
-	"errors"
-	"time"
 )
 
 // Contribution 投稿
 type Contribution struct {
-	ID          uint
-	User        user.User
-	Title       string
-	Tag         []tags.Tag
-	FollowCount int
-	Body        []GetBody
-	ViewStatus  int
-	Search      string
-	SoundStatus int
-	Movie       models.UserContributionMovie
-	UpdatedAt   time.Time
-	CreatedAt   time.Time
+	ID          uint                         `json:"id"`
+	User        user.User                    `json:"user"`
+	Title       string                       `json:"title"`
+	Tag         []tags.Tag                   `json:"tag"`
+	FollowCount int                          `json:"followCount"`
+	Body        []GetBody                    `json:"body"`
+	ViewStatus  int                          `json:"viewStatus"`
+	Search      string                       `json:"search"`
+	SoundStatus int                          `json:"soundStatus"`
+	Movie       models.UserContributionMovie `json:"movie"`
+	UpdatedAt   time.Time                    `json:"updatedAt"`
+	CreatedAt   time.Time                    `json:"createdAt"`
 }
 
 // Add 投稿する
