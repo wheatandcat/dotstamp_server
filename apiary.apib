@@ -13,23 +13,47 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
         [
             {
-                "question": "Favourite programming language?",
-                "published_at": "2015-08-05T08:40:51.620Z",
-                "choices": [
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "title": "foo",
+                "tag": [
                     {
-                        "choice": "Swift",
-                        "votes": 2048
-                    }, {
-                        "choice": "Python",
-                        "votes": 1024
-                    }, {
-                        "choice": "Objective-C",
-                        "votes": 512
-                    }, {
-                        "choice": "Ruby",
-                        "votes": 256
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": 1,
                     }
-                ]
+                ],
+                "followCount": 1,
+                "body": [
+                    {
+                        "priority": 1,
+                        "body": "foo",
+                        "directionType": 1,
+                        "character": {
+                            "id": 1,
+                            "fileName": "foo",
+                            "voiceType": 1,
+                        }
+                    }
+                ],
+                "viewStatus": 1,
+                "search": "foo",
+                "soundStatus": 1,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1,
+                    "CreatedAt": "2017-04-24T22:45:00+09:00",
+                    "DeletedAt": NULL,
+                    "UpdatedAt": "2017-04-24T22:45:00+09:00"
+                },
+                "createdAt": "2017-04-24T22:45:00+09:00",
+                "updatedAt": "2017-04-24T22:45:00+09:00"
             }
         ]
 
