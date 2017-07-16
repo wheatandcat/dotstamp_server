@@ -31,7 +31,7 @@ func TestSavePost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"PUT",
-		"/api/character/",
+		"/api/characters/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -44,7 +44,7 @@ func TestSavePost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("PUT /character/\n", t, func() {
+	Convey("PUT /characters/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

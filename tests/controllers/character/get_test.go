@@ -25,7 +25,7 @@ func TestGet(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"GET",
-		"/api/character/",
+		"/api/characters/",
 		nil,
 	)
 
@@ -38,7 +38,7 @@ func TestGet(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("GET /character/\n", t, func() {
+	Convey("GET /characters/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

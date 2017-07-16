@@ -26,7 +26,7 @@ func TestDelete(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"DELETE",
-		"/api/follow/1/?user_id=1000",
+		"/api/follows/1/?user_id=1000",
 		nil,
 	)
 
@@ -39,7 +39,7 @@ func TestDelete(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/follow/delete/1\n", t, func() {
+	Convey("/follows/1\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

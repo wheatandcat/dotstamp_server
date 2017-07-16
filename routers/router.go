@@ -23,7 +23,7 @@ import (
 )
 
 func init() {
-	beego.Router("/api/bug/", &controllersBug.AddController{})
+	beego.Router("/api/bugs/", &controllersBug.AddController{})
 
 	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
 	beego.Router("/api/contributions/new/", &controllersContribution.NewController{})
@@ -32,14 +32,14 @@ func init() {
 	beego.Router("/api/contributions/edit/:id([0-9]+)", &controllersContribution.EditController{})
 	beego.Router("/api/contributions/search/", &controllersContribution.SearchController{})
 
-	beego.Router("/api/character/", &controllersCharacter.MainController{})
-	beego.Router("/api/character/:id([0-9]+)", &controllersCharacter.DeleteController{})
+	beego.Router("/api/characters/", &controllersCharacter.MainController{})
+	beego.Router("/api/characters/:id([0-9]+)", &controllersCharacter.DeleteController{})
 
 	beego.Router("/api/facebook/oauth/", &controllersFacebook.OauthController{})
 	beego.Router("/api/facebook/callback/", &controllersFacebook.CallbackController{})
 
-	beego.Router("/api/follow/:id([0-9]+)", &controllersFollow.MainController{})
-	beego.Router("/api/follow/list/", &controllersFollow.ListController{})
+	beego.Router("/api/follows/:id([0-9]+)", &controllersFollow.MainController{})
+	beego.Router("/api/follows/list/", &controllersFollow.ListController{})
 
 	beego.Router("/api/forget_password/", &controllersForgetPassword.MainController{})
 	beego.Router("/api/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})

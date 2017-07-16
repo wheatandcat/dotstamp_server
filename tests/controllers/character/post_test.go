@@ -25,7 +25,7 @@ func TestPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/character/",
+		"/api/characters/",
 		nil,
 	)
 
@@ -38,7 +38,7 @@ func TestPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("POST /character/\n", t, func() {
+	Convey("POST /characters/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
