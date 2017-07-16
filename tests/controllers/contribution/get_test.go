@@ -35,7 +35,7 @@ func TestMainGet(t *testing.T) {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", " application/json")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

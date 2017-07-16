@@ -1,13 +1,14 @@
 package controllersBug
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -26,7 +27,7 @@ func TestAddPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/bug/add/",
+		"/api/bug/",
 		strings.NewReader(values.Encode()),
 	)
 

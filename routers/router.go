@@ -3,7 +3,7 @@ package routers
 import (
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/controllers/bug"
-	"github.com/wheatandcat/dotstamp_server/controllers/characterImage"
+	"github.com/wheatandcat/dotstamp_server/controllers/character"
 	"github.com/wheatandcat/dotstamp_server/controllers/contribution"
 	"github.com/wheatandcat/dotstamp_server/controllers/facebook"
 	"github.com/wheatandcat/dotstamp_server/controllers/follow"
@@ -23,14 +23,17 @@ import (
 )
 
 func init() {
-	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
+	beego.Router("/api/bug/", &controllersBug.AddController{})
 
+	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
 	beego.Router("/api/contributions/new/", &controllersContribution.NewController{})
 	beego.Router("/api/contributions/:id([0-9]+)", &controllersContribution.MainController{})
-
 	beego.Router("/api/contributions/upload/", &controllersContribution.UploadController{})
 	beego.Router("/api/contributions/edit/:id([0-9]+)", &controllersContribution.EditController{})
 	beego.Router("/api/contributions/search/", &controllersContribution.SearchController{})
+
+	beego.Router("/api/character/", &controllersCharacter.MainController{})
+	beego.Router("/api/character/:id([0-9]+)", &controllersCharacter.DeleteController{})
 
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/api/login/new/", &controllersLogin.NewController{})
@@ -54,19 +57,12 @@ func init() {
 	beego.Router("/api/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
 	beego.Router("/api/user/forget_password/save/", &controllersForgetPassword.SaveController{})
 
-	beego.Router("/api/characterImage/list/", &controllersCharacterImage.ListController{})
-	beego.Router("/api/characterImage/upload/", &controllersCharacterImage.UploadController{})
-	beego.Router("/api/characterImage/delete/:id([0-9]+)", &controllersCharacterImage.DeleteController{})
-	beego.Router("/api/characterImage/save/", &controllersCharacterImage.SaveController{})
-
 	beego.Router("/api/follow/add/", &controllersFollow.AddController{})
 	beego.Router("/api/follow/delete/", &controllersFollow.DeleteController{})
 	beego.Router("/api/follow/list/", &controllersFollow.ListController{})
 
 	beego.Router("/api/tag/add/", &controllersTag.AddController{})
 	beego.Router("/api/tag/delete/", &controllersTag.DeleteController{})
-
-	beego.Router("/api/bug/add/", &controllersBug.AddController{})
 
 	beego.Router("/api/problem/add/", &controllersProblem.AddController{})
 
