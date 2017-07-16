@@ -25,7 +25,7 @@ func init() {
 
 func TestUoloadPost(t *testing.T) {
 	values := url.Values{}
-	values.Set("userContributionId", "1")
+	values.Set("id", "1")
 
 	r, err := http.NewRequest(
 		"POST",

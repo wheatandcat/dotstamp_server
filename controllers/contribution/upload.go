@@ -14,7 +14,7 @@ type UploadController struct {
 
 // UploadRequest アップロードリクエスト
 type UploadRequest struct {
-	UserContributionID int `form:"userContributionId"`
+	ID int `form:"id"`
 }
 
 // UploadResponse アップロードレスポンス
@@ -38,7 +38,7 @@ func (c *UploadController) Post() {
 		return
 	}
 
-	id, err := contributions.GetImageIDAndAdd(request.UserContributionID)
+	id, err := contributions.GetImageIDAndAdd(request.ID)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
