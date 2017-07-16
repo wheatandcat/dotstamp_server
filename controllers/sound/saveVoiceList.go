@@ -2,6 +2,7 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
@@ -17,8 +18,7 @@ type SaveVoiceListController struct {
 
 // SaveVoiceListRequest ボイスリスト更新リクエスト
 type SaveVoiceListRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
-	VoiceType          int `form:"voiceType" validate:"min=1"`
+	VoiceType int `form:"voiceType" validate:"min=1"`
 }
 
 // SaveVoiceListResponse ボイスリスト更新レスポンス
@@ -27,27 +27,33 @@ type SaveVoiceListResponse struct {
 	Message string `json:"message"`
 }
 
-// Post ボイスリストを更新する
-func (c *SaveVoiceListController) Post() {
+// Put ボイスリストを更新する
+func (c *SaveVoiceListController) Put() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
+		return
+	}
+
 	request := SaveVoiceListRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err = c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
+	if err = validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -58,7 +64,7 @@ func (c *SaveVoiceListController) Post() {
 		return
 	}
 
-	if err := contributions.UpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID(request.UserContributionID, models.MakeStatusUncreated, request.VoiceType); err != nil {
+	if err := contributions.UpdatesSoundToMakeStatusAndVoiceTypeByUserContributionID(id, models.MakeStatusUncreated, request.VoiceType); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

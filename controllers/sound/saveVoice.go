@@ -26,8 +26,8 @@ type SaveVoiceResponse struct {
 	ID      uint   `json:"id"`
 }
 
-// Post ボイス保存する
-func (c *SaveVoiceController) Post() {
+// Put ボイス保存する
+func (c *SaveVoiceController) Put() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()

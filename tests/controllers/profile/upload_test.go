@@ -1,17 +1,18 @@
 package controllersUser
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpUpload() {
 	test.Setup()
 
 	test.SetupFixture([]string{
@@ -19,10 +20,12 @@ func init() {
 	})
 }
 
-func TestUploadPost(t *testing.T) {
+func TestUpload(t *testing.T) {
+	setUpUpload()
+
 	r, err := http.NewRequest(
 		"POST",
-		"/api/user/profile/upload/",
+		"/api/profile/",
 		nil,
 	)
 
@@ -35,7 +38,7 @@ func TestUploadPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/user/profile/upload/\n", t, func() {
+	Convey("/profile/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

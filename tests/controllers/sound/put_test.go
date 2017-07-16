@@ -1,19 +1,20 @@
 package controllersSound
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
 
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
+
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func setUpAdd() {
+func setUpPut() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_contributions",
@@ -24,15 +25,15 @@ func setUpAdd() {
 	})
 }
 
-func TestAddPost(t *testing.T) {
-	setUpAdd()
+func TestPut(t *testing.T) {
+	setUpPut()
 
 	values := url.Values{}
-	values.Set("userContributionId", "2")
+	values.Set("soundStatus", "1")
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/sound/add/?user_id=2",
+		"PUT",
+		"/api/sounds/1/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -45,7 +46,7 @@ func TestAddPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sound/add/\n", t, func() {
+	Convey("PUT /sounds/1/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

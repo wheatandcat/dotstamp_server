@@ -20,10 +20,10 @@ const (
 // UserContributionSoundDetail ユーザ投稿音声
 type UserContributionSoundDetail struct {
 	gorm.Model
-	UserContributionID int `json:"user_contribution_id"`
-	Priority           int
-	TalkType           int `json:"talk_type"`
-	Body               string
+	UserContributionID int    `json:"user_contribution_id"`
+	Priority           int    `json:"priority"`
+	TalkType           int    `json:"talk_type"`
+	Body               string `json:"body"`
 	BodySound          string `json:"body_sound"`
 	VoiceType          int    `json:"voice_type"`
 	MakeStatus         int    `json:"make_status"`

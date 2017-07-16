@@ -26,8 +26,8 @@ type SaveBodyResponse struct {
 	ID      uint   `json:"id"`
 }
 
-// Post 本文保存する
-func (c *SaveBodyController) Post() {
+// Put 本文保存する
+func (c *SaveBodyController) Put() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()

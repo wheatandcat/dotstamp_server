@@ -1,13 +1,14 @@
 package controllersSound
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -30,8 +31,8 @@ func TestSaveBodyPost(t *testing.T) {
 	values.Set("body", "あいうえお")
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/sound/saveBody/",
+		"PUT",
+		"/api/sounds/body/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -44,7 +45,7 @@ func TestSaveBodyPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sound/SaveBody/\n", t, func() {
+	Convey("/sounds/body/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

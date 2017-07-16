@@ -2,6 +2,7 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
@@ -10,44 +11,44 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// SaveController 追加コントローラ
-type SaveController struct {
-	controllers.BaseController
+// PutRequest リクエスト
+type PutRequest struct {
+	SoundStatus int `form:"soundStatus" validate:"min=1,max=2"`
 }
 
-// SaveRequest 追加リクエスト
-type SaveRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
-	SoundStatus        int `form:"soundStatus" validate:"min=1,max=2"`
-}
-
-// SaveResponse 追加レスポンス
-type SaveResponse struct {
+// PutResponse レスポンス
+type PutResponse struct {
 	Warning bool   `json:"warning"`
 	Message string `json:"message"`
 }
 
-// Post 保存する
-func (c *SaveController) Post() {
+// Put 保存する
+func (c *MainController) Put() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := SaveRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
+		return
+	}
+
+	request := PutRequest{}
+	if err = c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
+	if err = validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -58,7 +59,7 @@ func (c *SaveController) Post() {
 		return
 	}
 
-	s, err := contributions.GetSoundByUserContributionID(request.UserContributionID)
+	s, err := contributions.GetSoundByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -69,7 +70,7 @@ func (c *SaveController) Post() {
 		return
 	}
 
-	if !contributions.ExistsSound(request.UserContributionID) {
+	if !contributions.ExistsSound(id) {
 		c.ServerError(errors.New("not exists file"), controllers.ErrCodeCommon, userID)
 		return
 	}
@@ -85,7 +86,7 @@ func (c *SaveController) Post() {
 
 	models.Commit(tx)
 
-	c.Data["json"] = AddResponse{
+	c.Data["json"] = PutResponse{
 		Warning: false,
 		Message: "",
 	}

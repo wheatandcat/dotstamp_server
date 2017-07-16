@@ -2,26 +2,15 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-
-	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// ShowController 確認コントローラ
-type ShowController struct {
-	controllers.BaseController
-}
-
-// ShowRequest 確認リクエスト
-type ShowRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
-}
-
-// ShowResponse 確認レスポンス
-type ShowResponse struct {
+// GetResponse 確認レスポンス
+type GetResponse struct {
 	List        []models.UserContributionSoundDetail `json:"list"`
 	SoundStatus int                                  `json:"soundStatus"`
 	SoundFile   bool                                 `json:"soundFile"`
@@ -29,27 +18,21 @@ type ShowResponse struct {
 	Movie       models.UserContributionMovie         `json:"movie"`
 }
 
-// Post 確認する
-func (c *ShowController) Post() {
+// Get 確認する
+func (c *MainController) Get() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := ShowRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -60,7 +43,7 @@ func (c *ShowController) Post() {
 		return
 	}
 
-	s, err := contributions.GetSoundByUserContributionID(request.UserContributionID)
+	s, err := contributions.GetSoundByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -71,23 +54,23 @@ func (c *ShowController) Post() {
 		return
 	}
 
-	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
+	list, err := contributions.GetSoundDetailListByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	movie, err := contributions.GetMovie(request.UserContributionID, models.MovieTypeYoutube)
+	movie, err := contributions.GetMovie(id, models.MovieTypeYoutube)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	c.Data["json"] = ShowResponse{
+	c.Data["json"] = GetResponse{
 		List:        list,
-		SoundFile:   contributions.ExistsSound(request.UserContributionID),
+		SoundFile:   contributions.ExistsSound(id),
 		SoundStatus: s.SoundStatus,
-		MovieFile:   contributions.ExistsMovie(request.UserContributionID),
+		MovieFile:   contributions.ExistsMovie(id),
 		Movie:       movie,
 	}
 

@@ -1,13 +1,14 @@
 package controllersSound
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -27,12 +28,11 @@ func TestReflectPost(t *testing.T) {
 	setUpReflect()
 
 	values := url.Values{}
-	values.Set("userContributionId", "1")
 	values.Set("overwrite", "true")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/sound/reflect/",
+		"/api/sounds/1/reflect/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -45,7 +45,7 @@ func TestReflectPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sound/reflect/\n", t, func() {
+	Convey("/sounds/1/reflect/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

@@ -1,52 +1,45 @@
 package controllersSound
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func setUpSave() {
+func setUpGet() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_contributions",
-		"user_contribution_details",
-		"user_character_images",
 		"user_contribution_sounds",
 		"user_contribution_sound_details",
 	})
 }
 
-func TestSavePost(t *testing.T) {
-	setUpSave()
-
-	values := url.Values{}
-	values.Set("userContributionId", "1")
-	values.Set("soundStatus", "1")
+func TestGet(t *testing.T) {
+	setUpGet()
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/sound/save/",
-		strings.NewReader(values.Encode()),
+		"GET",
+		"/api/sounds/1",
+		nil,
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sound/save/\n", t, func() {
+	Convey("GET /sounds/1\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

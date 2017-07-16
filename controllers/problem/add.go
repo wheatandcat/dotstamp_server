@@ -12,14 +12,14 @@ type AddController struct {
 
 // AddRequest 追加リクエスト
 type AddRequest struct {
-	UserContributionID int `form:"userContributionId"`
-	Type               int `form:"type"`
+	ID   int `form:"id"`
+	Type int `form:"type"`
 }
 
 // AddResponse 追加レスポンス
 type AddResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 追加する
@@ -35,7 +35,7 @@ func (c *AddController) Post() {
 		return
 	}
 
-	if err := problem.Add(userID, request.UserContributionID, request.Type); err != nil {
+	if err := problem.Add(userID, request.ID, request.Type); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

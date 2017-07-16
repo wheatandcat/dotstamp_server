@@ -1,19 +1,20 @@
 package controllersProblem
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
 
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
+
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpAdd() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"log_problem_contribution_reports",
@@ -21,13 +22,15 @@ func init() {
 }
 
 func TestAddPost(t *testing.T) {
+	setUpAdd()
+
 	values := url.Values{}
-	values.Set("userContributionId", "1")
+	values.Set("id", "1")
 	values.Set("type", "1")
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/problem/add/",
+		"/api/problem/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -40,7 +43,7 @@ func TestAddPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/problem/add/\n", t, func() {
+	Convey("/problem/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

@@ -2,6 +2,7 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
@@ -18,8 +19,7 @@ type ReflectController struct {
 
 // ReflectRequest 反映リクエスト
 type ReflectRequest struct {
-	UserContributionID int  `form:"userContributionId" validate:"min=1"`
-	Overwrite          bool `form:"overwrite"`
+	Overwrite bool `form:"overwrite"`
 }
 
 // ReflectResponse 反映レスポンス
@@ -36,14 +36,20 @@ func (c *ReflectController) Post() {
 		return
 	}
 
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
+		return
+	}
+
 	request := ReflectRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err = c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
+	if err = validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
@@ -51,7 +57,7 @@ func (c *ReflectController) Post() {
 	tx := models.Begin()
 	models.Lock("user_masters", userID)
 
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -77,7 +83,7 @@ func (c *ReflectController) Post() {
 		charVoiceMap[int(v.ID)] = v.VoiceType
 	}
 
-	body, err := contributions.GetBodyByUserContributionID(request.UserContributionID)
+	body, err := contributions.GetBodyByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -88,7 +94,7 @@ func (c *ReflectController) Post() {
 		body[k].Character.VoiceType = charVoiceMap[v.Character.ID]
 	}
 
-	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
+	list, err := contributions.GetSoundDetailListByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -138,7 +144,7 @@ func (c *ReflectController) Post() {
 	if len(body) > len(list) {
 		addBody := body[len(list):]
 
-		err = contributions.AddSoundDetailList(request.UserContributionID, addBody)
+		err = contributions.AddSoundDetailList(id, addBody)
 		if err != nil {
 			models.Rollback(tx)
 			c.ServerError(err, controllers.ErrCodeCommon, userID)

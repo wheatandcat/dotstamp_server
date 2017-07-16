@@ -1,13 +1,14 @@
 package controllersSound
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -30,8 +31,8 @@ func TestSaveVoicePost(t *testing.T) {
 	values.Set("voice_type", "1")
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/sound/saveVoice/",
+		"PUT",
+		"/api/sounds/voice/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -44,7 +45,7 @@ func TestSaveVoicePost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sound/saveVoice/\n", t, func() {
+	Convey("/sounds/voice/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

@@ -2,55 +2,38 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/character"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-
-	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// AddController 追加コントローラ
-type AddController struct {
-	controllers.BaseController
-}
-
-// AddRequest 追加リクエスト
-type AddRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
-}
-
-// AddResponse 追加レスポンス
-type AddResponse struct {
+// PostResponse 追加レスポンス
+type PostResponse struct {
 	Warning bool   `json:"warning"`
 	Message string `json:"message"`
 }
 
 // Post 追加する
-func (c *AddController) Post() {
+func (c *MainController) Post() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := AddRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
 	tx := models.Begin()
 	models.Lock("user_masters", userID)
 
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -63,7 +46,7 @@ func (c *AddController) Post() {
 		return
 	}
 
-	s, err := contributions.GetSoundByUserContributionID(request.UserContributionID)
+	s, err := contributions.GetSoundByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -76,7 +59,7 @@ func (c *AddController) Post() {
 		return
 	}
 
-	err = contributions.AddSound(request.UserContributionID, models.SoundStatusPrivate)
+	err = contributions.AddSound(id, models.SoundStatusPrivate)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -96,7 +79,7 @@ func (c *AddController) Post() {
 		charVoiceMap[int(v.ID)] = v.VoiceType
 	}
 
-	body, err := contributions.GetBodyByUserContributionID(request.UserContributionID)
+	body, err := contributions.GetBodyByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -107,7 +90,7 @@ func (c *AddController) Post() {
 		body[k].Character.VoiceType = charVoiceMap[v.Character.ID]
 	}
 
-	err = contributions.AddSoundDetailList(request.UserContributionID, body)
+	err = contributions.AddSoundDetailList(id, body)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -116,7 +99,7 @@ func (c *AddController) Post() {
 
 	models.Commit(tx)
 
-	c.Data["json"] = AddResponse{
+	c.Data["json"] = PostResponse{
 		Warning: false,
 		Message: "",
 	}

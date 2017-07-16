@@ -23,7 +23,7 @@ import (
 )
 
 func init() {
-	beego.Router("/api/bugs/", &controllersBug.AddController{})
+	beego.Router("/api/bug/", &controllersBug.AddController{})
 
 	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
 	beego.Router("/api/contributions/new/", &controllersContribution.NewController{})
@@ -58,6 +58,20 @@ func init() {
 	beego.Router("/api/movies/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
 	beego.Router("/api/movies/callback/", &controllersMovie.CallbackController{})
 
+	beego.Router("/api/problem/", &controllersProblem.AddController{})
+
+	beego.Router("/api/profile/", &controllersUserProfile.UploadController{})
+
+	beego.Router("/api/question/", &controllersQuestion.AddController{})
+
+	beego.Router("/api/sounds/:id([0-9]+)/", &controllersSound.MainController{})
+	beego.Router("/api/sounds/:id([0-9]+)/make/", &controllersSound.MakeController{})
+	beego.Router("/api/sounds/:id([0-9]+)/reflect/", &controllersSound.ReflectController{})
+	beego.Router("/api/sounds/:id([0-9]+)/voice/list/", &controllersSound.SaveVoiceListController{})
+	beego.Router("/api/sounds/body/", &controllersSound.SaveBodyController{})
+	beego.Router("/api/sounds/voice/", &controllersSound.SaveVoiceController{})
+	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
+
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
@@ -65,24 +79,9 @@ func init() {
 	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
 	beego.Router("/api/user/show/", &controllersUser.ShowController{})
-	beego.Router("/api/user/profile/upload/", &controllersUserProfile.UploadController{})
 
 	beego.Router("/api/tag/add/", &controllersTag.AddController{})
 	beego.Router("/api/tag/delete/", &controllersTag.DeleteController{})
-
-	beego.Router("/api/problem/add/", &controllersProblem.AddController{})
-
-	beego.Router("/api/sound/add/", &controllersSound.AddController{})
-	beego.Router("/api/sound/make/", &controllersSound.MakeController{})
-	beego.Router("/api/sound/show/", &controllersSound.ShowController{})
-	beego.Router("/api/sound/save/", &controllersSound.SaveController{})
-	beego.Router("/api/sound/saveBody/", &controllersSound.SaveBodyController{})
-	beego.Router("/api/sound/saveVoice/", &controllersSound.SaveVoiceController{})
-	beego.Router("/api/sound/saveVoiceList/", &controllersSound.SaveVoiceListController{})
-	beego.Router("/api/sound/reflect/", &controllersSound.ReflectController{})
-	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
-
-	beego.Router("/api/question/add/", &controllersQuestion.AddController{})
 
 	beego.Router("/*", &controllers.MainController{})
 }

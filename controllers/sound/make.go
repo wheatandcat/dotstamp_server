@@ -2,22 +2,16 @@ package controllersSound
 
 import (
 	"errors"
+	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-
-	validator "gopkg.in/go-playground/validator.v9"
 )
 
 // MakeController 作成コントローラ
 type MakeController struct {
 	controllers.BaseController
-}
-
-// MakeRequest 作成リクエスト
-type MakeRequest struct {
-	UserContributionID int `form:"userContributionId" validate:"min=1"`
 }
 
 // MakeResponse 作成レスポンス
@@ -34,19 +28,13 @@ func (c *MakeController) Post() {
 		return
 	}
 
-	request := MakeRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
-	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
-		return
-	}
-
-	u, err := contributions.GetByUserContributionID(request.UserContributionID)
+	u, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
@@ -57,18 +45,18 @@ func (c *MakeController) Post() {
 		return
 	}
 
-	list, err := contributions.GetSoundDetailListByUserContributionID(request.UserContributionID)
+	list, err := contributions.GetSoundDetailListByUserContributionID(id)
 	if err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	if err := contributions.MakeSoundFile(request.UserContributionID, list); err != nil {
+	if err := contributions.MakeSoundFile(id, list); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	if err := contributions.UpdateSoundToMakeStatus(request.UserContributionID, models.MakeStatusMade); err != nil {
+	if err := contributions.UpdateSoundToMakeStatus(id, models.MakeStatusMade); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
