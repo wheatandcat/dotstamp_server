@@ -1,10 +1,11 @@
 package controllersSound
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -22,8 +23,8 @@ type SaveVoiceListRequest struct {
 
 // SaveVoiceListResponse ボイスリスト更新レスポンス
 type SaveVoiceListResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post ボイスリストを更新する

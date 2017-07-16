@@ -1,11 +1,12 @@
 package controllersTag
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/tag"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -23,9 +24,9 @@ type AddRequest struct {
 
 // AddResponse 追加レスポンス
 type AddResponse struct {
-	Warning bool
-	Message string
-	Tag     []tags.Tag
+	Warning bool       `json:"warning"`
+	Message string     `json:"message"`
+	Tag     []tags.Tag `json:"tag"`
 }
 
 // Post 追加する

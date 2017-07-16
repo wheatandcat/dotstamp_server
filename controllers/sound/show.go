@@ -1,10 +1,11 @@
 package controllersSound
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -21,11 +22,11 @@ type ShowRequest struct {
 
 // ShowResponse 確認レスポンス
 type ShowResponse struct {
-	List        []models.UserContributionSoundDetail
-	SoundStatus int
-	SoundFile   bool
-	MovieFile   bool
-	Movie       models.UserContributionMovie
+	List        []models.UserContributionSoundDetail `json:"list"`
+	SoundStatus int                                  `json:"soundStatus"`
+	SoundFile   bool                                 `json:"soundFile"`
+	MovieFile   bool                                 `json:"movieFile"`
+	Movie       models.UserContributionMovie         `json:"movie"`
 }
 
 // Post 確認する

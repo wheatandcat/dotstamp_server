@@ -20,11 +20,11 @@ type ListRequest struct {
 
 // ListResponse リストレスポンス
 type ListResponse struct {
-	List  []contributions.Contribution
-	Count int
+	List  []contributions.Contribution `json:"list"`
+	Count int                          `json:"count"`
 }
 
-// Post 追加する
+// Post リスト
 func (c *ListController) Post() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {

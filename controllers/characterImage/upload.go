@@ -12,7 +12,7 @@ type UploadController struct {
 
 // UploadResponse アップロードレスポンス
 type UploadResponse struct {
-	Image []characters.Image
+	Image []characters.Image `json:"images"`
 }
 
 // Post 画像アップロード

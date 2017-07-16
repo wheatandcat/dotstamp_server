@@ -24,12 +24,12 @@ import (
 
 func init() {
 	beego.Router("/api/contributions/list/:order([0-9]+)", &controllersContribution.ListController{})
+
 	beego.Router("/api/contributions/new/", &controllersContribution.NewController{})
+	beego.Router("/api/contributions/:id([0-9]+)", &controllersContribution.MainController{})
+
 	beego.Router("/api/contributions/upload/", &controllersContribution.UploadController{})
-	beego.Router("/api/contributions/save/", &controllersContribution.SaveController{})
-	beego.Router("/api/contributions/show/:id([0-9]+)", &controllersContribution.ShowController{})
 	beego.Router("/api/contributions/edit/:id([0-9]+)", &controllersContribution.EditController{})
-	beego.Router("/api/contributions/delete/:id([0-9]+)", &controllersContribution.DeleteController{})
 	beego.Router("/api/contributions/search/", &controllersContribution.SearchController{})
 
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})

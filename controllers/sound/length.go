@@ -12,7 +12,7 @@ type LengthController struct {
 
 // LengthResponse レスポンス
 type LengthResponse struct {
-	Character float32
+	Character float32 `json:"character"`
 }
 
 // Get 1文字あたりの長さを取得する

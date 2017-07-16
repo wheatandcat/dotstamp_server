@@ -1,10 +1,11 @@
 package controllersSound
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -21,8 +22,8 @@ type MakeRequest struct {
 
 // MakeResponse 作成レスポンス
 type MakeResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 作成する

@@ -1,6 +1,8 @@
 package controllersContribution
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
@@ -9,30 +11,31 @@ import (
 	validator "gopkg.in/go-playground/validator.v9"
 )
 
-// SaveController Saveコントローラ
-type SaveController struct {
-	controllers.BaseController
+// PutRequest PUTリクエスト
+type PutRequest struct {
+	Title      string `form:"title" validate:"min=1,max=100"`
+	Body       string `form:"body" validate:"min=1"`
+	ViewStatus int    `form:"viewStatus"`
 }
 
-// SaveRequest 保存リクエスト
-type SaveRequest struct {
-	UserContributionID int    `form:"userContributionId"`
-	Title              string `form:"title" validate:"min=1,max=100"`
-	Body               string `form:"body" validate:"min=1"`
-	ViewStatus         int    `form:"viewStatus"`
-}
+// Put 保存する
+func (c *MainController) Put() {
 
-// Post 保存する
-func (c *SaveController) Post() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := SaveRequest{}
+	request := PutRequest{}
 	if err := c.ParseForm(&request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
+		return
+	}
+
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
@@ -44,13 +47,13 @@ func (c *SaveController) Post() {
 
 	tx := models.Begin()
 
-	if err := contributions.Save(request.UserContributionID, userID, request.Title, request.ViewStatus); err != nil {
+	if err := contributions.Save(id, userID, request.Title, request.ViewStatus); err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
 	}
 
-	if err := contributions.SaveDetail(request.UserContributionID, request.Body); err != nil {
+	if err := contributions.SaveDetail(id, request.Body); err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrContributionSave, userID)
 		return
@@ -59,7 +62,7 @@ func (c *SaveController) Post() {
 	models.Commit(tx)
 
 	if request.ViewStatus == models.ViewStatusPublic {
-		t, err := tags.GetTagNameJoin(request.UserContributionID)
+		t, err := tags.GetTagNameJoin(id)
 		if err != nil {
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
@@ -78,18 +81,18 @@ func (c *SaveController) Post() {
 		}
 
 		s := contributions.JoinSearchWord(searchWord)
-		if err := contributions.AddOrSaveSearch(request.UserContributionID, s); err != nil {
+		if err := contributions.AddOrSaveSearch(id, s); err != nil {
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 
 	} else {
-		if err := contributions.DeleteSearchByUserContributionID(request.UserContributionID); err != nil {
+		if err := contributions.DeleteSearchByUserContributionID(id); err != nil {
 			c.ServerError(err, controllers.ErrContributionSave, userID)
 			return
 		}
 	}
 
-	c.Data["json"] = request.UserContributionID
+	c.Data["json"] = id
 	c.ServeJSON()
 }

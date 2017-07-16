@@ -1,10 +1,11 @@
 package controllersCharacterImage
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/character"
-	"strconv"
 )
 
 // DeleteController Deleteコントローラ
@@ -14,7 +15,7 @@ type DeleteController struct {
 
 // DeleteResponse 削除レスポンス
 type DeleteResponse struct {
-	Image []characters.Image
+	Image []characters.Image `json:"images"`
 }
 
 // Post 画像を削除する

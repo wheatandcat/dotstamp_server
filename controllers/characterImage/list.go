@@ -12,7 +12,7 @@ type ListController struct {
 
 // ListResponse リストレスポンス
 type ListResponse struct {
-	Image []characters.Image
+	Image []characters.Image `json:"images"`
 }
 
 // Post 一覧を取得する

@@ -8,13 +8,8 @@ import (
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 )
 
-// DeleteController Deleteコントローラ
-type DeleteController struct {
-	controllers.BaseController
-}
-
-// Post 画像を削除する
-func (c *DeleteController) Post() {
+// Delete 削除する
+func (c *MainController) Delete() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()

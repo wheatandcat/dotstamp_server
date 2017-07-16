@@ -19,9 +19,9 @@ type DeleteRequest struct {
 
 // DeleteResponse 削除レスポンス
 type DeleteResponse struct {
-	Warning     bool
-	Message     string
-	FollowCount int
+	Warning     bool   `json:"warning"`
+	Message     string `json:"message"`
+	FollowCount int    `json:"followCount"`
 }
 
 // Post 削除する

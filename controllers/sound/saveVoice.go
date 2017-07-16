@@ -21,9 +21,9 @@ type SaveVoicedRequest struct {
 
 // SaveVoiceResponse ボイス保存レスポンス
 type SaveVoiceResponse struct {
-	Warning bool
-	Message string
-	ID      uint
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
+	ID      uint   `json:"id"`
 }
 
 // Post ボイス保存する

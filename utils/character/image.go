@@ -1,18 +1,19 @@
 package characters
 
 import (
-	"github.com/wheatandcat/dotstamp_server/models"
 	"errors"
 	"strconv"
+
+	"github.com/wheatandcat/dotstamp_server/models"
 )
 
 // Image 画像
 type Image struct {
-	ID          uint
-	CharacterID int
-	Priority    int
-	VoiceType   int
-	FileName    string
+	ID          uint   `json:"id"`
+	CharacterID int    `json:"characterID"`
+	Priority    int    `json:"priority"`
+	VoiceType   int    `json:"voiceType"`
+	FileName    string `json:"fileName"`
 }
 
 // AddImage 画像を追加する

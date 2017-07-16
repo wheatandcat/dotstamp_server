@@ -9,13 +9,8 @@ import (
 	"github.com/wheatandcat/dotstamp_server/utils/follow"
 )
 
-// ShowController showコントローラ
-type ShowController struct {
-	controllers.BaseController
-}
-
-// ShowResponse 確認レスポンス
-type ShowResponse struct {
+// GetResponse レスポンス
+type GetResponse struct {
 	contributions.Contribution
 	FollowCount int                          `json:"followCount"`
 	Following   bool                         `json:"following"`
@@ -24,7 +19,7 @@ type ShowResponse struct {
 }
 
 // Get 投稿詳細を取得する
-func (c *ShowController) Get() {
+func (c *MainController) Get() {
 	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
 	if err != nil {
 		c.ServerError(err, controllers.ErrParameter, 0)
@@ -81,7 +76,7 @@ func (c *ShowController) Get() {
 	}
 	contributions.AddLog(userID, id)
 
-	c.Data["json"] = ShowResponse{
+	c.Data["json"] = GetResponse{
 		Contribution: contribution,
 		FollowCount:  followCount,
 		Following:    following,

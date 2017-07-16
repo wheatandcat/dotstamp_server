@@ -1,11 +1,12 @@
 package controllersTag
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/tag"
-	"errors"
 )
 
 // DeleteController 削除コントローラ
@@ -21,9 +22,9 @@ type DeleteRequest struct {
 
 // DeleteResponse 削除レスポンス
 type DeleteResponse struct {
-	Warning bool
-	Message string
-	Tag     []tags.Tag
+	Warning bool       `json:"warning"`
+	Message string     `json:"message"`
+	Tag     []tags.Tag `json:"tag"`
 }
 
 // Post 削除する

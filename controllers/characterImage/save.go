@@ -21,8 +21,8 @@ type SaveRequest struct {
 
 // SaveResponse 保存レスポンス
 type SaveResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 保存する

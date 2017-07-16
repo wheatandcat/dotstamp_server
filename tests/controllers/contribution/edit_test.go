@@ -12,7 +12,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setupEdit() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_masters",
@@ -23,10 +23,12 @@ func init() {
 	})
 }
 
-func TestShowPost(t *testing.T) {
+func TestEdit(t *testing.T) {
+	setupEdit()
+
 	r, err := http.NewRequest(
 		"GET",
-		"/api/contributions/show/1",
+		"/api/contributions/edit/1",
 		nil,
 	)
 	if err != nil {
@@ -38,7 +40,7 @@ func TestShowPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/contribution/show/1\n", t, func() {
+	Convey("GET /contribution/edit/1\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

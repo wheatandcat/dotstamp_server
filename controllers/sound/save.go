@@ -1,10 +1,11 @@
 package controllersSound
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -22,9 +23,8 @@ type SaveRequest struct {
 
 // SaveResponse 追加レスポンス
 type SaveResponse struct {
-	Warning     bool
-	Message     string
-	FollowCount int
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 保存する

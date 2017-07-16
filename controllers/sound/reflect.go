@@ -1,11 +1,12 @@
 package controllersSound
 
 import (
+	"errors"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/character"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
-	"errors"
 
 	validator "gopkg.in/go-playground/validator.v9"
 )
@@ -23,8 +24,8 @@ type ReflectRequest struct {
 
 // ReflectResponse 反映レスポンス
 type ReflectResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 反映する

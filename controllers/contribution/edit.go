@@ -20,8 +20,8 @@ type EditResponse struct {
 	SoundFile bool `json:"soundFile"`
 }
 
-// Post 編集する
-func (t *EditController) Post() {
+// Get 編集する
+func (t *EditController) Get() {
 	userID := t.GetUserID()
 	if !t.IsNoLogin(userID) {
 		t.ServerLoginNotFound()

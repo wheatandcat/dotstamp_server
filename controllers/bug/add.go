@@ -19,8 +19,8 @@ type AddRequest struct {
 
 // AddResponse 追加レスポンス
 type AddResponse struct {
-	Warning bool
-	Message string
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
 }
 
 // Post 追加する
