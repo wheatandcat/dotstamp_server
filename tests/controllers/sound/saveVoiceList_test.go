@@ -31,7 +31,7 @@ func TestSaveVoiceListPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"PUT",
-		"/api/sounds/1/voice/list/",
+		"/api/sounds/1/voice/all/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -44,7 +44,7 @@ func TestSaveVoiceListPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/sounds/1/voice/list/\n", t, func() {
+	Convey("/sounds/1/voice/all/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
