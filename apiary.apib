@@ -5,7 +5,7 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## bug [/bug]
+## bugs [/bugs]
 
 ### バグを報告する [POST]
 
@@ -24,7 +24,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 message: ""
             }
 
-## character [/character]
+## characters [/character]
 
 ### キャラクタを取得する [GET]
 
@@ -94,7 +94,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "message": ""
             }
 
-## character/{id} [/character/{id}]
+## characters/{id} [/character/{id}]
     
 + Parameters
     + id - 投稿ID
@@ -117,9 +117,9 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 ]
             }
 
-## contribution/upload{?id} [/contribution/upload{?id}]
+## contributions/upload{?id} [/contribution/upload{?id}]
 
-## contribution/{id} [/contribution/{id}]
+## contributions/{id} [/contribution/{id}]
     
 + Parameters
     + id - 投稿ID
@@ -204,7 +204,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 true
             }
 
-## contribution/new [/contribution/new]
+## contributions/new [/contribution/new]
 
 ### 投稿を作成する [POST]
 
@@ -225,7 +225,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "{id}"
             }
             
-## contribution/list [/contribution/list]
+## contributions/list [/contribution/list]
 
 ### 投稿リストを取得する [GET]
 
@@ -277,7 +277,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-## contribution/edit/{id} [/contribution/edit/{id}]
+## contributions/edit/{id} [/contribution/edit/{id}]
 
 + Parameters
     + id - 投稿ID
@@ -334,7 +334,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "soundFile": true
             }
 
-## contribution/search [/contribution/search]
+## contributions/search [/contribution/search]
 
 ### 検索する [POST]
 
@@ -358,7 +358,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 count: 1,
             }
             
-## contribution/upload/{?id} [/contribution/upload/{?id}]
+## contributions/upload/{?id} [/contribution/upload/{?id}]
 
 + Parameters
     + id -投稿ID
@@ -389,7 +389,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 path: "14.jpg",
             }
 
-## follow/{id} [/follow/{id}]
+## follows/{id} [/follow/{id}]
 
 + Parameters
     + id - 投稿ID
@@ -418,7 +418,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "followCount": 0
             }
 
-## follow/list [/follow/list]
+## follows/list [/follow/list]
 
 ### フォローリストを取得する [POST]
 
@@ -456,7 +456,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
             {
                 "warning": false,
-                "message": "",
+                "message": ""
             }
 
 ### パスワードを変更する [PUT]
@@ -475,7 +475,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
             {
                 "warning": false,
-                "message": "",
+                "message": ""
             }
 
 ## forget_password/check/{email}/{keyword} [/forget_password/check/{email}/{keyword}]
@@ -492,5 +492,116 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
             {
                 "warning": false,
+                "message": ""
+            }
+
+## login/auth [/login/auth]
+
+### ログインする [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "login": true,
+                "name": "foo"
+            }
+
+## login/check [/login/check]
+
+### ログイン済みを判定する [POST]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "foo@bar.com",
+            "password": "******"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                true
+            }
+
+## logout [/logout]
+
+### ログアウトする [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                true
+            }
+
+## movies/{id} [/movies/{id}]
+
++ Parameters
+    + id - 投稿ID
+
+### 動画を確認する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+### 動画を作成する [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
                 "message": "",
+                "movieStatus": 1
+            }
+
+## movies/{id}/upload [/movies/{id}/upload]
+
++ Parameters
+    + id - 投稿ID
+
+### 動画をアップロードする [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "movieID" "foo"
+            }
+
+## users/new [/users/new]
+
+### ユーザを登録する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "foo@bar.com",
+            "password": "******"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "userID": 1
             }
