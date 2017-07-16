@@ -5,7 +5,7 @@ HOST: http://polls.apiblueprint.org/
 
 Polls is a simple API allowing consumers to view polls and vote in them.
 
-## bugs [/bugs]
+## bug [/bug]
 
 ### バグを報告する [POST]
 
@@ -583,6 +583,260 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "warning": false,
                 "message": "",
                 "movieID" "foo"
+            }
+
+
+## problem [/problem]
+
+### 問題を報告する [POST]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "id": 1,
+            "type": 1
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## profile [/profile]
+
+### 画像をアップロードする [POST]
+
+
++ Request  (multipart/form-data; boundary=---BOUNDARY)
+
+        -----BOUNDARY
+        Content-Disposition: form-data; name="image[file]"; filename="image.jpg"
+        Content-Type: image/jpeg
+        Content-Transfer-Encoding: base64
+
+        /9j/4AAQSkZJRgABAQEAYABgAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0a
+        HBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIy
+        MjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAABAAEDASIA
+        AhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAf/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFAEB
+        AAAAAAAAAAAAAAAAAAAAAP/EABQRAQAAAAAAAAAAAAAAAAAAAAD/2gAMAwEAAhEDEQA/AL+AD//Z
+        -----BOUNDARY
+
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "1.jpg"
+            }
+
+## question [/question]
+
+### 問い合わせる [POST]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "email": "foo@bar.com",
+            "body": "foo"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+
+## sounds/{id} [/sounds/{id}]
+
++ Parameters
+    + id - 投稿ID
+
+### 音声を確認する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "list": [
+                    {
+                        "user_contribution_id": 1,
+                        "priority": 1,
+                        "talk_type": 1,
+                        "body": "foo",
+                        "body_sound": "foo",
+                        "voice_type": 1,
+                        "make_status": 1
+                    }
+                ],
+                "soundStatus": 1,
+                "soundFile": true,
+                "movieFile": true,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1
+                }
+            }
+
+### 音声を反映する [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+### 音声を更新する [PUT]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "soundStatus": 1,
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/{id}/make [/sounds/{id}/make]
+
++ Parameters
+    + id - 投稿ID
+
+### 音声を作成する [POST]
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/{id}/reflect [/sounds/{id}/reflect]
+
++ Parameters
+    + id - 投稿ID
+
+### 音声を再構築する [POST]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "overwrite": true,
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/body [/sounds/body]
+
+### 音声文を更新する [PUT]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "id": 1,
+            "body": "foo"
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "id": 1
+            }
+
+## sounds/voice [/sounds/voice]
+
+### 音声タイプを更新する [PUT]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "id": 1,
+            "voice_type": 1
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "id": 1
+            }
+
+
+## sounds/{id}/voice/all [/sounds/{id}/voice/all]
+
++ Parameters
+    + id - 投稿ID
+
+### 音声タイプを一括更新する [PUT]
+
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "voice_type": 1
+        }
+
++ Response 200 (application/x-www-form-urlencoded)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/length [/sounds/length]
+
+### 時間を取得する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "character": 0.34
             }
 
 ## users/new [/users/new]
