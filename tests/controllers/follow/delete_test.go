@@ -1,13 +1,12 @@
 package controllersFollow
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -22,16 +21,13 @@ func setupDelete() {
 	})
 }
 
-func TestDeletePost(t *testing.T) {
+func TestDelete(t *testing.T) {
 	setupDelete()
 
-	values := url.Values{}
-	values.Set("userContributionId", "1")
-
 	r, err := http.NewRequest(
-		"POST",
-		"/api/follow/delete/?user_id=1000",
-		strings.NewReader(values.Encode()),
+		"DELETE",
+		"/api/follow/1/?user_id=1000",
+		nil,
 	)
 
 	if err != nil {
@@ -43,7 +39,7 @@ func TestDeletePost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/follow/delete/\n", t, func() {
+	Convey("/follow/delete/1\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})

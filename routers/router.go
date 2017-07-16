@@ -35,6 +35,12 @@ func init() {
 	beego.Router("/api/character/", &controllersCharacter.MainController{})
 	beego.Router("/api/character/:id([0-9]+)", &controllersCharacter.DeleteController{})
 
+	beego.Router("/api/facebook/oauth/", &controllersFacebook.OauthController{})
+	beego.Router("/api/facebook/callback/", &controllersFacebook.CallbackController{})
+
+	beego.Router("/api/follow/:id([0-9]+)", &controllersFollow.MainController{})
+	beego.Router("/api/follow/list/", &controllersFollow.ListController{})
+
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})
 	beego.Router("/api/login/new/", &controllersLogin.NewController{})
 	beego.Router("/api/login/check/", &controllersLogin.CheckController{})
@@ -46,9 +52,6 @@ func init() {
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
-	beego.Router("/api/facebook/oauth/", &controllersFacebook.OauthController{})
-	beego.Router("/api/facebook/callback/", &controllersFacebook.CallbackController{})
-
 	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
 	beego.Router("/api/user/show/", &controllersUser.ShowController{})
@@ -56,10 +59,6 @@ func init() {
 	beego.Router("/api/user/forget_password/add/", &controllersForgetPassword.AddController{})
 	beego.Router("/api/user/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
 	beego.Router("/api/user/forget_password/save/", &controllersForgetPassword.SaveController{})
-
-	beego.Router("/api/follow/add/", &controllersFollow.AddController{})
-	beego.Router("/api/follow/delete/", &controllersFollow.DeleteController{})
-	beego.Router("/api/follow/list/", &controllersFollow.ListController{})
 
 	beego.Router("/api/tag/add/", &controllersTag.AddController{})
 	beego.Router("/api/tag/delete/", &controllersTag.DeleteController{})

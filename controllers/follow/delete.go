@@ -1,21 +1,13 @@
 package controllersFollow
 
 import (
+	"strconv"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 	"github.com/wheatandcat/dotstamp_server/utils/follow"
 )
-
-// DeleteController 削除コントローラ
-type DeleteController struct {
-	controllers.BaseController
-}
-
-// DeleteRequest 削除リクエスト
-type DeleteRequest struct {
-	UserContributionID int `form:"userContributionId"`
-}
 
 // DeleteResponse 削除レスポンス
 type DeleteResponse struct {
@@ -24,29 +16,29 @@ type DeleteResponse struct {
 	FollowCount int    `json:"followCount"`
 }
 
-// Post 削除する
-func (c *DeleteController) Post() {
+// Delete 削除する
+func (c *MainController) Delete() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()
 		return
 	}
 
-	request := DeleteRequest{}
-	if err := c.ParseForm(&request); err != nil {
-		c.ServerError(err, controllers.ErrCodeCommon, userID)
+	id, err := strconv.Atoi(c.Ctx.Input.Param(":id"))
+	if err != nil {
+		c.ServerError(err, controllers.ErrParameter, userID)
 		return
 	}
 
 	tx := models.Begin()
 
-	if err := models.Lock("user_masters", userID); err != nil {
+	if err = models.Lock("user_masters", userID); err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
-	userContribution, err := contributions.GetByUserContributionID(request.UserContributionID)
+	userContribution, err := contributions.GetByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -59,7 +51,7 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	userfollow, err := follows.GetByUserIDAndUserContributionID(userID, request.UserContributionID)
+	userfollow, err := follows.GetByUserIDAndUserContributionID(userID, id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
@@ -78,7 +70,7 @@ func (c *DeleteController) Post() {
 		return
 	}
 
-	count, err := follows.GetCountByUserContributionID(request.UserContributionID)
+	count, err := follows.GetCountByUserContributionID(id)
 	if err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrAddFollow, userID)
