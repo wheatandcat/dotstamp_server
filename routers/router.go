@@ -45,16 +45,18 @@ func init() {
 	beego.Router("/api/forget_password/check/:email/:keyword", &controllersForgetPassword.CheckController{})
 
 	beego.Router("/api/login/auth/", &controllersLogin.AuthController{})
-	beego.Router("/api/login/new/", &controllersLogin.NewController{})
 	beego.Router("/api/login/check/", &controllersLogin.CheckController{})
-	beego.Router("/api/login/logout/", &controllersLogin.LogoutController{})
 	beego.Router("/api/login/callback/", &controllersLogin.CallbackController{})
+
+	beego.Router("/api/logout/", &controllersLogin.LogoutController{})
+
 	beego.Router("/api/google/oauth/", &controllersGoogle.OauthController{})
 	beego.Router("/api/google/callback/", &controllersGoogle.CallbackController{})
 
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
+	beego.Router("/api/users/new/", &controllersLogin.NewController{})
 	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
 	beego.Router("/api/user/show/", &controllersUser.ShowController{})

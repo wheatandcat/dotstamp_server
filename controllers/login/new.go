@@ -20,9 +20,9 @@ type NewRequest struct {
 
 // NewResponse 新規レスポンス
 type NewResponse struct {
-	Warning bool
-	Message string
-	UserID  uint
+	Warning bool   `json:"warning"`
+	Message string `json:"message"`
+	UserID  uint   `json:"userID"`
 }
 
 // Post 新規ログイン

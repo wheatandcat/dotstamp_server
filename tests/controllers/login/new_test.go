@@ -1,13 +1,14 @@
 package controllersLogin
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
 	"net/url"
 	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
@@ -28,7 +29,7 @@ func TestNewPost(t *testing.T) {
 
 	r, err := http.NewRequest(
 		"POST",
-		"/api/login/new/",
+		"/api/users/new/",
 		strings.NewReader(values.Encode()),
 	)
 
@@ -41,7 +42,7 @@ func TestNewPost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/login/new/\n", t, func() {
+	Convey("/users/new/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
