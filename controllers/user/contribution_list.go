@@ -20,10 +20,10 @@ type ContributionListRequest struct {
 
 // ContributionListResponse 投稿リストレスポンス
 type ContributionListResponse struct {
-	PrivteList []models.UserContribution
-	List       []models.UserContribution
-	TitleList  []string
-	Count      int
+	PrivteList []models.UserContribution `json:"privtes"`
+	List       []models.UserContribution `json:"list"`
+	TitleList  []string                  `json:"titles"`
+	Count      int                       `json:"count"`
 }
 
 // Post ユーザー投稿一覧を取得する
