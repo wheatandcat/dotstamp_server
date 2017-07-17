@@ -15,7 +15,7 @@ type Contribution struct {
 	ID          uint                         `json:"id"`
 	User        user.User                    `json:"user"`
 	Title       string                       `json:"title"`
-	Tag         []tags.Tag                   `json:"tag"`
+	Tag         []tags.Tag                   `json:"tags"`
 	FollowCount int                          `json:"followCount"`
 	Body        []GetBody                    `json:"body"`
 	ViewStatus  int                          `json:"viewStatus"`
