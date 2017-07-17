@@ -1,15 +1,16 @@
 package user
 
 import (
-	"github.com/wheatandcat/dotstamp_server/models"
 	"time"
+
+	"github.com/wheatandcat/dotstamp_server/models"
 )
 
 // Profile プロフィール
 type Profile struct {
-	ID      uint
-	UserID  int
-	Created time.Time
+	ID      uint      `json:"id"`
+	UserID  int       `json:"userID"`
+	Created time.Time `json:"created"`
 }
 
 // GetProfileImageListByUserID ユーザIDからプロフィール画像リストを取得する

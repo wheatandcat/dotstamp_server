@@ -77,10 +77,9 @@ func init() {
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
+	beego.Router("/api/me/", &controllersUser.MainController{})
 	beego.Router("/api/users/new/", &controllersLogin.NewController{})
-	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
-	beego.Router("/api/user/save/", &controllersUser.SaveController{})
-	beego.Router("/api/user/show/", &controllersUser.ShowController{})
+	beego.Router("/api/users/contribution/list/", &controllersUser.ContributionListController{})
 
 	beego.Router("/*", &controllers.MainController{})
 }
