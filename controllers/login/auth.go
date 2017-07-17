@@ -12,8 +12,8 @@ type AuthController struct {
 
 // AuthResponse 削除レスポンス
 type AuthResponse struct {
-	Login bool   `form:"login"`
-	Name  string `form:"name"`
+	Login bool   `json:"login"`
+	Name  string `json:"name"`
 }
 
 // Post ログイン中か判定する
