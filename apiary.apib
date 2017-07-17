@@ -763,7 +763,6 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
 ### 音声文を更新する [PUT]
 
-
 + Request (application/x-www-form-urlencoded)
 
         {
@@ -947,3 +946,32 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "message": "",
                 "userID": 1
             }
+
+## users/contribution/list/ [/users/contribution/list/]
+
+### ユーザー投稿を取得する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/json)
+
+
+        {
+            "privtes": [
+                "{投稿データ}"
+            ],
+            "list": [
+                "{投稿データ}"
+            ],
+            titles: [
+                "foo",
+                "bar"
+            ],
+            count: 1
+        }
