@@ -9,14 +9,9 @@ import (
 	"github.com/wheatandcat/dotstamp_server/utils/tag"
 )
 
-// DeleteController 削除コントローラ
-type DeleteController struct {
-	controllers.BaseController
-}
-
 // DeleteRequest 削除リクエスト
 type DeleteRequest struct {
-	UserContributionID int `form:"userContributionId"`
+	UserContributionID int `form:"cid"`
 	ID                 int `form:"id"`
 }
 
@@ -24,11 +19,11 @@ type DeleteRequest struct {
 type DeleteResponse struct {
 	Warning bool       `json:"warning"`
 	Message string     `json:"message"`
-	Tag     []tags.Tag `json:"tag"`
+	Tag     []tags.Tag `json:"tags"`
 }
 
-// Post 削除する
-func (c *DeleteController) Post() {
+// Delete 削除する
+func (c *MainController) Delete() {
 	userID := c.GetUserID()
 	if !c.IsNoLogin(userID) {
 		c.ServerLoginNotFound()

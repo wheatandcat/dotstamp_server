@@ -72,6 +72,8 @@ func init() {
 	beego.Router("/api/sounds/voice/", &controllersSound.SaveVoiceController{})
 	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
 
+	beego.Router("/api/tags/", &controllersTag.MainController{})
+
 	beego.Router("/api/twitter/oauth/", &controllersTwitter.OauthController{})
 	beego.Router("/api/twitter/callback/", &controllersTwitter.CallbackController{})
 
@@ -79,9 +81,6 @@ func init() {
 	beego.Router("/api/user/contributionList/", &controllersUser.ContributionListController{})
 	beego.Router("/api/user/save/", &controllersUser.SaveController{})
 	beego.Router("/api/user/show/", &controllersUser.ShowController{})
-
-	beego.Router("/api/tag/add/", &controllersTag.AddController{})
-	beego.Router("/api/tag/delete/", &controllersTag.DeleteController{})
 
 	beego.Router("/*", &controllers.MainController{})
 }

@@ -1,19 +1,18 @@
-package controllersFollow
+package controllersTags
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpDelete() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_contributions",
@@ -22,15 +21,13 @@ func init() {
 	})
 }
 
-func TestDeletePost(t *testing.T) {
-	values := url.Values{}
-	values.Set("userContributionId", "1")
-	values.Set("id", "1")
+func TestDelete(t *testing.T) {
+	setUpDelete()
 
 	r, err := http.NewRequest(
-		"POST",
-		"/api/tag/delete/",
-		strings.NewReader(values.Encode()),
+		"DELETE",
+		"/api/tags/?id=1&cid=1",
+		nil,
 	)
 
 	if err != nil {
@@ -42,7 +39,7 @@ func TestDeletePost(t *testing.T) {
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
 
-	Convey("/tag/delete/\n", t, func() {
+	Convey("DELETE /tags/\n", t, func() {
 		Convey("Status Code Should Be 200", func() {
 			So(w.Code, ShouldEqual, 200)
 		})
