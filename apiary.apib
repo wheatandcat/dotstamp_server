@@ -24,7 +24,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 message: ""
             }
 
-## characters [/character]
+## characters [/characters]
 
 ### キャラクタを取得する [GET]
 
@@ -94,7 +94,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "message": ""
             }
 
-## characters/{id} [/character/{id}]
+## characters/{id} [/characters/{id}]
     
 + Parameters
     + id - 投稿ID
@@ -117,9 +117,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 ]
             }
 
-## contributions/upload{?id} [/contribution/upload{?id}]
-
-## contributions/{id} [/contribution/{id}]
+## contributions/{id} [/contributions/{id}]
     
 + Parameters
     + id - 投稿ID
@@ -138,7 +136,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                     "profileImageID": 1
                 },
                 "title": "foo",
-                "tag": [
+                "tags": [
                     {
                         "id": 1,
                         "userContributionID": 1,
@@ -204,7 +202,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 true
             }
 
-## contributions/new [/contribution/new]
+## contributions/new [/contributions/new]
 
 ### 投稿を作成する [POST]
 
@@ -225,7 +223,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "{id}"
             }
             
-## contributions/list/{order} [/contribution/list/{order}]
+## contributions/list/{order} [/contributions/list/{order}]
 
 + Parameters
     + order - ページ
@@ -243,7 +241,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                     "profileImageID": 1
                 },
                 "title": "foo",
-                "tag": [
+                "tags": [
                     {
                         "id": 1,
                         "userContributionID": 1,
@@ -280,7 +278,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
             }
         ]
 
-## contributions/edit/{id} [/contribution/edit/{id}]
+## contributions/edit/{id} [/contributions/edit/{id}]
 
 + Parameters
     + id - 投稿ID
@@ -299,7 +297,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                     "profileImageID": 1
                 },
                 "title": "foo",
-                "tag": [
+                "tags": [
                     {
                         "id": 1,
                         "userContributionID": 1,
@@ -337,7 +335,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "soundFile": true
             }
 
-## contributions/search [/contribution/search]
+## contributions/search [/contributions/search]
 
 ### 検索する [POST]
 
@@ -361,7 +359,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 count: 1,
             }
             
-## contributions/upload/{?id} [/contribution/upload/{?id}]
+## contributions/upload/{?id} [/contributions/upload/{?id}]
 
 + Parameters
     + id -投稿ID
@@ -392,7 +390,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 path: "14.jpg",
             }
 
-## follows/{id} [/follow/{id}]
+## follows/{id} [/follows/{id}]
 
 + Parameters
     + id - 投稿ID
@@ -421,7 +419,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "followCount": 0
             }
 
-## follows/list [/follow/list]
+## follows/list [/follows/list]
 
 ### フォローリストを取得する [POST]
 
