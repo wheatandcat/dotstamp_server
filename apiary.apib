@@ -836,7 +836,95 @@ Polls is a simple API allowing consumers to view polls and vote in them.
     + Body
 
             {
-                "character": 0.34
+                "character": 0.6
+            }
+
+## tags/{?id,cid} [/tags/{?id,cid}]
+
++ Parameters
+    + id (optional) - ID
+    + cid (optional) - 投稿ID
+
+### タグを追加する [POST]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "userContributionId": 1,
+            "name": "foo"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": "foo"
+                    }
+                ]
+            }
+
+### タグを削除する [DELETE]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": "foo"
+                    }
+                ]
+            }
+
+## me [/me]
+
+### 取得する [GET]
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1,
+                },
+                "profiles": [
+                    {
+                        "id": 1,
+                        "userID": 1,
+                        "created": "2017-01-01 00:00:00"
+                    }
+                ]
+            }
+
+### 保存する [PUT]
+
++ Request (application/x-www-form-urlencoded)
+
+        {
+            "name": "foo"
+        }
+
++ Response 200 (application/json)
+
+    + Body
+
+            {
+                "success": true
             }
 
 ## users/new [/users/new]
