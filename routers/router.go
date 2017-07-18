@@ -70,7 +70,7 @@ func init() {
 	beego.Router("/api/sounds/:id([0-9]+)/voice/all/", &controllersSound.SaveVoiceListController{})
 	beego.Router("/api/sounds/body/", &controllersSound.SaveBodyController{})
 	beego.Router("/api/sounds/voice/", &controllersSound.SaveVoiceController{})
-	beego.Router("/api/sound/length/", &controllersSound.LengthController{})
+	beego.Router("/api/sounds/length/", &controllersSound.LengthController{})
 
 	beego.Router("/api/tags/", &controllersTag.MainController{})
 
