@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // UserContributionDetail ユーザー投稿詳細
 type UserContributionDetail struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
 	Body               string
 }

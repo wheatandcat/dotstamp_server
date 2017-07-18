@@ -13,7 +13,7 @@ const (
 
 // UserContributionMovie ユーザ投稿動画
 type UserContributionMovie struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int    `json:"user_contribution_id"`
 	MovieType          int    `json:"movie_type"`
 	MovieID            string `json:"movie_id"`

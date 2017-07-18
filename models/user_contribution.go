@@ -14,7 +14,7 @@ const ViewStatusPrivate = 2
 
 // UserContribution ユーザ投稿
 type UserContribution struct {
-	gorm.Model
+	BaseModel
 	UserID     int `json:"user_id"`
 	Title      string
 	ViewStatus int `json:"view_status"`

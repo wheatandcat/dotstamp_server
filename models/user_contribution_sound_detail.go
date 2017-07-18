@@ -2,7 +2,6 @@ package models
 
 import (
 	"strconv"
-	"time"
 
 	"github.com/jinzhu/gorm"
 )
@@ -20,17 +19,14 @@ const (
 
 // UserContributionSoundDetail ユーザ投稿音声
 type UserContributionSoundDetail struct {
-	ID                 uint       `gorm:"primary_key" json:"id"`
-	UserContributionID int        `json:"user_contribution_id"`
-	Priority           int        `json:"priority"`
-	TalkType           int        `json:"talk_type"`
-	Body               string     `json:"body"`
-	BodySound          string     `json:"body_sound"`
-	VoiceType          int        `json:"voice_type"`
-	MakeStatus         int        `json:"make_status"`
-	CreatedAt          time.Time  `json:"createdAt"`
-	UpdatedAt          time.Time  `json:"updatedAt"`
-	DeletedAt          *time.Time `json:"deletedAt"`
+	BaseModel
+	UserContributionID int    `json:"user_contribution_id"`
+	Priority           int    `json:"priority"`
+	TalkType           int    `json:"talk_type"`
+	Body               string `json:"body"`
+	BodySound          string `json:"body_sound"`
+	VoiceType          int    `json:"voice_type"`
+	MakeStatus         int    `json:"make_status"`
 }
 
 // Add 追加する

@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // ContributionTotalFollows ユーザー投稿フォロー総数
 type ContributionTotalFollows struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
 	Count              int
 }

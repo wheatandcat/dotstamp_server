@@ -13,7 +13,7 @@ const (
 
 // UserContributionSound ユーザ投稿音声
 type UserContributionSound struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
 	SoundStatus        int `json:"sound_status"`
 }

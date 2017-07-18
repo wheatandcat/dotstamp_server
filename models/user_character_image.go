@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // UserCharacterImage ユーザーキャラクター画像
 type UserCharacterImage struct {
-	gorm.Model
+	BaseModel
 	UserID      int `json:"user_id"`
 	CharacterID int `json:"character_id"`
 	Priority    int

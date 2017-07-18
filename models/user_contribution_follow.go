@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // UserContributionFollow ユーザー投稿フォロー
 type UserContributionFollow struct {
-	gorm.Model
+	BaseModel
 	UserID             int `json:"user_id"`
 	UserContributionID int `json:"user_contribution_id"`
 }

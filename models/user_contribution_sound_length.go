@@ -6,7 +6,7 @@ import (
 
 // UserContributionSoundLength ユーザ投稿音声長さ
 type UserContributionSoundLength struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
 	Second             int `json:"second"`
 	Length             int `json:"length"`

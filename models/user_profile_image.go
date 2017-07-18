@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // UserProfileImage ユーザープロフィール画像
 type UserProfileImage struct {
-	gorm.Model
+	BaseModel
 	UserID int `json:"user_id"`
 }
 

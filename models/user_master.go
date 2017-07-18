@@ -4,7 +4,7 @@ import "github.com/jinzhu/gorm"
 
 // UserMaster ユーザー情報
 type UserMaster struct {
-	gorm.Model     `model:"true"`
+	BaseModel      `model:"true"`
 	Name           string
 	Email          string `validate:"required,email"`
 	Password       string

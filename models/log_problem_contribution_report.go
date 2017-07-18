@@ -1,7 +1,5 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 const (
 	// ProblemTypeSpam 問題タイプ：スパム
 	ProblemTypeSpam = 1
@@ -11,7 +9,7 @@ const (
 
 // LogProblemContributionReport 投稿画像ログ
 type LogProblemContributionReport struct {
-	gorm.Model
+	BaseModel
 	UserID             int `json:"user_id"`
 	Type               int
 	UserContributionID int `json:"user_contribution_id"`

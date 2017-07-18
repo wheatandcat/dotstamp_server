@@ -1,10 +1,8 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 // LogUserContribution 投稿画像ログ
 type LogUserContribution struct {
-	gorm.Model
+	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
 	UserID             int `json:"user_id"`
 }

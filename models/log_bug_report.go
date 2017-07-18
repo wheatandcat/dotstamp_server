@@ -1,10 +1,8 @@
 package models
 
-import "github.com/jinzhu/gorm"
-
 // LogBugReport バグレポート
 type LogBugReport struct {
-	gorm.Model
+	BaseModel
 	UserID int `json:"user_id"`
 	Body   string
 }

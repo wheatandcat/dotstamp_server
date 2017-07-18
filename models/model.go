@@ -3,6 +3,7 @@ package models
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/wheatandcat/dotstamp_server/models/database"
 
@@ -32,6 +33,14 @@ const (
 	// StatusMade 状態：作成済み
 	StatusMade = 7
 )
+
+// BaseModel ベースモデル
+type BaseModel struct {
+	ID        uint       `gorm:"primary_key" json:"id"`
+	CreatedAt time.Time  `json:"createdAt"`
+	UpdatedAt time.Time  `json:"updatedAt"`
+	DeletedAt *time.Time `json:"deletedAt"`
+}
 
 // getBindAndPlaceHolder バインドとプレースホルダの結果を取得する
 func getBindAndPlaceHolder(where string, bindList []map[string]interface{}) (string, []interface{}) {

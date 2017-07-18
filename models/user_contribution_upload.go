@@ -6,7 +6,7 @@ import (
 
 // UserContributionUpload ユーザ投稿アップロード
 type UserContributionUpload struct {
-	gorm.Model
+	BaseModel
 	UserID             int    `json:"user_id"`
 	UserContributionID int    `json:"user_contribution_id"`
 	Token              string `json:"token"`
