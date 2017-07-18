@@ -3,9 +3,9 @@ package models
 // LogQuestion 問い合わせログ
 type LogQuestion struct {
 	BaseModel
-	UserID int `json:"user_id"`
-	Email  string
-	Body   string
+	UserID int    `json:"user_id"`
+	Email  string `json:"email"`
+	Body   string `json:"body"`
 }
 
 // Add 追加する

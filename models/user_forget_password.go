@@ -5,8 +5,8 @@ import "github.com/jinzhu/gorm"
 // UserForgetPassword ユーザの忘れたパスワード
 type UserForgetPassword struct {
 	BaseModel
-	Email   string
-	Keyword string
+	Email   string `json:"email"`
+	Keyword string `json:"keyword"`
 }
 
 // Add 追加する

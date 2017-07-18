@@ -5,8 +5,8 @@ import "github.com/jinzhu/gorm"
 // UserContributionTag ユーザー投稿タグ
 type UserContributionTag struct {
 	BaseModel
-	UserContributionID int `json:"user_contribution_id"`
-	Name               string
+	UserContributionID int    `json:"user_contribution_id"`
+	Name               string `json:"name"`
 }
 
 // Add 追加する

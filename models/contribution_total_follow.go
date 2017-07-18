@@ -6,7 +6,7 @@ import "github.com/jinzhu/gorm"
 type ContributionTotalFollows struct {
 	BaseModel
 	UserContributionID int `json:"user_contribution_id"`
-	Count              int
+	Count              int `json:"count"`
 }
 
 // Add 追加する
@@ -24,7 +24,9 @@ func (c *ContributionTotalFollows) GetListByUserContributionID(uID []int) (contr
 	whereList := []map[string]interface{}{
 		{"UserContributionID": uID},
 	}
-	option := make(map[string]interface{})
+	option := map[string]interface{}{
+		"order": "ID desc",
+	}
 
 	db, err = GetListWhere(&contributionTotalFollows, "User_contribution_ID IN :UserContributionID", whereList, option)
 

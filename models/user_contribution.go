@@ -15,9 +15,9 @@ const ViewStatusPrivate = 2
 // UserContribution ユーザ投稿
 type UserContribution struct {
 	BaseModel
-	UserID     int `json:"user_id"`
-	Title      string
-	ViewStatus int `json:"view_status"`
+	UserID     int    `json:"user_id"`
+	Title      string `json:"title"`
+	ViewStatus int    `json:"view_status"`
 }
 
 // GetIDAndAdd 投稿してIDを取得する

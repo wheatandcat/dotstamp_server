@@ -7,7 +7,7 @@ type UserCharacterImage struct {
 	BaseModel
 	UserID      int `json:"user_id"`
 	CharacterID int `json:"character_id"`
-	Priority    int
+	Priority    int `json:"priority"`
 	VoiceType   int `json:"voice_type"`
 }
 

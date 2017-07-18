@@ -11,7 +11,7 @@ const (
 type LogProblemContributionReport struct {
 	BaseModel
 	UserID             int `json:"user_id"`
-	Type               int
+	Type               int `json:"type"`
 	UserContributionID int `json:"user_contribution_id"`
 }
 

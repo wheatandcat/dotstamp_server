@@ -5,8 +5,8 @@ import "github.com/jinzhu/gorm"
 // UserContributionDetail ユーザー投稿詳細
 type UserContributionDetail struct {
 	BaseModel
-	UserContributionID int `json:"user_contribution_id"`
-	Body               string
+	UserContributionID int    `json:"user_contribution_id"`
+	Body               string `json:"body"`
 }
 
 // Add 追加する

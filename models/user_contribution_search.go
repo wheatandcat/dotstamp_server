@@ -8,12 +8,12 @@ import (
 
 // UserContributionSearch ユーザー投稿検索
 type UserContributionSearch struct {
-	ID                 uint   `gorm:"primary_key"`
-	UserContributionID int    `json:"user_contribution_id"`
-	Search             string `gorm:"index:search"`
-	FollowCount        int    `json:"follow_count"`
-	CreatedAt          time.Time
-	UpdatedAt          time.Time
+	ID                 uint      `gorm:"primary_key"`
+	UserContributionID int       `json:"user_contribution_id"`
+	Search             string    `gorm:"index:search"`
+	FollowCount        int       `json:"follow_count"`
+	CreatedAt          time.Time `json:"createdAt"`
+	UpdatedAt          time.Time `json:"updatedAt"`
 }
 
 // Add 追加する

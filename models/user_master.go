@@ -5,10 +5,10 @@ import "github.com/jinzhu/gorm"
 // UserMaster ユーザー情報
 type UserMaster struct {
 	BaseModel      `model:"true"`
-	Name           string
-	Email          string `validate:"required,email"`
-	Password       string
-	ProfileImageID int `json:"profile_image_id"`
+	Name           string `json:"name"`
+	Email          string `json:"email" validate:"required,email"`
+	Password       string `json:"password"`
+	ProfileImageID int    `json:"profile_image_id"`
 }
 
 // GetIDAndAdd 投稿してIDを取得する
