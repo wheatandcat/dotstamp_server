@@ -2,6 +2,7 @@
 
 [![Build Status](https://travis-ci.org/wheatandcat/dotstamp_server.svg?branch=master)](https://travis-ci.org/wheatandcat/dotstamp_server)
 [![DB Document](https://img.shields.io/badge/database-doc-brightgreen.svg)](https://wheatandcat.github.io/dotstamp_server/db/stamp_test.html)
+[![API Document](https://img.shields.io/badge/restful%20api-doc-green.svg)](https://wheatandcat.github.io/dotstamp_server/apiary.html#)
 [![BSD License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
 
 <img src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" data-canonical-src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" width="200" />
@@ -77,6 +78,10 @@ db定義書生成
 ```
 mysqldump --no-data --xml -uroot stamp_test > db/stamp_test.xml
 xsltproc -o db/stamp_test.html db/style.xsl db/stamp_test.xml
+```
+APIドキュメント生成
+```
+aglio -i apiary.apib -o apiary.html
 ```
 ## バッチ  
 ファイルパス：tasks/
