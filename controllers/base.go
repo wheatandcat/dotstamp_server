@@ -18,8 +18,8 @@ type BaseController struct {
 
 // ErrorResponse エラー発生レスポンス
 type ErrorResponse struct {
-	Message string
-	ErrCode int
+	Message string `json:"message"`
+	ErrCode int    `json:"errCode"`
 }
 
 // Accessor ベースアクセサー
