@@ -97,7 +97,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## characters/{id} [/characters/{id}]
     
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### キャラクタを削除する [DELETE]
 
@@ -120,7 +120,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## contributions/{id} [/contributions/{id}]
     
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 投稿を取得する [GET]
 
@@ -189,7 +189,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
     + Body
 
             {
-                "{id}"
+                true
             }
             
 ### 投稿を削除する [DELETE]
@@ -220,13 +220,13 @@ Polls is a simple API allowing consumers to view polls and vote in them.
     + Body
 
             {
-                "{id}"
+                1
             }
             
 ## contributions/list/{order} [/contributions/list/{order}]
 
 + Parameters
-    + order - ページ
+    + order: 1 - ページ
 
 ### 投稿リストを取得する [GET]
 
@@ -281,7 +281,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## contributions/edit/{id} [/contributions/edit/{id}]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 投稿の編集情報を取得する [GET]
 
@@ -362,7 +362,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## contributions/upload/{?id} [/contributions/upload/{?id}]
 
 + Parameters
-    + id -投稿ID
+    + id: 1 -投稿ID
 
 ### 画像をアップロードする [POST]
 
@@ -393,7 +393,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## follows/{id} [/follows/{id}]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### フォローする [POST]
 
@@ -482,8 +482,8 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## forget_password/check/{email}/{keyword} [/forget_password/check/{email}/{keyword}]
 
 + Parameters
-    + email - メールアドレス
-    + keyword - キーワード
+    + email: foo@abc.com - メールアドレス
+    + keyword: test - キーワード
 
 ### パスワード変更可能を判定する [GET]
 
@@ -544,7 +544,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## movies/{id} [/movies/{id}]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 動画を確認する [GET]
 
@@ -572,7 +572,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## movies/{id}/upload [/movies/{id}/upload]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 動画をアップロードする [POST]
 
@@ -661,7 +661,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## sounds/{id} [/sounds/{id}]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 音声を確認する [GET]
 
@@ -724,7 +724,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## sounds/{id}/make [/sounds/{id}/make]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 音声を作成する [POST]
 
@@ -740,7 +740,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## sounds/{id}/reflect [/sounds/{id}/reflect]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 音声を再構築する [POST]
 
@@ -807,7 +807,7 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## sounds/{id}/voice/all [/sounds/{id}/voice/all]
 
 + Parameters
-    + id - 投稿ID
+    + id: 1 - 投稿ID
 
 ### 音声タイプを一括更新する [PUT]
 
@@ -842,8 +842,8 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 ## tags/{?id,cid} [/tags/{?id,cid}]
 
 + Parameters
-    + id (optional) - ID
-    + cid (optional) - 投稿ID
+    + id: 1 (optional) - ID
+    + cid: 1 (optional) - 投稿ID
 
 ### タグを追加する [POST]
 
