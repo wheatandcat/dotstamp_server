@@ -1,10 +1,9 @@
 package controllersFollow
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -28,22 +27,23 @@ func setupList() {
 func TestListPost(t *testing.T) {
 	setupList()
 
-	values := url.Values{}
-	values.Set("order", "1")
-	values.Set("page", "1")
-	values.Set("limit", "10")
+	json := `{
+		"order":1,
+		"page":1,
+		"limit":10
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/follows/list/?user_id=1000",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

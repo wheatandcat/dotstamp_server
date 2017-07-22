@@ -1,10 +1,9 @@
 package controllersContribution
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -14,7 +13,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpUpload() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_masters",
@@ -24,19 +23,22 @@ func init() {
 }
 
 func TestUoloadPost(t *testing.T) {
-	values := url.Values{}
-	values.Set("id", "1")
+	setUpUpload()
+
+	json := `{
+		"id":1
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/contributions/upload",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

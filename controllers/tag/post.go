@@ -1,6 +1,7 @@
 package controllersTag
 
 import (
+	"encoding/json"
 	"errors"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
@@ -33,7 +34,7 @@ func (c *MainController) Post() {
 	}
 
 	request := PostdRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

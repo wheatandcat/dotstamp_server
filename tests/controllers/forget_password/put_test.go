@@ -1,10 +1,9 @@
 package controllersForgetPassword
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -26,22 +25,23 @@ func setUpPut() {
 func TestSavePost(t *testing.T) {
 	setUpPut()
 
-	values := url.Values{}
-	values.Set("email", "vHWexIhSOGxjAIjz.t.3o8DN2_cv4ozt3TOb")
-	values.Set("keyword", "gEyG9YZUN31mLKbA18GFpxVc_h8fGFdtn2dNU9SwqG7uakosOKeNU0we4Ahpvishbf4-")
-	values.Set("password", "testtest")
+	json := `{
+		"email":"vHWexIhSOGxjAIjz.t.3o8DN2_cv4ozt3TOb",
+		"keyword":"gEyG9YZUN31mLKbA18GFpxVc_h8fGFdtn2dNU9SwqG7uakosOKeNU0we4Ahpvishbf4-",
+		"password":"testtest"
+	}`
 
 	r, err := http.NewRequest(
 		"PUT",
 		"/api/forget_password/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

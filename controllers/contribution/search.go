@@ -1,6 +1,8 @@
 package controllersContribution
 
 import (
+	"encoding/json"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
 )
@@ -27,7 +29,7 @@ type SearchResponse struct {
 // Post 検索を取得を取得する
 func (c *SearchController) Post() {
 	request := SearchRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}

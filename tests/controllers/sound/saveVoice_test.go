@@ -1,10 +1,9 @@
 package controllersSound
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -26,21 +25,22 @@ func setUpSaveVoice() {
 func TestSaveVoicePost(t *testing.T) {
 	setUpSaveVoice()
 
-	values := url.Values{}
-	values.Set("id", "1")
-	values.Set("voice_type", "1")
+	json := `{
+		"id":1,
+		"voiceType":2
+	}`
 
 	r, err := http.NewRequest(
 		"PUT",
 		"/api/sounds/voice/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

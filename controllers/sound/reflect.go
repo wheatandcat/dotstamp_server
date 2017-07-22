@@ -1,6 +1,7 @@
 package controllersSound
 
 import (
+	"encoding/json"
 	"errors"
 	"strconv"
 
@@ -43,7 +44,7 @@ func (c *ReflectController) Post() {
 	}
 
 	request := ReflectRequest{}
-	if err = c.ParseForm(&request); err != nil {
+	if err = json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}

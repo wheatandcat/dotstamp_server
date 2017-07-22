@@ -12,7 +12,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpList() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"user_masters",
@@ -23,6 +23,8 @@ func init() {
 }
 
 func TestListPost(t *testing.T) {
+	setUpList()
+
 	r, err := http.NewRequest(
 		"GET",
 		"/api/contributions/list/2",
@@ -32,7 +34,7 @@ func TestListPost(t *testing.T) {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

@@ -1,10 +1,9 @@
 package controllersUser
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -29,15 +28,16 @@ func setUpList() {
 func TestList(t *testing.T) {
 	setUpList()
 
-	values := url.Values{}
-	values.Set("order", "1")
-	values.Set("page", "1")
-	values.Set("limit", "10")
+	json := `{
+		"order":1,
+		"page":1,
+		"limit":10
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/users/contribution/list",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {

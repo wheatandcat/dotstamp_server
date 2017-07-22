@@ -1,10 +1,9 @@
 package controllersSound
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -27,20 +26,21 @@ func setUpReflect() {
 func TestReflectPost(t *testing.T) {
 	setUpReflect()
 
-	values := url.Values{}
-	values.Set("overwrite", "true")
+	json := `{
+		"overwrite":true
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/sounds/1/reflect/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

@@ -1,11 +1,12 @@
 package controllersFacebook
 
 import (
+	"errors"
+	"net/url"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/oauth/facebook"
 	"github.com/wheatandcat/dotstamp_server/utils/user"
-	"errors"
-	"net/url"
 
 	"github.com/astaxie/beego"
 	fb "github.com/huandu/facebook"

@@ -1,6 +1,7 @@
 package controllersContribution
 
 import (
+	"encoding/json"
 	"strconv"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
@@ -33,7 +34,7 @@ func (c *UploadController) Post() {
 	}
 
 	request := UploadRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}

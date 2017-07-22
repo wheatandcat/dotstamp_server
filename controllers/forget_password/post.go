@@ -1,6 +1,8 @@
 package controllersForgetPassword
 
 import (
+	"encoding/json"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils"
@@ -26,7 +28,7 @@ type PostResponse struct {
 // Post ユーザー投稿一覧を取得する
 func (c *MainController) Post() {
 	request := PostRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}

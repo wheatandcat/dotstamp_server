@@ -1,10 +1,9 @@
 package controllersQuestion
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -14,7 +13,7 @@ import (
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setupAdd() {
 	test.Setup()
 	test.SetupFixture([]string{
 		"log_questions",
@@ -22,21 +21,26 @@ func init() {
 }
 
 func TestAddPost(t *testing.T) {
-	values := url.Values{}
-	values.Set("body", "abc")
-	values.Set("email", "abc@test.com")
+	setupAdd()
+
+	json := `{
+		"body":"abc",
+		"order":1,
+		"page":1,
+		"email":"abc@test.com"
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/question/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

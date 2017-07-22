@@ -24,6 +24,8 @@ func setupMainDelete() {
 }
 
 func TestMainDelete(t *testing.T) {
+	setupMainDelete()
+
 	r, err := http.NewRequest(
 		"DELETE",
 		"/api/contributions/1/",
@@ -34,7 +36,7 @@ func TestMainDelete(t *testing.T) {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

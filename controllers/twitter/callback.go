@@ -1,10 +1,11 @@
 package controllersTwitter
 
 import (
+	"net/url"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/oauth/twitter"
 	"github.com/wheatandcat/dotstamp_server/utils/user"
-	"net/url"
 
 	"github.com/astaxie/beego"
 	"github.com/garyburd/go-oauth/oauth"

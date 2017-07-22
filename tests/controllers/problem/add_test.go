@@ -1,10 +1,9 @@
 package controllersProblem
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -24,21 +23,22 @@ func setUpAdd() {
 func TestAddPost(t *testing.T) {
 	setUpAdd()
 
-	values := url.Values{}
-	values.Set("id", "1")
-	values.Set("type", "1")
+	json := `{
+		"id":1,
+		"type":1
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/problem/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

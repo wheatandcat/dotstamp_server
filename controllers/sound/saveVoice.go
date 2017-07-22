@@ -1,6 +1,9 @@
 package controllersSound
 
 import (
+	"encoding/json"
+	"log"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
 	"github.com/wheatandcat/dotstamp_server/utils/contribution"
@@ -16,7 +19,7 @@ type SaveVoiceController struct {
 // SaveVoicedRequest ボイス保存リクエスト
 type SaveVoicedRequest struct {
 	ID        uint `form:"id" validate:"min=1"`
-	VoiceType int  `form:"voice_type" validate:"min=1"`
+	VoiceType int  `form:"voiceType" validate:"min=1"`
 }
 
 // SaveVoiceResponse ボイス保存レスポンス
@@ -35,11 +38,11 @@ func (c *SaveVoiceController) Put() {
 	}
 
 	request := SaveVoicedRequest{}
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
-
+	log.Println(request)
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)

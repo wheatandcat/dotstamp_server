@@ -1,6 +1,8 @@
 package controllersLogin
 
 import (
+	"encoding/json"
+
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/utils/user"
 )
@@ -20,7 +22,7 @@ type CheckRequest struct {
 func (c *CheckController) Post() {
 	request := CheckRequest{}
 
-	if err := c.ParseForm(&request); err != nil {
+	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, 0)
 		return
 	}

@@ -1,4 +1,3 @@
----
 language: go
 go:
   - 1.7.x
@@ -14,10 +13,8 @@ install:
 before_script:
   - mysql -uroot -e "create database stamp_test"
   - mysql -uroot -e "INSTALL PLUGIN Mroonga SONAME 'ha_mroonga.so';"
-  - mysql -uroot -e "CREATE FUNCTION mroonga_snippet RETURNS STRING SONAME 'ha_mroonga.so';"
-  - mysql -uroot -e "CREATE FUNCTION mroonga_command RETURNS STRING SONAME 'ha_mroonga.so';"
-  - mysql -uroot -e "CREATE FUNCTION mroonga_escape RETURNS STRING SONAME 'ha_mroonga.so';"
   - goose -env test up
+  - dredd
 script:
   - glide install
   - go build main.go

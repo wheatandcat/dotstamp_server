@@ -1,10 +1,9 @@
 package controllersTags
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -26,21 +25,22 @@ func setUpPost() {
 func TestAddPost(t *testing.T) {
 	setUpPost()
 
-	values := url.Values{}
-	values.Set("userContributionId", "1")
-	values.Set("name", "1")
+	json := `{
+		"userContributionId":1,
+		"name":"foo"
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/tags/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

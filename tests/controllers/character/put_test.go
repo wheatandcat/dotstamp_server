@@ -1,10 +1,9 @@
 package controllersCharacterImage
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -25,21 +24,19 @@ func setupPut() {
 func TestSavePost(t *testing.T) {
 	setupPut()
 
-	values := url.Values{}
-	values.Set("id", "1")
-	values.Set("voiceType", "2")
+	json := `{"id":1,"voiceType":2}`
 
 	r, err := http.NewRequest(
 		"PUT",
 		"/api/characters/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

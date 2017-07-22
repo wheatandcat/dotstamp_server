@@ -1,10 +1,9 @@
 package controllersForgetPassword
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -26,21 +25,22 @@ func setUpPost() {
 func TestAddPost(t *testing.T) {
 	setUpPost()
 
-	values := url.Values{}
-	values.Set("email", "test_xyz@test.com")
-	values.Set("password", "test")
+	json := `{
+		"email":"foo@bar.com",
+		"password":"test"
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/forget_password/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

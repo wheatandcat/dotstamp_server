@@ -1,19 +1,19 @@
 package controllersLogin
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
-	"github.com/wheatandcat/dotstamp_server/tests"
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
+	"github.com/wheatandcat/dotstamp_server/tests"
 
 	"github.com/astaxie/beego"
 	. "github.com/smartystreets/goconvey/convey"
 )
 
-func init() {
+func setUpCheck() {
 	test.Setup()
 
 	test.SetupFixture([]string{
@@ -22,21 +22,24 @@ func init() {
 }
 
 func TestCheckPost(t *testing.T) {
-	values := url.Values{}
-	values.Set("email", "test@tedt.com")
-	values.Set("password", "abc")
+	setUpCheck()
+
+	json := `{
+		"email":"test@tedt.com",
+		"password": "abc"
+	}`
 
 	r, err := http.NewRequest(
 		"POST",
 		"/api/login/check/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)

@@ -1,10 +1,9 @@
 package controllersSound
 
 import (
+	"bytes"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
-	"strings"
 	"testing"
 
 	_ "github.com/wheatandcat/dotstamp_server/routers"
@@ -26,21 +25,22 @@ func setUpSaveBody() {
 func TestSaveBodyPost(t *testing.T) {
 	setUpSaveBody()
 
-	values := url.Values{}
-	values.Set("id", "1")
-	values.Set("body", "あいうえお")
+	json := `{
+			"id":1,
+			"body":"あいうえお"
+	}`
 
 	r, err := http.NewRequest(
 		"PUT",
 		"/api/sounds/body/",
-		strings.NewReader(values.Encode()),
+		bytes.NewBuffer([]byte(json)),
 	)
 
 	if err != nil {
 		panic(err)
 	}
 
-	r.Header.Set("Content-Type", "application/x-www-form-urlencoded")
+	r.Header.Set("Content-Type", "application/json")
 
 	w := httptest.NewRecorder()
 	beego.BeeApp.Handlers.ServeHTTP(w, r)
