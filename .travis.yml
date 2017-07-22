@@ -14,7 +14,6 @@ before_script:
   - mysql -uroot -e "create database stamp_test"
   - mysql -uroot -e "INSTALL PLUGIN Mroonga SONAME 'ha_mroonga.so';"
   - goose -env test up
-  - dredd
 script:
   - glide install
   - go build main.go
