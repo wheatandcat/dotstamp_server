@@ -1,5 +1,5 @@
-hash: 11545889e7f720d5a4ad71eff7d60f9be52bd54b18d0fd7d9f513544ec8a4801
-updated: 2017-06-26T22:54:19.590816911+09:00
+hash: c6f8fd77751c5fce0e671b38f325bc0e812200c5817b87b7dfc4d897862de4d7
+updated: 2017-07-23T04:21:27.526910364+09:00
 imports:
 - name: cloud.google.com/go
   version: 7050ae8919c454e5119ddeb65c678014a52e5d57
@@ -69,7 +69,13 @@ imports:
 - name: github.com/Sirupsen/logrus
   version: ba1b36c82c5e05c4f912a88eab0dcd91a171688f
 - name: github.com/snabb/sitemap
-  version: 83b92297a76a19329ad9f68411d9d8857b3b01c5
+  version: 036d02a8f10827316f0f031c0e4bde15024ae8f0
+- name: github.com/snikch/goodman
+  version: 3b65f3e04f92d05e0bdf805fbf137f82f01a1730
+  subpackages:
+  - cmd/goodman
+  - hooks
+  - transaction
 - name: github.com/ziutek/mymysql
   version: e08c2f35356576b3c3690c252fe5dca728ae9292
   subpackages:

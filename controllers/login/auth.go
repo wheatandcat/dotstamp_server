@@ -10,7 +10,7 @@ type AuthController struct {
 	controllers.BaseController
 }
 
-// AuthResponse 削除レスポンス
+// AuthResponse 認証レスポンス
 type AuthResponse struct {
 	Login bool   `json:"login"`
 	Name  string `json:"name"`

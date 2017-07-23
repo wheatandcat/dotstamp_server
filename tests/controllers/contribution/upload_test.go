@@ -1,7 +1,6 @@
 package controllersContribution
 
 import (
-	"bytes"
 	"net/http"
 	"net/http/httptest"
 	"testing"
@@ -25,14 +24,10 @@ func setUpUpload() {
 func TestUoloadPost(t *testing.T) {
 	setUpUpload()
 
-	json := `{
-		"id":1
-	}`
-
 	r, err := http.NewRequest(
 		"POST",
-		"/api/contributions/upload",
-		bytes.NewBuffer([]byte(json)),
+		"/api/contributions/upload/?id=1",
+		nil,
 	)
 	if err != nil {
 		panic(err)

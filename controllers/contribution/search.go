@@ -48,7 +48,7 @@ func (c *SearchController) Post() {
 	}
 
 	if len(searchValue) == 0 {
-		c.Data["json"] = []contributions.Contribution{}
+		c.Data["json"] = SearchResponse{}
 		c.ServeJSON()
 		return
 	}

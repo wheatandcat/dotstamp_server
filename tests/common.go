@@ -1,7 +1,6 @@
 package test
 
 import (
-	"github.com/wheatandcat/dotstamp_server/tests/database"
 	"io/ioutil"
 	"os"
 	"os/exec"
@@ -9,6 +8,8 @@ import (
 	"runtime"
 	"strconv"
 	"time"
+
+	"github.com/wheatandcat/dotstamp_server/tests/database"
 
 	"github.com/astaxie/beego"
 	"gopkg.in/yaml.v2"

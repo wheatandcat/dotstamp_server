@@ -1,9 +1,10 @@
 package main
 
 import (
-	_ "github.com/wheatandcat/dotstamp_server/routers"
 	"os"
 	"path/filepath"
+
+	_ "github.com/wheatandcat/dotstamp_server/routers"
 
 	"github.com/astaxie/beego"
 	_ "github.com/astaxie/beego/session/redis"
@@ -23,6 +24,8 @@ func main() {
 		err = beego.LoadAppConfig("ini", dir+"/conf/app_prod_blue.conf")
 	} else if os.Getenv("ENV_CONF") == "prod_green" {
 		err = beego.LoadAppConfig("ini", dir+"/conf/app_prod_green.conf")
+	} else if os.Getenv("ENV_CONF") == "test" {
+		err = beego.LoadAppConfig("ini", dir+"/conf/app_test.conf")
 	} else {
 		err = beego.LoadAppConfig("ini", dir+"/conf/app_dev.conf")
 	}

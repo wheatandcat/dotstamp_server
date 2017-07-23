@@ -1,0 +1,36 @@
+reporter: apiary
+custom:
+  apiaryApiKey: 27fc81f68529434d24e2ead05133edd5
+  apiaryApiName: wheatandcat
+dry-run: null
+hookfiles: null
+language: go
+sandbox: false
+server:  ./dotstamp_server
+server-wait: 3
+init: false
+names: false
+only: []
+output: []
+header: []
+sorted: false
+user: null
+inline-errors: true
+details: true
+method: []
+color: true
+level: info
+timestamp: false
+silent: false
+path: []
+hooks-worker-timeout: 50000
+hooks-worker-connect-timeout: 15000
+hooks-worker-connect-retry: 5000
+hooks-worker-after-connect-wait: 1000
+hooks-worker-term-timeout: 50000
+hooks-worker-term-retry: 5000
+hooks-worker-handler-host: 127.0.0.1
+hooks-worker-handler-port: 61321
+config: ./dredd.yml
+blueprint: apiary.apib
+endpoint: 'http://127.0.0.1:8081/api'

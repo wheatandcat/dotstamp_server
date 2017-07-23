@@ -9,14 +9,14 @@ Polls is a simple API allowing consumers to view polls and vote in them.
 
 ### ユーザを登録する [POST]
 
-+ Request (application/json)
++ Request (application/json; charset=utf-8)
 
         {
-            "email": "wheatandcat@gmail.com",
-            "password": "jdhflinjkhfljhk;lnz;klnfhklfn"
+            "email": "foo@bar.com",
+            "password": "foobar12345"
         }
 
-+ Response 200 (application/json)
++ Response 200 (application/json; charset=utf-8)
 
     + Body
 
@@ -25,3 +25,969 @@ Polls is a simple API allowing consumers to view polls and vote in them.
                 "message": "",
                 "userID": 1
             }
+
+## login/check [/login/check]
+
+### ログイン済みを判定する [POST]
+
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "email": "foo@bar.com",
+            "password": "foobar12345"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            true
+
+## login/auth [/login/auth]
+
+### ログインする [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "login": true,
+                "name": "foo@bar.com"
+            }
+
+## bug [/bug]
+
+### バグを報告する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "body": "foo"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## characters [/characters]
+
+### キャラクタをアップロードする [POST]
+
++ Request  (multipart/form-data; boundary=---BOUNDARY)
+
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+              "images": [
+                {
+                  "id": 2,
+                  "characterID": 1,
+                  "priority": 1,
+                  "voiceType": 1,
+                  "fileName": "1.jpg"
+                }
+              ]
+            }
+
+### キャラクタを取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "images": [
+                    {
+                        "id": 2,
+                        "characterID": 1,
+                        "priority": 1,
+                        "voiceType": 1,
+                        "fileName": "1.jpg"
+                    }
+                ]
+            }
+
+### キャラクタを更新する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "id": 2,
+            "voiceType": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## characters/{id} [/characters/{id}]
+
++ Parameters
+    + id: 2 - 投稿ID
+
+### キャラクタを削除する [DELETE]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "images": [
+                    {
+                        "id": 1,
+                        "characterID": 1,
+                        "priority": 1,
+                        "voiceType": 1,
+                        "fileName": "1.jpg"
+                    }
+                ]
+            }
+
+## contributions/new [/contributions/new]
+
+### 投稿を作成する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "title": "foo",
+            "body": "[{}]",
+            "viewStatus": 1,
+            "tag": "foo,bar,foobar"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            1
+
+## contributions/{id} [/contributions/{id}]
+
++ Parameters
+    + id: 3 - 投稿ID
+
+### 投稿を取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "id": 2,
+                "user": {
+                  "id": 1,
+                  "name": "foo@bar.com",
+                  "profileImageID": 0
+                },
+                "title": "foo",
+                "tags": [
+                  {
+                    "id": 2,
+                    "userContributionID": 2,
+                    "name": "foo,bar,foobar"
+                  }
+                ],
+                "body": [
+                  {
+                    "priority": 0,
+                    "body": "",
+                    "directionType": 0,
+                    "talkType": 0,
+                    "character": {
+                      "id": 0,
+                      "fileName": "",
+                      "voiceType": 0
+                    }
+                  }
+                ],
+                "viewStatus": 1,
+                "search": "",
+                "soundStatus": 0,
+                "updatedAt": "2017-07-23T20:17:19+09:00",
+                "createdAt": "2017-07-23T20:17:19+09:00",
+                "followCount": 0,
+                "following": false,
+                "soundFile": false,
+                "movie": {
+                  "id": 0,
+                  "createdAt": "0001-01-01T00:00:00Z",
+                  "updatedAt": "0001-01-01T00:00:00Z",
+                  "deletedAt": null,
+                  "user_contribution_id": 0,
+                  "movie_type": 0,
+                  "movie_id": "",
+                  "movie_status": 0
+                }
+            }
+
+### 投稿を更新する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "title": "foo",
+            "body": "[{}]",
+            "viewStatus": 1
+        }
+
++ Response 200  (application/json; charset=utf-8)
+
+    + Body
+
+            1
+
+### 投稿を削除する [DELETE]
+
++ Response 200  (application/json; charset=utf-8)
+
+    + Body
+
+            true
+
+## contributions/list/{order} [/contributions/list/{order}]
+
++ Parameters
+    + order: 1 - ページ
+
+### 投稿リストを取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+        [
+            {
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "title": "foo",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": 1
+                    }
+                ],
+                "followCount": 1,
+                "body": null,
+                "viewStatus": 1,
+                "search": "foo",
+                "soundStatus": 1,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1,
+                    "createdAt": "2017-04-24T22:45:00+09:00",
+                    "deletedAt": null,
+                    "updatedAt": "2017-04-24T22:45:00+09:00"
+                },
+                "createdAt": "2017-04-24T22:45:00+09:00",
+                "updatedAt": "2017-04-24T22:45:00+09:00"
+            }
+        ]
+
+## contributions/edit/{id} [/contributions/edit/{id}]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 投稿の編集情報を取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "id": 1,
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "title": "foo",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": 1
+                    }
+                ],
+                "followCount": 1,
+                "body": [
+                    {
+                        "priority": 1,
+                        "body": "foo",
+                        "directionType": 1,
+                        "character": {
+                            "id": 1,
+                            "fileName": "foo",
+                            "voiceType": 1
+                        }
+                    }
+                ],
+                "viewStatus": 1,
+                "search": "foo",
+                "soundStatus": 1,
+                "movie": {
+                    "user_contribution_id": 1,
+                    "movie_type": 1,
+                    "movie_id": "foo",
+                    "movie_status": 1,
+                    "createdAt": "2017-04-24T22:45:00+09:00",
+                    "deletedAt": null,
+                    "updatedAt": "2017-04-24T22:45:00+09:00"
+                },
+                "createdAt": "2017-04-24T22:45:00+09:00",
+                "updatedAt": "2017-04-24T22:45:00+09:00",
+                "sound": true,
+                "soundFile": true
+            }
+
+## contributions/search [/contributions/search]
+
+### 検索する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "search": "foo",
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "list": [
+                  {
+                    "id": 1,
+                    "user": {
+                      "id": 1,
+                      "name": "foo@bar.com",
+                      "profileImageID": 0
+                    },
+                    "title": "foo",
+                    "tags": [
+                      {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": "foo,bar,foobar"
+                      }
+                    ],
+                    "followCount": 0,
+                    "body": null,
+                    "viewStatus": 1,
+                    "search": "foo,bar",
+                    "soundStatus": 0,
+                    "movie": {
+                      "id": 0,
+                      "createdAt": "0001-01-01T00:00:00Z",
+                      "updatedAt": "0001-01-01T00:00:00Z",
+                      "deletedAt": null,
+                      "user_contribution_id": 0,
+                      "movie_type": 0,
+                      "movie_id": "",
+                      "movie_status": 0
+                    },
+                    "updatedAt": "2017-07-23T15:12:52+09:00",
+                    "createdAt": "2017-07-23T15:12:52+09:00"
+                  }
+                ],
+                "count": 1
+            }
+
+## contributions/upload/{?id} [/contributions/upload/{?id}]
+
++ Parameters
+    + id: 1 -投稿ID
+
+### 画像をアップロードする [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "path": "1.jpg"
+            }
+
+## follows/{id} [/follows/{id}]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### フォローする [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "followCount": 1
+            }
+
+### フォローを削除する [DELETE]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "followCount": 0
+            }
+
+## follows/list [/follows/list]
+
+### フォローリストを取得する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+
+        {
+            "list": [
+              {
+                "id": 2,
+                "user": {
+                  "id": 1,
+                  "name": "foo@bar.com",
+                  "profileImageID": 0
+                },
+                "title": "bar",
+                "tags": [],
+                "followCount": 0,
+                "body": null,
+                "viewStatus": 1,
+                "search": "",
+                "soundStatus": 0,
+                "movie": {
+                  "id": 0,
+                  "createdAt": "0001-01-01T00:00:00Z",
+                  "updatedAt": "0001-01-01T00:00:00Z",
+                  "deletedAt": null,
+                  "user_contribution_id": 0,
+                  "movie_type": 0,
+                  "movie_id": "",
+                  "movie_status": 0
+                },
+                "updatedAt": "2017-07-23T15:12:52+09:00",
+                "createdAt": "2017-07-23T15:12:52+09:00"
+              }
+            ],
+            "count": 1
+        }
+
+## forget_password [/forget_password]
+
+### パスワード変更を登録する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "email": "foo@bar.com"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+### パスワードを変更する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "email": "vHWexIhSOGxjAIjz.t.3o8DN2_cv4ozt3TOb",
+            "keyword":"gEyG9YZUN31mLKbA18GFpxVc_h8fGFdtn2dNU9SwqG7uakosOKeNU0we4Ahpvishbf4-",
+            "password": "testtest"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## forget_password/check/{email}/{keyword} [/forget_password/check/{email}/{keyword}]
+
++ Parameters
+    + email: rH.Zw7xSMXghDIT_ - メールアドレス
+    + keyword: uXiJ05lV - キーワード
+
+### パスワード変更可能を判定する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+              {
+                  "warning": false,
+                  "message": ""
+              }
+
+## sounds/{id} [/sounds/{id}]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 音声を反映する [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+### 音声を確認する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "list": [
+                  {
+                    "id": 1,
+                    "createdAt": "2017-07-24T00:42:15+09:00",
+                    "updatedAt": "2017-07-24T00:42:15+09:00",
+                    "deletedAt": null,
+                    "user_contribution_id": 1,
+                    "priority": 1,
+                    "talk_type": 1,
+                    "body": "foo",
+                    "body_sound": "foo",
+                    "voice_type": 1,
+                    "make_status": 0
+                  }
+                ],
+                "soundStatus": 2,
+                "soundFile": true,
+                "movieFile": true,
+                "movie": {
+                  "id": 0,
+                  "createdAt": "0001-01-01T00:00:00Z",
+                  "updatedAt": "0001-01-01T00:00:00Z",
+                  "deletedAt": null,
+                  "user_contribution_id": 0,
+                  "movie_type": 0,
+                  "movie_id": "",
+                  "movie_status": 0
+                }
+            }
+
+### 音声を更新する [PUT]
+
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "soundStatus": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/{id}/make [/sounds/{id}/make]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 音声を作成する [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/{id}/reflect [/sounds/{id}/reflect]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 音声を再構築する [POST]
+
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "overwrite": true
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/body [/sounds/body]
+
+### 音声文を更新する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "id": 1,
+            "body": "foo"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "id": 1
+            }
+
+## sounds/voice [/sounds/voice]
+
+### 音声タイプを更新する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "id": 1,
+            "voiceType": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "id": 1
+            }
+
+## sounds/{id}/voice/all [/sounds/{id}/voice/all]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 音声タイプを一括更新する [PUT]
+
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "voiceType": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## sounds/length [/sounds/length]
+
+### 時間を取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "character": 0.6
+            }
+
+## movies/{id} [/movies/{id}]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 動画を作成する [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+### 動画を確認する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## movies/{id}/upload [/movies/{id}/upload]
+
++ Parameters
+    + id: 1 - 投稿ID
+
+### 動画をアップロードする [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "movieID": "foo"
+            }
+
+## problem [/problem]
+
+### 問題を報告する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "id": 1,
+            "type": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## profile [/profile]
+
+### 画像をアップロードする [POST]
+
++ Request  (multipart/form-data; boundary=---BOUNDARY)
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            "1.jpg"
+
+## question [/question]
+
+### 問い合わせる [POST]
+
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "email": "foo@bar.com",
+            "body": "foo"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": ""
+            }
+
+## tags/{?id,cid} [/tags/{?id,cid}]
+
++ Parameters
+    + id: 2 (optional) - ID
+    + cid: 1 (optional) - 投稿ID
+
+### タグを追加する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "userContributionId": 1,
+            "name": "fooabcccc"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": "foo"
+                    }
+                ]
+            }
+
+### タグを削除する [DELETE]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "warning": false,
+                "message": "",
+                "tags": [
+                    {
+                        "id": 1,
+                        "userContributionID": 1,
+                        "name": "foo"
+                    }
+                ]
+            }
+
+## me [/me]
+
+### 取得する [GET]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "user": {
+                    "id": 1,
+                    "name": "foo",
+                    "profileImageID": 1
+                },
+                "profiles": [
+                    {
+                        "id": 1,
+                        "userID": 1,
+                        "created": "2017-01-01 00:00:00"
+                    }
+                ]
+            }
+
+### 保存する [PUT]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "name": "foo"
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            {
+                "success": true
+            }
+
+## users/contribution/list/ [/users/contribution/list/]
+
+### ユーザー投稿を取得する [POST]
+
++ Request (application/json; charset=utf-8)
+
+        {
+            "order": 1,
+            "page": 1,
+            "limit": 1
+        }
+
++ Response 200 (application/json; charset=utf-8)
+
+
+        {
+          "privtes": [],
+          "list": [
+            {
+              "id": 2,
+              "createdAt": "2017-07-23T15:12:52+09:00",
+              "updatedAt": "2017-07-23T15:12:52+09:00",
+              "deletedAt": null,
+              "user_id": 1,
+              "title": "bar",
+              "view_status": 1
+            },
+            {
+              "id": 1,
+              "createdAt": "2017-07-23T15:12:52+09:00",
+              "updatedAt": "2017-07-23T15:12:52+09:00",
+              "deletedAt": null,
+              "user_id": 1,
+              "title": "foo",
+              "view_status": 1
+            }
+          ],
+          "titles": [
+            "bar",
+            "foo"
+          ],
+          "count": 2
+        }
+
+## logout [/logout]
+
+### ログアウトする [POST]
+
++ Response 200 (application/json; charset=utf-8)
+
+    + Body
+
+            true

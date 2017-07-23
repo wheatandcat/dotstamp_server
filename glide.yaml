@@ -47,6 +47,12 @@ import:
 - package: github.com/ikeikeikeike/go-sitemap-generator
   subpackages:
   - stm
+- package: github.com/snikch/goodman
+  version: ^0.2.3
+  subpackages:
+  - cmd/goodman
+  - transaction
+  - hooks
 testImport:
 - package: github.com/smartystreets/goconvey
   version: ^1.6.2

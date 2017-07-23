@@ -33,20 +33,21 @@ func (c *MainController) Post() {
 		return
 	}
 
+	var err error
 	request := PostdRequest{}
-	if err := json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
+	if err = json.Unmarshal(c.Ctx.Input.RequestBody, &request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	validate := validator.New()
-	if err := validate.Struct(request); err != nil {
+	if err = validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
 
 	tx := models.Begin()
-	if err := models.Lock("user_masters", userID); err != nil {
+	if err = models.Lock("user_masters", userID); err != nil {
 		models.Rollback(tx)
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return

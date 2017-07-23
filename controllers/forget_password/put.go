@@ -2,6 +2,7 @@ package controllersForgetPassword
 
 import (
 	"encoding/json"
+	"log"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
@@ -40,28 +41,34 @@ func (c *MainController) Put() {
 
 	email, err := utils.Urldecode(request.Email)
 	if err != nil {
+		log.Println("OUT")
 		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	e, err := utils.Decrypter([]byte(email))
 	if err != nil {
+		log.Println("OUT2")
 		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
+	log.Println(request)
 	keyword, err := utils.Urldecode(request.Keyword)
 	if err != nil {
+		log.Println("OUT3")
 		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 	k, err := utils.Decrypter([]byte(keyword))
 	if err != nil {
+		log.Println("OUT4")
 		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}
 
 	r, err := user.IsUpdatePassword(e, k)
 	if err != nil {
+		log.Println("OUT5")
 		c.ServerError(err, controllers.ErrParameter, 0)
 		return
 	}

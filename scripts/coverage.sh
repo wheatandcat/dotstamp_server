@@ -1,6 +1,6 @@
 #!/bin/sh
 
-controllerDirs=$GOPATH/src/dotstamp_server/tests/controllers/*
+controllerDirs=$GOPATH/src/github.com/wheatandcat/dotstamp_server/tests/controllers/*
 for filepath in $controllerDirs; do
     if [ -d $filepath ]; then
         dir=`basename ${filepath}`
@@ -12,7 +12,7 @@ done
 list=(models tasks utils)
 for item in ${list[@]}; do
     echo $item
-    dirs=$GOPATH/src/dotstamp_server/$item/*
+    dirs=$GOPATH/src/github.com/wheatandcat/dotstamp_server/$item/*
     go test -p 1 -coverprofile=./coverage/$item.coverage.out./$dir/
 
     for filepath in $dirs; do
