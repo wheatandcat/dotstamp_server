@@ -83,6 +83,11 @@ APIドキュメント生成
 ```
 aglio -i apiary.apib -o apiary.html
 ```
+dredd
+```
+sh scripts/dredd.sh && ENV_CONF=test dredd
+```
+
 ## バッチ  
 ファイルパス：tasks/
 
