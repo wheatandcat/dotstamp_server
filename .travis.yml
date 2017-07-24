@@ -1,6 +1,6 @@
 language: go
 go:
-  - 1.7.x
+  - 1.8.x
 sudo: required
 before_install:
   - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
@@ -10,7 +10,13 @@ before_install:
   - sudo apt-get install ffmpeg -y
   - sudo apt-get install lame -y
   - sudo apt-get install open-jtalk -y
-  - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y 
+  - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y
+  - ll /usr/share/hts-voice
+  - ln -s /usr/share/hts-voice/mei tool/open-jtalk/voice/mei
+  - ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/ tool/open-jtalk/voice/m100
+  - ll tool/open-jtalk/voice
+  - ll /var/lib/mecab/dic/open-jtalk/naist-jdic
+  - ln -s /var/lib/mecab/dic/open-jtalk/naist-jdic tool/open-jtalk/dic/
 addons:
   mariadb: '10.0'
 install:
