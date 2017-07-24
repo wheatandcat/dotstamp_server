@@ -46,7 +46,7 @@ before_script:
   - goose -env test up
 script:
   - glide install
-  - go build main.go
+  - go build
   - go test -p 1 ./models
   - go test -p 1 ./tests/controllers/*
   - sh scripts/dredd.sh
