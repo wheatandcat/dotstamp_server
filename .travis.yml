@@ -12,14 +12,14 @@ before_install:
   - sudo apt-get install open-jtalk -y
   - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y
   - ls -al /
-  - ll /
-  - ll /usr
-  - ll /usr/share
-  - ll /usr/share/hts-voice
+  - ls -al /
+  - ls -al /usr
+  - ls -al /usr/share
+  - ls -al /usr/share/hts-voice
   - ln -s /usr/share/hts-voice/mei tool/open-jtalk/voice/mei
   - ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/ tool/open-jtalk/voice/m100
-  - ls tool/open-jtalk/voice
-  - ls /var/lib/mecab/dic/open-jtalk/naist-jdic
+  - ls -al tool/open-jtalk/voice
+  - ls -al /var/lib/mecab/dic/open-jtalk/naist-jdic
   - ln -s /var/lib/mecab/dic/open-jtalk/naist-jdic tool/open-jtalk/dic/
 addons:
   mariadb: '10.0'
