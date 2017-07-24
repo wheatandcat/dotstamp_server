@@ -26,6 +26,7 @@ before_install:
   - ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/ tool/open-jtalk/voice/m100
   - ln -s /var/lib/mecab/dic/open-jtalk/naist-jdic tool/open-jtalk/dic/
   - ls -al tool/open-jtalk/voice/mei/
+  - ls -al /var/lib/mecab/dic/open-jtalk/naist-jdic
   - ls -al /home/travis/gopath/src/github.com/wheatandcat/dotstamp_server/tool/open-jtalk/dic/
   - open_jtalk
   - echo 'abcd' | open_jtalk -x /home/travis/gopath/src/github.com/wheatandcat/dotstamp_server/tool/open-jtalk/dic/ -m /home/travis/gopath/src/github.com/wheatandcat/dotstamp_server/tool/open-jtalk/voice/mei/mei_normal.htsvoice -ow /home/travis/gopath/src/github.com/wheatandcat/dotstamp_server/static/files/tmp/sound/1_1.wav
