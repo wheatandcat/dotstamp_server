@@ -4,6 +4,13 @@ go:
 sudo: required
 before_install:
   - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
+  - sudo apt-get -qq update
+  - sudo apt-get -y install software-properties-common
+  - sudo add-apt-repository ppa:mc3man/trusty-media
+  - sudo apt-get -y install ffmpeg
+  - sudo apt-get install lame
+  - sudo apt-get install open-jtalk
+  - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001
 addons:
   mariadb: '10.0'
 install:
@@ -17,4 +24,5 @@ before_script:
 script:
   - glide install
   - go build main.go
-  - go test -p 1 $(glide novendor)
+  - go test -p 1 ./models
+  - go test -p 1 ./tests/controllers/*
