@@ -2,7 +2,6 @@ package sound
 
 import (
 	"encoding/json"
-	"log"
 	"os"
 	"os/exec"
 	"strconv"
@@ -79,7 +78,6 @@ func addOpenJtalk(text string, file string, v string) error {
 
 	cmd := "echo '" + text + "' | open_jtalk -x " + dic + " -m " + voice + " -ow " + output
 
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -100,7 +98,6 @@ func toAqk2k(text string) (string, error) {
 
 	cmd := "echo '" + text + "' | " + voice + " " + dic
 
-	log.Println(cmd)
 	r, err := exec.Command("sh", "-c", cmd).Output()
 
 	return string(r), err
@@ -118,8 +115,6 @@ func addSoundless(file string) error {
 	output := path + "static/files/" + file + ".wav"
 
 	cmd := "sox " + src + " " + soundless + " " + output
-
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -145,7 +140,6 @@ func addAquesTalk(text string, file string) error {
 
 	cmd := "echo '" + text + "' | " + voice + " > " + output
 
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 	if err != nil {
 		return err
@@ -167,7 +161,6 @@ func Join(list []string, file string) error {
 	}
 
 	cmd += " " + path + "static/files/tmp/sound/" + file + ".wav"
-	log.Println(cmd)
 	if _, err := exec.Command("sh", "-c", cmd).Output(); err != nil {
 		return err
 	}
@@ -186,7 +179,6 @@ func toMp3(file string) error {
 	dest := path + "static/files/sound/" + file + ".mp3"
 
 	cmd := "lame -V2 " + src + " " + dest
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -203,7 +195,6 @@ func ToM4a(file string) error {
 	dest := path + "static/files/tmp/sound/" + file + ".m4a"
 
 	cmd := "ffmpeg -y -i " + src + " -vn -ac 2 -vol 256 -ab 112k " + dest
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -269,7 +260,6 @@ func GetLength(file string) (len float64, err error) {
 	}
 
 	cmd := "ffprobe -show_streams -print_format json " + src
-	log.Println(cmd)
 	out, err := exec.Command("sh", "-c", cmd).Output()
 	if err != nil {
 		return len, err

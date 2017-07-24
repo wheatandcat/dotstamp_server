@@ -1,7 +1,6 @@
 package movie
 
 import (
-	"log"
 	"net/http"
 	"os"
 	"os/exec"
@@ -45,7 +44,6 @@ func Make(file string) error {
 	dist := path + "static/files/tmp/movie/" + file + ".mp4"
 
 	cmd := "ffmpeg -y -i " + movie + " -i " + sound + " -map 0:0 -map 1:0 -movflags faststart -vcodec libx264 -acodec copy " + dist
-	log.Println(cmd)
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -63,8 +61,6 @@ func ToFilter(file string) error {
 	dist := path + "static/files/movie/" + file + ".mp4"
 
 	cmd := "ffmpeg -y -i " + src + " -i " + filter + " -filter_complex 'concat=n=2:v=1:a=1' " + dist
-	log.Println(cmd)
-
 	_, err = exec.Command("sh", "-c", cmd).Output()
 
 	return err
@@ -78,7 +74,6 @@ func ExecMakeMovie(id int) error {
 	}
 
 	cmd := "ENV_CONF_BATCH=" + beego.AppConfig.String("runmode") + " " + path + "tasks/makeMovie/makeMovie -userContributionId=" + strconv.Itoa(id)
-	log.Println(cmd)
 
 	return exec.Command("sh", "-c", cmd).Start()
 }
