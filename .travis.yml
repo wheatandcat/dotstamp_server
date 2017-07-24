@@ -43,4 +43,4 @@ script:
   - glide install
   - go build main.go
   - go test -p 1 ./models
-  - go test -p 1 -v ./tests/controllers/*
+  - go test -p 1 ./tests/controllers/*
