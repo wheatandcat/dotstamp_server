@@ -4,13 +4,12 @@ go:
 sudo: required
 before_install:
   - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
-  - sudo apt-get -qq update
+  - sudo apt-get update
   - sudo apt-get install  software-properties-common -y
   - sudo add-apt-repository ppa:mc3man/trusty-media -y
   - sudo apt-get install ffmpeg -y
   - sudo apt-get install lame -y
-  - sudo apt-get install open-jtalk -y
-  - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y
+  - sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic htsengine libhtsengine-dev hts-voice-nitech-jp-atr503-m001
   - sudo apt-get install sox libsox-fmt-all -y
   - mkdir tool/open-jtalk
   - mkdir tool/open-jtalk/dic
