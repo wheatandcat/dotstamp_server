@@ -4,25 +4,36 @@ go:
 dist: trusty
 sudo: required
 before_install:
-  - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
-  - sudo add-apt-repository ppa:mc3man/trusty-media -y
-  - sudo add-apt-repository ppa:openrtc-w/openhri -y
+  - >-
+    curl --silent --location
+    https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
+  - 'sudo add-apt-repository ppa:mc3man/trusty-media -y'
+  - 'sudo add-apt-repository ppa:openrtc-w/openhri -y'
   - sudo apt-get update
   - sudo apt-get install software-properties-common -y
   - sudo apt-get install ffmpeg -y
   - sudo apt-get install lame -y
-  - sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y
+  - >-
+    sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic
+    hts-voice-nitech-jp-atr503-m001 -y
   - sudo apt-get install sox libsox-fmt-all -y
   - mkdir tool/open-jtalk
   - mkdir tool/open-jtalk/voice
-  - wget https://downloads.sourceforge.net/project/hts-engine/hts_engine%20API/hts_engine_API-1.10/hts_engine_API-1.10.tar.gz
+  - >-
+    wget
+    https://downloads.sourceforge.net/project/hts-engine/hts_engine%20API/hts_engine_API-1.10/hts_engine_API-1.10.tar.gz
   - sudo tar xvzf hts_engine_API-1.10.tar.gz
-  - wget http://downloads.sourceforge.net/project/mmdagent/MMDAgent_Example/MMDAgent_Example-1.6/MMDAgent_Example-1.6.zip
+  - >-
+    wget
+    http://downloads.sourceforge.net/project/mmdagent/MMDAgent_Example/MMDAgent_Example-1.6/MMDAgent_Example-1.6.zip
   - unzip MMDAgent_Example-1.6.zip
   - sudo cp -R ./MMDAgent_Example-1.6/Voice/mei /usr/share/hts-voice/
   - ln -s /usr/share/hts-voice/mei tool/open-jtalk/voice/mei
-  - ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/ tool/open-jtalk/voice/m100
+  - >-
+    ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/
+    tool/open-jtalk/voice/m100
   - ln -s /var/lib/mecab/dic/open-jtalk/naist-jdic tool/open-jtalk/dic
+  - npm install -g dredd@4.1.2
 addons:
   mariadb: '10.0'
 install:
@@ -38,3 +49,5 @@ script:
   - go build main.go
   - go test -p 1 ./models
   - go test -p 1 ./tests/controllers/*
+  - sh scripts/dredd.sh
+  - dredd
