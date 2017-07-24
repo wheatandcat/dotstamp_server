@@ -17,4 +17,4 @@ before_script:
 script:
   - glide install
   - go build main.go
-  - go test -p 1 ./models
+  - go test -p 1 $(glide novendor)
