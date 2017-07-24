@@ -11,6 +11,8 @@ before_install:
   - sudo apt-get install lame -y
   - sudo apt-get install open-jtalk -y
   - sudo apt-get install open-jtalk-mecab-naist-jdic hts-voice-nitech-jp-atr503-m001 -y
+  - ls -al /
+  - ll /
   - ll /usr
   - ll /usr/share
   - ll /usr/share/hts-voice
