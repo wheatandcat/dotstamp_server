@@ -51,4 +51,4 @@ script:
   - go test -p 1 ./models
   - go test -p 1 ./tests/controllers/*
   - sh scripts/dredd.sh
-  - dredd
+  - ENV_CONF=test dredd
