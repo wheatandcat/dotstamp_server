@@ -9,7 +9,8 @@ before_install:
   - sudo add-apt-repository ppa:mc3man/trusty-media -y
   - sudo apt-get install ffmpeg -y
   - sudo apt-get install lame -y
-  - sudo apt-get install open-jtalk open-jtalk-mecab-naist-jdic htsengine libhtsengine-dev hts-voice-nitech-jp-atr503-m001
+  - sudo apt-get install open-jtalk=1.10-1
+  - sudo apt-get install open-jtalk-mecab-naist-jdic htsengine libhtsengine-dev hts-voice-nitech-jp-atr503-m001
   - sudo apt-get install sox libsox-fmt-all -y
   - mkdir tool/open-jtalk
   - mkdir tool/open-jtalk/dic
