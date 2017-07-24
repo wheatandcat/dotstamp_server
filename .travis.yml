@@ -1,12 +1,14 @@
 language: go
 go:
   - 1.8.x
+dist: trusty
 sudo: required
 before_install:
   - curl --silent --location https://github.com/groonga/groonga/raw/master/data/travis/setup.sh | sh
   - sudo apt-get update
   - sudo apt-get install  software-properties-common -y
   - sudo add-apt-repository ppa:mc3man/trusty-media -y
+  - sudo apt-get update
   - sudo apt-get install ffmpeg -y
   - sudo apt-get install lame -y
   - sudo apt-get install open-jtalk=1.07-2 -y
