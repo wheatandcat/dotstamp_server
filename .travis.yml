@@ -16,6 +16,10 @@ before_install:
   - ls -al /usr
   - ls -al /usr/share
   - ls -al /usr/share/hts-voice
+  - mkdir tool/open-jtalk
+  - mkdir tool/open-jtalk/dic
+  - mkdir tool/open-jtalk/voice
+  - ls -al tool/open-jtalk
   - ln -s /usr/share/hts-voice/mei tool/open-jtalk/voice/mei
   - ln -s /usr/share/hts-voice/hts_voice_nitech_jp_atr503_m001-1.05/ tool/open-jtalk/voice/m100
   - ls -al tool/open-jtalk/voice
