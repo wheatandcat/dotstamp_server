@@ -27,7 +27,7 @@ func TestSaveBodyPost(t *testing.T) {
 
 	json := `{
 			"id":1,
-			"body":"あいうえお"
+			"body":"abcd"
 	}`
 
 	r, err := http.NewRequest(
