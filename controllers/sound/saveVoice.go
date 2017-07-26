@@ -2,7 +2,6 @@ package controllersSound
 
 import (
 	"encoding/json"
-	"log"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
 	"github.com/wheatandcat/dotstamp_server/models"
@@ -42,7 +41,7 @@ func (c *SaveVoiceController) Put() {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)
 		return
 	}
-	log.Println(request)
+
 	validate := validator.New()
 	if err := validate.Struct(request); err != nil {
 		c.ServerError(err, controllers.ErrCodeCommon, userID)

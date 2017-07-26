@@ -15,8 +15,8 @@ output: []
 header: []
 sorted: false
 user: null
-inline-errors: false
-details: false
+inline-errors: true
+details: true
 method: []
 color: true
 level: info
