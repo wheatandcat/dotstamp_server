@@ -11,6 +11,7 @@ import (
 	"github.com/wheatandcat/dotstamp_server/controllers/google"
 	"github.com/wheatandcat/dotstamp_server/controllers/login"
 	"github.com/wheatandcat/dotstamp_server/controllers/movie"
+	"github.com/wheatandcat/dotstamp_server/controllers/native"
 	"github.com/wheatandcat/dotstamp_server/controllers/problem"
 	"github.com/wheatandcat/dotstamp_server/controllers/profile"
 	"github.com/wheatandcat/dotstamp_server/controllers/question"
@@ -57,6 +58,9 @@ func init() {
 	beego.Router("/api/movies/:id([0-9]+)/upload/", &controllersMovie.UploadController{})
 	beego.Router("/api/movies/connect/:id([0-9]+)", &controllersMovie.ConnectController{})
 	beego.Router("/api/movies/callback/", &controllersMovie.CallbackController{})
+
+	beego.Router("/api/native/callback/", &controllersNative.CallbackController{})
+	beego.Router("/api/native/dev-callback/", &controllersNative.DevCallbackController{})
 
 	beego.Router("/api/problem/", &controllersProblem.AddController{})
 
