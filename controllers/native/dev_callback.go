@@ -23,6 +23,6 @@ func (c *DevCallbackController) Get() {
 		return
 	}
 
-	url := "exp://wg-qka.community.app.exp.direct:80/?code=" + request.Code
+	url := "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct:80/?code=" + request.Code
 	c.Redirect(url, 302)
 }
