@@ -11,8 +11,7 @@ type RedirectController struct {
 
 // RedirectRequest コールバックリクエスト
 type RedirectRequest struct {
-	Code  string `form:"code"`
-	State string `form:"state"`
+	AccessToken string `form:"access_token"`
 }
 
 // Get コールバックする
@@ -23,6 +22,6 @@ func (c *RedirectController) Get() {
 		return
 	}
 
-	url := "exp://exp.host/@wheatandcat/dotstamp_native/?code=" + request.Code
+	url := "exp://exp.host/@wheatandcat/dotstamp_native/?access_token=" + request.AccessToken
 	c.Redirect(url, 302)
 }

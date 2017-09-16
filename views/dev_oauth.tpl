@@ -9,7 +9,7 @@
 if (window.location.hash) {
   var query = window.location.hash.replace(/^#/, "");
   // document.write(query);
-  var url = window.location.origin + "/api/native/redirect/" + "?" + query;
+  var url = window.location.origin + "/api/native/dev-redirect/" + "?" + query;
   window.location = url;
   document.write("Authenticating...");
 } else {

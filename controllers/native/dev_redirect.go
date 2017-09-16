@@ -11,8 +11,7 @@ type DevRedirectController struct {
 
 // DevRedirectRequest コールバックリクエスト
 type DevRedirectRequest struct {
-	Code  string `form:"code"`
-	State string `form:"state"`
+	AccessToken string `form:"access_token"`
 }
 
 // Get コールバックする
@@ -23,6 +22,6 @@ func (c *DevRedirectController) Get() {
 		return
 	}
 
-	url := "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct:80/?code=" + request.Code
+	url := "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct:80/?access_token=" + request.AccessToken
 	c.Redirect(url, 302)
 }
