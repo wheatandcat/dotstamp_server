@@ -4,20 +4,20 @@ import (
 	"github.com/wheatandcat/dotstamp_server/controllers"
 )
 
-// DevCallbackController コールバックコントローラ
-type DevCallbackController struct {
+// DevRedirectController コールバックコントローラ
+type DevRedirectController struct {
 	controllers.BaseController
 }
 
-// DevCallbackRequest コールバックリクエスト
-type DevCallbackRequest struct {
+// DevRedirectRequest コールバックリクエスト
+type DevRedirectRequest struct {
 	Code  string `form:"code"`
 	State string `form:"state"`
 }
 
 // Get コールバックする
-func (c *DevCallbackController) Get() {
-	request := DevCallbackRequest{}
+func (c *DevRedirectController) Get() {
+	request := DevRedirectRequest{}
 	if err := c.ParseForm(&request); err != nil {
 		c.RedirectError(err, 0)
 		return

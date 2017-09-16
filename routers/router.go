@@ -60,7 +60,8 @@ func init() {
 	beego.Router("/api/movies/callback/", &controllersMovie.CallbackController{})
 
 	beego.Router("/api/native/callback/", &controllersNative.CallbackController{})
-	beego.Router("/api/native/dev-callback/", &controllersNative.DevCallbackController{})
+	beego.Router("/api/native/redirect/", &controllersNative.RedirectController{})
+	beego.Router("/api/native/dev-redirect/", &controllersNative.DevRedirectController{})
 
 	beego.Router("/api/problem/", &controllersProblem.AddController{})
 
