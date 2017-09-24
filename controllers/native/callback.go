@@ -27,6 +27,10 @@ type Response struct {
 // Get コールバックする
 func (c *CallbackController) Get() {
 	request := CallbackRequest{}
+	if err := c.ParseForm(&request); err != nil {
+		c.RedirectError(err, 0)
+		return
+	}
 
 	url := "https://graph.facebook.com/me?access_token=" + request.AccessToken + "&fields=email"
 	r, _ := http.Get(url)

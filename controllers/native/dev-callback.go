@@ -22,7 +22,12 @@ type DevCallbackRequest struct {
 
 // Get コールバックする
 func (c *DevCallbackController) Get() {
-	request := CallbackRequest{}
+	request := DevCallbackRequest{}
+	if err := c.ParseForm(&request); err != nil {
+		c.RedirectError(err, 0)
+		return
+	}
+	log.Println(request)
 
 	url := "https://graph.facebook.com/me?access_token=" + request.AccessToken + "&fields=email"
 	r, _ := http.Get(url)
