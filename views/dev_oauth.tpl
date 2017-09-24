@@ -12,7 +12,7 @@ if (window.location.hash) {
     "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct/+" +
     "?" +
     query +
-    "&login={.login}"
+    "&login={{.login}}&email={{.email}}"
   window.location = url
   document.write("Authenticating...")
 } else {

@@ -9,7 +9,10 @@
 if (window.location.hash) {
   var query = window.location.hash.replace(/^#/, "")
   var url =
-    "exp://exp.host/@wheatandcat/dotstamp/+" + "?" + query + "&login={.login}"
+    "exp://exp.host/@wheatandcat/dotstamp/+" +
+    "?" +
+    query +
+    "&login={{.login}}&email={{.email}}"
   window.location = url
   document.write("Authenticating...")
 } else {
