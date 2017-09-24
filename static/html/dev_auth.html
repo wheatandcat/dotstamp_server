@@ -8,8 +8,7 @@
 <script>
 if (window.location.hash) {
   var query = window.location.hash.replace(/^#/, "")
-  var url =
-    "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct/+" + "?" + query
+  var url = "https://dotstamp.com/api/native/dev-callback" + "?" + query
   window.location = url
   document.write("Authenticating...")
 } else {

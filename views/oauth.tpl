@@ -6,18 +6,11 @@
     </head>
     <body>
 <script>
-if (window.location.hash) {
-  var query = window.location.hash.replace(/^#/, "")
-  var url =
-    "exp://exp.host/@wheatandcat/dotstamp/+" +
-    "?" +
-    query +
-    "&login={{.login}}&email={{.email}}"
-  window.location = url
-  document.write("Authenticating...")
-} else {
-  document.write("Uh oh something went wrong")
-}
+var url =
+  "exp://exp.host/@wheatandcat/dotstamp/+" +
+  "?_login={{.login}}&email={{.email}}"
+window.location = url
+document.write("Authenticating...")
 </script>
     </body>
 </html>

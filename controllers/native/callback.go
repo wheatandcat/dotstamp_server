@@ -28,7 +28,7 @@ type Response struct {
 func (c *CallbackController) Get() {
 	request := CallbackRequest{}
 
-	url := "https://graph.facebook.com/me?access_token=" + request.AccessToken
+	url := "https://graph.facebook.com/me?access_token=" + request.AccessToken + "&fields=email"
 	r, _ := http.Get(url)
 
 	body, err := ioutil.ReadAll(r.Body)
