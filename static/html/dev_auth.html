@@ -9,10 +9,7 @@
 if (window.location.hash) {
   var query = window.location.hash.replace(/^#/, "")
   var url =
-    "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct/+" +
-    "?" +
-    query +
-    "&login={.login}"
+    "exp://ts-xwe.wheatandcat.dotstamp-native.exp.direct/+" + "?" + query
   window.location = url
   document.write("Authenticating...")
 } else {

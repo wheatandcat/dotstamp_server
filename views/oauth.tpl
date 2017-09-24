@@ -1,19 +1,19 @@
-<!doctype html>
 <html lang="ja">
     <head>
         <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>.stamp</title>
     </head>
     <body>
 <script>
 if (window.location.hash) {
-  var query = window.location.hash.replace(/^#/, "");
-  // document.write(query);
-  var url = window.location.origin + "/api/native/redirect/" + "?" + query;
-  window.location = url;
-  document.write("Authenticating...");
+  var query = window.location.hash.replace(/^#/, "")
+  var url =
+    "exp://exp.host/@wheatandcat/dotstamp/+" + "?" + query + "&login={.login}"
+  window.location = url
+  document.write("Authenticating...")
 } else {
-  document.write("Uh oh something went wrong");
+  document.write("Uh oh something went wrong")
 }
 </script>
     </body>
