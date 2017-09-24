@@ -3,6 +3,7 @@ package controllersNative
 import (
 	"encoding/json"
 	"io/ioutil"
+	"log"
 	"net/http"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
@@ -32,8 +33,10 @@ func (c *DevCallbackController) Get() {
 		return
 	}
 
+	log.Println(body)
 	res := Response{}
 	err = json.Unmarshal(body, &res)
+	log.Println(res)
 	if err != nil {
 		c.RedirectError(err, 0)
 		return
