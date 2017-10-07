@@ -21,6 +21,7 @@ type CallbackRequest struct {
 
 // Response レスポンス
 type Response struct {
+	Login bool   `json:"login"`
 	Email string `json:"email"`
 }
 
@@ -54,13 +55,17 @@ func (c *CallbackController) Get() {
 		return
 	}
 
+	login := false
+
 	if u.ID != 0 {
 		c.SetSession("user_id", u.ID)
-		c.Data["login"] = true
-	} else {
-		c.Data["login"] = false
+		login = true
 	}
 
-	c.Data["email"] = res.Email
-	c.TplName = "oauth.tpl"
+	c.Data["json"] = DevResponse{
+		Email: res.Email,
+		Login: login,
+	}
+
+	c.ServeJSON()
 }

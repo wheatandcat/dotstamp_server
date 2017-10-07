@@ -3,7 +3,6 @@ package controllersNative
 import (
 	"encoding/json"
 	"io/ioutil"
-	"log"
 	"net/http"
 
 	"github.com/wheatandcat/dotstamp_server/controllers"
@@ -20,6 +19,12 @@ type DevCallbackRequest struct {
 	AccessToken string `form:"access_token"`
 }
 
+// DevResponse レスポンス
+type DevResponse struct {
+	Login bool   `json:"login"`
+	Email string `json:"email"`
+}
+
 // Get コールバックする
 func (c *DevCallbackController) Get() {
 	request := DevCallbackRequest{}
@@ -27,7 +32,6 @@ func (c *DevCallbackController) Get() {
 		c.RedirectError(err, 0)
 		return
 	}
-	log.Println(request)
 
 	url := "https://graph.facebook.com/me?access_token=" + request.AccessToken + "&fields=email"
 	r, _ := http.Get(url)
@@ -38,10 +42,8 @@ func (c *DevCallbackController) Get() {
 		return
 	}
 
-	log.Println(body)
 	res := Response{}
 	err = json.Unmarshal(body, &res)
-	log.Println(res)
 	if err != nil {
 		c.RedirectError(err, 0)
 		return
@@ -53,13 +55,17 @@ func (c *DevCallbackController) Get() {
 		return
 	}
 
+	login := false
+
 	if u.ID != 0 {
 		c.SetSession("user_id", u.ID)
-		c.Data["login"] = true
-	} else {
-		c.Data["login"] = false
+		login = true
 	}
 
-	c.Data["email"] = res.Email
-	c.TplName = "dev_oauth.tpl"
+	c.Data["json"] = DevResponse{
+		Email: res.Email,
+		Login: login,
+	}
+
+	c.ServeJSON()
 }

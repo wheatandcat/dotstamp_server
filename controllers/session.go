@@ -55,7 +55,6 @@ func (c *BaseController) SetSession(name string, value interface{}) {
 	if c.CruSession == nil {
 		c.StartSession()
 	}
-
 	c.CruSession.Set(name, value)
 }
 
