@@ -22,7 +22,7 @@ webサービス：[.stamp](http://dotstamp.com/)
 * admin
   * backend:[dotstamp_server](https://github.com/wheatandcat/dotstamp_admin_server)
   * frontend：[dotstamp_client](https://github.com/wheatandcat/dotstamp_admin_client)
-  
+
 ## 必要なもの
 * golang
 * MariaDB
@@ -103,5 +103,5 @@ sh scripts/dredd.sh && ENV_CONF=test dredd
 | makeMovie       | 動画ファイルを作成する |  |
 | removeContribution       | 不要ファイルを削除する | 1日1回実行 |
 
-## ライセンス
-BSDライセンス
+## License
+MIT
