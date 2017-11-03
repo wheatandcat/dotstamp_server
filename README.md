@@ -13,12 +13,16 @@
 webサービス：[.stamp](http://dotstamp.com/)
 
 ## projectリポジトリ一覧
-* サーバーサイド:[dotstamp_server](https://github.com/wheatandcat/dotstamp_server)
-* クライアントサイド：[dotstamp_client](https://github.com/wheatandcat/dotstamp_client)
-* 環境構築：[dotstamp_ansible](https://github.com/wheatandcat/dotstamp_ansible)
-* デプロイスクリプト：[dotstamp_deploy_script](https://github.com/wheatandcat/dotstamp_deploy_script)
-* デプロイ環境構築：[dotstamp_deploy_ansible](https://github.com/wheatandcat/dotstamp_deploy_ansible)
-
+* service
+  * backend:[dotstamp_server](https://github.com/wheatandcat/dotstamp_server)
+  * frontend：[dotstamp_client](https://github.com/wheatandcat/dotstamp_client)
+  * ansibl：[dotstamp_ansible](https://github.com/wheatandcat/dotstamp_ansible)
+  * deploy_script：[dotstamp_deploy_script](https://github.com/wheatandcat/dotstamp_deploy_script)
+  * deploy_ansible：[dotstamp_deploy_ansible](https://github.com/wheatandcat/dotstamp_deploy_ansible)
+* admin
+  * backend:[dotstamp_server](https://github.com/wheatandcat/dotstamp_admin_server)
+  * frontend：[dotstamp_client](https://github.com/wheatandcat/dotstamp_admin_client)
+  
 ## 必要なもの
 * golang
 * MariaDB
