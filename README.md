@@ -4,7 +4,7 @@
 [![DB Document](https://img.shields.io/badge/database-doc-brightgreen.svg)](https://wheatandcat.github.io/dotstamp_server/db/stamp_test.html)
 [![API Document](https://img.shields.io/badge/restful%20api-doc-green.svg)](https://wheatandcat.github.io/dotstamp_server/apiary.html#)
 [![API Testing](https://img.shields.io/badge/API%20Testing-dredd-green.svg)](https://github.com/apiaryio/dredd)
-[![BSD License](https://img.shields.io/badge/license-BSD-blue.svg)](LICENSE)
+[![MIT License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
 
 <img src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" data-canonical-src="https://raw.githubusercontent.com/wheatandcat/dotstamp_client/master/dist/images/common/about.png" width="200" />
 
